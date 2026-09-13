@@ -87,14 +87,28 @@ GM rights are stored **per character** in the database. To grant them, the chara
 already exist and be **logged out** (a character's save writes its own access level back, so
 editing it while online gets overwritten).
 
-With the servers closed:
+**Easiest — with the servers already running** (MariaDB is up, and step 8 will dump the change
+back into the snapshot for you when you close):
+
+1. Launch `L3-run.bat` as usual and wait for both server windows.
+2. **Before logging in** as that character, open a second PowerShell:
+   ```
+   cd C:\Agentic\L3\server
+   .\db-set-access.ps1 -Name admin
+   ```
+3. Now log in as `admin` — you're a Master and `//` commands work.
+
+**Alternative — with everything closed.** Because `L3-run.bat` re-restores the DB snapshot on
+startup whenever it changed, you must re-dump afterwards or the next launch undoes your change:
 ```
 cd C:\Agentic\L3\server
 .\db-start.ps1                        # MariaDB alone (the servers stop it when they close)
 .\db-set-access.ps1 -Name admin       # grant level 100 "Master" to the character 'admin'
+.\db-dump.ps1                         # IMPORTANT: bake it into the snapshot
 .\db-stop.ps1
 ```
-Then launch `L3-run.bat` and log in as that character. Useful variants:
+
+Useful variants:
 
 | Command | Effect |
 |---|---|

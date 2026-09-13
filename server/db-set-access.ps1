@@ -73,3 +73,20 @@ if ($Level -ge 70) {
 } else {
   Write-Host "'$Name' is now a normal player (no GM commands)." -ForegroundColor Gray
 }
+
+# Guard against L3-run.ps1 step 4 silently undoing this. It re-restores the snapshot whenever the
+# snapshot file's hash differs from .last-restored-hash — and the snapshot still holds the OLD
+# access level, so a change made while the servers are down can be wiped on the next launch.
+$snapshot = Join-Path $PSScriptRoot 'dist\db_snapshot\l2jmobiusinterlude.sql'
+$stamp    = Join-Path $PSScriptRoot 'dist\db_snapshot\.last-restored-hash'
+if (Test-Path $snapshot) {
+  $curHash  = (Get-FileHash $snapshot -Algorithm SHA256).Hash
+  $lastHash = if (Test-Path $stamp) { (Get-Content $stamp -Raw).Trim() } else { '' }
+  if ($curHash -ne $lastHash) {
+    Write-Host ""
+    Write-Host "HEADS UP: the next L3-run launch will restore the DB snapshot, which still has the" -ForegroundColor Yellow
+    Write-Host "old access level and would undo this change. Either:" -ForegroundColor Yellow
+    Write-Host "  * run  .\db-dump.ps1  now, so the snapshot carries this change, or" -ForegroundColor Yellow
+    Write-Host "  * make this change while the servers are already running (character logged out)." -ForegroundColor Yellow
+  }
+}
