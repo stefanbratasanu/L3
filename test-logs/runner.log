@@ -1,0 +1,71 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20260914005206
+Username: Desktop-1H06Q\Brata
+RunAs User: Desktop-1H06Q\Brata
+Configuration Name: 
+Machine: Desktop-1H06Q (Microsoft Windows NT 10.0.19045.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -NoProfile -ExecutionPolicy Bypass -File C:\Agentic\l3\L3-run.ps1 -NoPull
+Process ID: 4196
+PSVersion: 5.1.19041.7291
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.19041.7291
+BuildVersion: 10.0.19041.7291
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+L3 environment ready:
+  JAVA_HOME = C:\Agentic\tools\jdk-25
+  ANT_HOME  = C:\Agentic\tools\ant
+  MariaDB   = C:\Agentic\tools\mariadb  (data: C:\Agentic\data\mariadb, port: 3306)
+  Server    = C:\Agentic\L3\server
+
+Quick checks:  java -version | ant -version | mariadbd --version | git --version
+
+=== 1/8  Pulling latest from GitHub ===
+  -NoPull set; skipping.
+
+=== 2/8  Checking toolchain ===
+  java : C:\Agentic\tools\jdk-25\bin\java.exe
+  db   : C:\Agentic\tools\mariadb\bin\mariadbd.exe
+
+=== 3/8  Starting MariaDB ===
+MariaDB running (PID 30984) on 127.0.0.1:3306.
+  data: C:\Agentic\data\mariadb
+  logs: C:\Agentic\data\mariadb\..\mariadb-logs\mariadbd.out.log
+Stop it with:  .\db-stop.ps1
+
+=== 4/8  Restoring database ===
+  DB already matches the current snapshot - no restore needed.
+
+=== 5/8  Preparing server jars ===
+  Using committed jars in server\dist\libs.
+
+=== 6/8  Launching servers ===
+  starting LoginServer ...
+  starting GameServer ...
+
+  LoginServer PID 15768
+  GameServer PID 30724
+  Servers are starting. Point the client at this machine, log in, and test.
+  >>> To finish: type  .sd  in game (GM), or close a server window. <<<
+      This script then dumps + commits the DB and logs.
+
+=== 7/8  Running - waiting for shutdown (.sd in game, or close a server window) ===
+  GameServer (PID 30724) stopped.
+  Shutting the other server down too.
+  Server(s) stopped.
+
+=== 8/8  Syncing database + logs back to git ===
+Dumping l2jmobiusinterlude -> C:\Agentic\l3\server\dist\db_snapshot\l2jmobiusinterlude.sql ...
+  Wrote 336.4 KB.
+Requesting graceful shutdown via mariadb-admin ...
+
+MariaDB stopped.
+  logs collected into test-logs\ .
+**********************
+Windows PowerShell transcript end
+End time: 20260914005619
+**********************

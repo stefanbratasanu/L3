@@ -1,20 +1,22 @@
-2026.09.14 00:32:58,885	INFO	3	org.l2jmobius.commons.database.DatabaseFactory	Database: HikariCP pool initialized successfully.
-2026.09.14 00:32:59,115	INFO	3	org.l2jmobius.commons.database.DatabaseFactory	Database: Initialized with a valid connection.
-2026.09.14 00:32:59,125	INFO	3	org.l2jmobius.commons.threads.ThreadPool	ThreadPool: Initializing.
-2026.09.14 00:32:59,128	INFO	3	org.l2jmobius.commons.threads.ThreadPool	...scheduled pool executor with 2 total threads.
-2026.09.14 00:32:59,128	INFO	3	org.l2jmobius.commons.threads.ThreadPool	...instant pool executor with 2 total threads.
-2026.09.14 00:32:59,129	INFO	3	org.l2jmobius.loginserver.controller.LoginController	Loading LoginController...
-2026.09.14 00:32:59,380	INFO	3	org.l2jmobius.loginserver.controller.LoginController	Cached 10 KeyPairs for RSA communication.
-2026.09.14 00:32:59,397	INFO	3	org.l2jmobius.loginserver.controller.LoginController	Stored 20 keys for Blowfish communication.
-2026.09.14 00:32:59,459	INFO	3	org.l2jmobius.loginserver.data.GameServerTable	Loaded 127 server names.
-2026.09.14 00:32:59,489	INFO	3	org.l2jmobius.loginserver.data.GameServerTable	Loaded 2 registered Game Servers.
-2026.09.14 00:32:59,539	INFO	3	org.l2jmobius.loginserver.data.GameServerTable	Cached 10 RSA keys for Game Server communication.
-2026.09.14 00:32:59,541	INFO	3	org.l2jmobius.loginserver.LoginServer	Loaded 2 IP Bans.
-2026.09.14 00:32:59,544	INFO	3	org.l2jmobius.loginserver.LoginServer	Game server listener is listening on 127.0.0.1:9014.
-2026.09.14 00:32:59,553	INFO	3	org.l2jmobius.loginserver.LoginServer	LoginServer: Login client listener started on 0.0.0.0:2106.
-2026.09.14 00:33:29,174	INFO	63	org.l2jmobius.loginserver.GameServerThread	Updated Gameserver [1] Bartz IP's:
-2026.09.14 00:33:29,175	INFO	63	org.l2jmobius.loginserver.GameServerThread	127.0.0.1/127.0.0.0/8
-2026.09.14 00:33:29,175	INFO	63	org.l2jmobius.loginserver.GameServerThread	127.0.0.1/0.0.0.0/0
-2026.09.14 00:33:29,175	INFO	63	org.l2jmobius.loginserver.GameServerThread	127.0.0.1/0.0.0.0/0
-2026.09.14 00:39:01,204	INFO	63	org.l2jmobius.loginserver.GameServerThread	GameServer [1] Bartz: Connection lost - Connection reset
-2026.09.14 00:39:01,204	INFO	63	org.l2jmobius.loginserver.GameServerThread	Server [1] Bartz is now marked as disconnected.
+2026.09.14 00:40:17,847	INFO	3	org.l2jmobius.commons.database.DatabaseFactory	Database: HikariCP pool initialized successfully.
+2026.09.14 00:40:18,080	INFO	3	org.l2jmobius.commons.database.DatabaseFactory	Database: Initialized with a valid connection.
+2026.09.14 00:40:18,090	INFO	3	org.l2jmobius.commons.threads.ThreadPool	ThreadPool: Initializing.
+2026.09.14 00:40:18,092	INFO	3	org.l2jmobius.commons.threads.ThreadPool	...scheduled pool executor with 2 total threads.
+2026.09.14 00:40:18,092	INFO	3	org.l2jmobius.commons.threads.ThreadPool	...instant pool executor with 2 total threads.
+2026.09.14 00:40:18,094	INFO	3	org.l2jmobius.loginserver.controller.LoginController	Loading LoginController...
+2026.09.14 00:40:18,358	INFO	3	org.l2jmobius.loginserver.controller.LoginController	Cached 10 KeyPairs for RSA communication.
+2026.09.14 00:40:18,376	INFO	3	org.l2jmobius.loginserver.controller.LoginController	Stored 20 keys for Blowfish communication.
+2026.09.14 00:40:18,454	INFO	3	org.l2jmobius.loginserver.data.GameServerTable	Loaded 127 server names.
+2026.09.14 00:40:18,491	INFO	3	org.l2jmobius.loginserver.data.GameServerTable	Loaded 1 registered Game Servers.
+2026.09.14 00:40:18,532	INFO	3	org.l2jmobius.loginserver.data.GameServerTable	Cached 10 RSA keys for Game Server communication.
+2026.09.14 00:40:18,534	INFO	3	org.l2jmobius.loginserver.LoginServer	Loaded 2 IP Bans.
+2026.09.14 00:40:18,537	INFO	3	org.l2jmobius.loginserver.LoginServer	Game server listener is listening on 127.0.0.1:9014.
+2026.09.14 00:40:18,551	INFO	3	org.l2jmobius.loginserver.LoginServer	LoginServer: Login client listener started on 0.0.0.0:2106.
+2026.09.14 00:40:48,545	INFO	63	org.l2jmobius.loginserver.GameServerThread	Updated Gameserver [1] Bartz IP's:
+2026.09.14 00:40:48,546	INFO	63	org.l2jmobius.loginserver.GameServerThread	127.0.0.1/127.0.0.0/8
+2026.09.14 00:40:48,546	INFO	63	org.l2jmobius.loginserver.GameServerThread	127.0.0.1/0.0.0.0/0
+2026.09.14 00:40:48,546	INFO	63	org.l2jmobius.loginserver.GameServerThread	127.0.0.1/0.0.0.0/0
+2026.09.14 00:41:56,916	SEVERE	69	org.l2jmobius.commons.database.DatabaseFactory	Database: Could not get a connection.
+2026.09.14 00:41:56,920	WARNING	69	org.l2jmobius.loginserver.controller.LoginController	Exception while retriving account info for 'admin'!
+2026.09.14 00:42:00,568	SEVERE	73	org.l2jmobius.commons.database.DatabaseFactory	Database: Could not get a connection.
+2026.09.14 00:42:00,569	WARNING	73	org.l2jmobius.loginserver.controller.LoginController	Exception while retriving account info for 'admin'!
