@@ -167,20 +167,40 @@ $gameProc  = Start-Node 'GameServer'  'game'  'GameServer.jar'
 
 Say "`n  LoginServer PID $($loginProc.Id)   GameServer PID $($gameProc.Id)" 'Cyan'
 Say '  Servers are starting. Point the client at this machine, log in, and test.' 'Cyan'
-Say '  >>> CLOSE BOTH server windows when done — this script will then sync the DB. <<<' 'Yellow'
+Say '  >>> To finish: type  .sd  in game (GM), or close either server window. <<<' 'Yellow'
+Say '      Either way this script then dumps + commits the DB.' 'Yellow'
 
 # -----------------------------------------------------------------------------
-# 7. wait for you to close the servers
+# 7. wait for the session to end
 # -----------------------------------------------------------------------------
-Section '7/8  Running — waiting for both servers to close'
-Wait-Process -Id $loginProc.Id -ErrorAction SilentlyContinue
-Wait-Process -Id $gameProc.Id  -ErrorAction SilentlyContinue
+# We wait for EITHER process to exit, then stop the other. That way one action ends the whole
+# session: an in-game `.sd` (which only shuts down the game server), or closing either window.
+# Waiting for both in sequence would hang forever after a `.sd`, because the login server would
+# still be running with nobody left to close it.
+Section '7/8  Running — waiting for shutdown (.sd in game, or close a server window)'
+while (-not $loginProc.HasExited -and -not $gameProc.HasExited) {
+  Start-Sleep -Seconds 2
+}
+
+$first = if ($gameProc.HasExited) { 'GameServer' } else { 'LoginServer' }
+Say "  $first stopped - shutting the other one down too." 'Yellow'
+
+foreach ($p in @($gameProc, $loginProc)) {
+  if ($p.HasExited) { continue }
+  # Ask politely first (Mobius closes its window cleanly), then insist.
+  try { $null = $p.CloseMainWindow() } catch { }
+  if (-not $p.WaitForExit(20000)) {
+    Say "  PID $($p.Id) did not exit in 20s - terminating it." 'DarkYellow'
+    try { $p.Kill() } catch { }
+    try { $null = $p.WaitForExit(10000) } catch { }
+  }
+}
 Say '  Both servers have stopped.' 'Green'
 
 # -----------------------------------------------------------------------------
 # 8. dump DB, stop MariaDB, commit + push the snapshot
 # -----------------------------------------------------------------------------
-Section '8/8  Syncing database back to git'
+Section '8/8  Syncing database + logs back to git'
 try {
   & (Join-Path $serverDir 'db-dump.ps1') -Database $Database
   # record the hash we just dumped so the next start doesn't needlessly re-restore
@@ -194,15 +214,40 @@ try {
 # stop MariaDB now that we've dumped
 & (Join-Path $serverDir 'db-stop.ps1')
 
+# ---------------------------------------------------------------------------
+# Collect the server logs so the build box can read what actually happened.
+# The live log dirs are gitignored (they churn constantly and hold lock files);
+# we copy the useful files into test-logs/, which IS tracked.
+# ---------------------------------------------------------------------------
+$logRoot = Join-Path $repoRoot 'test-logs'
+foreach ($node in @(@{ src = 'dist\game\log'; dst = 'game' }, @{ src = 'dist\login\log'; dst = 'login' })) {
+  $src = Join-Path $serverDir $node.src
+  $dst = Join-Path $logRoot   $node.dst
+  if (-not (Test-Path $src)) { continue }
+  New-Item -ItemType Directory -Force -Path $dst | Out-Null
+  # Clear previous copies first, so a log that disappeared doesn't linger forever in git.
+  foreach ($old in @(Get-ChildItem -LiteralPath $dst -File -ErrorAction SilentlyContinue)) {
+    [System.IO.File]::Delete($old.FullName)
+  }
+  # Only real log files, and only non-empty ones. This deliberately matches the .gitignore
+  # negations for test-logs/, so everything we copy is also something git will track.
+  $keepExt = @('.log', '.csv', '.txt')
+  foreach ($f in @(Get-ChildItem -LiteralPath $src -File | Where-Object { ($_.Length -gt 0) -and ($keepExt -contains $_.Extension) })) {
+    Copy-Item -LiteralPath $f.FullName -Destination (Join-Path $dst $f.Name) -Force
+  }
+}
+Say "  logs collected into test-logs\ ." 'Green'
+
 if ($NoCommit) {
   Say '  -NoCommit set; leaving the snapshot uncommitted.' 'DarkYellow'
 } else {
   Push-Location $repoRoot
   try {
-    & $git add -- 'server/dist/db_snapshot/l2jmobiusinterlude.sql'
-    $changed = (& $git status --porcelain -- 'server/dist/db_snapshot/l2jmobiusinterlude.sql')
+    $syncPaths = @('server/dist/db_snapshot/l2jmobiusinterlude.sql', 'test-logs')
+    & $git add -- $syncPaths
+    $changed = (& $git status --porcelain -- $syncPaths)
     if ($changed) {
-      $msg = "DB snapshot from test run $(Get-Date -Format 'yyyy-MM-dd HH:mm')"
+      $msg = "DB + logs from test run $(Get-Date -Format 'yyyy-MM-dd HH:mm')"
       & $git commit -m $msg | Out-Null
       Say "  committed: $msg" 'Green'
       $hasRemote = (& $git remote) | Where-Object { $_ -eq 'origin' }

@@ -39,14 +39,24 @@ It will, in order:
 When both server windows say they're loaded, **launch your L2 client** and log in
 (see below). Play / test as long as you want.
 
-**When you're done: close both server windows** (LoginServer and GameServer).
-The script then automatically:
-- dumps the database (your characters, items, and later the AI agents' state),
-- commits it, and
-- pushes it back to GitHub —
+**When you're done, type `.sd` in game** (in normal "All" chat — you must be a GM).
+That does a *graceful* shutdown, which matters: characters and agents are saved
+**before** the database is dumped. Variants: `.sd now` (immediate), `.sd 60`
+(after 60s), `.sd abort` (cancel).
 
-…so the build box sees exactly what happened during your session. Then it prints
-"Done" and you can close the window.
+Closing either server window works too — the script notices and stops the other one.
+
+Either way the script then automatically:
+- dumps the database (your characters, items, and later the AI agents' state),
+- copies the server logs into `test-logs/`,
+- commits both, and
+- pushes them back to GitHub —
+
+…so the build box sees exactly what happened during your session, including the logs.
+Then it prints "Done" and you can close the window.
+
+> Prefer `.sd` over killing the windows. A hard kill can lose anything not yet
+> auto-saved, and the dump would then capture that stale state.
 
 ---
 

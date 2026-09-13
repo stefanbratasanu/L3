@@ -28,10 +28,20 @@
 #   - server/dist/**/*.jar
 
 # === Server runtime logs & generated hex id (regenerated on boot) ===
+# The LIVE log dirs stay ignored (they churn during a run and contain .lck lock files).
 /server/dist/game/log/
 /server/dist/login/log/
 *.log
 /server/dist/game/config/hexid.txt
+
+# ...but DO track the copies L3-run.ps1 step 8 collects on shutdown, so the build box can read
+# what happened during a test session. These negations must come after the '*.log' rule above.
+!/test-logs/
+!/test-logs/game/
+!/test-logs/login/
+!/test-logs/**/*.log
+!/test-logs/**/*.txt
+!/test-logs/**/*.csv
 
 # === DB snapshot: KEEP the .sql (this is how the DB syncs between machines),
 #     ignore its transient siblings written during dump/restore ===
