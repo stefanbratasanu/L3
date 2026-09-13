@@ -15,8 +15,17 @@ $Global:L3_SERVER = Join-Path $L3_ROOT 'server'
 $Global:JAVA_HOME = Join-Path $L3_TOOLS 'jdk-25'          # Temurin JDK 25 (LTS) — required by build.xml
 $Global:ANT_HOME  = Join-Path $L3_TOOLS 'ant'             # Apache Ant 1.10.x
 $Global:L3_MARIADB = Join-Path $L3_TOOLS 'mariadb'        # MariaDB 11.4 LTS (portable ZIP)
-$Global:L3_GIT    = Join-Path $L3_TOOLS 'MinGit\cmd'      # portable git
 $Global:L3_LLM    = Join-Path $L3_ROOT  'llm'             # local LLM runner (llama.cpp) + prompts/schemas
+
+# git: prefer the portable MinGit on the build box; on machines that installed
+# Git normally (test box) it is not there, so fall back to git already on PATH.
+$__mingit = Join-Path $L3_TOOLS 'MinGit\cmd'
+if (Test-Path (Join-Path $__mingit 'git.exe')) {
+  $Global:L3_GIT = $__mingit                                       # portable git dir
+} else {
+  $__sysgit = (Get-Command git -ErrorAction SilentlyContinue)
+  $Global:L3_GIT = if ($__sysgit) { Split-Path $__sysgit.Source } else { $null }   # system git dir, or none
+}
 
 # --- MariaDB local data dir (machine-local; gitignored at repo root) ---
 $Global:L3_DB_DATA = 'C:\Agentic\data\mariadb'
@@ -26,7 +35,8 @@ $Global:L3_DB_PORT = 3306
 $env:JAVA_HOME = $JAVA_HOME
 $env:ANT_HOME  = $ANT_HOME
 
-# Prepend tool bins to PATH (idempotent-ish: only add if missing)
+# Prepend tool bins to PATH (idempotent-ish: only add if missing).
+# $L3_GIT is $null when git is already on PATH (system install) — skip empties.
 $bins = @(
   (Join-Path $JAVA_HOME 'bin'),
   (Join-Path $ANT_HOME  'bin'),
@@ -34,6 +44,7 @@ $bins = @(
   $L3_GIT
 )
 foreach ($b in $bins) {
+  if ([string]::IsNullOrEmpty($b)) { continue }
   if ($env:Path -notlike "*$b*") { $env:Path = "$b;$env:Path" }
 }
 

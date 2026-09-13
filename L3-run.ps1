@@ -39,7 +39,15 @@ function Section([string]$m) { Write-Host "`n=== $m ===" -ForegroundColor Cyan }
 if (-not (Test-Path $envScript)) { throw "env.ps1 not found at $envScript (are you in the L3 repo root?)" }
 . $envScript
 
-$git      = Join-Path $L3_GIT 'git.exe'
+# Resolve git: portable MinGit dir from env.ps1 if present (build box), else
+# whatever `git` is on PATH (test box installed Git normally). Fail loud if neither.
+if ($L3_GIT -and (Test-Path (Join-Path $L3_GIT 'git.exe'))) {
+  $git = Join-Path $L3_GIT 'git.exe'
+} else {
+  $gitCmd = Get-Command git -ErrorAction SilentlyContinue
+  if (-not $gitCmd) { throw "git not found (no portable MinGit under C:\Agentic\tools, and 'git' is not on PATH). Install Git for Windows: https://git-scm.com/download/win" }
+  $git = $gitCmd.Source
+}
 $javaExe  = Join-Path $JAVA_HOME 'bin\java.exe'
 $setup    = Join-Path $repoRoot 'L3-setup.ps1'
 
