@@ -95,6 +95,41 @@ public class L3Config
 	/** Give up on a target that has somehow stayed unreachable this long and pick another. */
 	public static final int TARGET_TIMEOUT_MS = 20000;
 
+	// --- Permanent population -------------------------------------------------------------------
+	/**
+	 * The account every agent character belongs to. This is how agents are recognised across
+	 * restarts: on boot we load the characters on this account and put them back in the world, the
+	 * same way {@code OfflinePlayTable} restores offline-play characters.
+	 */
+	public static final String AGENT_ACCOUNT = "l3agents";
+
+	/**
+	 * Target population, and the replacement cap: the system tops the world up to this many agents
+	 * and never exceeds it. Losing an agent causes a replacement to be created, up to this number.
+	 */
+	public static final int POPULATION_TARGET = 1000;
+
+	/** How often the population is checked and topped up. */
+	public static final int POPULATION_MAINTAIN_MS = 4000;
+
+	/**
+	 * Agents created per top-up pass. Deliberately incremental: creating a thousand characters in
+	 * one go would stall boot, hammer the database, and make the very first run look like a hang.
+	 * Filling gradually keeps the server responsive and spreads the write load.
+	 */
+	public static final int POPULATION_BATCH = 25;
+
+	/** How far apart to scatter newly created agents around a town centre. */
+	public static final int SPAWN_SCATTER = 400;
+
+	// --- Turbo test agent -----------------------------------------------------------------------
+	// A deliberately overpowered agent, for watching behaviour without it dying mid-demonstration.
+	// Applied as flat stat functions (FuncAdd), so these are bonuses on top of the character's base
+	// values rather than absolute settings.
+	public static final int TURBO_MOVE_SPEED = 500;
+	public static final int TURBO_ATTACK_SPEED = 1500;
+	public static final int TURBO_PHYSICAL_ATTACK = 10000;
+
 	// --- Safety ---------------------------------------------------------------------------------
 	/** Hard ceiling on live agents, so a bad config or a loop cannot spawn the box to death. */
 	public static final int MAX_AGENTS = 5000;

@@ -20,20 +20,38 @@
  */
 package l3.agent;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import org.l2jmobius.commons.database.DatabaseFactory;
+import org.l2jmobius.gameserver.data.xml.PlayerTemplateData;
+import org.l2jmobius.gameserver.entity.Location;
 import org.l2jmobius.gameserver.entity.World;
 import org.l2jmobius.gameserver.entity.actor.Player;
+import org.l2jmobius.gameserver.entity.actor.appearance.PlayerAppearance;
+import org.l2jmobius.gameserver.entity.actor.templates.PlayerTemplate;
+import org.l2jmobius.gameserver.mechanics.stats.Stat;
+import org.l2jmobius.gameserver.mechanics.stats.functions.FuncAdd;
 
 import l3.L3Config;
+import l3.L3Locations;
+import l3.L3Names;
 import l3.agent.L3Agent.Lod;
+import l3.ai.L3ThinkTaskManager;
 
 /**
- * The registry of live L3 agents, and the owner of their level-of-detail decisions.
+ * The registry of live L3 agents, their persistence, and the owner of their level-of-detail
+ * decisions.
  * <p>
  * <b>Why a registry instead of a flag on {@code Player}:</b> telling agents apart from humans could
  * be a boolean field on {@code Player}, but that means editing an upstream file and carrying the
@@ -44,18 +62,39 @@ import l3.agent.L3Agent.Lod;
  * <b>The level-of-detail trick.</b> There are only ever a few real humans online, so instead of
  * asking "which agents can see a player" (a world query per agent) we ask "how far is each agent
  * from the nearest human" - a handful of integer comparisons per agent against a cached list.
- * Refreshing all 5000 agents costs a few thousand comparisons every couple of seconds, which is
- * nothing, and it tells us which small subset actually needs full simulation.
+ * Refreshing thousands of agents costs a few thousand comparisons every couple of seconds, and it
+ * tells us which small subset actually needs full simulation.
+ * <p>
+ * <b>Persistence.</b> Agents are real characters on the {@link L3Config#AGENT_ACCOUNT} account, so
+ * they survive restarts with full fidelity - level, gear, inventory - exactly like Mobius's own
+ * offline-play characters. On boot their ids are queued and restored gradually rather than all at
+ * once, because a thousand {@code Player.load} calls in a tight loop would stall startup and make
+ * the first run look like a hang.
  *
  * @author L3
  */
 public class L3AgentManager
 {
+	private static final Logger LOGGER = Logger.getLogger(L3AgentManager.class.getName());
+
+	private static final String SELECT_AGENT_IDS = "SELECT charId FROM characters WHERE account_name=?";
+
+	/** Marker used as the owner of turbo stat functions. */
+	private static final String TURBO_OWNER = "l3-turbo";
+
+	/** classId 0 = Human Fighter: a valid Interlude starting class, so a template always exists. */
+	private static final int DEFAULT_CLASS_ID = 0;
+
 	/** objectId -> agent. Concurrent because pool tasks read it while spawns mutate it. */
 	private static final Map<Integer, L3Agent> AGENTS = new ConcurrentHashMap<>();
 
+	/** Agent characters known in the database but not yet put back into the world. */
+	private static final Queue<Integer> PENDING_RESTORE = new ConcurrentLinkedQueue<>();
+
 	/** Cached list of real (non-agent) players, refreshed on the LOD cadence rather than per agent. */
 	private static volatile List<Player> HUMANS = List.of();
+
+	private static volatile boolean _restoreScanned;
 
 	protected L3AgentManager()
 	{
@@ -64,29 +103,33 @@ public class L3AgentManager
 	// --- Registry -------------------------------------------------------------------------------
 
 	/**
-	 * Brings an already-spawned clientless player under L3 control.
-	 * @param player a player that is already in the world
+	 * Brings an already-spawned clientless player under L3 control and starts it thinking.
 	 * @return the controller, or {@code null} if refused (duplicate, or at the population ceiling)
 	 */
 	public L3Agent register(Player player)
 	{
-		if (player == null)
-		{
-			return null;
-		}
-
-		if (AGENTS.size() >= L3Config.MAX_AGENTS)
+		if ((player == null) || (AGENTS.size() >= L3Config.MAX_AGENTS))
 		{
 			return null;
 		}
 
 		final L3Agent agent = new L3Agent(player);
-		return AGENTS.putIfAbsent(player.getObjectId(), agent) == null ? agent : null;
+		if (AGENTS.putIfAbsent(player.getObjectId(), agent) != null)
+		{
+			return null;
+		}
+
+		L3ThinkTaskManager.getInstance().add(agent);
+		return agent;
 	}
 
 	public void unregister(int objectId)
 	{
-		AGENTS.remove(objectId);
+		final L3Agent agent = AGENTS.remove(objectId);
+		if (agent != null)
+		{
+			L3ThinkTaskManager.getInstance().remove(agent);
+		}
 	}
 
 	public boolean isAgent(Player player)
@@ -112,6 +155,209 @@ public class L3AgentManager
 	public int size()
 	{
 		return AGENTS.size();
+	}
+
+	public int pendingRestoreCount()
+	{
+		return PENDING_RESTORE.size();
+	}
+
+	// --- Spawning -------------------------------------------------------------------------------
+
+	/**
+	 * Creates a brand new agent character and puts it in the world.
+	 * @param location where to place it
+	 * @param name a specific name, or {@code null} to generate one
+	 * @param turbo whether to apply the overpowered test stats
+	 * @return the new agent, or {@code null} if creation failed
+	 */
+	public L3Agent spawnNew(Location location, String name, boolean turbo)
+	{
+		final PlayerTemplate template = PlayerTemplateData.getInstance().getTemplate(DEFAULT_CLASS_ID);
+		if (template == null)
+		{
+			LOGGER.warning("L3: no player template for classId " + DEFAULT_CLASS_ID);
+			return null;
+		}
+
+		// Turbo agents live on a separate account so they are never picked up as part of the
+		// permanent population: their stat functions are runtime-only and would not survive a
+		// restart anyway, which would leave a confusingly ordinary "turbo" agent behind.
+		final String account = turbo ? (L3Config.AGENT_ACCOUNT + "_turbo") : L3Config.AGENT_ACCOUNT;
+
+		Player player = null;
+		if (name != null)
+		{
+			player = Player.create(template, account, name, new PlayerAppearance((byte) 0, (byte) 0, (byte) 0, false));
+		}
+		else
+		{
+			// char_name is unique, so a generated name can collide; try a few before giving up.
+			for (int attempt = 0; (attempt < 5) && (player == null); attempt++)
+			{
+				player = Player.create(template, account, L3Names.random(), new PlayerAppearance((byte) 0, (byte) 0, (byte) 0, false));
+			}
+		}
+
+		if (player == null)
+		{
+			return null;
+		}
+
+		if (!placeInWorld(player, location))
+		{
+			return null;
+		}
+
+		if (turbo)
+		{
+			applyTurbo(player);
+		}
+
+		final L3Agent agent = register(player);
+		if (agent == null)
+		{
+			LOGGER.warning("L3: created " + player.getName() + " but could not register it.");
+		}
+
+		return agent;
+	}
+
+	/**
+	 * The clientless in-world sequence, mirroring {@code OfflinePlayTable.restoreOfflinePlayers()}:
+	 * a full {@link Player} with no {@code GameClient} and no socket.
+	 * @param location where to put it, or {@code null} to use the character's stored position
+	 */
+	private boolean placeInWorld(Player player, Location location)
+	{
+		try
+		{
+			player.setOnlineStatus(true, false);
+
+			final int x = (location == null) ? player.getX() : location.getX();
+			final int y = (location == null) ? player.getY() : location.getY();
+			final int z = (location == null) ? player.getZ() : location.getZ();
+
+			player.setXYZ(x, y, z);
+			player.spawnMe(x, y, z); // inserts into World + region grid = in-world
+
+			player.setOnlineStatus(true, true);
+			player.setRunning();
+			return true;
+		}
+		catch (Exception e)
+		{
+			LOGGER.log(Level.WARNING, "L3: failed to place " + player.getName() + " in the world.", e);
+			return false;
+		}
+	}
+
+	/**
+	 * Overpowered stats for a test agent, so behaviour can be watched without the agent dying
+	 * mid-demonstration. Applied as flat {@link FuncAdd} stat functions, which is how the engine
+	 * itself layers bonuses - so these are additions on top of base values, not absolute settings.
+	 */
+	private void applyTurbo(Player player)
+	{
+		player.addStatFunc(new FuncAdd(Stat.MOVE_SPEED, 0x40, TURBO_OWNER, L3Config.TURBO_MOVE_SPEED, null));
+		player.addStatFunc(new FuncAdd(Stat.POWER_ATTACK_SPEED, 0x40, TURBO_OWNER, L3Config.TURBO_ATTACK_SPEED, null));
+		player.addStatFunc(new FuncAdd(Stat.POWER_ATTACK, 0x40, TURBO_OWNER, L3Config.TURBO_PHYSICAL_ATTACK, null));
+
+		// Heal to the new maximum and tell nearby clients about the changed speed.
+		player.setCurrentHp(player.getMaxHp());
+		player.setCurrentMp(player.getMaxMp());
+		player.broadcastUserInfo();
+	}
+
+	// --- Permanent population -------------------------------------------------------------------
+
+	/**
+	 * Reads the ids of every existing agent character once, so they can be restored gradually.
+	 * Cheap: one indexed query, no object loading.
+	 */
+	public void scanForRestore()
+	{
+		if (_restoreScanned)
+		{
+			return;
+		}
+
+		_restoreScanned = true;
+
+		try (Connection con = DatabaseFactory.getConnection();
+			PreparedStatement ps = con.prepareStatement(SELECT_AGENT_IDS))
+		{
+			ps.setString(1, L3Config.AGENT_ACCOUNT);
+
+			try (ResultSet rs = ps.executeQuery())
+			{
+				while (rs.next())
+				{
+					PENDING_RESTORE.add(rs.getInt("charId"));
+				}
+			}
+		}
+		catch (Exception e)
+		{
+			LOGGER.log(Level.WARNING, "L3: could not scan for existing agents.", e);
+		}
+
+		LOGGER.info("L3: " + PENDING_RESTORE.size() + " existing agent characters found; restoring gradually (target " + L3Config.POPULATION_TARGET + ").");
+	}
+
+	/**
+	 * One population pass: restore some known agents, then create new ones if still short of the
+	 * target. Both are capped at {@link L3Config#POPULATION_BATCH} per pass so the work is spread
+	 * over time instead of stalling the server.
+	 */
+	public void maintainPopulation()
+	{
+		int budget = L3Config.POPULATION_BATCH;
+
+		// 1. Put existing characters back in the world first - they carry real progress.
+		while ((budget > 0) && !PENDING_RESTORE.isEmpty() && (AGENTS.size() < L3Config.POPULATION_TARGET))
+		{
+			final Integer charId = PENDING_RESTORE.poll();
+			if (charId == null)
+			{
+				break;
+			}
+
+			if (AGENTS.containsKey(charId) || (World.getPlayer(charId) != null))
+			{
+				continue; // Already in world.
+			}
+
+			budget--;
+
+			try
+			{
+				final Player player = Player.load(charId);
+				if (player == null)
+				{
+					continue;
+				}
+
+				if (placeInWorld(player, null) && (register(player) == null))
+				{
+					LOGGER.warning("L3: restored " + player.getName() + " but could not register it.");
+				}
+			}
+			catch (Exception e)
+			{
+				LOGGER.log(Level.WARNING, "L3: failed to restore agent charId " + charId, e);
+			}
+		}
+
+		// 2. Top up toward the target - this is the "replacement" half of the cap.
+		while ((budget > 0) && (AGENTS.size() < L3Config.POPULATION_TARGET) && PENDING_RESTORE.isEmpty())
+		{
+			budget--;
+			if (spawnNew(L3Locations.randomTownScattered(L3Config.SPAWN_SCATTER), null, false) == null)
+			{
+				break; // Creation is failing; do not spin.
+			}
+		}
 	}
 
 	// --- Level of detail ------------------------------------------------------------------------
@@ -144,7 +390,7 @@ public class L3AgentManager
 			// Reap agents whose player is gone, so the registry cannot leak.
 			if ((player == null) || !player.isOnline() || (World.getPlayer(agent.getObjectId()) == null))
 			{
-				AGENTS.remove(agent.getObjectId());
+				unregister(agent.getObjectId());
 				continue;
 			}
 

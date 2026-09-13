@@ -314,7 +314,11 @@
 	<admin command="kill_monster" description="Kill the target monster." accessLevel="100" />
 
 	<!-- ADMIN L3 (fake-player agents) -->
-	<admin command="l3spawn" description="Spawn a clientless L3 puppet next to you; 'clean' removes them." accessLevel="100" />
+	<admin command="l3spawn" description="Spawn L3 agents next to you: //l3spawn [count], or 'clean'." accessLevel="100" />
+	<admin command="l3spawnname" description="Spawn one L3 agent with a specific name." accessLevel="100" />
+	<admin command="l3spawnturbo" description="Spawn one overpowered L3 test agent." accessLevel="100" />
+	<admin command="l3spawnworld" description="Spawn L3 agents scattered across the towns of the world." accessLevel="100" />
+	<admin command="gotonext" description="Teleport to the next L3 agent, cycling through them." accessLevel="100" />
 
 	<!-- ADMIN LEVEL -->
 	<admin command="add_level" description="Add specified number of levels to the target player." accessLevel="100" />

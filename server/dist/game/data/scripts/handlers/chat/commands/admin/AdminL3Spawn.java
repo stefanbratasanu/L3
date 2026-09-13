@@ -20,39 +20,41 @@
  */
 package handlers.chat.commands.admin;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.l2jmobius.commons.util.Rnd;
-import org.l2jmobius.gameserver.data.xml.PlayerTemplateData;
+import org.l2jmobius.gameserver.entity.Location;
 import org.l2jmobius.gameserver.entity.World;
 import org.l2jmobius.gameserver.entity.actor.Player;
-import org.l2jmobius.gameserver.entity.actor.appearance.PlayerAppearance;
-import org.l2jmobius.gameserver.entity.actor.templates.PlayerTemplate;
 import org.l2jmobius.gameserver.handler.IAdminCommandHandler;
 import org.l2jmobius.gameserver.network.GameClient;
 
+import l3.L3Config;
+import l3.L3Locations;
 import l3.agent.L3Agent;
 import l3.agent.L3AgentManager;
-import l3.ai.L3ThinkTaskManager;
 
 /**
- * L3 v1 spawn primitive test.<br>
- * Proves the clientless-Player mechanism (the same one {@code OfflinePlayTable} uses) works on
- * real hardware: synthesizes a fresh character with NO {@link GameClient} / socket and inserts it
- * into the world next to the observer. It just stands there — no AI yet. This is the foundation the
- * real {@code L3AgentManager} (Milestone 2) is built on.
- * <p>
- * Commands:
+ * Admin tools for spawning and inspecting L3 agents.
  * <ul>
- * <li>{@code //l3spawn} — mint one puppet (Human Fighter) ~150 units in front of you.</li>
- * <li>{@code //l3spawn clean} — remove every puppet this command created (world + DB rows).</li>
+ * <li>{@code //l3spawn} - one agent in front of you.</li>
+ * <li>{@code //l3spawn 25} - that many, scattered around you.</li>
+ * <li>{@code //l3spawnname Aldric} - one agent with a specific name.</li>
+ * <li>{@code //l3spawnturbo} - one deliberately overpowered test agent, so you can watch behaviour
+ * without it dying halfway through.</li>
+ * <li>{@code //l3spawnworld 200} - that many spread randomly across the towns of the world.</li>
+ * <li>{@code //gotonext} - teleport to the next agent, cycling through the population.</li>
+ * <li>{@code //l3spawn clean} - delete the agents spawned by these commands this session.</li>
  * </ul>
- * Puppets are real character rows (via {@link Player#create}), exactly like future agents, so
- * {@code clean} deletes both the in-world object and its DB record to keep the synced snapshot tidy.
+ * Agents created here are part of the <b>permanent</b> population: real characters that survive
+ * restarts and get topped back up to {@link L3Config#POPULATION_TARGET}. Turbo agents are the
+ * exception - their stats are runtime-only, so they live on a separate throwaway account.
  *
  * @author L3
  */
@@ -62,18 +64,24 @@ public class AdminL3Spawn implements IAdminCommandHandler
 
 	private static final String[] ADMIN_COMMANDS =
 	{
-		"admin_l3spawn"
+		"admin_l3spawn",
+		"admin_l3spawnname",
+		"admin_l3spawnturbo",
+		"admin_l3spawnworld",
+		"admin_gotonext"
 	};
 
-	// classId 0 = Human Fighter (a valid Interlude starting class → template always present).
-	private static final int PUPPET_CLASS_ID = 0;
-	// Throwaway account name shared by all puppets (real players use their login account name).
-	private static final String PUPPET_ACCOUNT = "l3agents";
-	// Distance in front of the observer to place the puppet.
+	/** Distance in front of the observer to place a single agent. */
 	private static final int SPAWN_OFFSET = 150;
 
-	// Object ids of every puppet we created, so //l3spawn clean can remove exactly those.
+	/** Sanity limit for one command, so a typo cannot ask for a million agents. */
+	private static final int MAX_PER_COMMAND = 1000;
+
+	/** Object ids spawned by these commands this session, so 'clean' can undo exactly those. */
 	private static final Set<Integer> SPAWNED = Collections.synchronizedSet(new HashSet<>());
+
+	/** Cycle position for //gotonext. */
+	private static int _gotoIndex;
 
 	@Override
 	public boolean onCommand(String command, Player activeChar)
@@ -83,95 +91,206 @@ public class AdminL3Spawn implements IAdminCommandHandler
 			return false;
 		}
 
-		final String args = command.length() > "admin_l3spawn".length() ? command.substring("admin_l3spawn".length()).trim() : "";
+		final String[] parts = command.split(" ");
+		final String cmd = parts[0];
+		final String arg = (parts.length > 1) ? parts[1].trim() : "";
 
-		if (args.equalsIgnoreCase("clean"))
+		switch (cmd)
 		{
-			cleanup(activeChar);
-			return true;
+			case "admin_gotonext":
+			{
+				return gotoNext(activeChar);
+			}
+			case "admin_l3spawnturbo":
+			{
+				return spawnTurbo(activeChar);
+			}
+			case "admin_l3spawnname":
+			{
+				if (arg.isEmpty())
+				{
+					activeChar.sendSysMessage("Usage: //l3spawnname <name>");
+					return false;
+				}
+
+				return spawnNamed(activeChar, arg);
+			}
+			case "admin_l3spawnworld":
+			{
+				return spawnWorld(activeChar, parseCount(arg, 1));
+			}
+			default: // admin_l3spawn
+			{
+				if (arg.equalsIgnoreCase("clean"))
+				{
+					cleanup(activeChar);
+					return true;
+				}
+
+				return spawnHere(activeChar, parseCount(arg, 1));
+			}
+		}
+	}
+
+	private static int parseCount(String arg, int fallback)
+	{
+		if (arg.isEmpty())
+		{
+			return fallback;
 		}
 
-		spawnOne(activeChar);
+		try
+		{
+			return Math.max(1, Math.min(MAX_PER_COMMAND, Integer.parseInt(arg)));
+		}
+		catch (NumberFormatException e)
+		{
+			return fallback;
+		}
+	}
+
+	// --- spawn variants -------------------------------------------------------------------------
+
+	/** One or more agents around the observer. */
+	private boolean spawnHere(Player observer, int count)
+	{
+		int made = 0;
+		for (int i = 0; i < count; i++)
+		{
+			// A single agent goes right in front; a batch scatters so they do not stack up.
+			final Location location = (count == 1) ? inFrontOf(observer) : new Location(observer.getX() + Rnd.get(-250, 250), observer.getY() + Rnd.get(-250, 250), observer.getZ());
+
+			if (spawn(observer, location, null, false) != null)
+			{
+				made++;
+			}
+		}
+
+		report(observer, made, count);
+		return made > 0;
+	}
+
+	private boolean spawnNamed(Player observer, String name)
+	{
+		// Mobius validates names on creation; a clash or an illegal name simply returns null.
+		if (spawn(observer, inFrontOf(observer), name, false) == null)
+		{
+			observer.sendSysMessage("L3: could not create '" + name + "'. Name taken, too long, or invalid characters?");
+			return false;
+		}
+
+		observer.sendSysMessage("L3: spawned '" + name + "'. Agents: " + L3AgentManager.getInstance().size());
 		return true;
 	}
 
-	private void spawnOne(Player observer)
+	private boolean spawnTurbo(Player observer)
 	{
-		Player puppet = null;
+		final L3Agent agent = spawn(observer, inFrontOf(observer), null, true);
+		if (agent == null)
+		{
+			observer.sendSysMessage("L3: turbo spawn failed (see the game log).");
+			return false;
+		}
+
+		observer.sendSysMessage("L3: turbo agent '" + agent.getPlayer().getName() + "' spawned (+" + L3Config.TURBO_MOVE_SPEED + " speed, +" + L3Config.TURBO_ATTACK_SPEED + " atk.spd, +" + L3Config.TURBO_PHYSICAL_ATTACK + " p.atk).");
+		observer.sendSysMessage("L3: it is a throwaway test agent - it will not come back after a restart.");
+		return true;
+	}
+
+	/** Agents scattered across the towns of the world, to populate it rather than crowd one spot. */
+	private boolean spawnWorld(Player observer, int count)
+	{
+		int made = 0;
+		for (int i = 0; i < count; i++)
+		{
+			if (spawn(observer, L3Locations.randomTownScattered(L3Config.SPAWN_SCATTER), null, false) != null)
+			{
+				made++;
+			}
+		}
+
+		observer.sendSysMessage("L3: spawned " + made + " of " + count + " agents across " + L3Locations.TOWNS.length + " towns. Agents: " + L3AgentManager.getInstance().size());
+		observer.sendSysMessage("L3: use //gotonext to visit them.");
+		LOGGER.info("L3Spawn: " + observer.getName() + " spawned " + made + " agents across the world.");
+		return made > 0;
+	}
+
+	private L3Agent spawn(Player observer, Location location, String name, boolean turbo)
+	{
 		try
 		{
-			final PlayerTemplate template = PlayerTemplateData.getInstance().getTemplate(PUPPET_CLASS_ID);
-			if (template == null)
+			final L3Agent agent = L3AgentManager.getInstance().spawnNew(location, name, turbo);
+			if (agent != null)
 			{
-				observer.sendSysMessage("L3: no player template for classId " + PUPPET_CLASS_ID + ".");
-				return;
+				SPAWNED.add(agent.getObjectId());
 			}
 
-			// Fresh, unique-ish name. characters.char_name is unique, so retry-proof enough for a test.
-			final String name = "L3Agent" + (Rnd.get(100000, 999999));
-
-			// face / hairColor / hairStyle / isFemale — appearance is cosmetic; zeros are valid.
-			final PlayerAppearance appearance = new PlayerAppearance((byte) 0, (byte) 0, (byte) 0, false);
-
-			// The real synthesis path: builds a Player with a null GameClient and writes its DB row.
-			puppet = Player.create(template, PUPPET_ACCOUNT, name, appearance);
-			if (puppet == null)
-			{
-				observer.sendSysMessage("L3: Player.create returned null (name clash? DB error?). Try again.");
-				return;
-			}
-
-			// --- The clientless in-world sequence, mirroring OfflinePlayTable.restoreOfflinePlayers() ---
-			puppet.setOnlineStatus(true, false);
-
-			// Place it a short distance in front of the observer (same Z/instance, no client involved).
-			final double angle = Math.toRadians(observer.getHeading() / 182.044); // client heading → degrees
-			final int x = observer.getX() + (int) (Math.cos(angle) * SPAWN_OFFSET);
-			final int y = observer.getY() + (int) (Math.sin(angle) * SPAWN_OFFSET);
-			final int z = observer.getZ();
-			puppet.setXYZ(x, y, z);
-			puppet.spawnMe(x, y, z); // inserts into World + region grid = visible/in-world
-
-			puppet.setOnlineStatus(true, true);
-			puppet.setRunning();
-			// -------------------------------------------------------------------------------------------
-
-			SPAWNED.add(puppet.getObjectId());
-
-			// Hand the body to the brain: register it and put it in a thinking pool. Without this
-			// the puppet just stands there (which is all v1 did).
-			final L3Agent agent = L3AgentManager.getInstance().register(puppet);
-			if (agent == null)
-			{
-				observer.sendSysMessage("L3: spawned " + name + " but could NOT register it (population ceiling?). It will not act.");
-			}
-			else
-			{
-				L3ThinkTaskManager.getInstance().add(agent);
-			}
-
-			observer.sendSysMessage("L3: spawned " + name + " (objId " + puppet.getObjectId() + "). Agents: " + L3AgentManager.getInstance().size());
-			LOGGER.info("L3Spawn: " + observer.getName() + " spawned clientless puppet " + name + " (" + puppet.getObjectId() + ") at " + x + "," + y + "," + z);
+			return agent;
 		}
 		catch (Exception e)
 		{
-			LOGGER.log(Level.WARNING, "L3Spawn: failed to spawn puppet", e);
-			observer.sendSysMessage("L3: spawn FAILED — " + e.getClass().getSimpleName() + ": " + e.getMessage() + " (see game log).");
-			// Best-effort: if it half-created, get it out of the world.
-			if (puppet != null)
-			{
-				try
-				{
-					puppet.deleteMe();
-				}
-				catch (Exception ignored)
-				{
-					// nothing more we can do here
-				}
-			}
+			LOGGER.log(Level.WARNING, "L3Spawn: spawn failed", e);
+			observer.sendSysMessage("L3: spawn FAILED - " + e.getClass().getSimpleName() + ": " + e.getMessage());
+			return null;
 		}
 	}
 
+	private static Location inFrontOf(Player observer)
+	{
+		final double angle = Math.toRadians(observer.getHeading() / 182.044); // client heading -> degrees
+		return new Location((int) (observer.getX() + (Math.cos(angle) * SPAWN_OFFSET)), (int) (observer.getY() + (Math.sin(angle) * SPAWN_OFFSET)), observer.getZ());
+	}
+
+	private void report(Player observer, int made, int asked)
+	{
+		if (made == asked)
+		{
+			observer.sendSysMessage("L3: spawned " + made + ". Agents: " + L3AgentManager.getInstance().size());
+		}
+		else
+		{
+			observer.sendSysMessage("L3: spawned " + made + " of " + asked + " (population cap or name clashes). Agents: " + L3AgentManager.getInstance().size());
+		}
+
+		LOGGER.info("L3Spawn: " + observer.getName() + " spawned " + made + "/" + asked + " agents.");
+	}
+
+	// --- navigation -----------------------------------------------------------------------------
+
+	/** Teleports to the next agent in the population, cycling round. */
+	private boolean gotoNext(Player observer)
+	{
+		final List<L3Agent> agents = new ArrayList<>(L3AgentManager.getInstance().getAgents());
+		if (agents.isEmpty())
+		{
+			observer.sendSysMessage("L3: there are no agents to go to.");
+			return false;
+		}
+
+		// The registry is a hash map, so iteration order is arbitrary but stable enough to walk;
+		// sorting by object id makes //gotonext advance predictably instead of jumping about.
+		agents.sort((a, b) -> Integer.compare(a.getObjectId(), b.getObjectId()));
+
+		if (_gotoIndex >= agents.size())
+		{
+			_gotoIndex = 0;
+		}
+
+		final L3Agent agent = agents.get(_gotoIndex);
+		_gotoIndex = (_gotoIndex + 1) % agents.size();
+
+		final Player target = agent.getPlayer();
+		observer.teleToLocation(new Location(target.getX() + 60, target.getY() + 60, target.getZ()));
+		observer.sendSysMessage("L3: -> " + target.getName() + " (" + (_gotoIndex == 0 ? agents.size() : _gotoIndex) + "/" + agents.size() + ") level " + target.getLevel() + ", " + agent.getLod() + ".");
+		return true;
+	}
+
+	// --- cleanup --------------------------------------------------------------------------------
+
+	/**
+	 * Deletes the agents these commands created this session, world object and database rows alike.
+	 * Note the permanent population will simply top itself back up afterwards.
+	 */
 	private void cleanup(Player observer)
 	{
 		final Integer[] ids;
@@ -183,7 +302,7 @@ public class AdminL3Spawn implements IAdminCommandHandler
 
 		if (ids.length == 0)
 		{
-			observer.sendSysMessage("L3: no puppets to clean.");
+			observer.sendSysMessage("L3: no puppets from this session to clean.");
 			return;
 		}
 
@@ -193,19 +312,15 @@ public class AdminL3Spawn implements IAdminCommandHandler
 			try
 			{
 				// Take it out of the thinking pools first, so no tick can touch a deleted player.
-				final L3Agent agent = L3AgentManager.getInstance().get(objId);
-				if (agent != null)
-				{
-					L3ThinkTaskManager.getInstance().remove(agent);
-					L3AgentManager.getInstance().unregister(objId);
-				}
+				L3AgentManager.getInstance().unregister(objId);
 
 				final Player puppet = World.getPlayer(objId);
 				if (puppet != null)
 				{
-					puppet.deleteMe(); // remove from world
+					puppet.deleteMe();
 				}
-				GameClient.deleteCharByObjId(objId); // remove the DB row(s) so the snapshot stays clean
+
+				GameClient.deleteCharByObjId(objId);
 				removed++;
 			}
 			catch (Exception e)
@@ -214,8 +329,8 @@ public class AdminL3Spawn implements IAdminCommandHandler
 			}
 		}
 
-		observer.sendSysMessage("L3: cleaned " + removed + " of " + ids.length + " puppet(s).");
-		LOGGER.info("L3Spawn: " + observer.getName() + " cleaned " + removed + " puppet(s).");
+		observer.sendSysMessage("L3: cleaned " + removed + " of " + ids.length + ". Population will refill toward " + L3Config.POPULATION_TARGET + ".");
+		LOGGER.info("L3Spawn: " + observer.getName() + " cleaned " + removed + " agent(s).");
 	}
 
 	@Override
