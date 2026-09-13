@@ -152,6 +152,7 @@ import handlers.chat.commands.admin.AdminInstanceZone;
 import handlers.chat.commands.admin.AdminInvul;
 import handlers.chat.commands.admin.AdminKick;
 import handlers.chat.commands.admin.AdminKill;
+import handlers.chat.commands.admin.AdminL3Spawn;
 import handlers.chat.commands.admin.AdminLevel;
 import handlers.chat.commands.admin.AdminLogin;
 import handlers.chat.commands.admin.AdminMammon;
@@ -366,6 +367,7 @@ public class MasterHandler
 			AdminInvul.class,
 			AdminKick.class,
 			AdminKill.class,
+			AdminL3Spawn.class,
 			AdminLevel.class,
 			AdminLogin.class,
 			AdminMammon.class,

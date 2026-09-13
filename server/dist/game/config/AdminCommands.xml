@@ -313,6 +313,9 @@
 	<admin command="kill" description="Kill the target player." accessLevel="100" />
 	<admin command="kill_monster" description="Kill the target monster." accessLevel="100" />
 
+	<!-- ADMIN L3 (fake-player agents) -->
+	<admin command="l3spawn" description="Spawn a clientless L3 puppet next to you; 'clean' removes them." accessLevel="100" />
+
 	<!-- ADMIN LEVEL -->
 	<admin command="add_level" description="Add specified number of levels to the target player." accessLevel="100" />
 	<admin command="set_level" description="Set the exact level for the target player." accessLevel="100" />
