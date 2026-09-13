@@ -1,0 +1,8023 @@
+/*M!999999\- enable the sandbox mode */ 
+-- MariaDB dump 10.19-11.4.13-MariaDB, for Win64 (AMD64)
+--
+-- Host: 127.0.0.1    Database: l2jmobiusinterlude
+-- ------------------------------------------------------
+-- Server version	11.4.13-MariaDB
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*M!100616 SET @OLD_NOTE_VERBOSITY=@@NOTE_VERBOSITY, NOTE_VERBOSITY=0 */;
+
+--
+-- Current Database: `l2jmobiusinterlude`
+--
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `l2jmobiusinterlude` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */;
+
+USE `l2jmobiusinterlude`;
+
+--
+-- Table structure for table `account_data`
+--
+
+DROP TABLE IF EXISTS `account_data`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `account_data` (
+  `account_name` varchar(45) NOT NULL DEFAULT '',
+  `var` varchar(20) NOT NULL DEFAULT '',
+  `value` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`account_name`,`var`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `account_data`
+--
+
+LOCK TABLES `account_data` WRITE;
+/*!40000 ALTER TABLE `account_data` DISABLE KEYS */;
+/*!40000 ALTER TABLE `account_data` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `account_gsdata`
+--
+
+DROP TABLE IF EXISTS `account_gsdata`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `account_gsdata` (
+  `account_name` varchar(45) NOT NULL DEFAULT '',
+  `var` varchar(191) NOT NULL DEFAULT '',
+  `value` text NOT NULL,
+  PRIMARY KEY (`account_name`,`var`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `account_gsdata`
+--
+
+LOCK TABLES `account_gsdata` WRITE;
+/*!40000 ALTER TABLE `account_gsdata` DISABLE KEYS */;
+/*!40000 ALTER TABLE `account_gsdata` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `account_premium`
+--
+
+DROP TABLE IF EXISTS `account_premium`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `account_premium` (
+  `account_name` varchar(45) NOT NULL DEFAULT '',
+  `enddate` decimal(20,0) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`account_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `account_premium`
+--
+
+LOCK TABLES `account_premium` WRITE;
+/*!40000 ALTER TABLE `account_premium` DISABLE KEYS */;
+/*!40000 ALTER TABLE `account_premium` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `accounts`
+--
+
+DROP TABLE IF EXISTS `accounts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `accounts` (
+  `login` varchar(45) NOT NULL DEFAULT '',
+  `password` varchar(45) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `created_time` timestamp NOT NULL DEFAULT current_timestamp(),
+  `lastactive` bigint(13) unsigned NOT NULL DEFAULT 0,
+  `accessLevel` tinyint(4) NOT NULL DEFAULT 0,
+  `lastIP` char(15) DEFAULT NULL,
+  `lastServer` tinyint(4) DEFAULT 1,
+  `pcIp` char(15) DEFAULT NULL,
+  `hop1` char(15) DEFAULT NULL,
+  `hop2` char(15) DEFAULT NULL,
+  `hop3` char(15) DEFAULT NULL,
+  `hop4` char(15) DEFAULT NULL,
+  PRIMARY KEY (`login`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `accounts`
+--
+
+LOCK TABLES `accounts` WRITE;
+/*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
+/*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `accounts_ipauth`
+--
+
+DROP TABLE IF EXISTS `accounts_ipauth`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `accounts_ipauth` (
+  `login` varchar(45) NOT NULL,
+  `ip` char(15) NOT NULL,
+  `type` enum('deny','allow') DEFAULT 'allow'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `accounts_ipauth`
+--
+
+LOCK TABLES `accounts_ipauth` WRITE;
+/*!40000 ALTER TABLE `accounts_ipauth` DISABLE KEYS */;
+/*!40000 ALTER TABLE `accounts_ipauth` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `announcements`
+--
+
+DROP TABLE IF EXISTS `announcements`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `announcements` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `type` int(11) NOT NULL,
+  `initial` bigint(20) NOT NULL DEFAULT 0,
+  `delay` bigint(20) NOT NULL DEFAULT 0,
+  `repeat` int(11) NOT NULL DEFAULT 0,
+  `author` text NOT NULL,
+  `content` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `announcements`
+--
+
+LOCK TABLES `announcements` WRITE;
+/*!40000 ALTER TABLE `announcements` DISABLE KEYS */;
+INSERT INTO `announcements` VALUES
+(1,0,0,0,0,'L2jMobius','Thanks for using L2jMobius!'),
+(2,0,0,0,0,'L2jMobius','http://www.l2jmobius.org');
+/*!40000 ALTER TABLE `announcements` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auction`
+--
+
+DROP TABLE IF EXISTS `auction`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `auction` (
+  `id` int(11) NOT NULL DEFAULT 0,
+  `sellerId` int(11) NOT NULL DEFAULT 0,
+  `sellerName` varchar(50) NOT NULL DEFAULT 'NPC',
+  `sellerClanName` varchar(50) NOT NULL DEFAULT '',
+  `itemType` varchar(25) NOT NULL DEFAULT '',
+  `itemId` int(11) NOT NULL DEFAULT 0,
+  `itemObjectId` int(11) NOT NULL DEFAULT 0,
+  `itemName` varchar(40) NOT NULL DEFAULT '',
+  `itemQuantity` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `startingBid` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `currentBid` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `endDate` bigint(13) unsigned NOT NULL DEFAULT 0,
+  PRIMARY KEY (`itemType`,`itemId`,`itemObjectId`),
+  KEY `id` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auction`
+--
+
+LOCK TABLES `auction` WRITE;
+/*!40000 ALTER TABLE `auction` DISABLE KEYS */;
+INSERT INTO `auction` VALUES
+(22,0,'NPC','NPC Clan','ClanHall',22,0,'Moonstone Hall',1,20000000,0,1789913915535),
+(23,0,'NPC','NPC Clan','ClanHall',23,0,'Onyx Hall',1,20000000,0,1789913915539),
+(24,0,'NPC','NPC Clan','ClanHall',24,0,'Topaz Hall',1,20000000,0,1789913915544),
+(25,0,'NPC','NPC Clan','ClanHall',25,0,'Ruby Hall',1,20000000,0,1789913915548),
+(26,0,'NPC','NPC Clan','ClanHall',26,0,'Crystal Hall',1,20000000,0,1789913915553),
+(27,0,'NPC','NPC Clan','ClanHall',27,0,'Onyx Hall',1,20000000,0,1789913915559),
+(28,0,'NPC','NPC Clan','ClanHall',28,0,'Sapphire Hall',1,20000000,0,1789913915564),
+(29,0,'NPC','NPC Clan','ClanHall',29,0,'Moonstone Hall',1,20000000,0,1789913915569),
+(30,0,'NPC','NPC Clan','ClanHall',30,0,'Emerald Hall',1,20000000,0,1789913915573),
+(31,0,'NPC','NPC Clan','ClanHall',31,0,'The Atramental Barracks',1,8000000,0,1789913915579),
+(32,0,'NPC','NPC Clan','ClanHall',32,0,'The Scarlet Barracks',1,8000000,0,1789913915584),
+(33,0,'NPC','NPC Clan','ClanHall',33,0,'The Viridian Barracks',1,8000000,0,1789913915589),
+(36,0,'NPC','NPC Clan','ClanHall',36,0,'The Golden Chamber',1,50000000,0,1789913915595),
+(37,0,'NPC','NPC Clan','ClanHall',37,0,'The Silver Chamber',1,50000000,0,1789913915600),
+(38,0,'NPC','NPC Clan','ClanHall',38,0,'The Mithril Chamber',1,50000000,0,1789913915604),
+(39,0,'NPC','NPC Clan','ClanHall',39,0,'Silver Manor',1,50000000,0,1789913915610),
+(40,0,'NPC','NPC Clan','ClanHall',40,0,'Gold Manor',1,50000000,0,1789913915616),
+(41,0,'NPC','NPC Clan','ClanHall',41,0,'The Bronze Chamber',1,50000000,0,1789913915620),
+(42,0,'NPC','NPC Clan','ClanHall',42,0,'The Golden Chamber',1,50000000,0,1789913915626),
+(43,0,'NPC','NPC Clan','ClanHall',43,0,'The Silver Chamber',1,50000000,0,1789913915631),
+(44,0,'NPC','NPC Clan','ClanHall',44,0,'The Mithril Chamber',1,50000000,0,1789913915636),
+(45,0,'NPC','NPC Clan','ClanHall',45,0,'The Bronze Chamber',1,50000000,0,1789913915642),
+(46,0,'NPC','NPC Clan','ClanHall',46,0,'Silver Manor',1,50000000,0,1789913915647),
+(47,0,'NPC','NPC Clan','ClanHall',47,0,'Moonstone Hall',1,50000000,0,1789913915651),
+(48,0,'NPC','NPC Clan','ClanHall',48,0,'Onyx Hall',1,50000000,0,1789913915656),
+(49,0,'NPC','NPC Clan','ClanHall',49,0,'Emerald Hall',1,50000000,0,1789913915661),
+(50,0,'NPC','NPC Clan','ClanHall',50,0,'Sapphire Hall',1,50000000,0,1789913915665),
+(51,0,'NPC','NPC Clan','ClanHall',51,0,'Mont Chamber',1,50000000,0,1789913915670),
+(52,0,'NPC','NPC Clan','ClanHall',52,0,'Astaire Chamber',1,50000000,0,1789913915676),
+(53,0,'NPC','NPC Clan','ClanHall',53,0,'Aria Chamber',1,50000000,0,1789913915680),
+(54,0,'NPC','NPC Clan','ClanHall',54,0,'Yiana Chamber',1,50000000,0,1789913915685),
+(55,0,'NPC','NPC Clan','ClanHall',55,0,'Roien Chamber',1,50000000,0,1789913915691),
+(56,0,'NPC','NPC Clan','ClanHall',56,0,'Luna Chamber',1,50000000,0,1789913915696),
+(57,0,'NPC','NPC Clan','ClanHall',57,0,'Traban Chamber',1,50000000,0,1789913915701),
+(58,0,'NPC','NPC Clan','ClanHall',58,0,'Eisen Hall',1,20000000,0,1789913915706),
+(59,0,'NPC','NPC Clan','ClanHall',59,0,'Heavy Metal Hall',1,20000000,0,1789913915711),
+(60,0,'NPC','NPC Clan','ClanHall',60,0,'Molten Ore Hall',1,20000000,0,1789913915717),
+(61,0,'NPC','NPC Clan','ClanHall',61,0,'Titan Hall',1,20000000,0,1789913915722);
+/*!40000 ALTER TABLE `auction` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auction_bid`
+--
+
+DROP TABLE IF EXISTS `auction_bid`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `auction_bid` (
+  `id` int(11) NOT NULL DEFAULT 0,
+  `auctionId` int(11) NOT NULL DEFAULT 0,
+  `bidderId` int(11) NOT NULL DEFAULT 0,
+  `bidderName` varchar(50) NOT NULL,
+  `clan_name` varchar(50) NOT NULL,
+  `maxBid` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `time_bid` bigint(13) unsigned NOT NULL DEFAULT 0,
+  PRIMARY KEY (`auctionId`,`bidderId`),
+  KEY `id` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auction_bid`
+--
+
+LOCK TABLES `auction_bid` WRITE;
+/*!40000 ALTER TABLE `auction_bid` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auction_bid` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auction_watch`
+--
+
+DROP TABLE IF EXISTS `auction_watch`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `auction_watch` (
+  `charObjId` int(11) NOT NULL DEFAULT 0,
+  `auctionId` int(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`charObjId`,`auctionId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auction_watch`
+--
+
+LOCK TABLES `auction_watch` WRITE;
+/*!40000 ALTER TABLE `auction_watch` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auction_watch` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `bbs_favorites`
+--
+
+DROP TABLE IF EXISTS `bbs_favorites`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `bbs_favorites` (
+  `favId` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `playerId` int(10) unsigned NOT NULL,
+  `favTitle` varchar(50) NOT NULL,
+  `favBypass` varchar(127) NOT NULL,
+  `favAddDate` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`favId`),
+  UNIQUE KEY `favId_playerId` (`favId`,`playerId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `bbs_favorites`
+--
+
+LOCK TABLES `bbs_favorites` WRITE;
+/*!40000 ALTER TABLE `bbs_favorites` DISABLE KEYS */;
+/*!40000 ALTER TABLE `bbs_favorites` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `bbs_mail`
+--
+
+DROP TABLE IF EXISTS `bbs_mail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `bbs_mail` (
+  `id` int(10) unsigned NOT NULL DEFAULT 0,
+  `receiver_id` int(10) unsigned NOT NULL DEFAULT 0,
+  `sender_id` int(10) unsigned NOT NULL DEFAULT 0,
+  `location` varchar(15) NOT NULL,
+  `recipients` varchar(200) DEFAULT NULL,
+  `subject` varchar(128) DEFAULT NULL,
+  `message` varchar(3000) DEFAULT NULL,
+  `sent_date` timestamp NULL DEFAULT NULL,
+  `is_unread` smallint(1) DEFAULT 1,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `bbs_mail`
+--
+
+LOCK TABLES `bbs_mail` WRITE;
+/*!40000 ALTER TABLE `bbs_mail` DISABLE KEYS */;
+/*!40000 ALTER TABLE `bbs_mail` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `buffer_schemes`
+--
+
+DROP TABLE IF EXISTS `buffer_schemes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `buffer_schemes` (
+  `object_id` int(10) unsigned NOT NULL DEFAULT 0,
+  `scheme_name` varchar(16) NOT NULL DEFAULT 'default',
+  `skills` varchar(512) NOT NULL,
+  PRIMARY KEY (`object_id`,`scheme_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `buffer_schemes`
+--
+
+LOCK TABLES `buffer_schemes` WRITE;
+/*!40000 ALTER TABLE `buffer_schemes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `buffer_schemes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `buylists`
+--
+
+DROP TABLE IF EXISTS `buylists`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `buylists` (
+  `buylist_id` int(10) unsigned NOT NULL,
+  `item_id` int(10) unsigned NOT NULL,
+  `count` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `next_restock_time` bigint(20) unsigned NOT NULL DEFAULT 0,
+  PRIMARY KEY (`buylist_id`,`item_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `buylists`
+--
+
+LOCK TABLES `buylists` WRITE;
+/*!40000 ALTER TABLE `buylists` DISABLE KEYS */;
+/*!40000 ALTER TABLE `buylists` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `castle`
+--
+
+DROP TABLE IF EXISTS `castle`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `castle` (
+  `id` int(11) NOT NULL DEFAULT 0,
+  `name` varchar(25) NOT NULL,
+  `taxPercent` int(11) NOT NULL DEFAULT 15,
+  `treasury` bigint(20) NOT NULL DEFAULT 0,
+  `siegeDate` bigint(13) unsigned NOT NULL DEFAULT 0,
+  `regTimeOver` enum('true','false') NOT NULL DEFAULT 'true',
+  `regTimeEnd` bigint(13) unsigned NOT NULL DEFAULT 0,
+  `showNpcCrest` enum('true','false') NOT NULL DEFAULT 'false',
+  `ticketBuyCount` smallint(3) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`name`),
+  KEY `id` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `castle`
+--
+
+LOCK TABLES `castle` WRITE;
+/*!40000 ALTER TABLE `castle` DISABLE KEYS */;
+INSERT INTO `castle` VALUES
+(5,'Aden',0,0,1790514000758,'true',0,'false',0),
+(2,'Dion',0,0,1789318800750,'true',0,'false',0),
+(3,'Giran',0,0,1790514000753,'true',0,'false',0),
+(1,'Gludio',0,0,1790514000744,'true',0,'false',0),
+(7,'Goddard',0,0,1790514000763,'true',0,'false',0),
+(6,'Innadril',0,0,1789318800760,'true',0,'false',0),
+(4,'Oren',0,0,1789318800756,'true',0,'false',0),
+(8,'Rune',0,0,1789318800766,'true',0,'false',0),
+(9,'Schuttgart',0,0,1790514000768,'true',0,'false',0);
+/*!40000 ALTER TABLE `castle` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `castle_doorupgrade`
+--
+
+DROP TABLE IF EXISTS `castle_doorupgrade`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `castle_doorupgrade` (
+  `doorId` int(8) unsigned NOT NULL DEFAULT 0,
+  `ratio` tinyint(3) unsigned NOT NULL DEFAULT 0,
+  `castleId` tinyint(3) unsigned NOT NULL DEFAULT 0,
+  PRIMARY KEY (`doorId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `castle_doorupgrade`
+--
+
+LOCK TABLES `castle_doorupgrade` WRITE;
+/*!40000 ALTER TABLE `castle_doorupgrade` DISABLE KEYS */;
+/*!40000 ALTER TABLE `castle_doorupgrade` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `castle_functions`
+--
+
+DROP TABLE IF EXISTS `castle_functions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `castle_functions` (
+  `castle_id` int(2) NOT NULL DEFAULT 0,
+  `type` int(1) NOT NULL DEFAULT 0,
+  `lvl` int(3) NOT NULL DEFAULT 0,
+  `lease` int(10) NOT NULL DEFAULT 0,
+  `rate` decimal(20,0) NOT NULL DEFAULT 0,
+  `endTime` bigint(13) unsigned NOT NULL DEFAULT 0,
+  PRIMARY KEY (`castle_id`,`type`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `castle_functions`
+--
+
+LOCK TABLES `castle_functions` WRITE;
+/*!40000 ALTER TABLE `castle_functions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `castle_functions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `castle_manor_procure`
+--
+
+DROP TABLE IF EXISTS `castle_manor_procure`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `castle_manor_procure` (
+  `castle_id` tinyint(3) unsigned NOT NULL DEFAULT 0,
+  `crop_id` int(11) unsigned NOT NULL DEFAULT 0,
+  `amount` int(11) unsigned NOT NULL DEFAULT 0,
+  `start_amount` int(11) unsigned NOT NULL DEFAULT 0,
+  `price` int(11) unsigned NOT NULL DEFAULT 0,
+  `reward_type` tinyint(1) unsigned NOT NULL DEFAULT 0,
+  `next_period` tinyint(1) unsigned NOT NULL DEFAULT 1,
+  PRIMARY KEY (`castle_id`,`crop_id`,`next_period`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `castle_manor_procure`
+--
+
+LOCK TABLES `castle_manor_procure` WRITE;
+/*!40000 ALTER TABLE `castle_manor_procure` DISABLE KEYS */;
+/*!40000 ALTER TABLE `castle_manor_procure` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `castle_manor_production`
+--
+
+DROP TABLE IF EXISTS `castle_manor_production`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `castle_manor_production` (
+  `castle_id` tinyint(3) unsigned NOT NULL DEFAULT 0,
+  `seed_id` int(11) unsigned NOT NULL DEFAULT 0,
+  `amount` int(11) unsigned NOT NULL DEFAULT 0,
+  `start_amount` int(11) unsigned NOT NULL DEFAULT 0,
+  `price` int(11) unsigned NOT NULL DEFAULT 0,
+  `next_period` tinyint(1) unsigned NOT NULL DEFAULT 1,
+  PRIMARY KEY (`castle_id`,`seed_id`,`next_period`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `castle_manor_production`
+--
+
+LOCK TABLES `castle_manor_production` WRITE;
+/*!40000 ALTER TABLE `castle_manor_production` DISABLE KEYS */;
+/*!40000 ALTER TABLE `castle_manor_production` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `castle_siege_guards`
+--
+
+DROP TABLE IF EXISTS `castle_siege_guards`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `castle_siege_guards` (
+  `castleId` tinyint(1) unsigned NOT NULL DEFAULT 0,
+  `id` smallint(4) unsigned NOT NULL AUTO_INCREMENT,
+  `npcId` smallint(5) unsigned NOT NULL DEFAULT 0,
+  `x` mediumint(6) NOT NULL DEFAULT 0,
+  `y` mediumint(6) NOT NULL DEFAULT 0,
+  `z` mediumint(6) NOT NULL DEFAULT 0,
+  `heading` mediumint(6) NOT NULL DEFAULT 0,
+  `respawnDelay` mediumint(5) NOT NULL DEFAULT 0,
+  `isHired` tinyint(1) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`id`),
+  KEY `id` (`castleId`)
+) ENGINE=InnoDB AUTO_INCREMENT=3690 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `castle_siege_guards`
+--
+
+LOCK TABLES `castle_siege_guards` WRITE;
+/*!40000 ALTER TABLE `castle_siege_guards` DISABLE KEYS */;
+INSERT INTO `castle_siege_guards` VALUES
+(1,1,35085,-18460,113107,-2759,15608,10800,0),
+(1,2,35085,-18432,113107,-2759,15608,10800,0),
+(1,3,35085,-18404,113107,-2759,15608,10800,0),
+(1,4,35085,-18376,113107,-2759,15608,10800,0),
+(1,5,35085,-18348,113107,-2759,15608,10800,0),
+(1,6,35085,-18320,113107,-2759,15608,10800,0),
+(1,7,35085,-18292,113107,-2759,15608,10800,0),
+(1,8,35085,-18264,113107,-2759,15608,10800,0),
+(1,9,35085,-18236,113107,-2759,15608,10800,0),
+(1,10,35083,-18460,113127,-2759,15608,10800,0),
+(1,11,35082,-18432,113127,-2759,15608,10800,0),
+(1,12,35083,-18404,113127,-2759,15608,10800,0),
+(1,13,35082,-18376,113127,-2759,15608,10800,0),
+(1,14,35083,-18348,113127,-2759,15608,10800,0),
+(1,15,35082,-18320,113127,-2759,15608,10800,0),
+(1,16,35083,-18292,113127,-2759,15608,10800,0),
+(1,17,35082,-18264,113127,-2759,15608,10800,0),
+(1,18,35083,-18236,113127,-2759,15608,10800,0),
+(1,19,35084,-18460,113147,-2759,15608,10800,0),
+(1,20,35084,-18432,113147,-2759,15608,10800,0),
+(1,21,35084,-18404,113147,-2759,15608,10800,0),
+(1,22,35084,-18376,113147,-2759,15608,10800,0),
+(1,23,35079,-18348,113147,-2759,15608,10800,0),
+(1,24,35084,-18320,113147,-2759,15608,10800,0),
+(1,25,35084,-18292,113147,-2759,15608,10800,0),
+(1,26,35084,-18264,113147,-2759,15608,10800,0),
+(1,27,35084,-18236,113147,-2759,15608,10800,0),
+(1,28,35084,-18603,112729,-2749,64848,10800,0),
+(1,29,35084,-18602,112698,-2748,64848,10800,0),
+(1,30,35079,-18602,112668,-2748,64848,10800,0),
+(1,31,35084,-18602,112638,-2747,64848,10800,0),
+(1,32,35084,-18603,112607,-2748,64848,10800,0),
+(1,33,35084,-18601,112578,-2747,64848,10800,0),
+(1,34,35079,-18601,112548,-2747,64848,10800,0),
+(1,35,35084,-18601,112518,-2746,64848,10800,0),
+(1,36,35084,-18602,112487,-2747,64848,10800,0),
+(1,37,35083,-18628,112711,-2767,64848,10800,0),
+(1,38,35083,-18628,112681,-2767,64848,10800,0),
+(1,39,35082,-18628,112650,-2766,64848,10800,0),
+(1,40,35083,-18629,112620,-2767,64848,10800,0),
+(1,41,35083,-18627,112590,-2766,64848,10800,0),
+(1,42,35082,-18627,112560,-2766,64848,10800,0),
+(1,43,35083,-18626,112531,-2765,64848,10800,0),
+(1,44,35083,-18627,112499,-2766,64848,10800,0),
+(1,45,35085,-18649,112727,-2771,64848,10800,0),
+(1,46,35085,-18648,112697,-2771,64848,10800,0),
+(1,47,35085,-18648,112667,-2770,64848,10800,0),
+(1,48,35085,-18647,112636,-2770,64848,10800,0),
+(1,49,35085,-18649,112606,-2770,64848,10800,0),
+(1,50,35085,-18647,112576,-2769,64848,10800,0),
+(1,51,35085,-18647,112546,-2769,64848,10800,0),
+(1,52,35085,-18646,112517,-2768,64848,10800,0),
+(1,53,35085,-18647,112485,-2769,64848,10800,0),
+(1,54,35085,-18795,112709,-2772,64848,10800,0),
+(1,55,35085,-18795,112679,-2771,64848,10800,0),
+(1,56,35085,-18795,112648,-2771,64848,10800,0),
+(1,57,35085,-18794,112618,-2770,64848,10800,0),
+(1,58,35085,-18795,112588,-2770,64848,10800,0),
+(1,59,35085,-18793,112558,-2770,64848,10800,0),
+(1,60,35085,-18792,112528,-2769,64848,10800,0),
+(1,61,35085,-18792,112498,-2769,64848,10800,0),
+(1,62,35081,-18896,112378,-2763,15900,10800,0),
+(1,63,35081,-18866,112377,-2764,15900,10800,0),
+(1,64,35071,-18658,112496,-2747,64848,60,0),
+(1,65,35071,-18659,112560,-2747,64848,60,0),
+(1,66,35071,-18659,112649,-2747,64848,60,0),
+(1,67,35071,-18656,112709,-2747,64848,60,0),
+(1,68,35085,-18410,112356,-2498,15900,10800,0),
+(1,69,35085,-18380,112355,-2499,15900,10800,0),
+(1,70,35080,-18350,112358,-2498,15900,10800,0),
+(1,71,35085,-18320,112359,-2498,15900,10800,0),
+(1,72,35085,-18291,112360,-2497,15900,10800,0),
+(1,73,35085,-18640,112422,-2496,15900,10800,0),
+(1,74,35085,-18610,112421,-2497,15900,10800,0),
+(1,75,35080,-18581,112424,-2496,15900,10800,0),
+(1,76,35085,-18551,112425,-2496,15900,10800,0),
+(1,77,35085,-18521,112426,-2495,15900,10800,0),
+(1,78,35085,-18107,112560,-2497,31664,10800,0),
+(1,79,35085,-18104,112590,-2498,31664,10800,0),
+(1,80,35080,-18106,112619,-2497,31664,10800,0),
+(1,81,35085,-18105,112649,-2497,31664,10800,0),
+(1,82,35085,-18104,112679,-2496,31664,10800,0),
+(1,83,35084,-17840,112354,-2600,65480,10800,0),
+(1,84,35079,-17839,112320,-2600,65480,10800,0),
+(1,85,35084,-17835,112279,-2599,65480,10800,0),
+(1,86,35083,-17861,112354,-2589,65480,10800,0),
+(1,87,35083,-17860,112320,-2590,65480,10800,0),
+(1,88,35083,-17856,112279,-2589,65480,10800,0),
+(1,89,35082,-17879,112354,-2575,65480,10800,0),
+(1,90,35082,-17878,112320,-2576,65480,10800,0),
+(1,91,35082,-17874,112279,-2575,65480,10800,0),
+(1,92,35081,-18207,112313,-2498,22676,10800,0),
+(1,93,35085,-18410,112356,-2498,15900,10800,0),
+(1,94,35080,-18350,112358,-2498,15900,10800,0),
+(1,95,35085,-18291,112360,-2497,15900,10800,0),
+(1,96,35085,-18640,112422,-2496,15900,10800,0),
+(1,97,35085,-18610,112421,-2497,15900,10800,0),
+(1,98,35080,-18581,112424,-2496,15900,10800,0),
+(1,99,35085,-18551,112425,-2496,15900,10800,0),
+(1,100,35085,-18107,112560,-2497,31664,10800,0),
+(1,101,35080,-18106,112619,-2497,31664,10800,0),
+(1,102,35085,-18104,112679,-2496,31664,10800,0),
+(1,103,35082,-18257,110335,-2493,6320,10800,0),
+(1,104,35084,-18240,110310,-2494,6320,10800,0),
+(1,105,35082,-18216,110284,-2493,6320,10800,0),
+(1,106,35084,-18197,110261,-2493,6320,10800,0),
+(1,107,35082,-18182,110243,-2492,6320,10800,0),
+(1,108,35084,-18160,110217,-2494,6320,10800,0),
+(1,109,35082,-18143,110192,-2494,6320,10800,0),
+(1,110,35084,-18123,110171,-2494,6320,10800,0),
+(1,111,35082,-18099,110160,-2495,17076,10800,0),
+(1,112,35084,-18074,110179,-2494,25568,10800,0),
+(1,113,35082,-18056,110203,-2494,25568,10800,0),
+(1,114,35084,-18043,110223,-2493,25568,10800,0),
+(1,115,35082,-18024,110250,-2495,25568,10800,0),
+(1,116,35084,-18005,110274,-2496,25568,10800,0),
+(1,117,35082,-17986,110304,-2495,25568,10800,0),
+(1,118,35084,-17969,110329,-2495,25568,10800,0),
+(1,119,35082,-17956,110348,-2494,25568,10800,0),
+(1,120,35083,-18272,110315,-2495,6320,10800,0),
+(1,121,35085,-18254,110291,-2496,6320,10800,0),
+(1,122,35083,-18230,110265,-2495,6320,10800,0),
+(1,123,35085,-18211,110241,-2495,6320,10800,0),
+(1,124,35083,-18196,110223,-2494,6320,10800,0),
+(1,125,35085,-18175,110197,-2496,6320,10800,0),
+(1,126,35083,-18157,110173,-2496,6320,10800,0),
+(1,127,35085,-18138,110152,-2496,6320,10800,0),
+(1,128,35083,-18113,110141,-2497,17076,10800,0),
+(1,129,35085,-18085,110142,-2494,17076,10800,0),
+(1,130,35083,-18060,110161,-2493,25568,10800,0),
+(1,131,35085,-18042,110185,-2493,25568,10800,0),
+(1,132,35083,-18029,110205,-2492,25568,10800,0),
+(1,133,35085,-18010,110232,-2494,25568,10800,0),
+(1,134,35083,-17991,110256,-2495,25568,10800,0),
+(1,135,35085,-17972,110286,-2494,25568,10800,0),
+(1,136,35083,-17955,110311,-2494,25568,10800,0),
+(1,137,35085,-17942,110330,-2493,25568,10800,0),
+(1,138,35085,-18300,110210,-2493,6320,10800,0),
+(1,139,35085,-18281,110187,-2493,6320,10800,0),
+(1,140,35085,-18266,110169,-2492,6320,10800,0),
+(1,141,35085,-18244,110143,-2494,6320,10800,0),
+(1,142,35085,-18227,110118,-2495,6320,10800,0),
+(1,143,35085,-17999,110152,-2489,25568,10800,0),
+(1,144,35085,-17986,110172,-2488,25568,10800,0),
+(1,145,35085,-17966,110199,-2490,25568,10800,0),
+(1,146,35085,-17948,110223,-2491,25568,10800,0),
+(1,147,35085,-17929,110253,-2490,25568,10800,0),
+(1,148,35081,-17968,110076,-2491,15620,10800,0),
+(1,149,35080,-17934,110076,-2492,15620,10800,0),
+(1,150,35080,-18213,110073,-2492,15620,10800,0),
+(1,151,35081,-18190,110074,-2492,15620,10800,0),
+(1,152,35085,-18265,110348,-2490,25568,10800,0),
+(1,153,35071,-18274,110294,-2493,6320,60,0),
+(1,154,35071,-18193,110203,-2493,6320,60,0),
+(1,155,35071,-18008,110212,-2493,6320,60,0),
+(1,156,35071,-17936,110315,-2493,6320,60,0),
+(1,157,35064,-18173,108190,-2555,16344,300,0),
+(1,158,35065,-18061,108187,-2554,16344,180,0),
+(1,159,35072,-17959,108204,-2560,16344,120,0),
+(1,160,35072,-17922,108203,-2560,16344,120,0),
+(1,161,35072,-17889,108203,-2560,16344,120,0),
+(1,162,35072,-17851,108202,-2560,16344,120,0),
+(1,163,35072,-17814,108202,-2559,16344,120,0),
+(1,164,35072,-17776,108201,-2559,16344,120,0),
+(1,165,35072,-17744,108201,-2559,16344,120,0),
+(1,166,35072,-17706,108200,-2559,16344,120,0),
+(1,167,35069,-17959,108238,-2561,16344,120,0),
+(1,168,35069,-17921,108237,-2561,16344,120,0),
+(1,169,35069,-17888,108237,-2561,16344,120,0),
+(1,170,35069,-17851,108236,-2561,16344,120,0),
+(1,171,35069,-17813,108236,-2560,16344,120,0),
+(1,172,35069,-17776,108235,-2560,16344,120,0),
+(1,173,35069,-17743,108235,-2560,16344,120,0),
+(1,174,35069,-17706,108234,-2560,16344,120,0),
+(1,175,35071,-17957,108276,-2562,16344,60,0),
+(1,176,35071,-17919,108275,-2562,16344,60,0),
+(1,177,35066,-17887,108275,-2562,16344,120,0),
+(1,178,35071,-17849,108274,-2562,16344,60,0),
+(1,179,35071,-17812,108274,-2561,16344,60,0),
+(1,180,35066,-17774,108273,-2561,16344,120,0),
+(1,181,35071,-17742,108273,-2561,16344,60,0),
+(1,182,35071,-17704,108272,-2561,16344,60,0),
+(1,183,35072,-18519,108210,-2556,16344,120,0),
+(1,184,35072,-18481,108210,-2556,16344,120,0),
+(1,185,35072,-18449,108210,-2556,16344,120,0),
+(1,186,35072,-18411,108209,-2556,16344,120,0),
+(1,187,35072,-18374,108208,-2555,16344,120,0),
+(1,188,35072,-18336,108208,-2555,16344,120,0),
+(1,189,35072,-18303,108207,-2555,16344,120,0),
+(1,190,35072,-18266,108207,-2555,16344,120,0),
+(1,191,35069,-18518,108245,-2557,16344,120,0),
+(1,192,35069,-18480,108244,-2557,16344,120,0),
+(1,193,35069,-18448,108244,-2557,16344,120,0),
+(1,194,35069,-18410,108243,-2557,16344,120,0),
+(1,195,35069,-18373,108242,-2556,16344,120,0),
+(1,196,35069,-18335,108242,-2556,16344,120,0),
+(1,197,35069,-18303,108242,-2556,16344,120,0),
+(1,198,35069,-18265,108241,-2556,16344,120,0),
+(1,199,35071,-18517,108282,-2558,16344,60,0),
+(1,200,35071,-18479,108281,-2558,16344,60,0),
+(1,201,35066,-18446,108281,-2558,16344,120,0),
+(1,202,35071,-18409,108280,-2558,16344,60,0),
+(1,203,35071,-18371,108280,-2557,16344,60,0),
+(1,204,35066,-18334,108279,-2557,16344,120,0),
+(1,205,35071,-18301,108279,-2557,16344,60,0),
+(1,206,35071,-18264,108278,-2557,16344,60,0),
+(1,207,35068,-18439,108045,-2555,16344,120,0),
+(1,208,35068,-18355,108045,-2554,16344,120,0),
+(1,209,35068,-18276,108044,-2554,16344,120,0),
+(1,210,35068,-18201,108044,-2554,16344,120,0),
+(1,211,35068,-18024,108044,-2551,16344,120,0),
+(1,212,35068,-17941,108044,-2551,16344,120,0),
+(1,213,35068,-17861,108043,-2551,16344,120,0),
+(1,214,35068,-17787,108043,-2551,16344,120,0),
+(1,215,35084,-17599,109170,-2333,16088,10800,0),
+(1,216,35079,-17625,109170,-2333,16088,10800,0),
+(1,217,35084,-17653,109170,-2332,16088,10800,0),
+(1,218,35083,-17599,109148,-2337,16088,10800,0),
+(1,219,35083,-17626,109148,-2337,16088,10800,0),
+(1,220,35083,-17653,109148,-2336,16088,10800,0),
+(1,221,35082,-17600,109123,-2335,16088,10800,0),
+(1,222,35082,-17627,109123,-2335,16088,10800,0),
+(1,223,35082,-17654,109124,-2334,16088,10800,0),
+(1,224,35081,-17540,109046,-2335,16088,10800,0),
+(1,225,35081,-17566,109046,-2335,16088,10800,0),
+(1,226,35081,-17594,109046,-2334,16088,10800,0),
+(1,227,35085,-17795,108473,-2338,32692,10800,0),
+(1,228,35085,-17794,108436,-2338,32692,10800,0),
+(1,229,35080,-17794,108399,-2337,32692,10800,0),
+(1,230,35085,-17793,108363,-2337,32692,10800,0),
+(1,231,35085,-17793,108327,-2337,32692,10800,0),
+(1,232,35080,-17792,108289,-2337,32692,10800,0),
+(1,233,35085,-17792,108258,-2336,32692,10800,0),
+(1,234,35085,-17791,108221,-2336,32692,10800,0),
+(1,235,35080,-17790,108186,-2336,32692,10800,0),
+(1,236,35085,-17790,108149,-2336,32692,10800,0),
+(1,237,35085,-17790,108112,-2336,32692,10800,0),
+(1,238,35084,-18574,109236,-2333,16088,10800,0),
+(1,239,35079,-18600,109236,-2333,16088,10800,0),
+(1,240,35084,-18643,109233,-2332,16088,10800,0),
+(1,241,35083,-18574,109214,-2337,16088,10800,0),
+(1,242,35083,-18601,109214,-2337,16088,10800,0),
+(1,243,35083,-18628,109214,-2336,16088,10800,0),
+(1,244,35082,-18575,109189,-2335,16088,10800,0),
+(1,245,35082,-18602,109189,-2335,16088,10800,0),
+(1,246,35082,-18629,109190,-2334,16088,10800,0),
+(1,247,35081,-18536,108948,-2335,16088,10800,0),
+(1,248,35081,-18562,108948,-2335,16088,10800,0),
+(1,249,35081,-18590,108948,-2334,16088,10800,0),
+(1,250,35085,-18428,108118,-2338,65152,10800,0),
+(1,251,35085,-18427,108154,-2338,65152,10800,0),
+(1,252,35080,-18426,108191,-2337,65152,10800,0),
+(1,253,35085,-18426,108227,-2337,65152,10800,0),
+(1,254,35085,-18426,108263,-2337,65152,10800,0),
+(1,255,35080,-18425,108301,-2337,65152,10800,0),
+(1,256,35085,-18425,108332,-2336,65152,10800,0),
+(1,257,35085,-18424,108369,-2336,65152,10800,0),
+(1,258,35080,-18424,108404,-2336,65152,10800,0),
+(1,259,35085,-18423,108441,-2336,65152,10800,0),
+(1,260,35085,-18422,108478,-2336,65152,10800,0),
+(1,261,35085,-18096,113184,-2384,32768,10800,0),
+(1,262,35085,-18096,113248,-2384,32768,10800,0),
+(1,263,35085,-18096,113296,-2384,32768,10800,0),
+(1,264,35085,-18048,113296,-2384,20480,10800,0),
+(1,265,35085,-18000,113296,-2384,16384,10800,0),
+(1,266,35085,-17936,113296,-2384,16384,10800,0),
+(1,267,35085,-17872,113296,-2384,16384,10800,0),
+(1,268,35085,-18602,113174,-2376,0,10800,0),
+(1,269,35085,-18608,113232,-2384,0,10800,0),
+(1,270,35085,-18611,113295,-2376,8192,10800,0),
+(1,271,35085,-18672,113296,-2384,12288,10800,0),
+(1,272,35085,-18720,113296,-2384,16384,10800,0),
+(1,273,35085,-18780,113296,-2384,16384,10800,0),
+(1,274,35085,-18830,113296,-2384,16384,10800,0),
+(1,275,35080,-18096,113216,-2384,32768,10800,0),
+(1,276,35080,-18096,113264,-2384,32768,10800,0),
+(1,277,35080,-18608,113200,-2384,0,10800,0),
+(1,278,35080,-18611,113261,-2376,0,10800,0),
+(1,279,35081,-18025,113264,-2384,16384,10800,0),
+(1,280,35081,-18704,113256,-2384,16384,10800,0),
+(1,281,35085,-18648,113313,-2376,32768,10800,0),
+(1,282,35085,-18692,113313,-2376,32768,10800,0),
+(1,283,35085,-18759,113311,-2376,24576,10800,0),
+(1,284,35085,-18804,113316,-2376,16384,10800,0),
+(1,285,35085,-18071,113326,-2376,0,10800,0),
+(1,286,35085,-18011,113328,-2376,0,10800,0),
+(1,287,35085,-17969,113325,-2376,8192,10800,0),
+(1,288,35085,-17923,113326,-2376,16384,10800,0),
+(1,289,35080,-18096,113216,-2384,32768,10800,0),
+(1,290,35080,-18096,113264,-2384,32768,10800,0),
+(1,291,35080,-18608,113200,-2384,0,10800,0),
+(1,292,35080,-18611,113261,-2376,0,10800,0),
+(1,293,35081,-18025,113264,-2384,16384,10800,0),
+(1,294,35081,-18704,113256,-2384,16384,10800,0),
+(1,295,35072,-18176,111420,-2500,16384,120,0),
+(1,296,35072,-18048,111420,-2500,16384,120,0),
+(1,297,35072,-17985,111420,-2500,16384,120,0),
+(1,298,35072,-18240,111420,-2500,16384,120,0),
+(1,299,35072,-18371,111420,-2500,16384,120,0),
+(1,300,35072,-18499,111420,-2500,16384,120,0),
+(1,301,35072,-17857,111420,-2500,16384,120,0),
+(1,302,35072,-17728,111420,-2500,16384,120,0),
+(1,303,35067,-18304,111420,-2500,16384,10800,0),
+(1,304,35067,-17921,111420,-2500,16384,10800,0),
+(1,305,35067,-17664,111420,-2500,16384,10800,0),
+(1,306,35067,-18563,111420,-2500,16384,10800,0),
+(1,307,35068,-18112,111420,-2500,16384,120,0),
+(1,308,35068,-17793,111420,-2500,16384,120,0),
+(1,309,35068,-18435,111420,-2500,16384,120,0),
+(1,310,35071,-18560,111570,-2500,16384,60,0),
+(1,311,35071,-18496,111570,-2500,16384,60,0),
+(1,312,35071,-17664,111570,-2500,16384,60,0),
+(1,313,35071,-17728,111570,-2500,16384,60,0),
+(1,314,35066,-18112,111570,-2500,16384,120,0),
+(1,315,35071,-18432,111570,-2500,16384,60,0),
+(1,316,35071,-18368,111570,-2500,16384,60,0),
+(1,317,35071,-18304,111570,-2500,16384,60,0),
+(1,318,35071,-18240,111570,-2500,16384,60,0),
+(1,319,35066,-18176,111570,-2500,16384,120,0),
+(1,320,35066,-18049,111570,-2500,16384,120,0),
+(1,321,35071,-17985,111570,-2500,16384,60,0),
+(1,322,35071,-17921,111570,-2500,16384,60,0),
+(1,323,35071,-17857,111570,-2500,16384,60,0),
+(1,324,35071,-17793,111570,-2500,16384,60,0),
+(1,325,35085,-17880,110667,-2191,32768,10800,0),
+(1,326,35085,-17881,110789,-2191,32768,10800,0),
+(1,327,35085,-17826,110850,-2191,24576,10800,0),
+(1,328,35085,-17801,110869,-2191,16384,10800,0),
+(1,329,35085,-17762,110870,-2191,16384,10800,0),
+(1,330,35085,-17726,110870,-2191,16384,10800,0),
+(1,331,35085,-17880,110710,-2191,32768,10800,0),
+(1,332,35080,-17852,110825,-2191,24576,10800,0),
+(1,333,35080,-17880,110749,-2190,32768,10800,0),
+(1,334,35081,-17778,110804,-2192,24576,10800,0),
+(1,335,35085,-18333,110661,-2193,0,10800,0),
+(1,336,35085,-18333,110701,-2191,0,10800,0),
+(1,337,35085,-18333,110786,-2192,0,10800,0),
+(1,338,35085,-18391,110851,-2191,8192,10800,0),
+(1,339,35085,-18418,110871,-2190,16384,10800,0),
+(1,340,35085,-18458,110870,-2191,16384,10800,0),
+(1,341,35085,-18497,110871,-2191,16384,10800,0),
+(1,342,35080,-18333,110745,-2189,0,10800,0),
+(1,343,35080,-18355,110815,-2192,8192,10800,0),
+(1,344,35081,-18435,110797,-2189,8192,10800,0),
+(1,345,35085,-18220,110540,-2500,16384,10800,0),
+(1,346,35085,-18189,110540,-2500,16384,10800,0),
+(1,347,35085,-18158,110540,-2500,16384,10800,0),
+(1,348,35085,-18126,110540,-2500,16384,10800,0),
+(1,349,35085,-18095,110540,-2500,16384,10800,0),
+(1,350,35085,-18063,110540,-2500,16384,10800,0),
+(1,351,35085,-18032,110540,-2500,16384,10800,0),
+(1,352,35080,-18000,110540,-2500,16384,10800,0),
+(1,353,35080,-18220,110560,-2500,16384,10800,0),
+(1,354,35081,-18189,110560,-2500,16384,10800,0),
+(1,355,35085,-18158,110560,-2500,16384,10800,0),
+(1,356,35085,-18126,110560,-2500,16384,10800,0),
+(1,357,35085,-18095,110560,-2500,16384,10800,0),
+(1,358,35085,-18063,110560,-2500,16384,10800,0),
+(1,359,35085,-18032,110560,-2500,16384,10800,0),
+(1,360,35085,-18000,110560,-2500,16384,10800,0),
+(1,361,35085,-16548,111653,-2376,0,10800,0),
+(1,362,35085,-16548,111602,-2376,0,10800,0),
+(1,363,35085,-16548,111552,-2376,0,10800,0),
+(1,364,35085,-16548,111502,-2376,0,10800,0),
+(1,365,35081,-16548,111452,-2376,0,10800,0),
+(1,366,35085,-16548,111402,-2376,0,10800,0),
+(1,367,35085,-16548,111352,-2376,0,10800,0),
+(1,368,35085,-16548,111302,-2376,0,10800,0),
+(1,369,35085,-16548,111252,-2376,0,10800,0),
+(1,370,35080,-16548,111202,-2376,0,10800,0),
+(1,371,35085,-16548,111152,-2376,0,10800,0),
+(1,372,35085,-16548,111102,-2376,0,10800,0),
+(1,373,35085,-19950,111653,-2376,0,10800,0),
+(1,374,35085,-19950,111602,-2376,0,10800,0),
+(1,375,35085,-19950,111552,-2376,0,10800,0),
+(1,376,35085,-19950,111502,-2376,0,10800,0),
+(1,377,35081,-19950,111452,-2376,0,10800,0),
+(1,378,35085,-19950,111402,-2376,0,10800,0),
+(1,379,35085,-19950,111352,-2376,0,10800,0),
+(1,380,35085,-19950,111302,-2376,0,10800,0),
+(1,381,35085,-19950,111252,-2376,0,10800,0),
+(1,382,35080,-19950,111202,-2376,0,10800,0),
+(1,383,35085,-19950,111152,-2376,0,10800,0),
+(1,384,35085,-19950,111102,-2376,0,10800,0),
+(2,385,35127,22420,156643,-2953,48376,10800,0),
+(2,386,35127,22392,156643,-2953,48376,10800,0),
+(2,387,35127,22364,156643,-2953,48376,10800,0),
+(2,388,35127,22336,156643,-2953,48376,10800,0),
+(2,389,35127,22308,156643,-2953,48376,10800,0),
+(2,390,35127,22280,156643,-2953,48376,10800,0),
+(2,391,35127,22252,156643,-2953,48376,10800,0),
+(2,392,35127,22224,156643,-2953,48376,10800,0),
+(2,393,35127,22196,156643,-2953,48376,10800,0),
+(2,394,35125,22420,156623,-2953,48376,10800,0),
+(2,395,35124,22392,156623,-2953,48376,10800,0),
+(2,396,35125,22364,156623,-2953,48376,10800,0),
+(2,397,35124,22336,156623,-2953,48376,10800,0),
+(2,398,35125,22308,156623,-2953,48376,10800,0),
+(2,399,35124,22280,156623,-2953,48376,10800,0),
+(2,400,35125,22252,156623,-2953,48376,10800,0),
+(2,401,35124,22224,156623,-2953,48376,10800,0),
+(2,402,35125,22196,156623,-2953,48376,10800,0),
+(2,403,35126,22420,156603,-2953,48376,10800,0),
+(2,404,35126,22392,156603,-2953,48376,10800,0),
+(2,405,35126,22364,156603,-2953,48376,10800,0),
+(2,406,35126,22336,156603,-2953,48376,10800,0),
+(2,407,35121,22308,156603,-2953,48376,10800,0),
+(2,408,35126,22280,156603,-2953,48376,10800,0),
+(2,409,35126,22252,156603,-2953,48376,10800,0),
+(2,410,35126,22224,156603,-2953,48376,10800,0),
+(2,411,35126,22196,156603,-2953,48376,10800,0),
+(2,412,35126,22563,157021,-2943,32080,10800,0),
+(2,413,35126,22562,157052,-2942,32080,10800,0),
+(2,414,35121,22562,157082,-2942,32080,10800,0),
+(2,415,35126,22562,157112,-2941,32080,10800,0),
+(2,416,35126,22563,157143,-2942,32080,10800,0),
+(2,417,35126,22561,157172,-2941,32080,10800,0),
+(2,418,35121,22561,157202,-2941,32080,10800,0),
+(2,419,35126,22561,157232,-2940,32080,10800,0),
+(2,420,35126,22562,157263,-2941,32080,10800,0),
+(2,421,35125,22588,157039,-2961,32080,10800,0),
+(2,422,35125,22588,157069,-2961,32080,10800,0),
+(2,423,35124,22588,157100,-2960,32080,10800,0),
+(2,424,35125,22589,157130,-2961,32080,10800,0),
+(2,425,35125,22587,157160,-2960,32080,10800,0),
+(2,426,35124,22587,157190,-2960,32080,10800,0),
+(2,427,35125,22586,157219,-2959,32080,10800,0),
+(2,428,35125,22587,157251,-2960,32080,10800,0),
+(2,429,35127,22609,157023,-2965,32080,10800,0),
+(2,430,35127,22608,157053,-2965,32080,10800,0),
+(2,431,35127,22608,157083,-2964,32080,10800,0),
+(2,432,35127,22607,157114,-2964,32080,10800,0),
+(2,433,35127,22609,157144,-2964,32080,10800,0),
+(2,434,35127,22607,157174,-2963,32080,10800,0),
+(2,435,35127,22607,157204,-2963,32080,10800,0),
+(2,436,35127,22606,157233,-2962,32080,10800,0),
+(2,437,35127,22607,157265,-2963,32080,10800,0),
+(2,438,35127,22755,157041,-2966,32080,10800,0),
+(2,439,35127,22755,157071,-2965,32080,10800,0),
+(2,440,35127,22755,157102,-2965,32080,10800,0),
+(2,441,35127,22754,157132,-2964,32080,10800,0),
+(2,442,35127,22755,157162,-2964,32080,10800,0),
+(2,443,35127,22753,157192,-2964,32080,10800,0),
+(2,444,35127,22752,157222,-2963,32080,10800,0),
+(2,445,35127,22752,157252,-2963,32080,10800,0),
+(2,446,35123,22856,157372,-2957,48668,10800,0),
+(2,447,35123,22826,157373,-2958,48668,10800,0),
+(2,448,35113,22618,157254,-2941,32080,60,0),
+(2,449,35113,22619,157190,-2941,32080,60,0),
+(2,450,35113,22619,157101,-2941,32080,60,0),
+(2,451,35113,22616,157041,-2941,32080,60,0),
+(2,452,35127,22370,157394,-2692,48668,10800,0),
+(2,453,35127,22340,157395,-2693,48668,10800,0),
+(2,454,35122,22310,157392,-2692,48668,10800,0),
+(2,455,35127,22280,157391,-2692,48668,10800,0),
+(2,456,35127,22251,157390,-2691,48668,10800,0),
+(2,457,35127,22600,157328,-2690,48668,10800,0),
+(2,458,35127,22570,157329,-2691,48668,10800,0),
+(2,459,35122,22541,157326,-2690,48668,10800,0),
+(2,460,35127,22511,157325,-2690,48668,10800,0),
+(2,461,35127,22481,157324,-2689,48668,10800,0),
+(2,462,35127,22067,157190,-2691,64432,10800,0),
+(2,463,35127,22064,157160,-2692,64432,10800,0),
+(2,464,35122,22066,157131,-2691,64432,10800,0),
+(2,465,35127,22065,157101,-2691,64432,10800,0),
+(2,466,35127,22064,157071,-2690,64432,10800,0),
+(2,467,35126,21800,157396,-2794,32712,10800,0),
+(2,468,35121,21799,157430,-2794,32712,10800,0),
+(2,469,35126,21795,157471,-2793,32712,10800,0),
+(2,470,35125,21821,157396,-2783,32712,10800,0),
+(2,471,35125,21820,157430,-2784,32712,10800,0),
+(2,472,35125,21816,157471,-2783,32712,10800,0),
+(2,473,35124,21839,157396,-2769,32712,10800,0),
+(2,474,35124,21838,157430,-2770,32712,10800,0),
+(2,475,35124,21834,157471,-2769,32712,10800,0),
+(2,476,35123,22167,157437,-2692,55444,10800,0),
+(2,477,35127,22370,157394,-2692,48668,10800,0),
+(2,478,35122,22310,157392,-2692,48668,10800,0),
+(2,479,35127,22251,157390,-2691,48668,10800,0),
+(2,480,35127,22600,157328,-2690,48668,10800,0),
+(2,481,35127,22570,157329,-2691,48668,10800,0),
+(2,482,35122,22541,157326,-2690,48668,10800,0),
+(2,483,35127,22511,157325,-2690,48668,10800,0),
+(2,484,35127,22067,157190,-2691,64432,10800,0),
+(2,485,35122,22066,157131,-2691,64432,10800,0),
+(2,486,35127,22064,157071,-2690,64432,10800,0),
+(2,487,35124,22217,159415,-2687,39088,10800,0),
+(2,488,35126,22200,159440,-2688,39088,10800,0),
+(2,489,35124,22176,159466,-2687,39088,10800,0),
+(2,490,35126,22157,159489,-2687,39088,10800,0),
+(2,491,35124,22142,159507,-2686,39088,10800,0),
+(2,492,35126,22120,159533,-2688,39088,10800,0),
+(2,493,35124,22103,159558,-2688,39088,10800,0),
+(2,494,35126,22083,159579,-2688,39088,10800,0),
+(2,495,35124,22059,159590,-2689,49844,10800,0),
+(2,496,35126,22034,159571,-2688,58336,10800,0),
+(2,497,35124,22016,159547,-2688,58336,10800,0),
+(2,498,35126,22003,159527,-2687,58336,10800,0),
+(2,499,35124,21984,159500,-2689,58336,10800,0),
+(2,500,35126,21965,159476,-2690,58336,10800,0),
+(2,501,35124,21946,159446,-2689,58336,10800,0),
+(2,502,35126,21929,159421,-2689,58336,10800,0),
+(2,503,35124,21916,159402,-2688,58336,10800,0),
+(2,504,35125,22232,159435,-2689,39088,10800,0),
+(2,505,35127,22214,159459,-2690,39088,10800,0),
+(2,506,35125,22190,159485,-2689,39088,10800,0),
+(2,507,35127,22171,159509,-2689,39088,10800,0),
+(2,508,35125,22156,159527,-2688,39088,10800,0),
+(2,509,35127,22135,159553,-2690,39088,10800,0),
+(2,510,35125,22117,159577,-2690,39088,10800,0),
+(2,511,35127,22098,159598,-2690,39088,10800,0),
+(2,512,35125,22073,159609,-2691,49844,10800,0),
+(2,513,35127,22045,159608,-2688,49844,10800,0),
+(2,514,35125,22020,159589,-2687,58336,10800,0),
+(2,515,35127,22002,159565,-2687,58336,10800,0),
+(2,516,35125,21989,159545,-2686,58336,10800,0),
+(2,517,35127,21970,159518,-2688,58336,10800,0),
+(2,518,35125,21951,159494,-2689,58336,10800,0),
+(2,519,35127,21932,159464,-2688,58336,10800,0),
+(2,520,35125,21915,159439,-2688,58336,10800,0),
+(2,521,35127,21902,159420,-2687,58336,10800,0),
+(2,522,35127,22260,159540,-2687,39088,10800,0),
+(2,523,35127,22241,159563,-2687,39088,10800,0),
+(2,524,35127,22226,159581,-2686,39088,10800,0),
+(2,525,35127,22204,159607,-2688,39088,10800,0),
+(2,526,35127,22187,159632,-2689,39088,10800,0),
+(2,527,35127,21959,159598,-2683,58336,10800,0),
+(2,528,35127,21946,159578,-2682,58336,10800,0),
+(2,529,35127,21926,159551,-2684,58336,10800,0),
+(2,530,35127,21908,159527,-2685,58336,10800,0),
+(2,531,35127,21889,159497,-2684,58336,10800,0),
+(2,532,35123,21928,159674,-2685,48388,10800,0),
+(2,533,35122,21894,159674,-2686,48388,10800,0),
+(2,534,35122,22173,159677,-2686,48388,10800,0),
+(2,535,35123,22150,159676,-2686,48388,10800,0),
+(2,536,35127,22225,159402,-2684,58336,10800,0),
+(2,537,35113,22234,159456,-2687,39088,60,0),
+(2,538,35113,22153,159547,-2687,39088,60,0),
+(2,539,35113,21968,159538,-2687,39088,60,0),
+(2,540,35113,21896,159435,-2687,39088,60,0),
+(2,541,35106,22133,161560,-2749,49112,300,0),
+(2,542,35107,22021,161563,-2748,49112,180,0),
+(2,543,35114,21919,161546,-2754,49112,120,0),
+(2,544,35114,21882,161547,-2754,49112,120,0),
+(2,545,35114,21849,161547,-2754,49112,120,0),
+(2,546,35114,21811,161548,-2754,49112,120,0),
+(2,547,35114,21774,161548,-2753,49112,120,0),
+(2,548,35114,21736,161549,-2753,49112,120,0),
+(2,549,35114,21704,161549,-2753,49112,120,0),
+(2,550,35114,21666,161550,-2753,49112,120,0),
+(2,551,35111,21919,161512,-2755,49112,120,0),
+(2,552,35111,21881,161513,-2755,49112,120,0),
+(2,553,35111,21848,161513,-2755,49112,120,0),
+(2,554,35111,21811,161514,-2755,49112,120,0),
+(2,555,35111,21773,161514,-2754,49112,120,0),
+(2,556,35111,21736,161515,-2754,49112,120,0),
+(2,557,35111,21703,161515,-2754,49112,120,0),
+(2,558,35111,21666,161516,-2754,49112,120,0),
+(2,559,35113,21917,161474,-2756,49112,60,0),
+(2,560,35113,21879,161475,-2756,49112,60,0),
+(2,561,35108,21847,161475,-2756,49112,120,0),
+(2,562,35113,21809,161476,-2756,49112,60,0),
+(2,563,35113,21772,161476,-2755,49112,60,0),
+(2,564,35108,21734,161477,-2755,49112,120,0),
+(2,565,35113,21702,161477,-2755,49112,60,0),
+(2,566,35113,21664,161478,-2755,49112,60,0),
+(2,567,35114,22479,161540,-2750,49112,120,0),
+(2,568,35114,22441,161540,-2750,49112,120,0),
+(2,569,35114,22409,161540,-2750,49112,120,0),
+(2,570,35114,22371,161541,-2750,49112,120,0),
+(2,571,35114,22334,161542,-2749,49112,120,0),
+(2,572,35114,22296,161542,-2749,49112,120,0),
+(2,573,35114,22263,161543,-2749,49112,120,0),
+(2,574,35114,22226,161543,-2749,49112,120,0),
+(2,575,35111,22478,161505,-2751,49112,120,0),
+(2,576,35111,22440,161506,-2751,49112,120,0),
+(2,577,35111,22408,161506,-2751,49112,120,0),
+(2,578,35111,22370,161507,-2751,49112,120,0),
+(2,579,35111,22333,161508,-2750,49112,120,0),
+(2,580,35111,22295,161508,-2750,49112,120,0),
+(2,581,35111,22263,161508,-2750,49112,120,0),
+(2,582,35111,22225,161509,-2750,49112,120,0),
+(2,583,35113,22477,161468,-2752,49112,60,0),
+(2,584,35113,22439,161469,-2752,49112,60,0),
+(2,585,35108,22406,161469,-2752,49112,120,0),
+(2,586,35113,22369,161470,-2752,49112,60,0),
+(2,587,35113,22331,161470,-2751,49112,60,0),
+(2,588,35108,22294,161471,-2751,49112,120,0),
+(2,589,35113,22261,161471,-2751,49112,60,0),
+(2,590,35113,22224,161472,-2751,49112,60,0),
+(2,591,35110,22399,161705,-2749,49112,120,0),
+(2,592,35110,22315,161705,-2748,49112,120,0),
+(2,593,35110,22236,161706,-2748,49112,120,0),
+(2,594,35110,22161,161706,-2748,49112,120,0),
+(2,595,35110,21984,161706,-2745,49112,120,0),
+(2,596,35110,21901,161706,-2745,49112,120,0),
+(2,597,35110,21821,161707,-2745,49112,120,0),
+(2,598,35110,21747,161707,-2745,49112,120,0),
+(2,599,35126,21559,160580,-2527,48856,10800,0),
+(2,600,35121,21585,160580,-2527,48856,10800,0),
+(2,601,35126,21613,160580,-2526,48856,10800,0),
+(2,602,35125,21559,160602,-2531,48856,10800,0),
+(2,603,35125,21586,160602,-2531,48856,10800,0),
+(2,604,35125,21613,160602,-2530,48856,10800,0),
+(2,605,35124,21560,160627,-2529,48856,10800,0),
+(2,606,35124,21587,160627,-2529,48856,10800,0),
+(2,607,35124,21614,160626,-2528,48856,10800,0),
+(2,608,35123,21500,160704,-2529,48856,10800,0),
+(2,609,35123,21526,160704,-2529,48856,10800,0),
+(2,610,35123,21554,160704,-2528,48856,10800,0),
+(2,611,35127,21755,161277,-2532,65460,10800,0),
+(2,612,35127,21754,161314,-2532,65460,10800,0),
+(2,613,35122,21754,161351,-2531,65460,10800,0),
+(2,614,35127,21753,161387,-2531,65460,10800,0),
+(2,615,35127,21753,161423,-2531,65460,10800,0),
+(2,616,35122,21752,161461,-2531,65460,10800,0),
+(2,617,35127,21752,161492,-2530,65460,10800,0),
+(2,618,35127,21751,161529,-2530,65460,10800,0),
+(2,619,35122,21750,161564,-2530,65460,10800,0),
+(2,620,35127,21750,161601,-2530,65460,10800,0),
+(2,621,35127,21750,161638,-2530,65460,10800,0),
+(2,622,35126,22534,160514,-2527,48856,10800,0),
+(2,623,35121,22560,160514,-2527,48856,10800,0),
+(2,624,35126,22603,160517,-2526,48856,10800,0),
+(2,625,35125,22534,160536,-2531,48856,10800,0),
+(2,626,35125,22561,160536,-2531,48856,10800,0),
+(2,627,35125,22588,160536,-2530,48856,10800,0),
+(2,628,35124,22535,160561,-2529,48856,10800,0),
+(2,629,35124,22562,160561,-2529,48856,10800,0),
+(2,630,35124,22589,160560,-2528,48856,10800,0),
+(2,631,35123,22496,160802,-2529,48856,10800,0),
+(2,632,35123,22522,160802,-2529,48856,10800,0),
+(2,633,35123,22550,160802,-2528,48856,10800,0),
+(2,634,35127,22388,161632,-2532,32384,10800,0),
+(2,635,35127,22387,161596,-2532,32384,10800,0),
+(2,636,35122,22386,161559,-2531,32384,10800,0),
+(2,637,35127,22386,161523,-2531,32384,10800,0),
+(2,638,35127,22386,161487,-2531,32384,10800,0),
+(2,639,35122,22385,161449,-2531,32384,10800,0),
+(2,640,35127,22385,161418,-2530,32384,10800,0),
+(2,641,35127,22384,161381,-2530,32384,10800,0),
+(2,642,35122,22384,161346,-2530,32384,10800,0),
+(2,643,35127,22383,161309,-2530,32384,10800,0),
+(2,644,35127,22382,161272,-2530,32384,10800,0),
+(2,645,35127,22084,156570,-2576,0,10800,0),
+(2,646,35127,22084,156502,-2576,0,10800,0),
+(2,647,35127,22066,156434,-2576,57344,10800,0),
+(2,648,35127,22034,156410,-2576,49152,10800,0),
+(2,649,35127,21997,156410,-2576,49152,10800,0),
+(2,650,35127,21960,156410,-2576,49152,10800,0),
+(2,651,35127,21922,156410,-2576,49152,10800,0),
+(2,652,35127,22540,156570,-2576,32768,10800,0),
+(2,653,35127,22540,156498,-2576,32768,10800,0),
+(2,654,35127,22560,156432,-2576,40960,10800,0),
+(2,655,35127,22592,156405,-2576,49152,10800,0),
+(2,656,35127,22629,156405,-2576,49152,10800,0),
+(2,657,35127,22665,156405,-2576,49152,10800,0),
+(2,658,35127,22700,156405,-2576,49152,10800,0),
+(2,659,35122,22084,156536,-2576,0,10800,0),
+(2,660,35122,22084,156470,-2576,0,10800,0),
+(2,661,35122,22540,156533,-2576,32768,10800,0),
+(2,662,35122,22540,156464,-2576,32768,10800,0),
+(2,663,35123,22020,156475,-2576,57344,10800,0),
+(2,664,35123,22599,156480,-2576,40960,10800,0),
+(2,665,35127,22064,156579,-2567,0,10800,0),
+(2,666,35127,22064,156467,-2567,0,10800,0),
+(2,667,35127,22017,156408,-2567,57344,10800,0),
+(2,668,35127,21950,156394,-2567,49152,10800,0),
+(2,669,35127,22549,156540,-2567,32768,10800,0),
+(2,670,35127,22548,156460,-2567,32768,10800,0),
+(2,671,35127,22594,156403,-2567,40960,10800,0),
+(2,672,35127,22666,156391,-2567,49152,10800,0),
+(2,673,35122,22549,156499,-2566,32768,10800,0),
+(2,674,35122,22560,156428,-2566,40960,10800,0),
+(2,675,35122,22054,156431,-2566,57344,10800,0),
+(2,676,35122,22064,156515,-2567,0,10800,0),
+(2,677,35123,22648,156430,-2567,40960,10800,0),
+(2,678,35123,21958,156438,-2567,57344,10800,0),
+(2,679,35114,22136,158330,-2694,49152,120,0),
+(2,680,35114,22008,158330,-2694,49152,120,0),
+(2,681,35114,21945,158330,-2694,49152,120,0),
+(2,682,35114,22200,158330,-2694,49152,120,0),
+(2,683,35114,22331,158330,-2694,49152,120,0),
+(2,684,35114,22459,158330,-2694,49152,120,0),
+(2,685,35114,21817,158330,-2694,49152,120,0),
+(2,686,35114,21688,158330,-2694,49152,120,0),
+(2,687,35109,22264,158330,-2694,49152,10800,0),
+(2,688,35109,21881,158330,-2694,49152,10800,0),
+(2,689,35109,21624,158330,-2694,49152,10800,0),
+(2,690,35109,22523,158330,-2694,49152,10800,0),
+(2,691,35110,22072,158330,-2694,49152,120,0),
+(2,692,35110,21753,158330,-2694,49152,120,0),
+(2,693,35110,22395,158330,-2694,49152,120,0),
+(2,694,35113,22520,158180,-2694,49152,60,0),
+(2,695,35113,22456,158180,-2694,49152,60,0),
+(2,696,35113,21624,158180,-2694,49152,60,0),
+(2,697,35113,21688,158180,-2694,49152,60,0),
+(2,698,35108,22072,158180,-2694,49152,120,0),
+(2,699,35113,22392,158180,-2694,49152,60,0),
+(2,700,35113,22328,158180,-2694,49152,60,0),
+(2,701,35113,22264,158180,-2694,49152,60,0),
+(2,702,35113,22200,158180,-2694,49152,60,0),
+(2,703,35108,22136,158180,-2694,49152,120,0),
+(2,704,35108,22009,158180,-2694,49152,120,0),
+(2,705,35113,21945,158180,-2694,49152,60,0),
+(2,706,35113,21881,158180,-2694,49152,60,0),
+(2,707,35113,21817,158180,-2694,49152,60,0),
+(2,708,35113,21753,158180,-2694,49152,60,0),
+(2,709,35127,21840,159083,-2385,0,10800,0),
+(2,710,35127,21841,158961,-2385,0,10800,0),
+(2,711,35127,21786,158900,-2385,57344,10800,0),
+(2,712,35127,21761,158881,-2385,49152,10800,0),
+(2,713,35127,21722,158880,-2385,49152,10800,0),
+(2,714,35127,21686,158880,-2385,49152,10800,0),
+(2,715,35127,21840,159040,-2385,0,10800,0),
+(2,716,35122,21812,158925,-2385,57344,10800,0),
+(2,717,35122,21840,159001,-2384,0,10800,0),
+(2,718,35123,21738,158946,-2386,57344,10800,0),
+(2,719,35127,22293,159089,-2387,32768,10800,0),
+(2,720,35127,22293,159049,-2385,32768,10800,0),
+(2,721,35127,22293,158964,-2386,32768,10800,0),
+(2,722,35127,22351,158899,-2385,40960,10800,0),
+(2,723,35127,22378,158879,-2384,49152,10800,0),
+(2,724,35127,22418,158880,-2385,49152,10800,0),
+(2,725,35127,22457,158879,-2385,49152,10800,0),
+(2,726,35122,22293,159005,-2383,32768,10800,0),
+(2,727,35122,22315,158935,-2386,40960,10800,0),
+(2,728,35123,22395,158953,-2383,40960,10800,0),
+(2,729,35127,22180,159210,-2694,49152,10800,0),
+(2,730,35127,22149,159210,-2694,49152,10800,0),
+(2,731,35127,22118,159210,-2694,49152,10800,0),
+(2,732,35127,22086,159210,-2694,49152,10800,0),
+(2,733,35127,22055,159210,-2694,49152,10800,0),
+(2,734,35127,22023,159210,-2694,49152,10800,0),
+(2,735,35127,21992,159210,-2694,49152,10800,0),
+(2,736,35122,21960,159210,-2694,49152,10800,0),
+(2,737,35122,22180,159190,-2694,49152,10800,0),
+(2,738,35123,22149,159190,-2694,49152,10800,0),
+(2,739,35127,22118,159190,-2694,49152,10800,0),
+(2,740,35127,22086,159190,-2694,49152,10800,0),
+(2,741,35127,22055,159190,-2694,49152,10800,0),
+(2,742,35127,22023,159190,-2694,49152,10800,0),
+(2,743,35127,21992,159190,-2694,49152,10800,0),
+(2,744,35127,21960,159190,-2694,49152,10800,0),
+(2,745,35127,20508,158097,-2570,32768,10800,0),
+(2,746,35127,20508,158148,-2570,32768,10800,0),
+(2,747,35127,20508,158198,-2570,32768,10800,0),
+(2,748,35127,20508,158248,-2570,32768,10800,0),
+(2,749,35123,20508,158298,-2570,32768,10800,0),
+(2,750,35127,20508,158348,-2570,32768,10800,0),
+(2,751,35127,20508,158398,-2570,32768,10800,0),
+(2,752,35127,20508,158448,-2570,32768,10800,0),
+(2,753,35127,20508,158498,-2570,32768,10800,0),
+(2,754,35122,20508,158548,-2570,32768,10800,0),
+(2,755,35127,20508,158598,-2570,32768,10800,0),
+(2,756,35127,20508,158648,-2570,32768,10800,0),
+(2,757,35127,23910,158097,-2570,32768,10800,0),
+(2,758,35127,23910,158148,-2570,32768,10800,0),
+(2,759,35127,23910,158198,-2570,32768,10800,0),
+(2,760,35127,23910,158248,-2570,32768,10800,0),
+(2,761,35123,23910,158298,-2570,32768,10800,0),
+(2,762,35127,23910,158348,-2570,32768,10800,0),
+(2,763,35127,23910,158398,-2570,32768,10800,0),
+(2,764,35127,23910,158448,-2570,32768,10800,0),
+(2,765,35127,23910,158498,-2570,32768,10800,0),
+(2,766,35122,23910,158548,-2570,32768,10800,0),
+(2,767,35127,23910,158598,-2570,32768,10800,0),
+(2,768,35127,23910,158648,-2570,32768,10800,0),
+(2,769,35106,117732,145036,-2622,32728,300,0),
+(2,770,35107,117735,145148,-2621,32728,180,0),
+(2,771,35106,83808,37131,-2349,32728,300,0),
+(2,772,35107,83811,37243,-2348,32728,180,0),
+(3,773,35169,112815,144749,-2826,31992,10800,0),
+(3,774,35169,112815,144777,-2826,31992,10800,0),
+(3,775,35169,112815,144805,-2826,31992,10800,0),
+(3,776,35169,112815,144833,-2826,31992,10800,0),
+(3,777,35169,112815,144861,-2826,31992,10800,0),
+(3,778,35169,112815,144889,-2826,31992,10800,0),
+(3,779,35169,112815,144917,-2826,31992,10800,0),
+(3,780,35169,112815,144945,-2826,31992,10800,0),
+(3,781,35169,112815,144973,-2826,31992,10800,0),
+(3,782,35167,112795,144749,-2826,31992,10800,0),
+(3,783,35166,112795,144777,-2826,31992,10800,0),
+(3,784,35167,112795,144805,-2826,31992,10800,0),
+(3,785,35166,112795,144833,-2826,31992,10800,0),
+(3,786,35167,112795,144861,-2826,31992,10800,0),
+(3,787,35166,112795,144889,-2826,31992,10800,0),
+(3,788,35167,112795,144917,-2826,31992,10800,0),
+(3,789,35166,112795,144945,-2826,31992,10800,0),
+(3,790,35167,112795,144973,-2826,31992,10800,0),
+(3,791,35168,112775,144749,-2826,31992,10800,0),
+(3,792,35168,112775,144777,-2826,31992,10800,0),
+(3,793,35168,112775,144805,-2826,31992,10800,0),
+(3,794,35168,112775,144833,-2826,31992,10800,0),
+(3,795,35163,112775,144861,-2826,31992,10800,0),
+(3,796,35168,112775,144889,-2826,31992,10800,0),
+(3,797,35168,112775,144917,-2826,31992,10800,0),
+(3,798,35168,112775,144945,-2826,31992,10800,0),
+(3,799,35168,112775,144973,-2826,31992,10800,0),
+(3,800,35168,113193,144606,-2816,15696,10800,0),
+(3,801,35168,113224,144607,-2815,15696,10800,0),
+(3,802,35163,113254,144607,-2815,15696,10800,0),
+(3,803,35168,113284,144607,-2814,15696,10800,0),
+(3,804,35168,113315,144606,-2815,15696,10800,0),
+(3,805,35168,113344,144608,-2814,15696,10800,0),
+(3,806,35163,113374,144608,-2814,15696,10800,0),
+(3,807,35168,113404,144608,-2813,15696,10800,0),
+(3,808,35168,113435,144607,-2814,15696,10800,0),
+(3,809,35167,113211,144581,-2834,15696,10800,0),
+(3,810,35167,113241,144581,-2834,15696,10800,0),
+(3,811,35166,113272,144581,-2833,15696,10800,0),
+(3,812,35167,113302,144580,-2834,15696,10800,0),
+(3,813,35167,113332,144582,-2833,15696,10800,0),
+(3,814,35166,113362,144582,-2833,15696,10800,0),
+(3,815,35167,113391,144583,-2832,15696,10800,0),
+(3,816,35167,113423,144582,-2833,15696,10800,0),
+(3,817,35169,113195,144560,-2838,15696,10800,0),
+(3,818,35169,113225,144561,-2838,15696,10800,0),
+(3,819,35169,113255,144561,-2837,15696,10800,0),
+(3,820,35169,113286,144562,-2837,15696,10800,0),
+(3,821,35169,113316,144560,-2837,15696,10800,0),
+(3,822,35169,113346,144562,-2836,15696,10800,0),
+(3,823,35169,113376,144562,-2836,15696,10800,0),
+(3,824,35169,113405,144563,-2835,15696,10800,0),
+(3,825,35169,113437,144562,-2836,15696,10800,0),
+(3,826,35169,113213,144414,-2839,15696,10800,0),
+(3,827,35169,113243,144414,-2838,15696,10800,0),
+(3,828,35169,113274,144414,-2838,15696,10800,0),
+(3,829,35169,113304,144415,-2837,15696,10800,0),
+(3,830,35169,113334,144414,-2837,15696,10800,0),
+(3,831,35169,113364,144416,-2837,15696,10800,0),
+(3,832,35169,113394,144417,-2836,15696,10800,0),
+(3,833,35169,113424,144417,-2836,15696,10800,0),
+(3,834,35165,113544,144313,-2830,32284,10800,0),
+(3,835,35165,113545,144343,-2831,32284,10800,0),
+(3,836,35155,113426,144551,-2814,15696,60,0),
+(3,837,35155,113362,144550,-2814,15696,60,0),
+(3,838,35155,113273,144550,-2814,15696,60,0),
+(3,839,35155,113213,144553,-2814,15696,60,0),
+(3,840,35169,113566,144799,-2565,32284,10800,0),
+(3,841,35169,113567,144829,-2566,32284,10800,0),
+(3,842,35164,113564,144859,-2565,32284,10800,0),
+(3,843,35169,113563,144889,-2565,32284,10800,0),
+(3,844,35169,113562,144918,-2564,32284,10800,0),
+(3,845,35169,113500,144569,-2563,32284,10800,0),
+(3,846,35169,113501,144599,-2564,32284,10800,0),
+(3,847,35164,113498,144628,-2563,32284,10800,0),
+(3,848,35169,113497,144658,-2563,32284,10800,0),
+(3,849,35169,113496,144688,-2562,32284,10800,0),
+(3,850,35169,113362,145102,-2564,48048,10800,0),
+(3,851,35169,113332,145105,-2565,48048,10800,0),
+(3,852,35164,113303,145103,-2564,48048,10800,0),
+(3,853,35169,113273,145104,-2564,48048,10800,0),
+(3,854,35169,113243,145105,-2563,48048,10800,0),
+(3,855,35168,113568,145369,-2667,16328,10800,0),
+(3,856,35163,113602,145370,-2667,16328,10800,0),
+(3,857,35168,113643,145374,-2666,16328,10800,0),
+(3,858,35167,113568,145348,-2656,16328,10800,0),
+(3,859,35167,113602,145349,-2657,16328,10800,0),
+(3,860,35167,113643,145353,-2656,16328,10800,0),
+(3,861,35166,113568,145330,-2642,16328,10800,0),
+(3,862,35166,113602,145331,-2643,16328,10800,0),
+(3,863,35166,113643,145335,-2642,16328,10800,0),
+(3,864,35165,113609,145002,-2565,39060,10800,0),
+(3,865,35169,113566,144799,-2565,32284,10800,0),
+(3,866,35164,113564,144859,-2565,32284,10800,0),
+(3,867,35169,113562,144918,-2564,32284,10800,0),
+(3,868,35169,113500,144569,-2563,32284,10800,0),
+(3,869,35169,113501,144599,-2564,32284,10800,0),
+(3,870,35164,113498,144628,-2563,32284,10800,0),
+(3,871,35169,113497,144658,-2563,32284,10800,0),
+(3,872,35169,113362,145102,-2564,48048,10800,0),
+(3,873,35164,113303,145103,-2564,48048,10800,0),
+(3,874,35169,113243,145105,-2563,48048,10800,0),
+(3,875,35166,115587,144952,-2560,22704,10800,0),
+(3,876,35168,115612,144969,-2561,22704,10800,0),
+(3,877,35166,115638,144993,-2560,22704,10800,0),
+(3,878,35168,115661,145012,-2560,22704,10800,0),
+(3,879,35166,115679,145027,-2559,22704,10800,0),
+(3,880,35168,115705,145049,-2561,22704,10800,0),
+(3,881,35166,115730,145066,-2561,22704,10800,0),
+(3,882,35168,115751,145086,-2561,22704,10800,0),
+(3,883,35166,115762,145110,-2562,33460,10800,0),
+(3,884,35168,115743,145135,-2561,41952,10800,0),
+(3,885,35166,115719,145153,-2561,41952,10800,0),
+(3,886,35168,115699,145166,-2560,41952,10800,0),
+(3,887,35166,115672,145185,-2562,41952,10800,0),
+(3,888,35168,115648,145204,-2563,41952,10800,0),
+(3,889,35166,115618,145223,-2562,41952,10800,0),
+(3,890,35168,115593,145240,-2562,41952,10800,0),
+(3,891,35166,115574,145253,-2561,41952,10800,0),
+(3,892,35167,115607,144937,-2562,22704,10800,0),
+(3,893,35169,115631,144955,-2563,22704,10800,0),
+(3,894,35167,115657,144979,-2562,22704,10800,0),
+(3,895,35169,115681,144998,-2562,22704,10800,0),
+(3,896,35167,115699,145013,-2561,22704,10800,0),
+(3,897,35169,115725,145034,-2563,22704,10800,0),
+(3,898,35167,115749,145052,-2563,22704,10800,0),
+(3,899,35169,115770,145071,-2563,22704,10800,0),
+(3,900,35167,115781,145096,-2564,33460,10800,0),
+(3,901,35169,115780,145124,-2561,33460,10800,0),
+(3,902,35167,115761,145149,-2560,41952,10800,0),
+(3,903,35169,115737,145167,-2560,41952,10800,0),
+(3,904,35167,115717,145180,-2559,41952,10800,0),
+(3,905,35169,115690,145199,-2561,41952,10800,0),
+(3,906,35167,115666,145218,-2562,41952,10800,0),
+(3,907,35169,115636,145237,-2561,41952,10800,0),
+(3,908,35167,115611,145254,-2561,41952,10800,0),
+(3,909,35169,115592,145267,-2560,41952,10800,0),
+(3,910,35169,115712,144909,-2560,22704,10800,0),
+(3,911,35169,115735,144928,-2560,22704,10800,0),
+(3,912,35169,115753,144943,-2559,22704,10800,0),
+(3,913,35169,115779,144965,-2561,22704,10800,0),
+(3,914,35169,115804,144982,-2562,22704,10800,0),
+(3,915,35169,115770,145210,-2556,41952,10800,0),
+(3,916,35169,115750,145223,-2555,41952,10800,0),
+(3,917,35169,115723,145243,-2557,41952,10800,0),
+(3,918,35169,115699,145261,-2558,41952,10800,0),
+(3,919,35169,115669,145280,-2557,41952,10800,0),
+(3,920,35165,115846,145241,-2558,32004,10800,0),
+(3,921,35164,115846,145275,-2559,32004,10800,0),
+(3,922,35164,115849,144996,-2559,32004,10800,0),
+(3,923,35165,115848,145019,-2559,32004,10800,0),
+(3,924,35169,115574,144944,-2557,41952,10800,0),
+(3,925,35155,115628,144935,-2560,22704,60,0),
+(3,926,35155,115719,145016,-2560,22704,60,0),
+(3,927,35155,115710,145201,-2560,22704,60,0),
+(3,928,35155,115607,145273,-2560,22704,60,0),
+(3,929,35156,117718,145250,-2627,32728,120,0),
+(3,930,35156,117719,145287,-2627,32728,120,0),
+(3,931,35156,117719,145320,-2627,32728,120,0),
+(3,932,35156,117720,145358,-2627,32728,120,0),
+(3,933,35156,117720,145395,-2626,32728,120,0),
+(3,934,35156,117721,145433,-2626,32728,120,0),
+(3,935,35156,117721,145465,-2626,32728,120,0),
+(3,936,35156,117722,145503,-2626,32728,120,0),
+(3,937,35153,117684,145250,-2628,32728,120,0),
+(3,938,35153,117685,145288,-2628,32728,120,0),
+(3,939,35153,117685,145321,-2628,32728,120,0),
+(3,940,35153,117686,145358,-2628,32728,120,0),
+(3,941,35153,117686,145396,-2627,32728,120,0),
+(3,942,35153,117687,145433,-2627,32728,120,0),
+(3,943,35153,117687,145466,-2627,32728,120,0),
+(3,944,35153,117688,145503,-2627,32728,120,0),
+(3,945,35155,117646,145252,-2629,32728,60,0),
+(3,946,35155,117647,145290,-2629,32728,60,0),
+(3,947,35150,117647,145322,-2629,32728,120,0),
+(3,948,35155,117648,145360,-2629,32728,60,0),
+(3,949,35155,117648,145397,-2628,32728,60,0),
+(3,950,35150,117649,145435,-2628,32728,120,0),
+(3,951,35155,117649,145467,-2628,32728,60,0),
+(3,952,35155,117650,145505,-2628,32728,60,0),
+(3,953,35156,117712,144690,-2623,32728,120,0),
+(3,954,35156,117712,144728,-2623,32728,120,0),
+(3,955,35156,117712,144760,-2623,32728,120,0),
+(3,956,35156,117713,144798,-2623,32728,120,0),
+(3,957,35156,117714,144835,-2622,32728,120,0),
+(3,958,35156,117714,144873,-2622,32728,120,0),
+(3,959,35156,117715,144906,-2622,32728,120,0),
+(3,960,35156,117715,144943,-2622,32728,120,0),
+(3,961,35153,117677,144691,-2624,32728,120,0),
+(3,962,35153,117678,144729,-2624,32728,120,0),
+(3,963,35153,117678,144761,-2624,32728,120,0),
+(3,964,35153,117679,144799,-2624,32728,120,0),
+(3,965,35153,117680,144836,-2623,32728,120,0),
+(3,966,35153,117680,144874,-2623,32728,120,0),
+(3,967,35153,117680,144906,-2623,32728,120,0),
+(3,968,35153,117681,144944,-2623,32728,120,0),
+(3,969,35155,117640,144692,-2625,32728,60,0),
+(3,970,35155,117641,144730,-2625,32728,60,0),
+(3,971,35150,117641,144763,-2625,32728,120,0),
+(3,972,35155,117642,144800,-2625,32728,60,0),
+(3,973,35155,117642,144838,-2624,32728,60,0),
+(3,974,35150,117643,144875,-2624,32728,120,0),
+(3,975,35155,117643,144908,-2624,32728,60,0),
+(3,976,35155,117644,144945,-2624,32728,60,0),
+(3,977,35152,117877,144770,-2622,32728,120,0),
+(3,978,35152,117877,144854,-2621,32728,120,0),
+(3,979,35152,117878,144933,-2621,32728,120,0),
+(3,980,35152,117878,145008,-2621,32728,120,0),
+(3,981,35152,117878,145185,-2618,32728,120,0),
+(3,982,35152,117878,145268,-2618,32728,120,0),
+(3,983,35152,117879,145348,-2618,32728,120,0),
+(3,984,35152,117879,145422,-2618,32728,120,0),
+(3,985,35168,116752,145610,-2400,32472,10800,0),
+(3,986,35163,116752,145584,-2400,32472,10800,0),
+(3,987,35168,116752,145556,-2399,32472,10800,0),
+(3,988,35167,116774,145610,-2404,32472,10800,0),
+(3,989,35167,116774,145583,-2404,32472,10800,0),
+(3,990,35167,116774,145556,-2403,32472,10800,0),
+(3,991,35166,116799,145609,-2402,32472,10800,0),
+(3,992,35166,116799,145582,-2402,32472,10800,0),
+(3,993,35166,116798,145555,-2401,32472,10800,0),
+(3,994,35165,116876,145669,-2402,32472,10800,0),
+(3,995,35165,116876,145643,-2402,32472,10800,0),
+(3,996,35165,116876,145615,-2401,32472,10800,0),
+(3,997,35169,117449,145414,-2405,49076,10800,0),
+(3,998,35169,117486,145415,-2405,49076,10800,0),
+(3,999,35164,117523,145415,-2404,49076,10800,0),
+(3,1000,35169,117559,145416,-2404,49076,10800,0),
+(3,1001,35169,117595,145416,-2404,49076,10800,0),
+(3,1002,35164,117633,145417,-2404,49076,10800,0),
+(3,1003,35169,117664,145417,-2403,49076,10800,0),
+(3,1004,35169,117701,145418,-2403,49076,10800,0),
+(3,1005,35164,117736,145419,-2403,49076,10800,0),
+(3,1006,35169,117773,145419,-2403,49076,10800,0),
+(3,1007,35169,117810,145419,-2403,49076,10800,0),
+(3,1008,35168,116686,144635,-2400,32472,10800,0),
+(3,1009,35163,116686,144609,-2400,32472,10800,0),
+(3,1010,35168,116689,144566,-2399,32472,10800,0),
+(3,1011,35167,116708,144635,-2404,32472,10800,0),
+(3,1012,35167,116708,144608,-2404,32472,10800,0),
+(3,1013,35167,116708,144581,-2403,32472,10800,0),
+(3,1014,35166,116733,144634,-2402,32472,10800,0),
+(3,1015,35166,116733,144607,-2402,32472,10800,0),
+(3,1016,35166,116732,144580,-2401,32472,10800,0),
+(3,1017,35165,116974,144673,-2402,32472,10800,0),
+(3,1018,35165,116974,144647,-2402,32472,10800,0),
+(3,1019,35165,116974,144619,-2401,32472,10800,0),
+(3,1020,35169,117804,144781,-2405,16000,10800,0),
+(3,1021,35169,117768,144782,-2405,16000,10800,0),
+(3,1022,35164,117731,144783,-2404,16000,10800,0),
+(3,1023,35169,117695,144783,-2404,16000,10800,0),
+(3,1024,35169,117659,144783,-2404,16000,10800,0),
+(3,1025,35164,117621,144784,-2404,16000,10800,0),
+(3,1026,35169,117590,144784,-2403,16000,10800,0),
+(3,1027,35169,117553,144785,-2403,16000,10800,0),
+(3,1028,35164,117518,144785,-2403,16000,10800,0),
+(3,1029,35169,117481,144786,-2403,16000,10800,0),
+(3,1030,35169,117444,144787,-2403,16000,10800,0),
+(3,1031,35169,112740,145089,-2440,49152,10800,0),
+(3,1032,35169,112671,145088,-2400,49152,10800,0),
+(3,1033,35169,112612,145089,-2440,40960,10800,0),
+(3,1034,35169,112585,145136,-2440,32768,10800,0),
+(3,1035,35169,112582,145181,-2440,32768,10800,0),
+(3,1036,35169,112582,145219,-2440,32768,10800,0),
+(3,1037,35169,112582,145259,-2440,16384,10800,0),
+(3,1038,35169,112730,144624,-2440,49152,10800,0),
+(3,1039,35169,112683,144620,-2440,16384,10800,0),
+(3,1040,35169,112612,144628,-2440,16384,10800,0),
+(3,1041,35169,112582,144589,-2440,24576,10800,0),
+(3,1042,35169,112577,144541,-2440,32768,10800,0),
+(3,1043,35169,112577,144503,-2440,32768,10800,0),
+(3,1044,35169,112583,144464,-2440,32768,10800,0),
+(3,1045,35164,112697,145089,-2440,16384,10800,0),
+(3,1046,35164,112636,145090,-2440,24576,10800,0),
+(3,1047,35164,112705,144621,-2440,40960,10800,0),
+(3,1048,35164,112652,144627,-2440,49152,10800,0),
+(3,1049,35165,112659,145168,-2440,24576,10800,0),
+(3,1050,35165,112659,144553,-2440,40960,10800,0),
+(3,1051,35169,112751,145105,-2440,49152,10800,0),
+(3,1052,35169,112639,145105,-2440,49152,10800,0),
+(3,1053,35169,112580,145152,-2440,40960,10800,0),
+(3,1054,35169,112566,145219,-2440,32768,10800,0),
+(3,1055,35169,112712,144620,-2440,16384,10800,0),
+(3,1056,35169,112632,144621,-2440,16384,10800,0),
+(3,1057,35169,112575,144575,-2440,24576,10800,0),
+(3,1058,35169,112563,144503,-2440,32768,10800,0),
+(3,1059,35164,112671,144620,-2439,16384,10800,0),
+(3,1060,35164,112600,144609,-2439,24576,10800,0),
+(3,1061,35164,112603,145115,-2439,40960,10800,0),
+(3,1062,35164,112687,145105,-2440,49152,10800,0),
+(3,1063,35165,112602,144521,-2440,24576,10800,0),
+(3,1064,35165,112610,145211,-2440,40960,10800,0),
+(3,1065,35156,114502,145033,-2567,32768,120,0),
+(3,1066,35156,114502,145161,-2567,32768,120,0),
+(3,1067,35156,114502,145224,-2567,32768,120,0),
+(3,1068,35156,114502,144969,-2567,32768,120,0),
+(3,1069,35156,114502,144838,-2567,32768,120,0),
+(3,1070,35156,114502,144710,-2567,32768,120,0),
+(3,1071,35156,114502,145352,-2567,32768,120,0),
+(3,1072,35156,114502,145481,-2567,32768,120,0),
+(3,1073,35151,114502,144905,-2567,32768,10800,0),
+(3,1074,35151,114502,145288,-2567,32768,10800,0),
+(3,1075,35151,114502,145545,-2567,32768,10800,0),
+(3,1076,35151,114502,144646,-2567,32768,10800,0),
+(3,1077,35152,114502,145097,-2567,32768,120,0),
+(3,1078,35152,114502,145416,-2567,32768,120,0),
+(3,1079,35152,114502,144774,-2567,32768,120,0),
+(3,1080,35155,114352,144649,-2567,32768,60,0),
+(3,1081,35155,114352,144713,-2567,32768,60,0),
+(3,1082,35155,114352,145545,-2567,32768,60,0),
+(3,1083,35155,114352,145481,-2567,32768,60,0),
+(3,1084,35150,114352,145097,-2567,32768,120,0),
+(3,1085,35155,114352,144777,-2567,32768,60,0),
+(3,1086,35155,114352,144841,-2567,32768,60,0),
+(3,1087,35155,114352,144905,-2567,32768,60,0),
+(3,1088,35155,114352,144969,-2567,32768,60,0),
+(3,1089,35150,114352,145033,-2567,32768,120,0),
+(3,1090,35150,114352,145160,-2567,32768,120,0),
+(3,1091,35155,114352,145224,-2567,32768,60,0),
+(3,1092,35155,114352,145288,-2567,32768,60,0),
+(3,1093,35155,114352,145352,-2567,32768,60,0),
+(3,1094,35155,114352,145416,-2567,32768,60,0),
+(3,1095,35169,115255,145329,-2258,49152,10800,0),
+(3,1096,35169,115133,145328,-2258,49152,10800,0),
+(3,1097,35169,115072,145383,-2258,40960,10800,0),
+(3,1098,35169,115053,145408,-2258,32768,10800,0),
+(3,1099,35169,115052,145447,-2258,32768,10800,0),
+(3,1100,35169,115052,145483,-2258,32768,10800,0),
+(3,1101,35169,115212,145329,-2258,49152,10800,0),
+(3,1102,35164,115097,145357,-2258,40960,10800,0),
+(3,1103,35164,115173,145329,-2257,49152,10800,0),
+(3,1104,35165,115118,145431,-2259,40960,10800,0),
+(3,1105,35169,115261,144876,-2260,16384,10800,0),
+(3,1106,35169,115221,144876,-2258,16384,10800,0),
+(3,1107,35169,115136,144876,-2259,16384,10800,0),
+(3,1108,35169,115071,144818,-2258,24576,10800,0),
+(3,1109,35169,115051,144791,-2257,32768,10800,0),
+(3,1110,35169,115052,144751,-2258,32768,10800,0),
+(3,1111,35169,115051,144712,-2258,32768,10800,0),
+(3,1112,35164,115177,144876,-2256,16384,10800,0),
+(3,1113,35164,115107,144854,-2259,24576,10800,0),
+(3,1114,35165,115125,144774,-2256,24576,10800,0),
+(3,1115,35169,115382,144989,-2567,32768,10800,0),
+(3,1116,35169,115382,145020,-2567,32768,10800,0),
+(3,1117,35169,115382,145051,-2567,32768,10800,0),
+(3,1118,35169,115382,145083,-2567,32768,10800,0),
+(3,1119,35169,115382,145114,-2567,32768,10800,0),
+(3,1120,35169,115382,145146,-2567,32768,10800,0),
+(3,1121,35169,115382,145177,-2567,32768,10800,0),
+(3,1122,35164,115382,145209,-2567,32768,10800,0),
+(3,1123,35164,115362,144989,-2567,32768,10800,0),
+(3,1124,35165,115362,145020,-2567,32768,10800,0),
+(3,1125,35169,115362,145051,-2567,32768,10800,0),
+(3,1126,35169,115362,145083,-2567,32768,10800,0),
+(3,1127,35169,115362,145114,-2567,32768,10800,0),
+(3,1128,35169,115362,145146,-2567,32768,10800,0),
+(3,1129,35169,115362,145177,-2567,32768,10800,0),
+(3,1130,35169,115362,145209,-2567,32768,10800,0),
+(3,1131,35169,114269,146661,-2443,16384,10800,0),
+(3,1132,35169,114320,146661,-2443,16384,10800,0),
+(3,1133,35169,114370,146661,-2443,16384,10800,0),
+(3,1134,35169,114420,146661,-2443,16384,10800,0),
+(3,1135,35165,114470,146661,-2443,16384,10800,0),
+(3,1136,35169,114520,146661,-2443,16384,10800,0),
+(3,1137,35169,114570,146661,-2443,16384,10800,0),
+(3,1138,35169,114620,146661,-2443,16384,10800,0),
+(3,1139,35169,114670,146661,-2443,16384,10800,0),
+(3,1140,35164,114720,146661,-2443,16384,10800,0),
+(3,1141,35169,114770,146661,-2443,16384,10800,0),
+(3,1142,35169,114820,146661,-2443,16384,10800,0),
+(3,1143,35169,114269,143259,-2443,16384,10800,0),
+(3,1144,35169,114320,143259,-2443,16384,10800,0),
+(3,1145,35169,114370,143259,-2443,16384,10800,0),
+(3,1146,35169,114420,143259,-2443,16384,10800,0),
+(3,1147,35165,114470,143259,-2443,16384,10800,0),
+(3,1148,35169,114520,143259,-2443,16384,10800,0),
+(3,1149,35169,114570,143259,-2443,16384,10800,0),
+(3,1150,35169,114620,143259,-2443,16384,10800,0),
+(3,1151,35169,114670,143259,-2443,16384,10800,0),
+(3,1152,35164,114720,143259,-2443,16384,10800,0),
+(3,1153,35169,114770,143259,-2443,16384,10800,0),
+(3,1154,35169,114820,143259,-2443,16384,10800,0),
+(4,1155,35211,78891,36844,-2553,31992,10800,0),
+(4,1156,35211,78891,36872,-2553,31992,10800,0),
+(4,1157,35211,78891,36900,-2553,31992,10800,0),
+(4,1158,35211,78891,36928,-2553,31992,10800,0),
+(4,1159,35211,78891,36956,-2553,31992,10800,0),
+(4,1160,35211,78891,36984,-2553,31992,10800,0),
+(4,1161,35211,78891,37012,-2553,31992,10800,0),
+(4,1162,35211,78891,37040,-2553,31992,10800,0),
+(4,1163,35211,78891,37068,-2553,31992,10800,0),
+(4,1164,35209,78871,36844,-2553,31992,10800,0),
+(4,1165,35208,78871,36872,-2553,31992,10800,0),
+(4,1166,35209,78871,36900,-2553,31992,10800,0),
+(4,1167,35208,78871,36928,-2553,31992,10800,0),
+(4,1168,35209,78871,36956,-2553,31992,10800,0),
+(4,1169,35208,78871,36984,-2553,31992,10800,0),
+(4,1170,35209,78871,37012,-2553,31992,10800,0),
+(4,1171,35208,78871,37040,-2553,31992,10800,0),
+(4,1172,35209,78871,37068,-2553,31992,10800,0),
+(4,1173,35210,78851,36844,-2553,31992,10800,0),
+(4,1174,35210,78851,36872,-2553,31992,10800,0),
+(4,1175,35210,78851,36900,-2553,31992,10800,0),
+(4,1176,35210,78851,36928,-2553,31992,10800,0),
+(4,1177,35205,78851,36956,-2553,31992,10800,0),
+(4,1178,35210,78851,36984,-2553,31992,10800,0),
+(4,1179,35210,78851,37012,-2553,31992,10800,0),
+(4,1180,35210,78851,37040,-2553,31992,10800,0),
+(4,1181,35210,78851,37068,-2553,31992,10800,0),
+(4,1182,35210,79269,36701,-2543,15696,10800,0),
+(4,1183,35210,79300,36702,-2542,15696,10800,0),
+(4,1184,35205,79330,36702,-2542,15696,10800,0),
+(4,1185,35210,79360,36702,-2541,15696,10800,0),
+(4,1186,35210,79391,36701,-2542,15696,10800,0),
+(4,1187,35210,79420,36703,-2541,15696,10800,0),
+(4,1188,35205,79450,36703,-2541,15696,10800,0),
+(4,1189,35210,79480,36703,-2540,15696,10800,0),
+(4,1190,35210,79511,36702,-2541,15696,10800,0),
+(4,1191,35209,79287,36676,-2561,15696,10800,0),
+(4,1192,35209,79317,36676,-2561,15696,10800,0),
+(4,1193,35208,79348,36676,-2560,15696,10800,0),
+(4,1194,35209,79378,36675,-2561,15696,10800,0),
+(4,1195,35209,79408,36677,-2560,15696,10800,0),
+(4,1196,35208,79438,36677,-2560,15696,10800,0),
+(4,1197,35209,79467,36678,-2559,15696,10800,0),
+(4,1198,35209,79499,36677,-2560,15696,10800,0),
+(4,1199,35211,79271,36655,-2565,15696,10800,0),
+(4,1200,35211,79301,36656,-2565,15696,10800,0),
+(4,1201,35211,79331,36656,-2564,15696,10800,0),
+(4,1202,35211,79362,36657,-2564,15696,10800,0),
+(4,1203,35211,79392,36655,-2564,15696,10800,0),
+(4,1204,35211,79422,36657,-2563,15696,10800,0),
+(4,1205,35211,79452,36657,-2563,15696,10800,0),
+(4,1206,35211,79481,36658,-2562,15696,10800,0),
+(4,1207,35211,79513,36657,-2563,15696,10800,0),
+(4,1208,35211,79289,36509,-2566,15696,10800,0),
+(4,1209,35211,79319,36509,-2565,15696,10800,0),
+(4,1210,35211,79350,36509,-2565,15696,10800,0),
+(4,1211,35211,79380,36510,-2564,15696,10800,0),
+(4,1212,35211,79410,36509,-2564,15696,10800,0),
+(4,1213,35211,79440,36511,-2564,15696,10800,0),
+(4,1214,35211,79470,36512,-2563,15696,10800,0),
+(4,1215,35211,79500,36512,-2563,15696,10800,0),
+(4,1216,35207,79620,36408,-2557,32284,10800,0),
+(4,1217,35207,79621,36438,-2558,32284,10800,0),
+(4,1218,35197,79502,36646,-2541,15696,60,0),
+(4,1219,35197,79438,36645,-2541,15696,60,0),
+(4,1220,35197,79349,36645,-2541,15696,60,0),
+(4,1221,35197,79289,36648,-2541,15696,60,0),
+(4,1222,35211,79642,36894,-2292,32284,10800,0),
+(4,1223,35211,79643,36924,-2293,32284,10800,0),
+(4,1224,35206,79640,36954,-2292,32284,10800,0),
+(4,1225,35211,79639,36984,-2292,32284,10800,0),
+(4,1226,35211,79638,37013,-2291,32284,10800,0),
+(4,1227,35211,79576,36664,-2290,32284,10800,0),
+(4,1228,35211,79577,36694,-2291,32284,10800,0),
+(4,1229,35206,79574,36723,-2290,32284,10800,0),
+(4,1230,35211,79573,36753,-2290,32284,10800,0),
+(4,1231,35211,79572,36783,-2289,32284,10800,0),
+(4,1232,35211,79438,37197,-2291,48048,10800,0),
+(4,1233,35211,79408,37200,-2292,48048,10800,0),
+(4,1234,35206,79379,37198,-2291,48048,10800,0),
+(4,1235,35211,79349,37199,-2291,48048,10800,0),
+(4,1236,35211,79319,37200,-2290,48048,10800,0),
+(4,1237,35210,79644,37464,-2394,16328,10800,0),
+(4,1238,35205,79678,37465,-2394,16328,10800,0),
+(4,1239,35210,79719,37469,-2393,16328,10800,0),
+(4,1240,35209,79644,37443,-2383,16328,10800,0),
+(4,1241,35209,79678,37444,-2384,16328,10800,0),
+(4,1242,35209,79719,37448,-2383,16328,10800,0),
+(4,1243,35208,79644,37425,-2369,16328,10800,0),
+(4,1244,35208,79678,37426,-2370,16328,10800,0),
+(4,1245,35208,79719,37430,-2369,16328,10800,0),
+(4,1246,35207,79685,37097,-2292,39060,10800,0),
+(4,1247,35211,79642,36894,-2292,32284,10800,0),
+(4,1248,35206,79640,36954,-2292,32284,10800,0),
+(4,1249,35211,79638,37013,-2291,32284,10800,0),
+(4,1250,35211,79576,36664,-2290,32284,10800,0),
+(4,1251,35211,79577,36694,-2291,32284,10800,0),
+(4,1252,35206,79574,36723,-2290,32284,10800,0),
+(4,1253,35211,79573,36753,-2290,32284,10800,0),
+(4,1254,35211,79438,37197,-2291,48048,10800,0),
+(4,1255,35206,79379,37198,-2291,48048,10800,0),
+(4,1256,35211,79319,37200,-2290,48048,10800,0),
+(4,1257,35208,81663,37047,-2287,22704,10800,0),
+(4,1258,35210,81688,37064,-2288,22704,10800,0),
+(4,1259,35208,81714,37088,-2287,22704,10800,0),
+(4,1260,35210,81737,37107,-2287,22704,10800,0),
+(4,1261,35208,81755,37122,-2286,22704,10800,0),
+(4,1262,35210,81781,37144,-2288,22704,10800,0),
+(4,1263,35208,81806,37161,-2288,22704,10800,0),
+(4,1264,35210,81827,37181,-2288,22704,10800,0),
+(4,1265,35208,81838,37205,-2289,33460,10800,0),
+(4,1266,35210,81819,37230,-2288,41952,10800,0),
+(4,1267,35208,81795,37248,-2288,41952,10800,0),
+(4,1268,35210,81775,37261,-2287,41952,10800,0),
+(4,1269,35208,81748,37280,-2289,41952,10800,0),
+(4,1270,35210,81724,37299,-2290,41952,10800,0),
+(4,1271,35208,81694,37318,-2289,41952,10800,0),
+(4,1272,35210,81669,37335,-2289,41952,10800,0),
+(4,1273,35208,81650,37348,-2288,41952,10800,0),
+(4,1274,35209,81683,37032,-2289,22704,10800,0),
+(4,1275,35211,81707,37050,-2290,22704,10800,0),
+(4,1276,35209,81733,37074,-2289,22704,10800,0),
+(4,1277,35211,81757,37093,-2289,22704,10800,0),
+(4,1278,35209,81775,37108,-2288,22704,10800,0),
+(4,1279,35211,81801,37129,-2290,22704,10800,0),
+(4,1280,35209,81825,37147,-2290,22704,10800,0),
+(4,1281,35211,81846,37166,-2290,22704,10800,0),
+(4,1282,35209,81857,37191,-2291,33460,10800,0),
+(4,1283,35211,81856,37219,-2288,33460,10800,0),
+(4,1284,35209,81837,37244,-2287,41952,10800,0),
+(4,1285,35211,81813,37262,-2287,41952,10800,0),
+(4,1286,35209,81793,37275,-2286,41952,10800,0),
+(4,1287,35211,81766,37294,-2288,41952,10800,0),
+(4,1288,35209,81742,37313,-2289,41952,10800,0),
+(4,1289,35211,81712,37332,-2288,41952,10800,0),
+(4,1290,35209,81687,37349,-2288,41952,10800,0),
+(4,1291,35211,81668,37362,-2287,41952,10800,0),
+(4,1292,35211,81788,37004,-2287,22704,10800,0),
+(4,1293,35211,81811,37023,-2287,22704,10800,0),
+(4,1294,35211,81829,37038,-2286,22704,10800,0),
+(4,1295,35211,81855,37060,-2288,22704,10800,0),
+(4,1296,35211,81880,37077,-2289,22704,10800,0),
+(4,1297,35211,81846,37305,-2283,41952,10800,0),
+(4,1298,35211,81826,37318,-2282,41952,10800,0),
+(4,1299,35211,81799,37338,-2284,41952,10800,0),
+(4,1300,35211,81775,37356,-2285,41952,10800,0),
+(4,1301,35211,81745,37375,-2284,41952,10800,0),
+(4,1302,35207,81922,37336,-2285,32004,10800,0),
+(4,1303,35206,81922,37370,-2286,32004,10800,0),
+(4,1304,35206,81925,37091,-2286,32004,10800,0),
+(4,1305,35207,81924,37114,-2286,32004,10800,0),
+(4,1306,35211,81650,37039,-2284,41952,10800,0),
+(4,1307,35197,81704,37030,-2287,22704,60,0),
+(4,1308,35197,81795,37111,-2287,22704,60,0),
+(4,1309,35197,81786,37296,-2287,22704,60,0),
+(4,1310,35197,81683,37368,-2287,22704,60,0),
+(4,1311,35198,83794,37345,-2354,32728,120,0),
+(4,1312,35198,83795,37382,-2354,32728,120,0),
+(4,1313,35198,83795,37415,-2354,32728,120,0),
+(4,1314,35198,83796,37453,-2354,32728,120,0),
+(4,1315,35198,83796,37490,-2353,32728,120,0),
+(4,1316,35198,83797,37528,-2353,32728,120,0),
+(4,1317,35198,83797,37560,-2353,32728,120,0),
+(4,1318,35198,83798,37598,-2353,32728,120,0),
+(4,1319,35195,83760,37345,-2355,32728,120,0),
+(4,1320,35195,83761,37383,-2355,32728,120,0),
+(4,1321,35195,83761,37416,-2355,32728,120,0),
+(4,1322,35195,83762,37453,-2355,32728,120,0),
+(4,1323,35195,83762,37491,-2354,32728,120,0),
+(4,1324,35195,83763,37528,-2354,32728,120,0),
+(4,1325,35195,83763,37561,-2354,32728,120,0),
+(4,1326,35195,83764,37598,-2354,32728,120,0),
+(4,1327,35197,83722,37347,-2356,32728,60,0),
+(4,1328,35197,83723,37385,-2356,32728,60,0),
+(4,1329,35192,83723,37417,-2356,32728,120,0),
+(4,1330,35197,83724,37455,-2356,32728,60,0),
+(4,1331,35197,83724,37492,-2355,32728,60,0),
+(4,1332,35192,83725,37530,-2355,32728,120,0),
+(4,1333,35197,83725,37562,-2355,32728,60,0),
+(4,1334,35197,83726,37600,-2355,32728,60,0),
+(4,1335,35198,83788,36785,-2350,32728,120,0),
+(4,1336,35198,83788,36823,-2350,32728,120,0),
+(4,1337,35198,83788,36855,-2350,32728,120,0),
+(4,1338,35198,83789,36893,-2350,32728,120,0),
+(4,1339,35198,83790,36930,-2349,32728,120,0),
+(4,1340,35198,83790,36968,-2349,32728,120,0),
+(4,1341,35198,83791,37001,-2349,32728,120,0),
+(4,1342,35198,83791,37038,-2349,32728,120,0),
+(4,1343,35195,83753,36786,-2351,32728,120,0),
+(4,1344,35195,83754,36824,-2351,32728,120,0),
+(4,1345,35195,83754,36856,-2351,32728,120,0),
+(4,1346,35195,83755,36894,-2351,32728,120,0),
+(4,1347,35195,83756,36931,-2350,32728,120,0),
+(4,1348,35195,83756,36969,-2350,32728,120,0),
+(4,1349,35195,83756,37001,-2350,32728,120,0),
+(4,1350,35195,83757,37039,-2350,32728,120,0),
+(4,1351,35197,83716,36787,-2352,32728,60,0),
+(4,1352,35197,83717,36825,-2352,32728,60,0),
+(4,1353,35192,83717,36858,-2352,32728,120,0),
+(4,1354,35197,83718,36895,-2352,32728,60,0),
+(4,1355,35197,83718,36933,-2351,32728,60,0),
+(4,1356,35192,83719,36970,-2351,32728,120,0),
+(4,1357,35197,83719,37003,-2351,32728,60,0),
+(4,1358,35197,83720,37040,-2351,32728,60,0),
+(4,1359,35194,83953,36865,-2349,32728,120,0),
+(4,1360,35194,83953,36949,-2348,32728,120,0),
+(4,1361,35194,83954,37028,-2348,32728,120,0),
+(4,1362,35194,83954,37103,-2348,32728,120,0),
+(4,1363,35194,83954,37280,-2345,32728,120,0),
+(4,1364,35194,83954,37363,-2345,32728,120,0),
+(4,1365,35194,83955,37443,-2345,32728,120,0),
+(4,1366,35194,83955,37517,-2345,32728,120,0),
+(4,1367,35210,82828,37705,-2127,32472,10800,0),
+(4,1368,35205,82828,37679,-2127,32472,10800,0),
+(4,1369,35210,82828,37651,-2126,32472,10800,0),
+(4,1370,35209,82850,37705,-2131,32472,10800,0),
+(4,1371,35209,82850,37678,-2131,32472,10800,0),
+(4,1372,35209,82850,37651,-2130,32472,10800,0),
+(4,1373,35208,82875,37704,-2129,32472,10800,0),
+(4,1374,35208,82875,37677,-2129,32472,10800,0),
+(4,1375,35208,82874,37650,-2128,32472,10800,0),
+(4,1376,35207,82952,37764,-2129,32472,10800,0),
+(4,1377,35207,82952,37738,-2129,32472,10800,0),
+(4,1378,35207,82952,37710,-2128,32472,10800,0),
+(4,1379,35211,83525,37509,-2132,49076,10800,0),
+(4,1380,35211,83562,37510,-2132,49076,10800,0),
+(4,1381,35206,83599,37510,-2131,49076,10800,0),
+(4,1382,35211,83635,37511,-2131,49076,10800,0),
+(4,1383,35211,83671,37511,-2131,49076,10800,0),
+(4,1384,35206,83709,37512,-2131,49076,10800,0),
+(4,1385,35211,83740,37512,-2130,49076,10800,0),
+(4,1386,35211,83777,37513,-2130,49076,10800,0),
+(4,1387,35206,83812,37514,-2130,49076,10800,0),
+(4,1388,35211,83849,37514,-2130,49076,10800,0),
+(4,1389,35211,83886,37514,-2130,49076,10800,0),
+(4,1390,35210,82762,36730,-2127,32472,10800,0),
+(4,1391,35205,82762,36704,-2127,32472,10800,0),
+(4,1392,35210,82765,36661,-2126,32472,10800,0),
+(4,1393,35209,82784,36730,-2131,32472,10800,0),
+(4,1394,35209,82784,36703,-2131,32472,10800,0),
+(4,1395,35209,82784,36676,-2130,32472,10800,0),
+(4,1396,35208,82809,36729,-2129,32472,10800,0),
+(4,1397,35208,82809,36702,-2129,32472,10800,0),
+(4,1398,35208,82808,36675,-2128,32472,10800,0),
+(4,1399,35207,83050,36768,-2129,32472,10800,0),
+(4,1400,35207,83050,36742,-2129,32472,10800,0),
+(4,1401,35207,83050,36714,-2128,32472,10800,0),
+(4,1402,35211,83880,36876,-2132,16000,10800,0),
+(4,1403,35211,83844,36877,-2132,16000,10800,0),
+(4,1404,35206,83807,36878,-2131,16000,10800,0),
+(4,1405,35211,83771,36878,-2131,16000,10800,0),
+(4,1406,35211,83735,36878,-2131,16000,10800,0),
+(4,1407,35206,83697,36879,-2131,16000,10800,0),
+(4,1408,35211,83666,36879,-2130,16000,10800,0),
+(4,1409,35211,83629,36880,-2130,16000,10800,0),
+(4,1410,35206,83594,36880,-2130,16000,10800,0),
+(4,1411,35211,83557,36881,-2130,16000,10800,0),
+(4,1412,35211,83520,36882,-2130,16000,10800,0),
+(4,1413,35211,78822,37198,-2168,49152,10800,0),
+(4,1414,35211,78759,37185,-2168,49152,10800,0),
+(4,1415,35211,78697,37187,-2168,40960,10800,0),
+(4,1416,35211,78657,37233,-2168,32768,10800,0),
+(4,1417,35211,78656,37278,-2168,32768,10800,0),
+(4,1418,35211,78657,37310,-2168,32768,10800,0),
+(4,1419,35211,78659,37348,-2168,16384,10800,0),
+(4,1420,35211,78820,36711,-2168,49152,10800,0),
+(4,1421,35211,78755,36710,-2168,16384,10800,0),
+(4,1422,35211,78689,36718,-2168,16384,10800,0),
+(4,1423,35211,78660,36672,-2168,24576,10800,0),
+(4,1424,35211,78656,36620,-2168,32768,10800,0),
+(4,1425,35211,78653,36580,-2168,32768,10800,0),
+(4,1426,35211,78655,36537,-2168,32768,10800,0),
+(4,1427,35206,78783,37187,-2168,16384,10800,0),
+(4,1428,35206,78734,37184,-2168,24576,10800,0),
+(4,1429,35206,78785,36711,-2168,40960,10800,0),
+(4,1430,35206,78728,36709,-2168,49152,10800,0),
+(4,1431,35207,78728,37265,-2168,24576,10800,0),
+(4,1432,35207,78741,36649,-2168,40960,10800,0),
+(4,1433,35211,78822,37198,-2168,49152,10800,0),
+(4,1434,35211,78759,37185,-2168,49152,10800,0),
+(4,1435,35211,78697,37187,-2168,40960,10800,0),
+(4,1436,35211,78657,37233,-2168,32768,10800,0),
+(4,1437,35211,78820,36711,-2168,49152,10800,0),
+(4,1438,35211,78755,36710,-2168,16384,10800,0),
+(4,1439,35211,78689,36718,-2168,16384,10800,0),
+(4,1440,35211,78660,36672,-2168,24576,10800,0),
+(4,1441,35206,78783,37187,-2168,16384,10800,0),
+(4,1442,35206,78734,37184,-2168,24576,10800,0),
+(4,1443,35206,78785,36711,-2168,40960,10800,0),
+(4,1444,35206,78728,36709,-2168,49152,10800,0),
+(4,1445,35207,78728,37265,-2168,24576,10800,0),
+(4,1446,35207,78741,36649,-2168,40960,10800,0),
+(4,1447,35198,80578,37128,-2294,32768,120,0),
+(4,1448,35198,80578,37256,-2294,32768,120,0),
+(4,1449,35198,80578,37319,-2294,32768,120,0),
+(4,1450,35198,80578,37064,-2294,32768,120,0),
+(4,1451,35198,80578,36933,-2294,32768,120,0),
+(4,1452,35198,80578,36805,-2294,32768,120,0),
+(4,1453,35198,80578,37447,-2294,32768,120,0),
+(4,1454,35198,80578,37576,-2294,32768,120,0),
+(4,1455,35193,80578,37000,-2294,32768,10800,0),
+(4,1456,35193,80578,37383,-2294,32768,10800,0),
+(4,1457,35193,80578,37640,-2294,32768,10800,0),
+(4,1458,35193,80578,36741,-2294,32768,10800,0),
+(4,1459,35194,80578,37192,-2294,32768,120,0),
+(4,1460,35194,80578,37511,-2294,32768,120,0),
+(4,1461,35194,80578,36869,-2294,32768,120,0),
+(4,1462,35197,80428,36744,-2294,32768,60,0),
+(4,1463,35197,80428,36808,-2294,32768,60,0),
+(4,1464,35197,80428,37640,-2294,32768,60,0),
+(4,1465,35197,80428,37576,-2294,32768,60,0),
+(4,1466,35192,80428,37192,-2294,32768,120,0),
+(4,1467,35197,80428,36872,-2294,32768,60,0),
+(4,1468,35197,80428,36936,-2294,32768,60,0),
+(4,1469,35197,80428,37000,-2294,32768,60,0),
+(4,1470,35197,80428,37064,-2294,32768,60,0),
+(4,1471,35192,80428,37128,-2294,32768,120,0),
+(4,1472,35192,80428,37255,-2294,32768,120,0),
+(4,1473,35197,80428,37319,-2294,32768,60,0),
+(4,1474,35197,80428,37383,-2294,32768,60,0),
+(4,1475,35197,80428,37447,-2294,32768,60,0),
+(4,1476,35197,80428,37511,-2294,32768,60,0),
+(4,1477,35211,81331,37424,-1985,49152,10800,0),
+(4,1478,35211,81209,37423,-1985,49152,10800,0),
+(4,1479,35211,81148,37478,-1985,40960,10800,0),
+(4,1480,35211,81129,37503,-1985,32768,10800,0),
+(4,1481,35211,81128,37542,-1985,32768,10800,0),
+(4,1482,35211,81128,37578,-1985,32768,10800,0),
+(4,1483,35211,81288,37424,-1985,49152,10800,0),
+(4,1484,35206,81173,37452,-1985,40960,10800,0),
+(4,1485,35206,81249,37424,-1984,49152,10800,0),
+(4,1486,35207,81194,37526,-1986,40960,10800,0),
+(4,1487,35211,81337,36971,-1987,16384,10800,0),
+(4,1488,35211,81297,36971,-1985,16384,10800,0),
+(4,1489,35211,81212,36971,-1986,16384,10800,0),
+(4,1490,35211,81147,36913,-1985,24576,10800,0),
+(4,1491,35211,81127,36886,-1984,32768,10800,0),
+(4,1492,35211,81128,36846,-1985,32768,10800,0),
+(4,1493,35211,81127,36807,-1985,32768,10800,0),
+(4,1494,35206,81253,36971,-1983,16384,10800,0),
+(4,1495,35206,81183,36949,-1986,24576,10800,0),
+(4,1496,35207,81201,36869,-1983,24576,10800,0),
+(4,1497,35211,81458,37084,-2294,32768,10800,0),
+(4,1498,35211,81458,37115,-2294,32768,10800,0),
+(4,1499,35211,81458,37146,-2294,32768,10800,0),
+(4,1500,35211,81458,37178,-2294,32768,10800,0),
+(4,1501,35211,81458,37209,-2294,32768,10800,0),
+(4,1502,35211,81458,37241,-2294,32768,10800,0),
+(4,1503,35211,81458,37272,-2294,32768,10800,0),
+(4,1504,35206,81458,37304,-2294,32768,10800,0),
+(4,1505,35206,81438,37084,-2294,32768,10800,0),
+(4,1506,35207,81438,37115,-2294,32768,10800,0),
+(4,1507,35211,81438,37146,-2294,32768,10800,0),
+(4,1508,35211,81438,37178,-2294,32768,10800,0),
+(4,1509,35211,81438,37209,-2294,32768,10800,0),
+(4,1510,35211,81438,37241,-2294,32768,10800,0),
+(4,1511,35211,81438,37272,-2294,32768,10800,0),
+(4,1512,35211,81438,37304,-2294,32768,10800,0),
+(4,1513,35211,80345,38756,-2170,16384,10800,0),
+(4,1514,35211,80396,38756,-2170,16384,10800,0),
+(4,1515,35211,80446,38756,-2170,16384,10800,0),
+(4,1516,35211,80496,38756,-2170,16384,10800,0),
+(4,1517,35207,80546,38756,-2170,16384,10800,0),
+(4,1518,35211,80596,38756,-2170,16384,10800,0),
+(4,1519,35211,80646,38756,-2170,16384,10800,0),
+(4,1520,35211,80696,38756,-2170,16384,10800,0),
+(4,1521,35211,80746,38756,-2170,16384,10800,0),
+(4,1522,35206,80796,38756,-2170,16384,10800,0),
+(4,1523,35211,80846,38756,-2170,16384,10800,0),
+(4,1524,35211,80896,38756,-2170,16384,10800,0),
+(4,1525,35211,80345,35354,-2170,16384,10800,0),
+(4,1526,35211,80396,35354,-2170,16384,10800,0),
+(4,1527,35211,80446,35354,-2170,16384,10800,0),
+(4,1528,35211,80496,35354,-2170,16384,10800,0),
+(4,1529,35207,80546,35354,-2170,16384,10800,0),
+(4,1530,35211,80596,35354,-2170,16384,10800,0),
+(4,1531,35211,80646,35354,-2170,16384,10800,0),
+(4,1532,35211,80696,35354,-2170,16384,10800,0),
+(4,1533,35211,80746,35354,-2170,16384,10800,0),
+(4,1534,35206,80796,35354,-2170,16384,10800,0),
+(4,1535,35211,80846,35354,-2170,16384,10800,0),
+(4,1536,35211,80896,35354,-2170,16384,10800,0),
+(5,1537,35250,147290,8527,-470,16389,10800,0),
+(5,1538,35250,147356,8527,-470,16389,10800,0),
+(5,1539,35250,147423,8527,-470,16389,10800,0),
+(5,1540,35250,147490,8527,-470,16389,10800,0),
+(5,1541,35250,147556,8527,-470,16389,10800,0),
+(5,1542,35254,147290,8547,-470,16389,10800,0),
+(5,1543,35254,147323,8547,-470,16389,10800,0),
+(5,1544,35254,147356,8547,-470,16389,10800,0),
+(5,1545,35254,147390,8547,-470,16389,10800,0),
+(5,1546,35254,147423,8547,-470,16389,10800,0),
+(5,1547,35254,147456,8547,-470,16389,10800,0),
+(5,1548,35254,147490,8547,-470,16389,10800,0),
+(5,1549,35254,147523,8547,-470,16389,10800,0),
+(5,1550,35254,147556,8547,-470,16389,10800,0),
+(5,1551,35254,147590,8547,-470,16389,10800,0),
+(5,1552,35254,147290,8567,-470,16389,10800,0),
+(5,1553,35252,147323,8567,-470,16389,10800,0),
+(5,1554,35251,147356,8567,-470,16389,10800,0),
+(5,1555,35252,147390,8567,-470,16389,10800,0),
+(5,1556,35251,147423,8567,-470,16389,10800,0),
+(5,1557,35252,147456,8567,-470,16389,10800,0),
+(5,1558,35251,147490,8567,-470,16389,10800,0),
+(5,1559,35252,147523,8567,-470,16389,10800,0),
+(5,1560,35251,147556,8567,-470,16389,10800,0),
+(5,1561,35252,147590,8567,-470,16389,10800,0),
+(5,1562,35251,147290,8587,-470,16389,10800,0),
+(5,1563,35253,147323,8587,-470,16389,10800,0),
+(5,1564,35253,147356,8587,-470,16389,10800,0),
+(5,1565,35253,147390,8587,-470,16389,10800,0),
+(5,1566,35253,147423,8587,-470,16389,10800,0),
+(5,1567,35248,147456,8587,-470,16389,10800,0),
+(5,1568,35253,147490,8587,-470,16389,10800,0),
+(5,1569,35253,147523,8587,-470,16389,10800,0),
+(5,1570,35253,147556,8587,-470,16389,10800,0),
+(5,1571,35253,147590,8587,-470,16389,10800,0),
+(5,1572,35254,148185,8527,-212,32768,10800,0),
+(5,1573,35254,148185,8567,-212,32768,10800,0),
+(5,1574,35254,148185,8608,-212,32768,10800,0),
+(5,1575,35254,148185,8649,-212,32768,10800,0),
+(5,1576,35254,148185,8689,-212,32768,10800,0),
+(5,1577,35254,148185,8730,-212,32768,10800,0),
+(5,1578,35254,148185,8771,-212,32768,10800,0),
+(5,1579,35254,148185,8811,-212,32768,10800,0),
+(5,1580,35254,148185,8852,-212,32768,10800,0),
+(5,1581,35254,148185,8893,-212,32768,10800,0),
+(5,1582,35254,148185,8933,-212,32768,10800,0),
+(5,1583,35254,148185,8974,-212,32768,10800,0),
+(5,1584,35254,148185,9015,-212,32768,10800,0),
+(5,1585,35254,148185,9055,-212,32768,10800,0),
+(5,1586,35254,148185,9096,-212,32768,10800,0),
+(5,1587,35254,148185,9137,-212,32768,10800,0),
+(5,1588,35254,148185,9177,-212,32768,10800,0),
+(5,1589,35254,148185,9218,-212,32768,10800,0),
+(5,1590,35254,148185,9259,-212,32768,10800,0),
+(5,1591,35254,148185,9300,-212,32768,10800,0),
+(5,1592,35249,148231,8724,-212,32768,10800,0),
+(5,1593,35249,148231,8839,-212,32768,10800,0),
+(5,1594,35249,148231,8954,-212,32768,10800,0),
+(5,1595,35249,148231,9069,-212,32768,10800,0),
+(5,1596,35249,148231,8954,-212,32768,10800,0),
+(5,1597,35249,148231,9069,-212,32768,10800,0),
+(5,1598,35250,148261,8621,-212,32768,10800,0),
+(5,1599,35250,148261,8757,-212,32768,10800,0),
+(5,1600,35250,148261,8894,-212,32768,10800,0),
+(5,1601,35250,148261,9030,-212,32768,10800,0),
+(5,1602,35250,148261,9167,-212,32768,10800,0),
+(5,1603,35254,147984,8486,-212,16389,10800,0),
+(5,1604,35254,147955,8486,-212,16389,10800,0),
+(5,1605,35254,147927,8486,-212,16389,10800,0),
+(5,1606,35254,147896,8485,-212,16389,10800,0),
+(5,1607,35254,147865,8485,-212,16389,10800,0),
+(5,1608,35254,147835,8485,-212,16389,10800,0),
+(5,1609,35254,147983,8467,-212,16389,10800,0),
+(5,1610,35249,147954,8467,-212,16389,10800,0),
+(5,1611,35250,147925,8467,-212,16389,10800,0),
+(5,1612,35249,147895,8466,-212,16389,10800,0),
+(5,1613,35250,147864,8466,-212,16389,10800,0),
+(5,1614,35249,147833,8466,-212,16389,10800,0),
+(5,1615,35254,147064,8489,-212,16389,10800,0),
+(5,1616,35254,147035,8489,-212,16389,10800,0),
+(5,1617,35254,147007,8489,-212,16389,10800,0),
+(5,1618,35254,146976,8488,-212,16389,10800,0),
+(5,1619,35254,146945,8488,-212,16389,10800,0),
+(5,1620,35254,146915,8488,-212,16389,10800,0),
+(5,1621,35254,147065,8466,-212,16389,10800,0),
+(5,1622,35249,147036,8466,-212,16389,10800,0),
+(5,1623,35250,147007,8466,-212,16389,10800,0),
+(5,1624,35249,146977,8465,-212,16389,10800,0),
+(5,1625,35250,146946,8465,-212,16389,10800,0),
+(5,1626,35249,146915,8465,-212,16389,10800,0),
+(5,1627,35252,149105,6657,-470,16389,10800,0),
+(5,1628,35252,149142,6657,-470,16389,10800,0),
+(5,1629,35252,149180,6657,-470,16389,10800,0),
+(5,1630,35252,149217,6657,-470,16389,10800,0),
+(5,1631,35252,149255,6657,-470,16389,10800,0),
+(5,1632,35252,149292,6657,-470,16389,10800,0),
+(5,1633,35252,149330,6657,-470,16389,10800,0),
+(5,1634,35254,149105,6637,-470,16389,10800,0),
+(5,1635,35254,149142,6637,-470,16389,10800,0),
+(5,1636,35254,149180,6637,-470,16389,10800,0),
+(5,1637,35254,149217,6637,-470,16389,10800,0),
+(5,1638,35254,149255,6637,-470,16389,10800,0),
+(5,1639,35254,149292,6637,-470,16389,10800,0),
+(5,1640,35254,149330,6637,-470,16389,10800,0),
+(5,1641,35254,149105,6617,-470,16389,10800,0),
+(5,1642,35249,149142,6617,-470,16389,10800,0),
+(5,1643,35254,149180,6617,-470,16389,10800,0),
+(5,1644,35249,149217,6617,-470,16389,10800,0),
+(5,1645,35254,149255,6617,-470,16389,10800,0),
+(5,1646,35249,149292,6617,-470,16389,10800,0),
+(5,1647,35254,149330,6617,-470,16389,10800,0),
+(5,1648,35252,145569,6657,-470,16389,10800,0),
+(5,1649,35252,145606,6657,-470,16389,10800,0),
+(5,1650,35252,145644,6657,-470,16389,10800,0),
+(5,1651,35252,145682,6657,-470,16389,10800,0),
+(5,1652,35252,145719,6657,-470,16389,10800,0),
+(5,1653,35252,145757,6657,-470,16389,10800,0),
+(5,1654,35252,145795,6657,-470,16389,10800,0),
+(5,1655,35254,145569,6637,-470,16389,10800,0),
+(5,1656,35254,145606,6637,-470,16389,10800,0),
+(5,1657,35254,145644,6637,-470,16389,10800,0),
+(5,1658,35254,145682,6637,-470,16389,10800,0),
+(5,1659,35254,145719,6637,-470,16389,10800,0),
+(5,1660,35254,145757,6637,-470,16389,10800,0),
+(5,1661,35254,145795,6637,-470,16389,10800,0),
+(5,1662,35254,145569,6617,-470,16389,10800,0),
+(5,1663,35249,145606,6617,-470,16389,10800,0),
+(5,1664,35254,145644,6617,-470,16389,10800,0),
+(5,1665,35249,145682,6617,-470,16389,10800,0),
+(5,1666,35254,145719,6617,-470,16389,10800,0),
+(5,1667,35249,145757,6617,-470,16389,10800,0),
+(5,1668,35254,145795,6617,-470,16389,10800,0),
+(5,1669,35239,145762,7588,-470,16389,10800,0),
+(5,1670,35239,146067,7588,-470,16389,10800,0),
+(5,1671,35239,146372,7588,-470,16389,10800,0),
+(5,1672,35239,146678,7588,-470,16389,10800,0),
+(5,1673,35239,146983,7588,-470,16389,10800,0),
+(5,1674,35251,147288,7588,-470,16389,10800,0),
+(5,1675,35239,147594,7588,-470,16389,10800,0),
+(5,1676,35239,147899,7588,-470,16389,10800,0),
+(5,1677,35251,148204,7588,-470,16389,10800,0),
+(5,1678,35239,148510,7588,-470,16389,10800,0),
+(5,1679,35239,148815,7588,-470,16389,10800,0),
+(5,1680,35239,149121,7588,-470,16389,10800,0),
+(5,1681,35250,149083,4965,-20,0,10800,0),
+(5,1682,35254,149082,4926,-20,0,10800,0),
+(5,1683,35254,149081,4886,-20,0,10800,0),
+(5,1684,35254,149081,4843,-20,0,10800,0),
+(5,1685,35254,149057,4810,-20,0,10800,0),
+(5,1686,35254,149034,4790,-20,0,10800,0),
+(5,1687,35254,149008,4773,-20,0,10800,0),
+(5,1688,35254,148980,4766,-20,0,10800,0),
+(5,1689,35249,148951,4766,-20,0,10800,0),
+(5,1690,35254,148921,4766,-20,0,10800,0),
+(5,1691,35250,149006,4835,-20,0,10800,0),
+(5,1692,35250,149056,4219,-20,0,10800,0),
+(5,1693,35254,149080,4252,-20,0,10800,0),
+(5,1694,35254,149080,4295,-20,0,10800,0),
+(5,1695,35254,149081,4335,-20,0,10800,0),
+(5,1696,35254,149082,4374,-20,0,10800,0),
+(5,1697,35254,149038,4416,-20,0,10800,0),
+(5,1698,35254,149011,4439,-20,0,10800,0),
+(5,1699,35254,148984,4449,-20,0,10800,0),
+(5,1700,35249,148955,4450,-20,0,10800,0),
+(5,1701,35254,148922,4451,-20,0,10800,0),
+(5,1702,35250,149006,4362,-20,0,10800,0),
+(5,1703,35250,145831,4252,-20,32768,10800,0),
+(5,1704,35254,145909,4440,-20,32768,10800,0),
+(5,1705,35254,145883,4421,-20,32768,10800,0),
+(5,1706,35254,145833,4374,-20,32768,10800,0),
+(5,1707,35254,145833,4335,-20,32768,10800,0),
+(5,1708,35254,145832,4295,-20,32768,10800,0),
+(5,1709,35254,145852,4404,-20,32768,10800,0),
+(5,1710,35254,145936,4450,-20,32768,10800,0),
+(5,1711,35249,145966,4450,-20,32768,10800,0),
+(5,1712,35254,145995,4449,-20,32768,10800,0),
+(5,1713,35250,145926,4377,-20,32768,10800,0),
+(5,1714,35250,145836,4968,-20,32768,10800,0),
+(5,1715,35254,145836,4929,-20,32768,10800,0),
+(5,1716,35254,145835,4889,-20,32768,10800,0),
+(5,1717,35254,145834,4846,-20,32768,10800,0),
+(5,1718,35254,145853,4815,-20,32768,10800,0),
+(5,1719,35254,145874,4797,-20,32768,10800,0),
+(5,1720,35254,145901,4774,-20,32768,10800,0),
+(5,1721,35254,145989,4766,-20,32768,10800,0),
+(5,1722,35249,145958,4767,-20,32768,10800,0),
+(5,1723,35254,145928,4767,-20,32768,10800,0),
+(5,1724,35250,145921,4829,-20,32768,10800,0),
+(5,1725,35254,147146,5459,-340,16389,10800,0),
+(5,1726,35254,147196,5459,-340,16389,10800,0),
+(5,1727,35254,147247,5459,-340,16389,10800,0),
+(5,1728,35254,147298,5459,-340,16389,10800,0),
+(5,1729,35254,147349,5459,-340,16389,10800,0),
+(5,1730,35254,147400,5459,-340,16389,10800,0),
+(5,1731,35254,147451,5459,-340,16389,10800,0),
+(5,1732,35254,147501,5459,-340,16389,10800,0),
+(5,1733,35254,147552,5459,-340,16389,10800,0),
+(5,1734,35254,147603,5459,-340,16389,10800,0),
+(5,1735,35254,147654,5459,-340,16389,10800,0),
+(5,1736,35254,147705,5459,-340,16389,10800,0),
+(5,1737,35254,147756,5459,-340,16389,10800,0),
+(5,1738,35250,147554,5354,-340,16389,10800,0),
+(5,1739,35250,147352,5354,-340,32768,10800,0),
+(5,1740,35249,147560,5754,-340,32768,10800,0),
+(5,1741,35249,147356,5754,-340,32768,10800,0),
+(5,1742,35250,147457,5754,-340,32768,10800,0),
+(5,1743,35252,147556,5857,-400,16389,10800,0),
+(5,1744,35252,147522,5857,-400,16389,10800,0),
+(5,1745,35252,147488,5857,-400,16389,10800,0),
+(5,1746,35252,147455,5857,-400,16389,10800,0),
+(5,1747,35252,147421,5857,-400,16389,10800,0),
+(5,1748,35252,147387,5857,-400,16389,10800,0),
+(5,1749,35252,147353,5857,-400,16389,10800,0),
+(5,1750,35252,147320,5857,-400,16389,10800,0),
+(5,1751,35252,147455,3221,-400,16389,10800,0),
+(5,1752,35252,147334,5827,-400,16389,10800,0),
+(5,1753,35252,147367,5827,-400,16389,10800,0),
+(5,1754,35252,147401,5827,-400,16389,10800,0),
+(5,1755,35252,147435,5827,-400,16389,10800,0),
+(5,1756,35252,147468,5827,-400,16389,10800,0),
+(5,1757,35252,147502,5827,-400,16389,10800,0),
+(5,1758,35252,147536,5827,-400,16389,10800,0),
+(5,1759,35252,147570,5827,-400,16389,10800,0),
+(5,1760,35252,147590,5857,-400,16389,10800,0),
+(5,1761,35252,148161,1600,-150,16389,10800,0),
+(5,1762,35252,148199,1600,-150,16389,10800,0),
+(5,1763,35252,148161,1620,-150,16389,10800,0),
+(5,1764,35252,148199,1620,-150,16389,10800,0),
+(5,1765,35252,148161,1640,-150,16389,10800,0),
+(5,1766,35252,148199,1640,-150,16389,10800,0),
+(5,1767,35252,148161,1660,-150,16389,10800,0),
+(5,1768,35252,148199,1660,-150,16389,10800,0),
+(5,1769,35252,148161,1680,-150,16389,10800,0),
+(5,1770,35252,148199,1680,-150,16389,10800,0),
+(5,1771,35254,148161,1700,-150,16389,10800,0),
+(5,1772,35254,148199,1700,-150,16389,10800,0),
+(5,1773,35254,148161,1720,-150,16389,10800,0),
+(5,1774,35254,148199,1720,-150,16389,10800,0),
+(5,1775,35252,146750,1600,-150,16389,10800,0),
+(5,1776,35252,146707,1600,-150,16389,10800,0),
+(5,1777,35252,146750,1620,-150,16389,10800,0),
+(5,1778,35252,146707,1620,-150,16389,10800,0),
+(5,1779,35252,146750,1640,-150,16389,10800,0),
+(5,1780,35252,146707,1640,-150,16389,10800,0),
+(5,1781,35252,146750,1660,-150,16389,10800,0),
+(5,1782,35252,146707,1660,-150,16389,10800,0),
+(5,1783,35252,146750,1680,-150,16389,10800,0),
+(5,1784,35252,146707,1680,-150,16389,10800,0),
+(5,1785,35254,146750,1700,-150,16389,10800,0),
+(5,1786,35254,146707,1700,-150,16389,10800,0),
+(5,1787,35254,146750,1720,-150,16389,10800,0),
+(5,1788,35254,146707,1720,-150,16389,10800,0),
+(5,1789,35254,146818,1300,-150,16389,10800,0),
+(5,1790,35254,146861,1300,-150,16389,10800,0),
+(5,1791,35254,146905,1300,-150,16389,10800,0),
+(5,1792,35254,146949,1300,-150,16389,10800,0),
+(5,1793,35254,146993,1300,-150,16389,10800,0),
+(5,1794,35254,147037,1300,-150,16389,10800,0),
+(5,1795,35254,147351,1300,-150,16389,10800,0),
+(5,1796,35254,147393,1300,-150,16389,10800,0),
+(5,1797,35254,147435,1300,-150,16389,10800,0),
+(5,1798,35254,147477,1300,-150,16389,10800,0),
+(5,1799,35254,147519,1300,-150,16389,10800,0),
+(5,1800,35254,147561,1300,-150,16389,10800,0),
+(5,1801,35249,147461,1245,-150,16391,10800,0),
+(5,1802,35249,146933,1245,-150,16392,10800,0),
+(5,1803,35250,147441,1245,-150,16391,10800,0),
+(5,1804,35250,146953,1245,-150,16392,10800,0),
+(5,1805,35234,147468,1671,-338,16389,200,0),
+(5,1806,35250,147428,1671,-338,16389,10800,0),
+(5,1807,35251,147508,1671,-338,16389,10800,0),
+(5,1808,35252,147482,1933,-468,16389,10800,0),
+(5,1809,35252,147449,1933,-468,16389,10800,0),
+(5,1810,35254,147740,2020,-450,16389,10800,0),
+(5,1811,35254,147690,2020,-450,16389,10800,0),
+(5,1812,35254,147641,2020,-450,16389,10800,0),
+(5,1813,35254,147592,2020,-450,16389,10800,0),
+(5,1814,35254,147542,2020,-450,16389,10800,0),
+(5,1815,35254,147493,2020,-450,16389,10800,0),
+(5,1816,35254,147444,2020,-450,16389,10800,0),
+(5,1817,35254,147395,2020,-450,16389,10800,0),
+(5,1818,35254,147345,2020,-450,16389,10800,0),
+(5,1819,35254,147296,2020,-450,16389,10800,0),
+(5,1820,35254,147247,2020,-450,16389,10800,0),
+(5,1821,35254,147198,2020,-450,16389,10800,0),
+(5,1822,35254,147740,2040,-450,16389,10800,0),
+(5,1823,35254,147690,2040,-450,16389,10800,0),
+(5,1824,35254,147641,2040,-450,16389,10800,0),
+(5,1825,35254,147592,2040,-450,16389,10800,0),
+(5,1826,35254,147542,2040,-450,16389,10800,0),
+(5,1827,35254,147493,2040,-450,16389,10800,0),
+(5,1828,35254,147444,2040,-450,16389,10800,0),
+(5,1829,35254,147395,2040,-450,16389,10800,0),
+(5,1830,35254,147345,2040,-450,16389,10800,0),
+(5,1831,35254,147296,2040,-450,16389,10800,0),
+(5,1832,35254,147247,2040,-450,16389,10800,0),
+(5,1833,35254,147198,2040,-450,16389,10800,0),
+(5,1834,35240,147740,2060,-450,16389,200,0),
+(5,1835,35240,147690,2060,-450,16389,200,0),
+(5,1836,35240,147641,2060,-450,16389,200,0),
+(5,1837,35240,147592,2060,-450,16389,200,0),
+(5,1838,35240,147542,2060,-450,16389,200,0),
+(5,1839,35240,147493,2060,-450,16389,200,0),
+(5,1840,35240,147444,2060,-450,16389,200,0),
+(5,1841,35240,147395,2060,-450,16389,200,0),
+(5,1842,35240,147345,2060,-450,16389,200,0),
+(5,1843,35240,147296,2060,-450,16389,200,0),
+(5,1844,35240,147247,2060,-450,16389,200,0),
+(5,1845,35240,147198,2060,-450,16389,200,0),
+(5,1846,35240,147740,2080,-450,16389,200,0),
+(5,1847,35240,147690,2080,-450,16389,200,0),
+(5,1848,35240,147641,2080,-450,16389,200,0),
+(5,1849,35240,147592,2080,-450,16389,200,0),
+(5,1850,35240,147542,2080,-450,16389,200,0),
+(5,1851,35240,147493,2080,-450,16389,200,0),
+(5,1852,35240,147444,2080,-450,16389,200,0),
+(5,1853,35240,147395,2080,-450,16389,200,0),
+(5,1854,35240,147345,2080,-450,16389,200,0),
+(5,1855,35240,147296,2080,-450,16389,200,0),
+(5,1856,35240,147247,2080,-450,16389,200,0),
+(5,1857,35240,147198,2080,-450,16389,200,0),
+(5,1858,35250,148404,5289,-21,0,10800,0),
+(5,1859,35249,148404,5309,-21,0,10800,0),
+(5,1860,35250,148404,5328,-21,0,10800,0),
+(5,1861,35249,148404,5348,-21,0,10800,0),
+(5,1862,35250,148404,5368,-21,0,10800,0),
+(5,1863,35254,148424,5289,-21,0,10800,0),
+(5,1864,35254,148424,5309,-21,0,10800,0),
+(5,1865,35254,148424,5328,-21,0,10800,0),
+(5,1866,35254,148424,5348,-21,0,10800,0),
+(5,1867,35254,148424,5368,-21,0,10800,0),
+(5,1868,35254,148444,5289,-21,0,10800,0),
+(5,1869,35254,148444,5309,-21,0,10800,0),
+(5,1870,35254,148444,5328,-21,0,10800,0),
+(5,1871,35254,148444,5348,-21,0,10800,0),
+(5,1872,35254,148444,5368,-21,0,10800,0),
+(5,1873,35240,148464,5289,-21,0,200,0),
+(5,1874,35240,148464,5309,-21,0,200,0),
+(5,1875,35240,148464,5328,-21,0,200,0),
+(5,1876,35240,148464,5348,-21,0,200,0),
+(5,1877,35240,148464,5368,-21,0,200,0),
+(5,1878,35250,146520,5289,-21,32768,10800,0),
+(5,1879,35249,146520,5308,-21,32768,10800,0),
+(5,1880,35250,146520,5328,-21,32768,10800,0),
+(5,1881,35249,146520,5348,-21,32768,10800,0),
+(5,1882,35250,146520,5368,-21,32768,10800,0),
+(5,1883,35254,146500,5289,-21,32768,10800,0),
+(5,1884,35254,146500,5308,-21,32768,10800,0),
+(5,1885,35254,146500,5328,-21,32768,10800,0),
+(5,1886,35254,146500,5348,-21,32768,10800,0),
+(5,1887,35254,146500,5368,-21,32768,10800,0),
+(5,1888,35254,146480,5289,-21,32768,10800,0),
+(5,1889,35254,146480,5308,-21,32768,10800,0),
+(5,1890,35254,146480,5328,-21,32768,10800,0),
+(5,1891,35254,146480,5348,-21,32768,10800,0),
+(5,1892,35254,146480,5368,-21,32768,10800,0),
+(5,1893,35240,146460,5289,-21,32768,200,0),
+(5,1894,35240,146460,5308,-21,32768,200,0),
+(5,1895,35240,146460,5328,-21,32768,200,0),
+(5,1896,35240,146460,5348,-21,32768,200,0),
+(5,1897,35240,146460,5368,-21,32768,200,0),
+(5,1898,35254,149936,5168,-80,8192,10800,0),
+(5,1899,35254,149893,5230,-80,8192,10800,0),
+(5,1900,35254,149851,5293,-80,8192,10800,0),
+(5,1901,35254,149809,5355,-80,8192,10800,0),
+(5,1902,35254,149767,5418,-80,8192,10800,0),
+(5,1903,35254,149725,5480,-80,8192,10800,0),
+(5,1904,35254,149682,5543,-80,8192,10800,0),
+(5,1905,35254,149640,5605,-80,8192,10800,0),
+(5,1906,35254,149598,5668,-80,8192,10800,0),
+(5,1907,35254,149556,5730,-80,8192,10800,0),
+(5,1908,35254,149514,5793,-80,8192,10800,0),
+(5,1909,35254,149472,5856,-80,8192,10800,0),
+(5,1910,35254,144976,5136,-80,8192,10800,0),
+(5,1911,35254,145015,5197,-80,8192,10800,0),
+(5,1912,35254,145054,5258,-80,8192,10800,0),
+(5,1913,35254,145093,5319,-80,8192,10800,0),
+(5,1914,35254,145133,5380,-80,8192,10800,0),
+(5,1915,35254,145172,5441,-80,8192,10800,0),
+(5,1916,35254,145211,5502,-80,8192,10800,0),
+(5,1917,35254,145250,5563,-80,8192,10800,0),
+(5,1918,35254,145290,5624,-80,8192,10800,0),
+(5,1919,35254,145329,5685,-80,8192,10800,0),
+(5,1920,35254,145368,5746,-80,8192,10800,0),
+(5,1921,35254,145408,5808,-80,8192,10800,0),
+(5,1922,35254,148185,8527,-212,32768,10800,0),
+(5,1923,35254,148185,8567,-212,32768,10800,0),
+(5,1924,35254,148185,8649,-212,32768,10800,0),
+(5,1925,35254,148185,8689,-212,32768,10800,0),
+(5,1926,35254,148185,8771,-212,32768,10800,0),
+(5,1927,35254,148185,8811,-212,32768,10800,0),
+(5,1928,35254,148185,8893,-212,32768,10800,0),
+(5,1929,35254,148185,8933,-212,32768,10800,0),
+(5,1930,35254,148185,9015,-212,32768,10800,0),
+(5,1931,35254,148185,9055,-212,32768,10800,0),
+(5,1932,35254,148185,9137,-212,32768,10800,0),
+(5,1933,35254,148185,9177,-212,32768,10800,0),
+(5,1934,35254,148185,9259,-212,32768,10800,0),
+(5,1935,35254,148185,9300,-212,32768,10800,0),
+(5,1936,35249,148231,8724,-212,32768,10800,0),
+(5,1937,35249,148231,8839,-212,32768,10800,0),
+(5,1938,35249,148231,9069,-212,32768,10800,0),
+(5,1939,35249,148231,8954,-212,32768,10800,0),
+(5,1940,35250,148261,8621,-212,32768,10800,0),
+(5,1941,35250,148261,8894,-212,32768,10800,0),
+(5,1942,35250,148261,9167,-212,32768,10800,0),
+(6,1943,35301,116371,245422,-1049,48376,10800,0),
+(6,1944,35301,116343,245422,-1049,48376,10800,0),
+(6,1945,35301,116315,245422,-1049,48376,10800,0),
+(6,1946,35301,116287,245422,-1049,48376,10800,0),
+(6,1947,35301,116259,245422,-1049,48376,10800,0),
+(6,1948,35301,116231,245422,-1049,48376,10800,0),
+(6,1949,35301,116203,245422,-1049,48376,10800,0),
+(6,1950,35301,116175,245422,-1049,48376,10800,0),
+(6,1951,35301,116147,245422,-1049,48376,10800,0),
+(6,1952,35299,116371,245402,-1049,48376,10800,0),
+(6,1953,35298,116343,245402,-1049,48376,10800,0),
+(6,1954,35299,116315,245402,-1049,48376,10800,0),
+(6,1955,35298,116287,245402,-1049,48376,10800,0),
+(6,1956,35299,116259,245402,-1049,48376,10800,0),
+(6,1957,35298,116231,245402,-1049,48376,10800,0),
+(6,1958,35299,116203,245402,-1049,48376,10800,0),
+(6,1959,35298,116175,245402,-1049,48376,10800,0),
+(6,1960,35299,116147,245402,-1049,48376,10800,0),
+(6,1961,35300,116371,245382,-1049,48376,10800,0),
+(6,1962,35300,116343,245382,-1049,48376,10800,0),
+(6,1963,35300,116315,245382,-1049,48376,10800,0),
+(6,1964,35300,116287,245382,-1049,48376,10800,0),
+(6,1965,35295,116259,245382,-1049,48376,10800,0),
+(6,1966,35300,116231,245382,-1049,48376,10800,0),
+(6,1967,35300,116203,245382,-1049,48376,10800,0),
+(6,1968,35300,116175,245382,-1049,48376,10800,0),
+(6,1969,35300,116147,245382,-1049,48376,10800,0),
+(6,1970,35300,116514,245800,-1039,32080,10800,0),
+(6,1971,35300,116513,245831,-1038,32080,10800,0),
+(6,1972,35295,116513,245861,-1038,32080,10800,0),
+(6,1973,35300,116513,245891,-1037,32080,10800,0),
+(6,1974,35300,116514,245922,-1038,32080,10800,0),
+(6,1975,35300,116512,245951,-1037,32080,10800,0),
+(6,1976,35295,116512,245981,-1037,32080,10800,0),
+(6,1977,35300,116512,246011,-1036,32080,10800,0),
+(6,1978,35300,116513,246042,-1037,32080,10800,0),
+(6,1979,35299,116539,245818,-1057,32080,10800,0),
+(6,1980,35299,116539,245848,-1057,32080,10800,0),
+(6,1981,35298,116539,245879,-1056,32080,10800,0),
+(6,1982,35299,116540,245909,-1057,32080,10800,0),
+(6,1983,35299,116538,245939,-1056,32080,10800,0),
+(6,1984,35298,116538,245969,-1056,32080,10800,0),
+(6,1985,35299,116537,245998,-1055,32080,10800,0),
+(6,1986,35299,116538,246030,-1056,32080,10800,0),
+(6,1987,35301,116560,245802,-1061,32080,10800,0),
+(6,1988,35301,116559,245832,-1061,32080,10800,0),
+(6,1989,35301,116559,245862,-1060,32080,10800,0),
+(6,1990,35301,116558,245893,-1060,32080,10800,0),
+(6,1991,35301,116560,245923,-1060,32080,10800,0),
+(6,1992,35301,116558,245953,-1059,32080,10800,0),
+(6,1993,35301,116558,245983,-1059,32080,10800,0),
+(6,1994,35301,116557,246012,-1058,32080,10800,0),
+(6,1995,35301,116558,246044,-1059,32080,10800,0),
+(6,1996,35301,116706,245820,-1062,32080,10800,0),
+(6,1997,35301,116706,245850,-1061,32080,10800,0),
+(6,1998,35301,116706,245881,-1061,32080,10800,0),
+(6,1999,35301,116705,245911,-1060,32080,10800,0),
+(6,2000,35301,116706,245941,-1060,32080,10800,0),
+(6,2001,35301,116704,245971,-1060,32080,10800,0),
+(6,2002,35301,116703,246001,-1059,32080,10800,0),
+(6,2003,35301,116703,246031,-1059,32080,10800,0),
+(6,2004,35297,116807,246151,-1053,48668,10800,0),
+(6,2005,35297,116777,246152,-1054,48668,10800,0),
+(6,2006,35287,116569,246033,-1037,32080,60,0),
+(6,2007,35287,116570,245969,-1037,32080,60,0),
+(6,2008,35287,116570,245880,-1037,32080,60,0),
+(6,2009,35287,116567,245820,-1037,32080,60,0),
+(6,2010,35301,116321,246173,-788,48668,10800,0),
+(6,2011,35301,116291,246174,-789,48668,10800,0),
+(6,2012,35296,116261,246171,-788,48668,10800,0),
+(6,2013,35301,116231,246170,-788,48668,10800,0),
+(6,2014,35301,116202,246169,-787,48668,10800,0),
+(6,2015,35301,116551,246107,-786,48668,10800,0),
+(6,2016,35301,116521,246108,-787,48668,10800,0),
+(6,2017,35296,116492,246105,-786,48668,10800,0),
+(6,2018,35301,116462,246104,-786,48668,10800,0),
+(6,2019,35301,116432,246103,-785,48668,10800,0),
+(6,2020,35301,116018,245969,-787,64432,10800,0),
+(6,2021,35301,116015,245939,-788,64432,10800,0),
+(6,2022,35296,116017,245910,-787,64432,10800,0),
+(6,2023,35301,116016,245880,-787,64432,10800,0),
+(6,2024,35301,116015,245850,-786,64432,10800,0),
+(6,2025,35300,115751,246175,-890,32712,10800,0),
+(6,2026,35295,115750,246209,-890,32712,10800,0),
+(6,2027,35300,115746,246250,-889,32712,10800,0),
+(6,2028,35299,115772,246175,-879,32712,10800,0),
+(6,2029,35299,115771,246209,-880,32712,10800,0),
+(6,2030,35299,115767,246250,-879,32712,10800,0),
+(6,2031,35298,115790,246175,-865,32712,10800,0),
+(6,2032,35298,115789,246209,-866,32712,10800,0),
+(6,2033,35298,115785,246250,-865,32712,10800,0),
+(6,2034,35297,116118,246216,-788,55444,10800,0),
+(6,2035,35301,116321,246173,-788,48668,10800,0),
+(6,2036,35296,116261,246171,-788,48668,10800,0),
+(6,2037,35301,116202,246169,-787,48668,10800,0),
+(6,2038,35301,116551,246107,-786,48668,10800,0),
+(6,2039,35301,116521,246108,-787,48668,10800,0),
+(6,2040,35296,116492,246105,-786,48668,10800,0),
+(6,2041,35301,116462,246104,-786,48668,10800,0),
+(6,2042,35301,116018,245969,-787,64432,10800,0),
+(6,2043,35296,116017,245910,-787,64432,10800,0),
+(6,2044,35301,116015,245850,-786,64432,10800,0),
+(6,2045,35298,116168,248194,-783,39088,10800,0),
+(6,2046,35300,116151,248219,-784,39088,10800,0),
+(6,2047,35298,116127,248245,-783,39088,10800,0),
+(6,2048,35300,116108,248268,-783,39088,10800,0),
+(6,2049,35298,116093,248286,-782,39088,10800,0),
+(6,2050,35300,116071,248312,-784,39088,10800,0),
+(6,2051,35298,116054,248337,-784,39088,10800,0),
+(6,2052,35300,116034,248358,-784,39088,10800,0),
+(6,2053,35298,116010,248369,-785,49844,10800,0),
+(6,2054,35300,115985,248350,-784,58336,10800,0),
+(6,2055,35298,115967,248326,-784,58336,10800,0),
+(6,2056,35300,115954,248306,-783,58336,10800,0),
+(6,2057,35298,115935,248279,-785,58336,10800,0),
+(6,2058,35300,115916,248255,-786,58336,10800,0),
+(6,2059,35298,115897,248225,-785,58336,10800,0),
+(6,2060,35300,115880,248200,-785,58336,10800,0),
+(6,2061,35298,115867,248181,-784,58336,10800,0),
+(6,2062,35299,116183,248214,-785,39088,10800,0),
+(6,2063,35301,116165,248238,-786,39088,10800,0),
+(6,2064,35299,116141,248264,-785,39088,10800,0),
+(6,2065,35301,116122,248288,-785,39088,10800,0),
+(6,2066,35299,116107,248306,-784,39088,10800,0),
+(6,2067,35301,116086,248332,-786,39088,10800,0),
+(6,2068,35299,116068,248356,-786,39088,10800,0),
+(6,2069,35301,116049,248377,-786,39088,10800,0),
+(6,2070,35299,116024,248388,-787,49844,10800,0),
+(6,2071,35301,115996,248387,-784,49844,10800,0),
+(6,2072,35299,115971,248368,-783,58336,10800,0),
+(6,2073,35301,115953,248344,-783,58336,10800,0),
+(6,2074,35299,115940,248324,-782,58336,10800,0),
+(6,2075,35301,115921,248297,-784,58336,10800,0),
+(6,2076,35299,115902,248273,-785,58336,10800,0),
+(6,2077,35301,115883,248243,-784,58336,10800,0),
+(6,2078,35299,115866,248218,-784,58336,10800,0),
+(6,2079,35301,115853,248199,-783,58336,10800,0),
+(6,2080,35301,116211,248319,-783,39088,10800,0),
+(6,2081,35301,116192,248342,-783,39088,10800,0),
+(6,2082,35301,116177,248360,-782,39088,10800,0),
+(6,2083,35301,116155,248386,-784,39088,10800,0),
+(6,2084,35301,116138,248411,-785,39088,10800,0),
+(6,2085,35301,115910,248377,-779,58336,10800,0),
+(6,2086,35301,115897,248357,-778,58336,10800,0),
+(6,2087,35301,115877,248330,-780,58336,10800,0),
+(6,2088,35301,115859,248306,-781,58336,10800,0),
+(6,2089,35301,115840,248276,-780,58336,10800,0),
+(6,2090,35297,115879,248453,-781,48388,10800,0),
+(6,2091,35296,115845,248453,-782,48388,10800,0),
+(6,2092,35296,116124,248456,-782,48388,10800,0),
+(6,2093,35297,116101,248455,-782,48388,10800,0),
+(6,2094,35301,116176,248181,-780,58336,10800,0),
+(6,2095,35287,116185,248235,-783,39088,60,0),
+(6,2096,35287,116104,248326,-783,39088,60,0),
+(6,2097,35287,115919,248317,-783,39088,60,0),
+(6,2098,35287,115847,248214,-783,39088,60,0),
+(6,2099,35280,116084,250339,-845,49112,300,0),
+(6,2100,35281,115972,250342,-844,49112,180,0),
+(6,2101,35288,115870,250325,-850,49112,120,0),
+(6,2102,35288,115833,250326,-850,49112,120,0),
+(6,2103,35288,115800,250326,-850,49112,120,0),
+(6,2104,35288,115762,250327,-850,49112,120,0),
+(6,2105,35288,115725,250327,-849,49112,120,0),
+(6,2106,35288,115687,250328,-849,49112,120,0),
+(6,2107,35288,115655,250328,-849,49112,120,0),
+(6,2108,35288,115617,250329,-849,49112,120,0),
+(6,2109,35285,115870,250291,-851,49112,120,0),
+(6,2110,35285,115832,250292,-851,49112,120,0),
+(6,2111,35285,115799,250292,-851,49112,120,0),
+(6,2112,35285,115762,250293,-851,49112,120,0),
+(6,2113,35285,115724,250293,-850,49112,120,0),
+(6,2114,35285,115687,250294,-850,49112,120,0),
+(6,2115,35285,115654,250294,-850,49112,120,0),
+(6,2116,35285,115617,250295,-850,49112,120,0),
+(6,2117,35287,115868,250253,-852,49112,60,0),
+(6,2118,35287,115830,250254,-852,49112,60,0),
+(6,2119,35282,115798,250254,-852,49112,120,0),
+(6,2120,35287,115760,250255,-852,49112,60,0),
+(6,2121,35287,115723,250255,-851,49112,60,0),
+(6,2122,35282,115685,250256,-851,49112,120,0),
+(6,2123,35287,115653,250256,-851,49112,60,0),
+(6,2124,35287,115615,250257,-851,49112,60,0),
+(6,2125,35288,116430,250319,-846,49112,120,0),
+(6,2126,35288,116392,250319,-846,49112,120,0),
+(6,2127,35288,116360,250319,-846,49112,120,0),
+(6,2128,35288,116322,250320,-846,49112,120,0),
+(6,2129,35288,116285,250321,-845,49112,120,0),
+(6,2130,35288,116247,250321,-845,49112,120,0),
+(6,2131,35288,116214,250322,-845,49112,120,0),
+(6,2132,35288,116177,250322,-845,49112,120,0),
+(6,2133,35285,116429,250284,-847,49112,120,0),
+(6,2134,35285,116391,250285,-847,49112,120,0),
+(6,2135,35285,116359,250285,-847,49112,120,0),
+(6,2136,35285,116321,250286,-847,49112,120,0),
+(6,2137,35285,116284,250287,-846,49112,120,0),
+(6,2138,35285,116246,250287,-846,49112,120,0),
+(6,2139,35285,116214,250287,-846,49112,120,0),
+(6,2140,35285,116176,250288,-846,49112,120,0),
+(6,2141,35287,116428,250247,-848,49112,60,0),
+(6,2142,35287,116390,250248,-848,49112,60,0),
+(6,2143,35282,116357,250248,-848,49112,120,0),
+(6,2144,35287,116320,250249,-848,49112,60,0),
+(6,2145,35287,116282,250249,-847,49112,60,0),
+(6,2146,35282,116245,250250,-847,49112,120,0),
+(6,2147,35287,116212,250250,-847,49112,60,0),
+(6,2148,35287,116175,250251,-847,49112,60,0),
+(6,2149,35284,116350,250484,-845,49112,120,0),
+(6,2150,35284,116266,250484,-844,49112,120,0),
+(6,2151,35284,116187,250485,-844,49112,120,0),
+(6,2152,35284,116112,250485,-844,49112,120,0),
+(6,2153,35284,115935,250485,-841,49112,120,0),
+(6,2154,35284,115852,250485,-841,49112,120,0),
+(6,2155,35284,115772,250486,-841,49112,120,0),
+(6,2156,35284,115698,250486,-841,49112,120,0),
+(6,2157,35300,115510,249359,-623,48856,10800,0),
+(6,2158,35295,115536,249359,-623,48856,10800,0),
+(6,2159,35300,115564,249359,-622,48856,10800,0),
+(6,2160,35299,115510,249381,-627,48856,10800,0),
+(6,2161,35299,115537,249381,-627,48856,10800,0),
+(6,2162,35299,115564,249381,-626,48856,10800,0),
+(6,2163,35298,115511,249406,-625,48856,10800,0),
+(6,2164,35298,115538,249406,-625,48856,10800,0),
+(6,2165,35298,115565,249405,-624,48856,10800,0),
+(6,2166,35297,115451,249483,-625,48856,10800,0),
+(6,2167,35297,115477,249483,-625,48856,10800,0),
+(6,2168,35297,115505,249483,-624,48856,10800,0),
+(6,2169,35301,115706,250056,-628,65460,10800,0),
+(6,2170,35301,115705,250093,-628,65460,10800,0),
+(6,2171,35296,115705,250130,-627,65460,10800,0),
+(6,2172,35301,115704,250166,-627,65460,10800,0),
+(6,2173,35301,115704,250202,-627,65460,10800,0),
+(6,2174,35296,115703,250240,-627,65460,10800,0),
+(6,2175,35301,115703,250271,-626,65460,10800,0),
+(6,2176,35301,115702,250308,-626,65460,10800,0),
+(6,2177,35296,115701,250343,-626,65460,10800,0),
+(6,2178,35301,115701,250380,-626,65460,10800,0),
+(6,2179,35301,115701,250417,-626,65460,10800,0),
+(6,2180,35300,116485,249293,-623,48856,10800,0),
+(6,2181,35295,116511,249293,-623,48856,10800,0),
+(6,2182,35300,116554,249296,-622,48856,10800,0),
+(6,2183,35299,116485,249315,-627,48856,10800,0),
+(6,2184,35299,116512,249315,-627,48856,10800,0),
+(6,2185,35299,116539,249315,-626,48856,10800,0),
+(6,2186,35298,116486,249340,-625,48856,10800,0),
+(6,2187,35298,116513,249340,-625,48856,10800,0),
+(6,2188,35298,116540,249339,-624,48856,10800,0),
+(6,2189,35297,116447,249581,-625,48856,10800,0),
+(6,2190,35297,116473,249581,-625,48856,10800,0),
+(6,2191,35297,116501,249581,-624,48856,10800,0),
+(6,2192,35301,116339,250411,-628,32384,10800,0),
+(6,2193,35301,116338,250375,-628,32384,10800,0),
+(6,2194,35296,116337,250338,-627,32384,10800,0),
+(6,2195,35301,116337,250302,-627,32384,10800,0),
+(6,2196,35301,116337,250266,-627,32384,10800,0),
+(6,2197,35296,116336,250228,-627,32384,10800,0),
+(6,2198,35301,116336,250197,-626,32384,10800,0),
+(6,2199,35301,116335,250160,-626,32384,10800,0),
+(6,2200,35296,116335,250125,-626,32384,10800,0),
+(6,2201,35301,116334,250088,-626,32384,10800,0),
+(6,2202,35301,116333,250051,-626,32384,10800,0),
+(6,2203,35301,116032,245348,-672,0,10800,0),
+(6,2204,35301,116032,245277,-672,0,10800,0),
+(6,2205,35301,116015,245210,-672,57344,10800,0),
+(6,2206,35301,115984,245185,-672,49152,10800,0),
+(6,2207,35301,115946,245185,-672,49152,10800,0),
+(6,2208,35301,115910,245185,-672,49152,10800,0),
+(6,2209,35301,115872,245185,-672,49152,10800,0),
+(6,2210,35301,116491,245349,-672,32768,10800,0),
+(6,2211,35301,116491,245280,-672,32768,10800,0),
+(6,2212,35301,116512,245216,-672,40960,10800,0),
+(6,2213,35301,116544,245185,-672,49152,10800,0),
+(6,2214,35301,116579,245185,-672,49152,10800,0),
+(6,2215,35301,116614,245185,-672,49152,10800,0),
+(6,2216,35301,116650,245185,-672,49152,10800,0),
+(6,2217,35296,116032,245315,-672,0,10800,0),
+(6,2218,35296,116032,245240,-672,0,10800,0),
+(6,2219,35296,116491,245312,-672,32768,10800,0),
+(6,2220,35296,116491,245242,-672,32768,10800,0),
+(6,2221,35297,115968,245248,-672,57344,10800,0),
+(6,2222,35297,116544,245248,-672,40960,10800,0),
+(6,2223,35301,116015,245358,-663,0,10800,0),
+(6,2224,35301,116015,245246,-663,0,10800,0),
+(6,2225,35301,115968,245187,-663,57344,10800,0),
+(6,2226,35301,115901,245173,-663,49152,10800,0),
+(6,2227,35301,116500,245319,-663,32768,10800,0),
+(6,2228,35301,116499,245239,-663,32768,10800,0),
+(6,2229,35301,116545,245182,-663,40960,10800,0),
+(6,2230,35301,116617,245170,-663,49152,10800,0),
+(6,2231,35296,116500,245278,-662,32768,10800,0),
+(6,2232,35296,116511,245207,-662,40960,10800,0),
+(6,2233,35296,116005,245210,-662,57344,10800,0),
+(6,2234,35296,116015,245294,-663,0,10800,0),
+(6,2235,35297,116599,245209,-663,40960,10800,0),
+(6,2236,35297,115909,245217,-663,57344,10800,0),
+(6,2237,35288,116087,247109,-790,49152,120,0),
+(6,2238,35288,115959,247109,-790,49152,120,0),
+(6,2239,35288,115896,247109,-790,49152,120,0),
+(6,2240,35288,116151,247109,-790,49152,120,0),
+(6,2241,35288,116282,247109,-790,49152,120,0),
+(6,2242,35288,116410,247109,-790,49152,120,0),
+(6,2243,35288,115768,247109,-790,49152,120,0),
+(6,2244,35288,115639,247109,-790,49152,120,0),
+(6,2245,35283,116215,247109,-790,49152,10800,0),
+(6,2246,35283,115832,247109,-790,49152,10800,0),
+(6,2247,35283,115575,247109,-790,49152,10800,0),
+(6,2248,35283,116474,247109,-790,49152,10800,0),
+(6,2249,35284,116023,247109,-790,49152,120,0),
+(6,2250,35284,115704,247109,-790,49152,120,0),
+(6,2251,35284,116346,247109,-790,49152,120,0),
+(6,2252,35287,116471,246959,-790,49152,60,0),
+(6,2253,35287,116407,246959,-790,49152,60,0),
+(6,2254,35287,115575,246959,-790,49152,60,0),
+(6,2255,35287,115639,246959,-790,49152,60,0),
+(6,2256,35282,116023,246959,-790,49152,120,0),
+(6,2257,35287,116343,246959,-790,49152,60,0),
+(6,2258,35287,116279,246959,-790,49152,60,0),
+(6,2259,35287,116215,246959,-790,49152,60,0),
+(6,2260,35287,116151,246959,-790,49152,60,0),
+(6,2261,35282,116087,246959,-790,49152,120,0),
+(6,2262,35282,115960,246959,-790,49152,120,0),
+(6,2263,35287,115896,246959,-790,49152,60,0),
+(6,2264,35287,115832,246959,-790,49152,60,0),
+(6,2265,35287,115768,246959,-790,49152,60,0),
+(6,2266,35287,115704,246959,-790,49152,60,0),
+(6,2267,35301,115791,247862,-481,0,10800,0),
+(6,2268,35301,115792,247740,-481,0,10800,0),
+(6,2269,35301,115737,247679,-481,57344,10800,0),
+(6,2270,35301,115712,247660,-481,49152,10800,0),
+(6,2271,35301,115673,247659,-481,49152,10800,0),
+(6,2272,35301,115637,247659,-481,49152,10800,0),
+(6,2273,35301,115791,247819,-481,0,10800,0),
+(6,2274,35296,115763,247704,-481,57344,10800,0),
+(6,2275,35296,115791,247780,-480,0,10800,0),
+(6,2276,35297,115689,247725,-482,57344,10800,0),
+(6,2277,35301,116244,247868,-483,32768,10800,0),
+(6,2278,35301,116244,247828,-481,32768,10800,0),
+(6,2279,35301,116244,247743,-482,32768,10800,0),
+(6,2280,35301,116302,247678,-481,40960,10800,0),
+(6,2281,35301,116329,247658,-480,49152,10800,0),
+(6,2282,35301,116369,247659,-481,49152,10800,0),
+(6,2283,35301,116408,247658,-481,49152,10800,0),
+(6,2284,35296,116244,247784,-479,32768,10800,0),
+(6,2285,35296,116266,247714,-482,40960,10800,0),
+(6,2286,35297,116346,247732,-479,40960,10800,0),
+(6,2287,35301,116131,247989,-790,49152,10800,0),
+(6,2288,35301,116100,247989,-790,49152,10800,0),
+(6,2289,35301,116069,247989,-790,49152,10800,0),
+(6,2290,35301,116037,247989,-790,49152,10800,0),
+(6,2291,35301,116006,247989,-790,49152,10800,0),
+(6,2292,35301,115974,247989,-790,49152,10800,0),
+(6,2293,35301,115943,247989,-790,49152,10800,0),
+(6,2294,35296,115911,247989,-790,49152,10800,0),
+(6,2295,35296,116131,247969,-790,49152,10800,0),
+(6,2296,35297,116100,247969,-790,49152,10800,0),
+(6,2297,35301,116069,247969,-790,49152,10800,0),
+(6,2298,35301,116037,247969,-790,49152,10800,0),
+(6,2299,35301,116006,247969,-790,49152,10800,0),
+(6,2300,35301,115974,247969,-790,49152,10800,0),
+(6,2301,35301,115943,247969,-790,49152,10800,0),
+(6,2302,35301,115911,247969,-790,49152,10800,0),
+(6,2303,35301,114459,246876,-666,32768,10800,0),
+(6,2304,35301,114459,246927,-666,32768,10800,0),
+(6,2305,35301,114459,246977,-666,32768,10800,0),
+(6,2306,35301,114459,247027,-666,32768,10800,0),
+(6,2307,35297,114459,247077,-666,32768,10800,0),
+(6,2308,35301,114459,247127,-666,32768,10800,0),
+(6,2309,35301,114459,247177,-666,32768,10800,0),
+(6,2310,35301,114459,247227,-666,32768,10800,0),
+(6,2311,35301,114459,247277,-666,32768,10800,0),
+(6,2312,35296,114459,247327,-666,32768,10800,0),
+(6,2313,35301,114459,247377,-666,32768,10800,0),
+(6,2314,35301,114459,247427,-666,32768,10800,0),
+(6,2315,35301,117861,246876,-666,32768,10800,0),
+(6,2316,35301,117861,246927,-666,32768,10800,0),
+(6,2317,35301,117861,246977,-666,32768,10800,0),
+(6,2318,35301,117861,247027,-666,32768,10800,0),
+(6,2319,35297,117861,247077,-666,32768,10800,0),
+(6,2320,35301,117861,247127,-666,32768,10800,0),
+(6,2321,35301,117861,247177,-666,32768,10800,0),
+(6,2322,35301,117861,247227,-666,32768,10800,0),
+(6,2323,35301,117861,247277,-666,32768,10800,0),
+(6,2324,35296,117861,247327,-666,32768,10800,0),
+(6,2325,35301,117861,247377,-666,32768,10800,0),
+(6,2326,35301,117861,247427,-666,32768,10800,0),
+(7,2327,35340,147134,-45144,-1357,16416,10800,0),
+(7,2328,35351,147218,-45144,-1357,16416,10800,0),
+(7,2329,35351,147105,-45263,-1357,31296,10800,0),
+(7,2330,35351,147117,-45180,-1357,31296,10800,0),
+(7,2331,35340,147111,-45221,-1357,31296,10800,0),
+(7,2332,35340,147241,-45225,-1357,1424,10800,0),
+(7,2333,35351,147247,-45267,-1357,1424,10800,0),
+(7,2334,35351,147236,-45184,-1357,1424,10800,0),
+(7,2335,35340,147134,-45144,-1357,16416,10800,0),
+(7,2336,35351,147218,-45144,-1357,16416,10800,0),
+(7,2337,35351,147105,-45263,-1357,31296,10800,0),
+(7,2338,35351,147117,-45180,-1357,31296,10800,0),
+(7,2339,35340,147111,-45221,-1357,31296,10800,0),
+(7,2340,35340,147241,-45225,-1357,1424,10800,0),
+(7,2341,35351,147247,-45267,-1357,1424,10800,0),
+(7,2342,35351,147236,-45184,-1357,1424,10800,0),
+(7,2343,35351,147714,-45140,-1357,16416,10800,0),
+(7,2344,35340,147797,-45140,-1357,16416,10800,0),
+(7,2345,35351,147684,-45258,-1357,31296,10800,0),
+(7,2346,35351,147696,-45176,-1357,31296,10800,0),
+(7,2347,35340,147690,-45217,-1357,31296,10800,0),
+(7,2348,35340,147820,-45221,-1357,1424,10800,0),
+(7,2349,35351,147826,-45262,-1357,1424,10800,0),
+(7,2350,35351,147815,-45179,-1357,1424,10800,0),
+(7,2351,35351,147714,-45140,-1357,16416,10800,0),
+(7,2352,35340,147797,-45140,-1357,16416,10800,0),
+(7,2353,35351,147684,-45258,-1357,31296,10800,0),
+(7,2354,35351,147696,-45176,-1357,31296,10800,0),
+(7,2355,35340,147690,-45217,-1357,31296,10800,0),
+(7,2356,35340,147820,-45221,-1357,1424,10800,0),
+(7,2357,35351,147826,-45262,-1357,1424,10800,0),
+(7,2358,35351,147815,-45179,-1357,1424,10800,0),
+(7,2359,35351,147315,-45496,-2082,16296,10800,0),
+(7,2360,35351,147353,-45496,-2082,16296,10800,0),
+(7,2361,35351,147391,-45496,-2082,16296,10800,0),
+(7,2362,35351,147427,-45496,-2082,16296,10800,0),
+(7,2363,35351,147463,-45496,-2082,16296,10800,0),
+(7,2364,35351,147500,-45497,-2082,16296,10800,0),
+(7,2365,35351,147537,-45497,-2082,16296,10800,0),
+(7,2366,35351,147574,-45497,-2082,16296,10800,0),
+(7,2367,35351,147611,-45496,-2082,16296,10800,0),
+(7,2368,35343,147316,-45424,-2082,16296,10800,0),
+(7,2369,35343,147352,-45425,-2082,16296,10800,0),
+(7,2370,35343,147389,-45425,-2082,16296,10800,0),
+(7,2371,35343,147425,-45426,-2082,16296,10800,0),
+(7,2372,35343,147462,-45425,-2082,16296,10800,0),
+(7,2373,35343,147500,-45424,-2082,16296,10800,0),
+(7,2374,35343,147536,-45424,-2082,16296,10800,0),
+(7,2375,35343,147573,-45424,-2082,16296,10800,0),
+(7,2376,35343,147608,-45425,-2082,16296,10800,0),
+(7,2377,35339,147461,-45371,-2082,16296,10800,0),
+(7,2378,35350,147423,-45372,-2082,16296,10800,0),
+(7,2379,35350,147387,-45373,-2082,16296,10800,0),
+(7,2380,35350,147316,-45372,-2082,16296,10800,0),
+(7,2381,35350,147350,-45372,-2082,16296,10800,0),
+(7,2382,35350,147606,-45373,-2082,16296,10800,0),
+(7,2383,35350,147570,-45374,-2082,16296,10800,0),
+(7,2384,35350,147499,-45373,-2082,16296,10800,0),
+(7,2385,35350,147533,-45373,-2082,16296,10800,0),
+(7,2386,35350,147465,-45619,-2082,16352,10800,0),
+(7,2387,35350,147426,-45619,-2082,16352,10800,0),
+(7,2388,35350,147390,-45619,-2082,16352,10800,0),
+(7,2389,35350,147356,-45620,-2082,16352,10800,0),
+(7,2390,35350,147320,-45620,-2082,16352,10800,0),
+(7,2391,35350,147609,-45619,-2082,16352,10800,0),
+(7,2392,35350,147573,-45619,-2082,16352,10800,0),
+(7,2393,35350,147539,-45619,-2082,16352,10800,0),
+(7,2394,35350,147503,-45620,-2082,16352,10800,0),
+(7,2395,35343,147464,-45674,-2082,16352,10800,0),
+(7,2396,35343,147429,-45674,-2082,16352,10800,0),
+(7,2397,35343,147394,-45674,-2082,16352,10800,0),
+(7,2398,35343,147359,-45674,-2082,16352,10800,0),
+(7,2399,35343,147320,-45675,-2082,16352,10800,0),
+(7,2400,35343,147610,-45675,-2082,16352,10800,0),
+(7,2401,35343,147575,-45675,-2082,16352,10800,0),
+(7,2402,35343,147539,-45676,-2082,16352,10800,0),
+(7,2403,35343,147501,-45675,-2082,16352,10800,0),
+(7,2404,35350,147167,-45677,-2082,-64,10800,0),
+(7,2405,35350,147159,-45707,-2082,-64,10800,0),
+(7,2406,35350,147167,-45735,-2082,-64,10800,0),
+(7,2407,35350,147158,-45765,-2082,-48,10800,0),
+(7,2408,35339,147167,-45795,-2082,-64,10800,0),
+(7,2409,35350,147157,-45825,-2082,-32,10800,0),
+(7,2410,35350,147168,-45852,-2082,-64,10800,0),
+(7,2411,35350,147157,-45881,-2082,-64,10800,0),
+(7,2412,35350,147168,-45910,-2082,-64,10800,0),
+(7,2413,35351,147111,-45679,-2082,-64,10800,0),
+(7,2414,35351,147103,-45708,-2082,-64,10800,0),
+(7,2415,35351,147111,-45737,-2082,-64,10800,0),
+(7,2416,35351,147102,-45766,-2082,-48,10800,0),
+(7,2417,35351,147110,-45796,-2082,-64,10800,0),
+(7,2418,35351,147101,-45826,-2082,-32,10800,0),
+(7,2419,35351,147112,-45853,-2082,-64,10800,0),
+(7,2420,35351,147100,-45883,-2082,-64,10800,0),
+(7,2421,35351,147111,-45911,-2082,-64,10800,0),
+(7,2422,35341,147051,-45793,-2082,-64,10800,0),
+(7,2423,35350,147771,-45678,-2082,32768,10800,0),
+(7,2424,35350,147779,-45706,-2082,32768,10800,0),
+(7,2425,35350,147771,-45735,-2082,32768,10800,0),
+(7,2426,35350,147779,-45764,-2082,32768,10800,0),
+(7,2427,35350,147772,-45794,-2082,32768,10800,0),
+(7,2428,35350,147780,-45823,-2082,32768,10800,0),
+(7,2429,35350,147772,-45852,-2082,32768,10800,0),
+(7,2430,35350,147778,-45881,-2082,32768,10800,0),
+(7,2431,35350,147772,-45911,-2082,32768,10800,0),
+(7,2432,35351,147823,-45678,-2082,32768,10800,0),
+(7,2433,35351,147831,-45706,-2082,32768,10800,0),
+(7,2434,35351,147823,-45735,-2082,32768,10800,0),
+(7,2435,35351,147831,-45764,-2082,32768,10800,0),
+(7,2436,35351,147824,-45794,-2082,32768,10800,0),
+(7,2437,35351,147832,-45823,-2082,32768,10800,0),
+(7,2438,35351,147824,-45852,-2082,32768,10800,0),
+(7,2439,35351,147830,-45881,-2082,32768,10800,0),
+(7,2440,35351,147824,-45910,-2082,32768,10800,0),
+(7,2441,35341,147898,-45793,-2082,32768,10800,0),
+(7,2442,35351,146697,-45659,-1744,18936,10800,0),
+(7,2443,35351,146731,-45650,-1744,18936,10800,0),
+(7,2444,35340,146766,-45641,-1744,18936,10800,0),
+(7,2445,35351,146839,-45622,-1744,18936,10800,0),
+(7,2446,35351,146769,-45706,-1744,52040,10800,0),
+(7,2447,35340,146801,-45632,-1744,18936,10800,0),
+(7,2448,35351,146875,-45612,-1744,18936,10800,0),
+(7,2449,35351,146912,-45603,-1744,18936,10800,0),
+(7,2450,35351,146733,-45719,-1744,52040,10800,0),
+(7,2451,35351,146697,-45731,-1744,52040,10800,0),
+(7,2452,35351,146658,-45742,-1744,52040,10800,0),
+(7,2453,35341,146620,-45752,-1744,52040,10800,0),
+(7,2454,35351,146581,-45764,-1744,52040,10800,0),
+(7,2455,35351,146543,-45774,-1744,52040,10800,0),
+(7,2456,35351,146506,-45785,-1744,52040,10800,0),
+(7,2457,35351,148004,-45603,-1744,13712,10800,0),
+(7,2458,35351,148039,-45612,-1744,13712,10800,0),
+(7,2459,35351,148074,-45620,-1744,13712,10800,0),
+(7,2460,35340,148109,-45629,-1744,13712,10800,0),
+(7,2461,35351,148181,-45648,-1744,13712,10800,0),
+(7,2462,35340,148143,-45638,-1744,13712,10800,0),
+(7,2463,35351,148219,-45656,-1744,13712,10800,0),
+(7,2464,35351,148433,-45784,-1744,46376,10800,0),
+(7,2465,35351,148395,-45776,-1744,46376,10800,0),
+(7,2466,35351,148356,-45765,-1744,46376,10800,0),
+(7,2467,35341,148318,-45755,-1744,46376,10800,0),
+(7,2468,35351,148279,-45744,-1744,46376,10800,0),
+(7,2469,35351,148241,-45733,-1744,46376,10800,0),
+(7,2470,35351,148204,-45723,-1744,46376,10800,0),
+(7,2471,35351,148165,-45712,-1744,46376,10800,0),
+(7,2472,35351,146305,-45571,-1744,19960,10800,0),
+(7,2473,35340,146373,-45544,-1744,19960,10800,0),
+(7,2474,35351,146400,-45568,-1744,4744,10800,0),
+(7,2475,35340,146419,-45600,-1744,4744,10800,0),
+(7,2476,35351,146435,-45633,-1744,4352,10800,0),
+(7,2477,35351,146317,-45678,-1744,34888,10800,0),
+(7,2478,35340,146310,-45642,-1744,34496,10800,0),
+(7,2479,35351,146302,-45605,-1744,34496,10800,0),
+(7,2480,35351,146305,-45571,-1744,19960,10800,0),
+(7,2481,35340,146373,-45544,-1744,19960,10800,0),
+(7,2482,35351,146400,-45568,-1744,4744,10800,0),
+(7,2483,35340,146419,-45600,-1744,4744,10800,0),
+(7,2484,35351,146435,-45633,-1744,4352,10800,0),
+(7,2485,35351,146317,-45678,-1744,34888,10800,0),
+(7,2486,35340,146310,-45642,-1744,34496,10800,0),
+(7,2487,35351,146302,-45605,-1744,34496,10800,0),
+(7,2488,35340,148552,-45546,-1744,12832,10800,0),
+(7,2489,35351,148621,-45569,-1744,12832,10800,0),
+(7,2490,35351,148628,-45604,-1744,-2384,10800,0),
+(7,2491,35340,148622,-45642,-1744,-2384,10800,0),
+(7,2492,35351,148613,-45677,-1744,-2776,10800,0),
+(7,2493,35351,148493,-45638,-1744,27760,10800,0),
+(7,2494,35340,148511,-45605,-1744,27368,10800,0),
+(7,2495,35351,148528,-45571,-1744,27368,10800,0),
+(7,2496,35340,148552,-45546,-1744,12832,10800,0),
+(7,2497,35351,148621,-45569,-1744,12832,10800,0),
+(7,2498,35351,148628,-45604,-1744,-2384,10800,0),
+(7,2499,35340,148622,-45642,-1744,-2384,10800,0),
+(7,2500,35351,148613,-45677,-1744,-2776,10800,0),
+(7,2501,35351,148493,-45638,-1744,27760,10800,0),
+(7,2502,35340,148511,-45605,-1744,27368,10800,0),
+(7,2503,35351,148528,-45571,-1744,27368,10800,0),
+(7,2504,35351,145387,-45445,-1744,6128,10800,0),
+(7,2505,35351,145517,-45613,-1744,6128,10800,0),
+(7,2506,35340,145554,-45665,-1744,5672,10800,0),
+(7,2507,35351,145432,-45503,-1744,6128,10800,0),
+(7,2508,35351,145473,-45560,-1744,6128,10800,0),
+(7,2509,35340,145591,-45718,-1744,6128,10800,0),
+(7,2510,35351,145632,-45775,-1744,6128,10800,0),
+(7,2511,35351,145672,-45828,-1744,6128,10800,0),
+(7,2512,35340,145464,-45730,-1744,39264,10800,0),
+(7,2513,35340,145499,-45783,-1744,39264,10800,0),
+(7,2514,35351,145535,-45836,-1744,39264,10800,0),
+(7,2515,35351,145566,-45883,-1744,39264,10800,0),
+(7,2516,35351,145430,-45680,-1744,39264,10800,0),
+(7,2517,35351,145394,-45627,-1744,39264,10800,0),
+(7,2518,35351,145356,-45570,-1744,39264,10800,0),
+(7,2519,35351,145322,-45516,-1744,39264,10800,0),
+(7,2520,35351,149607,-45516,-1744,-6640,10800,0),
+(7,2521,35351,149493,-45695,-1744,-6640,10800,0),
+(7,2522,35340,149456,-45747,-1744,-7096,10800,0),
+(7,2523,35351,149567,-45577,-1744,-6640,10800,0),
+(7,2524,35351,149528,-45635,-1744,-6640,10800,0),
+(7,2525,35340,149419,-45800,-1744,-6640,10800,0),
+(7,2526,35351,149379,-45858,-1744,-6640,10800,0),
+(7,2527,35351,149343,-45914,-1744,-6640,10800,0),
+(7,2528,35340,149365,-45685,-1744,26496,10800,0),
+(7,2529,35340,149326,-45736,-1744,26496,10800,0),
+(7,2530,35351,149289,-45787,-1744,26496,10800,0),
+(7,2531,35351,149256,-45833,-1744,26496,10800,0),
+(7,2532,35351,149400,-45636,-1744,26496,10800,0),
+(7,2533,35351,149437,-45584,-1744,26496,10800,0),
+(7,2534,35351,149478,-45528,-1744,26496,10800,0),
+(7,2535,35351,149517,-45479,-1744,26496,10800,0),
+(7,2536,35351,144645,-47090,-1744,27912,10800,0),
+(7,2537,35340,144676,-47024,-1744,27912,10800,0),
+(7,2538,35351,144711,-47022,-1744,12696,10800,0),
+(7,2539,35340,144748,-47033,-1744,12696,10800,0),
+(7,2540,35351,144782,-47046,-1744,12304,10800,0),
+(7,2541,35351,144728,-47160,-1744,42840,10800,0),
+(7,2542,35340,144698,-47139,-1744,42448,10800,0),
+(7,2543,35351,144666,-47117,-1744,42448,10800,0),
+(7,2544,35351,144645,-47090,-1744,27912,10800,0),
+(7,2545,35340,144676,-47024,-1744,27912,10800,0),
+(7,2546,35351,144711,-47022,-1744,12696,10800,0),
+(7,2547,35340,144748,-47033,-1744,12696,10800,0),
+(7,2548,35351,144782,-47046,-1744,12304,10800,0),
+(7,2549,35351,144728,-47160,-1744,42840,10800,0),
+(7,2550,35340,144698,-47139,-1744,42448,10800,0),
+(7,2551,35351,144666,-47117,-1744,42448,10800,0),
+(7,2552,35340,150254,-47023,-1744,4736,10800,0),
+(7,2553,35351,150288,-47087,-1744,4736,10800,0),
+(7,2554,35351,150268,-47117,-1744,-10480,10800,0),
+(7,2555,35340,150238,-47139,-1744,-10480,10800,0),
+(7,2556,35351,150206,-47159,-1744,-10872,10800,0),
+(7,2557,35351,150148,-47047,-1744,19664,10800,0),
+(7,2558,35340,150184,-47036,-1744,19272,10800,0),
+(7,2559,35351,150220,-47023,-1744,19272,10800,0),
+(7,2560,35340,150254,-47023,-1744,4736,10800,0),
+(7,2561,35351,150288,-47087,-1744,4736,10800,0),
+(7,2562,35351,150268,-47117,-1744,-10480,10800,0),
+(7,2563,35340,150238,-47139,-1744,-10480,10800,0),
+(7,2564,35351,150206,-47159,-1744,-10872,10800,0),
+(7,2565,35351,150148,-47047,-1744,19664,10800,0),
+(7,2566,35340,150184,-47036,-1744,19272,10800,0),
+(7,2567,35351,150220,-47023,-1744,19272,10800,0),
+(7,2568,35351,144383,-47805,-1744,29552,10800,0),
+(7,2569,35340,144403,-47735,-1744,29552,10800,0),
+(7,2570,35351,144439,-47728,-1744,14336,10800,0),
+(7,2571,35340,144476,-47732,-1744,14336,10800,0),
+(7,2572,35351,144512,-47740,-1744,13944,10800,0),
+(7,2573,35351,144476,-47861,-1744,44480,10800,0),
+(7,2574,35340,144443,-47845,-1744,44088,10800,0),
+(7,2575,35351,144409,-47828,-1744,44088,10800,0),
+(7,2576,35340,150525,-47733,-1744,2960,10800,0),
+(7,2577,35351,150547,-47803,-1744,2960,10800,0),
+(7,2578,35351,150522,-47829,-1744,-12256,10800,0),
+(7,2579,35340,150488,-47846,-1744,-12256,10800,0),
+(7,2580,35351,150454,-47860,-1744,-12648,10800,0),
+(7,2581,35351,150416,-47739,-1744,17888,10800,0),
+(7,2582,35340,150453,-47734,-1744,17496,10800,0),
+(7,2583,35351,150491,-47728,-1744,17496,10800,0),
+(7,2584,35350,145615,-48338,-2381,32744,10800,0),
+(7,2585,35350,145616,-48300,-2381,32744,10800,0),
+(7,2586,35350,145616,-48263,-2381,32744,10800,0),
+(7,2587,35350,145615,-48226,-2381,32744,10800,0),
+(7,2588,35350,145615,-48188,-2381,32744,10800,0),
+(7,2589,35350,145615,-48149,-2381,32744,10800,0),
+(7,2590,35350,145662,-48338,-2381,32744,10800,0),
+(7,2591,35350,145662,-48299,-2381,32744,10800,0),
+(7,2592,35350,145662,-48262,-2381,32744,10800,0),
+(7,2593,35350,145661,-48225,-2381,32744,10800,0),
+(7,2594,35350,145661,-48187,-2381,32744,10800,0),
+(7,2595,35350,145661,-48149,-2381,32744,10800,0),
+(7,2596,35343,145721,-48338,-2381,32744,10800,0),
+(7,2597,35343,145721,-48299,-2381,32744,10800,0),
+(7,2598,35343,145721,-48262,-2381,32744,10800,0),
+(7,2599,35343,145720,-48225,-2381,32744,10800,0),
+(7,2600,35343,145720,-48187,-2381,32744,10800,0),
+(7,2601,35343,145720,-48148,-2381,32744,10800,0),
+(7,2602,35350,149318,-48143,-2381,0,10800,0),
+(7,2603,35350,149319,-48181,-2381,0,10800,0),
+(7,2604,35350,149320,-48222,-2381,0,10800,0),
+(7,2605,35350,149320,-48262,-2381,0,10800,0),
+(7,2606,35350,149319,-48300,-2381,0,10800,0),
+(7,2607,35350,149319,-48341,-2381,0,10800,0),
+(7,2608,35350,149274,-48144,-2381,0,10800,0),
+(7,2609,35350,149274,-48182,-2381,0,10800,0),
+(7,2610,35350,149275,-48223,-2381,0,10800,0),
+(7,2611,35350,149275,-48263,-2381,0,10800,0),
+(7,2612,35350,149274,-48301,-2381,0,10800,0),
+(7,2613,35350,149274,-48342,-2381,0,10800,0),
+(7,2614,35343,149178,-48139,-2381,0,10800,0),
+(7,2615,35343,149178,-48178,-2381,0,10800,0),
+(7,2616,35343,149179,-48218,-2381,0,10800,0),
+(7,2617,35343,149180,-48258,-2381,0,10800,0),
+(7,2618,35343,149179,-48296,-2381,0,10800,0),
+(7,2619,35343,149178,-48338,-2381,0,10800,0),
+(7,2620,35343,145886,-47792,-1604,28152,10800,0),
+(7,2621,35343,145900,-47763,-1604,28152,10800,0),
+(7,2622,35343,145872,-47822,-1604,28152,10800,0),
+(7,2623,35343,145914,-47734,-1604,28152,10800,0),
+(7,2624,35343,145866,-47780,-1604,28152,10800,0),
+(7,2625,35343,145880,-47751,-1604,28152,10800,0),
+(7,2626,35343,145852,-47809,-1604,28152,10800,0),
+(7,2627,35343,145894,-47721,-1604,28152,10800,0),
+(7,2628,35350,145778,-47743,-1604,28152,10800,0),
+(7,2629,35350,145793,-47713,-1604,28152,10800,0),
+(7,2630,35339,145805,-47736,-1604,28152,10800,0),
+(7,2631,35350,145828,-47693,-1604,28152,10800,0),
+(7,2632,35350,145787,-47781,-1604,28152,10800,0),
+(7,2633,35343,145846,-47771,-1604,28152,10800,0),
+(7,2634,35343,145860,-47742,-1604,28152,10800,0),
+(7,2635,35343,145831,-47800,-1604,28152,10800,0),
+(7,2636,35343,145873,-47712,-1604,28152,10800,0),
+(7,2637,35343,149027,-47763,-1604,4672,10800,0),
+(7,2638,35343,149042,-47793,-1604,4672,10800,0),
+(7,2639,35343,149014,-47733,-1604,4672,10800,0),
+(7,2640,35343,149056,-47821,-1604,4672,10800,0),
+(7,2641,35343,149050,-47756,-1604,4672,10800,0),
+(7,2642,35343,149064,-47785,-1604,4672,10800,0),
+(7,2643,35343,149036,-47726,-1604,4672,10800,0),
+(7,2644,35343,149078,-47814,-1604,4672,10800,0),
+(7,2645,35350,149134,-47710,-1604,4672,10800,0),
+(7,2646,35350,149148,-47741,-1604,4672,10800,0),
+(7,2647,35339,149123,-47736,-1604,4672,10800,0),
+(7,2648,35350,149141,-47780,-1604,4672,10800,0),
+(7,2649,35350,149099,-47693,-1604,4672,10800,0),
+(7,2650,35343,149070,-47745,-1604,4672,10800,0),
+(7,2651,35343,149084,-47774,-1604,4672,10800,0),
+(7,2652,35343,149056,-47715,-1604,4672,10800,0),
+(7,2653,35343,149098,-47803,-1604,4672,10800,0),
+(7,2654,35351,145995,-47693,-1608,28128,10800,0),
+(7,2655,35351,146011,-47662,-1608,28128,10800,0),
+(7,2656,35351,146019,-47707,-1608,28128,10800,0),
+(7,2657,35351,146036,-47676,-1608,28128,10800,0),
+(7,2658,35351,146047,-47721,-1608,28128,10800,0),
+(7,2659,35340,146064,-47690,-1608,28128,10800,0),
+(7,2660,35351,145876,-47941,-1608,28128,10800,0),
+(7,2661,35351,145893,-47910,-1608,28128,10800,0),
+(7,2662,35351,145896,-47950,-1608,28128,10800,0),
+(7,2663,35351,145913,-47918,-1608,28128,10800,0),
+(7,2664,35340,145921,-47961,-1608,28128,10800,0),
+(7,2665,35351,145938,-47930,-1608,28128,10800,0),
+(7,2666,35340,145949,-47972,-1608,28128,10800,0),
+(7,2667,35351,145966,-47941,-1608,28128,10800,0),
+(7,2668,35351,146077,-47736,-1608,28128,10800,0),
+(7,2669,35340,146093,-47705,-1608,28128,10800,0),
+(7,2670,35341,146082,-47657,-1608,28128,10800,0),
+(7,2671,35341,145905,-48000,-1608,28128,10800,0),
+(7,2672,35351,149033,-47903,-1608,4424,10800,0),
+(7,2673,35351,149047,-47934,-1608,4424,10800,0),
+(7,2674,35351,149002,-47915,-1608,4424,10800,0),
+(7,2675,35351,149016,-47947,-1608,4424,10800,0),
+(7,2676,35351,148977,-47927,-1608,4424,10800,0),
+(7,2677,35340,148960,-47977,-1608,4424,10800,0),
+(7,2678,35351,148913,-47956,-1608,4424,10800,0),
+(7,2679,35340,148929,-47988,-1608,4424,10800,0),
+(7,2680,35351,148923,-47672,-1608,4424,10800,0),
+(7,2681,35351,148937,-47700,-1608,4424,10800,0),
+(7,2682,35351,148900,-47682,-1608,4424,10800,0),
+(7,2683,35351,148915,-47712,-1608,4424,10800,0),
+(7,2684,35351,148868,-47694,-1608,4424,10800,0),
+(7,2685,35351,148882,-47725,-1608,4424,10800,0),
+(7,2686,35340,148831,-47711,-1608,4424,10800,0),
+(7,2687,35340,148788,-47729,-1608,4424,10800,0),
+(7,2688,35341,148974,-48007,-1608,4424,10800,0),
+(7,2689,35341,148815,-47680,-1608,4424,10800,0),
+(7,2690,35351,146467,-47149,-1608,21928,10800,0),
+(7,2691,35351,146648,-47035,-1608,21928,10800,0),
+(7,2692,35351,146585,-47075,-1608,21928,10800,0),
+(7,2693,35351,146527,-47110,-1608,21928,10800,0),
+(7,2694,35351,146503,-47138,-1608,53248,10800,0),
+(7,2695,35351,146684,-47023,-1608,53248,10800,0),
+(7,2696,35351,146621,-47063,-1608,53248,10800,0),
+(7,2697,35351,146563,-47099,-1608,53248,10800,0),
+(7,2698,35351,148292,-47048,-1608,10752,10800,0),
+(7,2699,35351,148348,-47080,-1608,10752,10800,0),
+(7,2700,35351,148409,-47118,-1608,10752,10800,0),
+(7,2701,35351,148461,-47152,-1608,10752,10800,0),
+(7,2702,35351,148262,-47032,-1608,45056,10800,0),
+(7,2703,35351,148319,-47065,-1608,45056,10800,0),
+(7,2704,35351,148380,-47103,-1608,45056,10800,0),
+(7,2705,35351,148432,-47136,-1608,45056,10800,0),
+(7,2706,35350,146652,-47383,-1613,53248,10800,0),
+(7,2707,35350,146686,-47362,-1613,53248,10800,0),
+(7,2708,35350,146721,-47339,-1613,53248,10800,0),
+(7,2709,35350,146790,-47295,-1613,53248,10800,0),
+(7,2710,35350,146754,-47318,-1613,53248,10800,0),
+(7,2711,35343,146681,-47428,-1613,53248,10800,0),
+(7,2712,35343,146716,-47407,-1613,53248,10800,0),
+(7,2713,35343,146750,-47384,-1613,53248,10800,0),
+(7,2714,35343,146819,-47340,-1613,53248,10800,0),
+(7,2715,35343,146783,-47363,-1613,53248,10800,0),
+(7,2716,35350,148136,-47292,-1613,45056,10800,0),
+(7,2717,35350,148175,-47313,-1613,45056,10800,0),
+(7,2718,35350,148215,-47335,-1613,45056,10800,0),
+(7,2719,35350,148251,-47357,-1613,45056,10800,0),
+(7,2720,35350,148284,-47378,-1613,45056,10800,0),
+(7,2721,35343,148114,-47328,-1613,45056,10800,0),
+(7,2722,35343,148152,-47348,-1613,45056,10800,0),
+(7,2723,35343,148193,-47371,-1613,45056,10800,0),
+(7,2724,35343,148228,-47393,-1613,45056,10800,0),
+(7,2725,35343,148262,-47414,-1613,45056,10800,0),
+(7,2726,35350,147101,-50056,-2128,30048,10800,0),
+(7,2727,35350,147111,-50022,-2128,30048,10800,0),
+(7,2728,35350,147119,-49988,-2128,30048,10800,0),
+(7,2729,35350,147127,-49956,-2128,30048,10800,0),
+(7,2730,35350,147137,-49923,-2128,30048,10800,0),
+(7,2731,35350,147144,-49894,-2128,30048,10800,0),
+(7,2732,35350,147153,-49860,-2128,30048,10800,0),
+(7,2733,35343,147132,-50052,-2128,30048,10800,0),
+(7,2734,35343,147141,-50017,-2128,30048,10800,0),
+(7,2735,35343,147150,-49983,-2128,30048,10800,0),
+(7,2736,35343,147158,-49951,-2128,30048,10800,0),
+(7,2737,35343,147168,-49918,-2128,30048,10800,0),
+(7,2738,35343,147175,-49889,-2128,30048,10800,0),
+(7,2739,35343,147184,-49855,-2128,30048,10800,0),
+(7,2740,35350,147782,-49845,-2128,68248,10800,0),
+(7,2741,35350,147791,-49879,-2128,68248,10800,0),
+(7,2742,35350,147801,-49913,-2128,68248,10800,0),
+(7,2743,35350,147809,-49945,-2128,68248,10800,0),
+(7,2744,35350,147817,-49978,-2128,68248,10800,0),
+(7,2745,35350,147826,-50007,-2128,68248,10800,0),
+(7,2746,35350,147835,-50041,-2128,68248,10800,0),
+(7,2747,35343,147750,-49842,-2128,68248,10800,0),
+(7,2748,35343,147760,-49877,-2128,68248,10800,0),
+(7,2749,35343,147769,-49911,-2128,68248,10800,0),
+(7,2750,35343,147777,-49943,-2128,68248,10800,0),
+(7,2751,35343,147785,-49975,-2128,68248,10800,0),
+(7,2752,35343,147794,-50005,-2128,68248,10800,0),
+(7,2753,35343,147803,-50038,-2128,68248,10800,0),
+(7,2754,35351,146896,-49631,-2125,43520,10800,0),
+(7,2755,35351,146934,-49653,-2125,43520,10800,0),
+(7,2756,35351,146971,-49674,-2125,43520,10800,0),
+(7,2757,35351,147006,-49695,-2125,43520,10800,0),
+(7,2758,35351,147041,-49715,-2125,43520,10800,0),
+(7,2759,35351,147081,-49736,-2125,43520,10800,0),
+(7,2760,35351,147863,-49743,-2125,54616,10800,0),
+(7,2761,35351,147900,-49720,-2125,54616,10800,0),
+(7,2762,35351,147937,-49698,-2125,54616,10800,0),
+(7,2763,35351,147973,-49677,-2125,54616,10800,0),
+(7,2764,35351,148007,-49656,-2125,54616,10800,0),
+(7,2765,35351,148044,-49632,-2125,54616,10800,0),
+(7,2766,35350,145837,-50098,-1601,16312,10800,0),
+(7,2767,35350,145869,-50098,-1601,16312,10800,0),
+(7,2768,35350,145900,-50098,-1601,16312,10800,0),
+(7,2769,35350,145931,-50098,-1601,16312,10800,0),
+(7,2770,35350,145963,-50098,-1601,16312,10800,0),
+(7,2771,35350,145994,-50098,-1601,16312,10800,0),
+(7,2772,35350,146026,-50098,-1601,16312,10800,0),
+(7,2773,35350,146057,-50098,-1601,16312,10800,0),
+(7,2774,35343,145852,-50136,-1601,16312,10800,0),
+(7,2775,35343,145884,-50136,-1601,16312,10800,0),
+(7,2776,35343,145915,-50136,-1601,16312,10800,0),
+(7,2777,35343,145946,-50136,-1601,16312,10800,0),
+(7,2778,35343,145978,-50136,-1601,16312,10800,0),
+(7,2779,35343,146010,-50136,-1601,16312,10800,0),
+(7,2780,35343,146041,-50136,-1601,16312,10800,0),
+(7,2781,35343,146072,-50136,-1601,16312,10800,0),
+(7,2782,35343,145850,-50177,-1601,16312,10800,0),
+(7,2783,35341,145882,-50177,-1601,16312,10800,0),
+(7,2784,35343,145913,-50177,-1601,16312,10800,0),
+(7,2785,35343,145944,-50177,-1601,16312,10800,0),
+(7,2786,35326,145976,-50177,-1601,16312,10800,0),
+(7,2787,35343,146007,-50177,-1601,16312,10800,0),
+(7,2788,35341,146039,-50177,-1601,16312,10800,0),
+(7,2789,35325,146070,-50177,-1601,16312,10800,0),
+(7,2790,35350,148877,-50096,-1601,16312,10800,0),
+(7,2791,35350,148909,-50096,-1601,16312,10800,0),
+(7,2792,35350,148940,-50096,-1601,16312,10800,0),
+(7,2793,35350,148971,-50096,-1601,16312,10800,0),
+(7,2794,35350,149003,-50096,-1601,16312,10800,0),
+(7,2795,35350,149034,-50096,-1601,16312,10800,0),
+(7,2796,35350,149066,-50096,-1601,16312,10800,0),
+(7,2797,35350,149097,-50096,-1601,16312,10800,0),
+(7,2798,35343,148862,-50132,-1601,16312,10800,0),
+(7,2799,35343,148894,-50132,-1601,16312,10800,0),
+(7,2800,35343,148925,-50132,-1601,16312,10800,0),
+(7,2801,35343,148956,-50132,-1601,16312,10800,0),
+(7,2802,35343,148988,-50132,-1601,16312,10800,0),
+(7,2803,35343,149020,-50132,-1601,16312,10800,0),
+(7,2804,35343,149051,-50132,-1601,16312,10800,0),
+(7,2805,35343,149082,-50132,-1601,16312,10800,0),
+(7,2806,35324,148860,-50174,-1601,16312,120,0),
+(7,2807,35341,148892,-50174,-1601,16312,10800,0),
+(7,2808,35343,148923,-50174,-1601,16312,10800,0),
+(7,2809,35326,148954,-50174,-1601,16312,10800,0),
+(7,2810,35343,148986,-50174,-1601,16312,10800,0),
+(7,2811,35343,149017,-50174,-1601,16312,10800,0),
+(7,2812,35341,149049,-50174,-1601,16312,10800,0),
+(7,2813,35343,149080,-50174,-1601,16312,10800,0),
+(7,2814,35330,145969,-50642,-1601,16312,120,0),
+(7,2815,35330,146017,-50642,-1601,16312,120,0),
+(7,2816,35330,146068,-50642,-1601,16312,120,0),
+(7,2817,35330,146117,-50642,-1601,16312,120,0),
+(7,2818,35330,146168,-50642,-1601,16312,120,0),
+(7,2819,35330,146217,-50642,-1601,16312,120,0),
+(7,2820,35330,146268,-50642,-1601,16312,120,0),
+(7,2821,35330,146316,-50642,-1601,16312,120,0),
+(7,2822,35326,145965,-50678,-1601,16312,10800,0),
+(7,2823,35327,146014,-50678,-1601,16312,120,0),
+(7,2824,35328,146065,-50678,-1601,16312,120,0),
+(7,2825,35328,146113,-50678,-1601,16312,120,0),
+(7,2826,35328,146164,-50678,-1601,16312,120,0),
+(7,2827,35328,146213,-50678,-1601,16312,120,0),
+(7,2828,35327,146264,-50678,-1601,16312,120,0),
+(7,2829,35326,146313,-50678,-1601,16312,10800,0),
+(7,2830,35351,146443,-50721,-1601,16312,10800,0),
+(7,2831,35351,146492,-50721,-1601,16312,10800,0),
+(7,2832,35351,146543,-50721,-1601,16312,10800,0),
+(7,2833,35351,146592,-50721,-1601,16312,10800,0),
+(7,2834,35351,146643,-50721,-1601,16312,10800,0),
+(7,2835,35351,146691,-50721,-1601,16312,10800,0),
+(7,2836,35351,146742,-50721,-1601,16312,10800,0),
+(7,2837,35351,146791,-50721,-1601,16312,10800,0),
+(7,2838,35330,148660,-50692,-1601,16312,120,0),
+(7,2839,35330,148709,-50692,-1601,16312,120,0),
+(7,2840,35330,148759,-50692,-1601,16312,120,0),
+(7,2841,35330,148808,-50692,-1601,16312,120,0),
+(7,2842,35330,148859,-50692,-1601,16312,120,0),
+(7,2843,35330,148908,-50692,-1601,16312,120,0),
+(7,2844,35330,148959,-50692,-1601,16312,120,0),
+(7,2845,35330,149008,-50692,-1601,16312,120,0),
+(7,2846,35326,148656,-50728,-1601,16312,10800,0),
+(7,2847,35327,148705,-50728,-1601,16312,120,0),
+(7,2848,35328,148756,-50728,-1601,16312,120,0),
+(7,2849,35328,148805,-50728,-1601,16312,120,0),
+(7,2850,35328,148856,-50728,-1601,16312,120,0),
+(7,2851,35328,148904,-50728,-1601,16312,120,0),
+(7,2852,35327,148955,-50728,-1601,16312,120,0),
+(7,2853,35326,149004,-50728,-1601,16312,10800,0),
+(7,2854,35351,148144,-50736,-1601,16312,10800,0),
+(7,2855,35351,148193,-50736,-1601,16312,10800,0),
+(7,2856,35351,148244,-50736,-1601,16312,10800,0),
+(7,2857,35351,148293,-50736,-1601,16312,10800,0),
+(7,2858,35351,148344,-50736,-1601,16312,10800,0),
+(7,2859,35351,148392,-50736,-1601,16312,10800,0),
+(7,2860,35351,148443,-50736,-1601,16312,10800,0),
+(7,2861,35351,148492,-50736,-1601,16312,10800,0),
+(7,2862,35340,145779,-50371,-1341,0,10800,0),
+(7,2863,35351,145779,-50325,-1341,0,10800,0),
+(7,2864,35341,145778,-50281,-1341,0,10800,0),
+(7,2865,35351,145779,-50419,-1341,0,10800,0),
+(7,2866,35351,145778,-50469,-1341,0,10800,0),
+(7,2867,35351,145778,-50606,-1341,0,10800,0),
+(7,2868,35351,145777,-50561,-1341,0,10800,0),
+(7,2869,35351,145778,-50513,-1341,0,10800,0),
+(7,2870,35340,149150,-50389,-1341,32768,10800,0),
+(7,2871,35351,149150,-50344,-1341,32768,10800,0),
+(7,2872,35341,149150,-50299,-1341,32768,10800,0),
+(7,2873,35351,149150,-50437,-1341,32768,10800,0),
+(7,2874,35351,149150,-50488,-1341,32768,10800,0),
+(7,2875,35351,149150,-50624,-1341,32768,10800,0),
+(7,2876,35351,149150,-50579,-1341,32768,10800,0),
+(7,2877,35351,149150,-50531,-1341,32768,10800,0),
+(7,2878,35340,146188,-50876,-1341,16416,10800,0),
+(7,2879,35351,146243,-50876,-1341,16416,10800,0),
+(7,2880,35341,146363,-50876,-1341,16416,10800,0),
+(7,2881,35351,146302,-50876,-1341,16416,10800,0),
+(7,2882,35351,146423,-50876,-1341,16416,10800,0),
+(7,2883,35351,146480,-50876,-1341,16416,10800,0),
+(7,2884,35351,146590,-50876,-1341,16416,10800,0),
+(7,2885,35340,146533,-50876,-1341,16416,10800,0),
+(7,2886,35340,148317,-50871,-1341,16416,10800,0),
+(7,2887,35351,148372,-50871,-1341,16416,10800,0),
+(7,2888,35341,148491,-50871,-1341,16416,10800,0),
+(7,2889,35351,148430,-50871,-1341,16416,10800,0),
+(7,2890,35351,148551,-50871,-1341,16416,10800,0),
+(7,2891,35351,148608,-50871,-1341,16416,10800,0),
+(7,2892,35351,148719,-50871,-1341,16416,10800,0),
+(7,2893,35340,148661,-50871,-1341,16416,10800,0),
+(7,2894,35351,146413,-50047,-1341,49152,10800,0),
+(7,2895,35351,146473,-50048,-1341,49152,10800,0),
+(7,2896,35351,146527,-50048,-1341,49152,10800,0),
+(7,2897,35340,146642,-50049,-1341,49152,10800,0),
+(7,2898,35351,146585,-50048,-1341,49152,10800,0),
+(7,2899,35351,146755,-50050,-1341,49152,10800,0),
+(7,2900,35351,146697,-50050,-1341,49152,10800,0),
+(7,2901,35351,146809,-50051,-1341,49152,10800,0),
+(7,2902,35351,148155,-50045,-1341,49152,10800,0),
+(7,2903,35351,148215,-50045,-1341,49152,10800,0),
+(7,2904,35351,148269,-50046,-1341,49152,10800,0),
+(7,2905,35340,148384,-50046,-1341,49152,10800,0),
+(7,2906,35351,148328,-50046,-1341,49152,10800,0),
+(7,2907,35351,148497,-50048,-1341,49152,10800,0),
+(7,2908,35351,148439,-50047,-1341,49152,10800,0),
+(7,2909,35351,148552,-50048,-1341,49152,10800,0),
+(9,2910,35516,79062,-154856,122,15541,60,0),
+(9,2911,35516,79011,-154872,122,14451,60,0),
+(9,2912,35516,78957,-154862,122,16881,60,0),
+(9,2913,35516,78907,-154864,122,13107,60,0),
+(9,2914,35516,78991,-154187,122,16785,60,0),
+(9,2915,35517,76142,-154189,122,15666,60,0),
+(9,2916,35518,75987,-154843,122,15850,60,0),
+(9,2917,35518,76320,-154840,122,14962,60,0),
+(9,2918,35518,76055,-154192,122,16948,60,0),
+(9,2919,35518,79108,-154860,122,19389,60,0),
+(9,2920,35518,78853,-154869,122,15163,60,0),
+(9,2921,35518,79082,-154188,122,14451,60,0),
+(9,2922,35519,76036,-154842,122,16384,60,0),
+(9,2923,35519,76271,-154836,122,16176,60,0),
+(9,2924,35520,76078,-154842,122,16819,60,0),
+(9,2925,35520,76123,-154837,122,18617,60,0),
+(9,2926,35520,76168,-154837,122,19199,60,0),
+(9,2927,35520,76223,-154831,122,16801,60,0),
+(9,2928,35522,75988,-154795,122,14904,60,0),
+(9,2929,35522,76035,-154792,122,17865,60,0),
+(9,2930,35522,76077,-154792,122,17424,60,0),
+(9,2931,35522,76124,-154791,122,15613,60,0),
+(9,2932,35522,76166,-154793,122,16771,60,0),
+(9,2933,35522,76221,-154788,122,16785,60,0),
+(9,2934,35522,76270,-154786,122,16087,60,0),
+(9,2935,35522,76318,-154785,122,17359,60,0),
+(9,2936,35522,79156,-154805,122,16384,60,0),
+(9,2937,35522,79111,-154809,122,14604,60,0),
+(9,2938,35522,79063,-154815,122,13380,60,0),
+(9,2939,35522,79010,-154825,122,16700,60,0),
+(9,2940,35522,78962,-154823,101,16785,60,0),
+(9,2941,35522,78912,-154823,122,16384,60,0),
+(9,2942,35522,78855,-154827,122,17289,60,0),
+(9,2943,35522,78806,-154829,122,11935,60,0),
+(9,2944,35531,77213,-149857,-358,62180,60,0),
+(9,2945,35531,77566,-149497,-358,14054,60,0),
+(9,2946,35531,75901,-151796,121,28435,60,0),
+(9,2947,35531,79209,-151802,121,4473,60,0),
+(9,2948,35532,76697,-154094,382,49586,60,0),
+(9,2949,35532,76864,-154946,382,17723,60,0),
+(9,2950,35532,76490,-154938,382,16147,60,0),
+(9,2951,35532,75870,-154537,382,65233,60,0),
+(9,2952,35532,78125,-154933,382,22390,60,0),
+(9,2953,35532,78601,-154939,382,14138,60,0),
+(9,2954,35532,79251,-154476,382,33635,60,0),
+(9,2955,35532,76910,-149714,-17,18039,60,0),
+(9,2956,35532,76872,-149719,-37,18335,60,0),
+(9,2957,35532,76484,-149616,-19,16633,60,0),
+(9,2958,35532,76508,-149661,-17,16384,60,0),
+(9,2959,35532,76403,-149710,-17,18684,60,0),
+(9,2960,35532,75587,-149642,-17,16384,60,0),
+(9,2961,35532,75479,-149687,-17,29598,60,0),
+(9,2962,35532,75612,-149682,-17,23008,60,0),
+(9,2963,35532,75507,-149727,-17,27982,60,0),
+(9,2964,35532,74786,-151087,-17,24614,60,0),
+(9,2965,35532,74849,-151115,-17,15439,60,0),
+(9,2966,35532,74804,-151215,-17,32598,60,0),
+(9,2967,35532,74509,-151788,-17,29315,60,0),
+(9,2968,35532,74571,-151793,-17,25670,60,0),
+(9,2969,35532,74542,-151904,-17,34211,60,0),
+(9,2970,35532,77330,-149317,366,62495,60,0),
+(9,2971,35532,77223,-149209,366,18586,60,0),
+(9,2972,35532,77201,-149289,366,18715,60,0),
+(9,2973,35532,77892,-149214,366,12468,60,0),
+(9,2974,35532,77915,-149331,366,10081,60,0),
+(9,2975,35532,77779,-149334,366,21915,60,0),
+(9,2976,35532,76136,-151775,117,28517,60,0),
+(9,2977,35532,76157,-151787,117,28181,60,0),
+(9,2978,35532,76041,-151999,117,28545,60,0),
+(9,2979,35532,76062,-152012,117,28651,60,0),
+(9,2980,35532,79068,-152019,117,2903,60,0),
+(9,2981,35532,79038,-152032,110,5889,60,0),
+(9,2982,35532,78917,-151775,110,5193,60,0),
+(9,2983,35532,78884,-151766,110,5567,60,0),
+(9,2984,35532,78273,-149718,-17,13829,60,0),
+(9,2985,35532,78225,-149712,-17,12597,60,0),
+(9,2986,35532,78634,-149626,-17,18311,60,0),
+(9,2987,35532,78601,-149707,-17,18443,60,0),
+(9,2988,35532,78697,-149715,-17,6085,60,0),
+(9,2989,35532,79563,-149790,-17,10068,60,0),
+(9,2990,35532,79537,-149833,-17,8435,60,0),
+(9,2991,35532,79491,-149702,-17,11345,60,0),
+(9,2992,35532,79462,-149744,-17,12765,60,0),
+(9,2993,35532,80304,-151217,-17,1723,60,0),
+(9,2994,35532,80332,-151083,-17,9129,60,0),
+(9,2995,35532,80263,-151114,-17,10848,60,0),
+(9,2996,35532,80551,-151924,-17,60850,60,0),
+(9,2997,35532,80600,-151798,-17,5323,60,0),
+(9,2998,35532,80515,-151805,-17,6075,60,0),
+(9,2999,35533,76695,-154945,382,15596,60,0),
+(9,3000,35533,75863,-154413,382,1723,60,0),
+(9,3001,35533,75960,-154202,122,19264,60,0),
+(9,3002,35533,76113,-154192,122,17650,60,0),
+(9,3003,35533,78369,-154939,382,13829,60,0),
+(9,3004,35533,78479,-154106,382,50426,60,0),
+(9,3005,35533,79240,-154347,382,33870,60,0),
+(9,3006,35533,79173,-154190,122,14167,60,0),
+(9,3007,35533,79019,-154187,122,14434,60,0),
+(9,3008,35533,78034,-149889,-300,24261,60,0),
+(9,3009,35533,77110,-149863,-316,387,60,0),
+(9,3010,35533,76718,-149806,-17,52961,60,0),
+(9,3011,35533,76126,-151742,117,27211,60,0),
+(9,3012,35533,76021,-152022,117,27495,60,0),
+(9,3013,35533,79058,-152046,117,3713,60,0),
+(9,3014,35533,78936,-151742,117,4511,60,0),
+(9,3015,35533,78390,-149812,-17,45442,60,0),
+(9,3016,35535,75927,-154186,122,16771,60,0),
+(9,3017,35535,75960,-154173,122,16229,60,0),
+(9,3018,35535,75993,-154168,122,18330,60,0),
+(9,3019,35535,76027,-154172,122,18107,60,0),
+(9,3020,35535,76061,-154168,122,17539,60,0),
+(9,3021,35535,76090,-154169,122,19686,60,0),
+(9,3022,35535,76115,-154170,122,15568,60,0),
+(9,3023,35535,76141,-154165,122,13029,60,0),
+(9,3024,35535,75924,-154204,122,17128,60,0),
+(9,3025,35535,75989,-154198,122,27132,60,0),
+(9,3026,35535,76023,-154197,122,15806,60,0),
+(9,3027,35535,76087,-154187,122,18795,60,0),
+(9,3028,35535,79159,-154849,122,16188,60,0),
+(9,3029,35535,78805,-154862,122,13029,60,0),
+(9,3030,35535,79199,-154176,122,15921,60,0),
+(9,3031,35535,79174,-154172,122,15962,60,0),
+(9,3032,35535,79145,-154172,122,16384,60,0),
+(9,3033,35535,79112,-154168,122,15244,60,0),
+(9,3034,35535,79081,-154165,122,14783,60,0),
+(9,3035,35535,79047,-154166,122,16236,60,0),
+(9,3036,35535,79022,-154165,122,15619,60,0),
+(9,3037,35535,78991,-154161,122,15126,60,0),
+(9,3038,35535,79200,-154196,122,16866,60,0),
+(9,3039,35535,79145,-154190,122,17919,60,0),
+(9,3040,35535,79113,-154192,122,15087,60,0),
+(9,3041,35535,79050,-154187,122,15480,60,0),
+(9,3042,35535,77703,-149698,-358,14434,60,0),
+(9,3043,35535,77668,-149694,-358,14292,60,0),
+(9,3044,35535,77636,-149692,-358,15772,60,0),
+(9,3045,35535,77604,-149687,-358,14509,60,0),
+(9,3046,35535,77573,-149689,-358,15067,60,0),
+(9,3047,35535,77536,-149683,-358,14662,60,0),
+(9,3048,35535,77503,-149687,-358,14904,60,0),
+(9,3049,35535,77470,-149685,-358,15571,60,0),
+(9,3050,35535,77437,-149683,-358,18489,60,0),
+(9,3051,35535,77702,-149539,-358,18061,60,0),
+(9,3052,35535,77671,-149548,-379,12873,60,0),
+(9,3053,35535,77636,-149550,-358,13303,60,0),
+(9,3054,35535,77587,-149549,-358,16710,60,0),
+(9,3055,35535,77547,-149559,-358,19287,60,0),
+(9,3056,35535,77513,-149561,-358,9876,60,0),
+(9,3057,35535,77485,-149559,-358,13029,60,0),
+(9,3058,35535,77454,-149562,-358,11548,60,0),
+(9,3059,35535,77417,-149562,-358,14509,60,0),
+(9,3060,35535,76947,-151454,110,55842,60,0),
+(9,3061,35535,76911,-151479,110,56098,60,0),
+(9,3062,35535,76866,-151506,110,54544,60,0),
+(9,3063,35535,76833,-151527,110,54961,60,0),
+(9,3064,35535,76805,-151557,110,54393,60,0),
+(9,3065,35535,75950,-151765,121,28694,60,0),
+(9,3066,35535,75966,-151774,121,27222,60,0),
+(9,3067,35535,75985,-151784,121,28996,60,0),
+(9,3068,35535,75928,-151784,121,26716,60,0),
+(9,3069,35535,75946,-151794,121,27510,60,0),
+(9,3070,35535,75968,-151803,121,28258,60,0),
+(9,3071,35535,75911,-151811,121,28077,60,0),
+(9,3072,35535,75927,-151819,121,28154,60,0),
+(9,3073,35535,75961,-151832,121,28771,60,0),
+(9,3074,35535,75912,-151850,121,28422,60,0),
+(9,3075,35535,75932,-151861,121,27760,60,0),
+(9,3076,35535,75950,-151869,121,28676,60,0),
+(9,3077,35535,77239,-154111,-401,31794,60,0),
+(9,3078,35535,77240,-154079,-401,30835,60,0),
+(9,3079,35535,77244,-154051,-401,31163,60,0),
+(9,3080,35535,77254,-154023,-401,30749,60,0),
+(9,3081,35535,77251,-153994,-401,33083,60,0),
+(9,3082,35535,77263,-153968,-401,30465,60,0),
+(9,3083,35535,77273,-153943,-401,31046,60,0),
+(9,3084,35535,75815,-152203,-655,30255,60,0),
+(9,3085,35535,75814,-152233,-656,32042,60,0),
+(9,3086,35535,75811,-152262,-656,32334,60,0),
+(9,3087,35535,75811,-152293,-655,31950,60,0),
+(9,3088,35535,75811,-152324,-657,32439,60,0),
+(9,3089,35535,75807,-152362,-657,33494,60,0),
+(9,3090,35535,78188,-151391,110,43370,60,0),
+(9,3091,35535,78220,-151414,110,42758,60,0),
+(9,3092,35535,78262,-151442,110,44928,60,0),
+(9,3093,35535,78300,-151470,110,44552,60,0),
+(9,3094,35535,78342,-151496,110,44812,60,0),
+(9,3095,35535,77864,-154130,-401,64475,60,0),
+(9,3096,35535,77862,-154095,-401,1481,60,0),
+(9,3097,35535,77855,-154067,-401,1974,60,0),
+(9,3098,35535,77845,-154038,-401,232,60,0),
+(9,3099,35535,77839,-154007,-401,0,60,0),
+(9,3100,35535,77829,-153978,-401,1771,60,0),
+(9,3101,35535,77815,-153948,-401,1646,60,0),
+(9,3102,35535,79304,-152404,-657,65113,60,0),
+(9,3103,35535,79307,-152374,-657,1440,60,0),
+(9,3104,35535,79307,-152345,-657,64238,60,0),
+(9,3105,35535,79308,-152307,-657,63902,60,0),
+(9,3106,35535,79308,-152263,-657,64481,60,0),
+(9,3107,35535,79312,-152225,-657,65242,60,0),
+(9,3108,35535,79201,-151859,121,4067,60,0),
+(9,3109,35535,79195,-151835,121,6301,60,0),
+(9,3110,35535,79182,-151813,121,5320,60,0),
+(9,3111,35535,79174,-151781,121,4521,60,0),
+(9,3112,35535,79147,-151793,121,5912,60,0),
+(9,3113,35535,79118,-151809,121,3853,60,0),
+(9,3114,35535,79168,-151816,121,3839,60,0),
+(9,3115,35535,79125,-151833,121,4943,60,0),
+(9,3116,35535,79179,-151840,121,5308,60,0),
+(9,3117,35535,79147,-151854,121,5011,60,0),
+(9,3118,35535,79183,-151868,121,4139,60,0),
+(9,3119,35535,79154,-151879,121,4432,60,0),
+(9,3120,35542,76143,-154139,122,15453,60,0),
+(9,3121,35542,76117,-154146,122,15153,60,0),
+(9,3122,35542,76088,-154144,122,15493,60,0),
+(9,3123,35542,76061,-154141,122,15248,60,0),
+(9,3124,35542,76028,-154146,122,15046,60,0),
+(9,3125,35542,75996,-154143,122,15103,60,0),
+(9,3126,35542,75960,-154143,122,16955,60,0),
+(9,3127,35542,75929,-154145,122,16384,60,0),
+(9,3128,35542,79203,-154141,122,15840,60,0),
+(9,3129,35542,79174,-154147,122,15723,60,0),
+(9,3130,35542,79144,-154150,122,15214,60,0),
+(9,3131,35542,79113,-154148,122,15781,60,0),
+(9,3132,35542,79081,-154147,122,16021,60,0),
+(9,3133,35542,79051,-154146,122,16906,60,0),
+(9,3134,35542,79024,-154149,122,18565,60,0),
+(9,3135,35542,78992,-154146,122,16384,60,0),
+(9,3136,35542,77898,-149967,-358,36306,60,0),
+(9,3137,35542,77902,-149942,-358,34169,60,0),
+(9,3138,35542,77907,-149919,-358,32768,60,0),
+(9,3139,35542,77914,-149892,-358,31152,60,0),
+(9,3140,35542,77918,-149865,-358,33989,60,0),
+(9,3141,35542,77920,-149839,-358,34948,60,0),
+(9,3142,35542,77923,-149814,-358,38901,60,0),
+(9,3143,35542,77921,-149778,-358,29103,60,0),
+(9,3144,35542,77922,-149756,-358,39479,60,0),
+(9,3145,35542,77187,-149761,-356,65062,60,0),
+(9,3146,35542,77187,-149777,-358,4837,60,0),
+(9,3147,35542,77186,-149794,-356,10251,60,0),
+(9,3148,35542,77185,-149821,-356,3539,60,0),
+(9,3149,35542,77185,-149843,-356,4837,60,0),
+(9,3150,35542,77187,-149873,-357,522,60,0),
+(9,3151,35542,77189,-149902,-357,64496,60,0),
+(9,3152,35542,77188,-149925,-358,1298,60,0),
+(9,3153,35542,77186,-149949,-356,1155,60,0),
+(9,3154,35542,77709,-149671,-358,16456,60,0),
+(9,3155,35542,77670,-149671,-358,14546,60,0),
+(9,3156,35542,77637,-149666,-358,14451,60,0),
+(9,3157,35542,77605,-149666,-358,16231,60,0),
+(9,3158,35542,77573,-149668,-358,15299,60,0),
+(9,3159,35542,77538,-149667,-358,15584,60,0),
+(9,3160,35542,77504,-149664,-358,17410,60,0),
+(9,3161,35542,77471,-149665,-358,17016,60,0),
+(9,3162,35542,77439,-149664,-358,16216,60,0),
+(9,3163,35542,77702,-149514,-358,19740,60,0),
+(9,3164,35542,77668,-149518,-358,17606,60,0),
+(9,3165,35542,77630,-149524,-358,14904,60,0),
+(9,3166,35542,77579,-149529,-358,20939,60,0),
+(9,3167,35542,77544,-149530,-358,11797,60,0),
+(9,3168,35542,77503,-149522,-358,18181,60,0),
+(9,3169,35542,77471,-149521,-358,20275,60,0),
+(9,3170,35542,77444,-149517,-358,17424,60,0),
+(9,3171,35542,77411,-149513,-358,15046,60,0),
+(9,3172,35542,76778,-151510,110,54277,60,0),
+(9,3173,35542,76812,-151491,110,53745,60,0),
+(9,3174,35542,76847,-151467,110,54441,60,0),
+(9,3175,35542,76881,-151441,110,55547,60,0),
+(9,3176,35542,76920,-151419,110,55725,60,0),
+(9,3177,35542,75921,-151750,121,27898,60,0),
+(9,3178,35542,75891,-151774,121,27543,60,0),
+(9,3179,35542,75880,-151801,121,29119,60,0),
+(9,3180,35542,75882,-151845,121,28636,60,0),
+(9,3181,35542,77199,-154108,-401,34120,60,0),
+(9,3182,35542,77209,-154076,-401,29655,60,0),
+(9,3183,35542,77216,-154045,-401,30510,60,0),
+(9,3184,35542,77226,-154018,-401,31314,60,0),
+(9,3185,35542,77233,-153994,-401,31716,60,0),
+(9,3186,35542,77238,-153966,-401,30594,60,0),
+(9,3187,35542,77248,-153940,-401,31778,60,0),
+(9,3188,35542,75838,-152206,-653,33807,60,0),
+(9,3189,35542,75836,-152235,-653,32603,60,0),
+(9,3190,35542,75834,-152260,-653,32650,60,0),
+(9,3191,35542,75835,-152291,-653,32266,60,0),
+(9,3192,35542,75833,-152323,-653,30515,60,0),
+(9,3193,35542,75825,-152359,-653,33635,60,0),
+(9,3194,35542,75862,-152205,-653,33088,60,0),
+(9,3195,35542,75862,-152238,-653,34227,60,0),
+(9,3196,35542,75862,-152262,-653,33511,60,0),
+(9,3197,35542,75864,-152291,-653,33369,60,0),
+(9,3198,35542,75862,-152323,-653,34106,60,0),
+(9,3199,35542,75863,-152358,-653,32768,60,0),
+(9,3200,35542,78212,-151353,110,44361,60,0),
+(9,3201,35542,78245,-151369,110,41988,60,0),
+(9,3202,35542,78286,-151404,110,44805,60,0),
+(9,3203,35542,78326,-151431,110,43968,60,0),
+(9,3204,35542,78367,-151456,110,43287,60,0),
+(9,3205,35542,77913,-154126,-401,760,60,0),
+(9,3206,35542,77901,-154092,-401,2476,60,0),
+(9,3207,35542,77889,-154063,-401,1383,60,0),
+(9,3208,35542,77876,-154036,-401,213,60,0),
+(9,3209,35542,77870,-154005,-401,1797,60,0),
+(9,3210,35542,77856,-153973,-401,946,60,0),
+(9,3211,35542,77843,-153943,-401,2827,60,0),
+(9,3212,35542,79392,-152408,-657,64248,60,0),
+(9,3213,35542,79386,-152377,-657,64552,60,0),
+(9,3214,35542,79386,-152343,-657,64456,60,0),
+(9,3215,35542,79383,-152301,-657,64256,60,0),
+(9,3216,35542,79381,-152265,-657,64001,60,0),
+(9,3217,35542,79371,-152222,-657,2091,60,0),
+(9,3218,35542,79352,-152404,-657,3743,60,0),
+(9,3219,35542,79348,-152377,-657,63859,60,0),
+(9,3220,35542,79348,-152346,-657,868,60,0),
+(9,3221,35542,79342,-152305,-657,64850,60,0),
+(9,3222,35542,79341,-152264,-657,64578,60,0),
+(9,3223,35542,79341,-152223,-657,332,60,0),
+(9,3224,35542,79244,-151843,121,3969,60,0),
+(9,3225,35542,79215,-151748,121,3782,60,0),
+(9,3226,35542,79243,-151770,121,4210,60,0),
+(9,3227,35542,79248,-151803,121,3782,60,0),
+(9,3228,35543,76478,-154115,382,48500,60,0),
+(9,3229,35543,76408,-154110,382,48500,60,0),
+(9,3230,35543,76556,-154113,382,48425,60,0),
+(9,3231,35543,76621,-154115,382,49828,60,0),
+(9,3232,35543,76771,-154113,382,50397,60,0),
+(9,3233,35543,77550,-149572,-358,16858,60,0),
+(9,3234,35543,76851,-154110,382,47822,60,0),
+(9,3235,35543,76939,-154110,382,51608,60,0),
+(9,3236,35543,76938,-154929,382,12041,60,0),
+(9,3237,35543,76802,-154938,382,18047,60,0),
+(9,3238,35543,76751,-154943,382,15753,60,0),
+(9,3239,35543,76632,-154939,382,17228,60,0),
+(9,3240,35543,76565,-154934,382,17988,60,0),
+(9,3241,35543,75880,-154815,382,63227,60,0),
+(9,3242,35543,75880,-154764,382,1876,60,0),
+(9,3243,35543,75878,-154715,382,766,60,0),
+(9,3244,35543,75879,-154660,382,64096,60,0),
+(9,3245,35543,75877,-154599,382,65238,60,0),
+(9,3246,35543,75877,-154478,382,65382,60,0),
+(9,3247,35543,77006,-154843,122,16666,60,0),
+(9,3248,35543,76952,-154846,122,15394,60,0),
+(9,3249,35543,76897,-154852,122,14220,60,0),
+(9,3250,35543,76857,-154855,122,13959,60,0),
+(9,3251,35543,76805,-154856,122,16384,60,0),
+(9,3252,35543,76761,-154856,122,15370,60,0),
+(9,3253,35543,76718,-154863,122,16059,60,0),
+(9,3254,35543,76675,-154870,122,17814,60,0),
+(9,3255,35543,78206,-154927,382,16545,60,0),
+(9,3256,35543,78288,-154927,382,16696,60,0),
+(9,3257,35543,78453,-154934,382,18383,60,0),
+(9,3258,35543,78525,-154930,382,17238,60,0),
+(9,3259,35543,78690,-154929,382,18309,60,0),
+(9,3260,35543,78661,-154108,382,49673,60,0),
+(9,3261,35543,78609,-154103,382,49483,60,0),
+(9,3262,35543,78552,-154105,382,50097,60,0),
+(9,3263,35543,78411,-154115,382,50544,60,0),
+(9,3264,35543,78349,-154115,382,48421,60,0),
+(9,3265,35543,78290,-154114,382,50490,60,0),
+(9,3266,35543,78221,-154114,382,48145,60,0),
+(9,3267,35543,79239,-154788,382,32471,60,0),
+(9,3268,35543,79235,-154722,382,35413,60,0),
+(9,3269,35543,79236,-154652,382,34771,60,0),
+(9,3270,35543,79234,-154592,382,34538,60,0),
+(9,3271,35543,79235,-154538,382,33338,60,0),
+(9,3272,35543,79246,-154413,382,33979,60,0),
+(9,3273,35543,78168,-154841,122,17786,60,0),
+(9,3274,35543,78225,-154848,122,17399,60,0),
+(9,3275,35543,78278,-154847,122,19119,60,0),
+(9,3276,35543,78332,-154855,122,21980,60,0),
+(9,3277,35543,78388,-154856,122,20214,60,0),
+(9,3278,35543,78435,-154854,122,18192,60,0),
+(9,3279,35543,78487,-154860,122,21478,60,0),
+(9,3280,35543,78540,-154861,122,16893,60,0),
+(9,3281,35543,78582,-154862,122,16666,60,0),
+(9,3282,35543,77930,-149963,-353,28258,60,0),
+(9,3283,35543,77934,-149946,-351,36123,60,0),
+(9,3284,35543,77935,-149918,-351,32768,60,0),
+(9,3285,35543,77940,-149892,-348,34302,60,0),
+(9,3286,35543,77944,-149866,-346,37976,60,0),
+(9,3287,35543,77946,-149836,-345,32768,60,0),
+(9,3288,35543,77948,-149810,-344,31901,60,0),
+(9,3289,35543,77949,-149780,-343,33202,60,0),
+(9,3290,35543,77948,-149752,-344,36636,60,0),
+(9,3291,35543,77165,-149760,-344,6134,60,0),
+(9,3292,35543,77155,-149782,-340,2556,60,0),
+(9,3293,35543,77156,-149807,-340,613,60,0),
+(9,3294,35543,77157,-149831,-369,417,60,0),
+(9,3295,35543,77153,-149852,-338,3356,60,0),
+(9,3296,35543,77158,-149877,-341,65082,60,0),
+(9,3297,35543,77158,-149903,-342,833,60,0),
+(9,3298,35543,77158,-149923,-342,7392,60,0),
+(9,3299,35543,77156,-149953,-341,57344,60,0),
+(9,3300,35543,77701,-149556,-358,18039,60,0),
+(9,3301,35543,77674,-149564,-358,15002,60,0),
+(9,3302,35543,77640,-149567,-358,19941,60,0),
+(9,3303,35543,77596,-149564,-358,17146,60,0),
+(9,3304,35543,77512,-149576,-358,16828,60,0),
+(9,3305,35543,77487,-149569,-358,12962,60,0),
+(9,3306,35543,77452,-149576,-358,14822,60,0),
+(9,3307,35543,77415,-149574,-358,26635,60,0),
+(9,3308,35543,77037,-149671,-17,19639,60,0),
+(9,3309,35543,76995,-149675,-17,16606,60,0),
+(9,3310,35543,76956,-149690,-17,16117,60,0),
+(9,3311,35543,76825,-149728,-17,17729,60,0),
+(9,3312,35543,76786,-149732,-17,17565,60,0),
+(9,3313,35543,76858,-149771,-17,54978,60,0),
+(9,3314,35543,76823,-149780,-17,52894,60,0),
+(9,3315,35543,76789,-149783,-17,51590,60,0),
+(9,3316,35543,76754,-149799,-17,51269,60,0),
+(9,3317,35543,76690,-149813,-17,55900,60,0),
+(9,3318,35543,76659,-149820,-17,52566,60,0),
+(9,3319,35543,76619,-149836,-17,51759,60,0),
+(9,3320,35543,76389,-149643,-17,16384,60,0),
+(9,3321,35543,76497,-149639,-17,19740,60,0),
+(9,3322,35543,76529,-149700,-17,20059,60,0),
+(9,3323,35543,76396,-149672,-17,21278,60,0),
+(9,3324,35543,76408,-149733,-17,20306,60,0),
+(9,3325,35543,75437,-149443,-17,12302,60,0),
+(9,3326,35543,75354,-149492,-17,25922,60,0),
+(9,3327,35543,75474,-149492,-17,15327,60,0),
+(9,3328,35543,75511,-149543,-17,12821,60,0),
+(9,3329,35543,75554,-149604,-17,13946,60,0),
+(9,3330,35543,75389,-149552,-17,44850,60,0),
+(9,3331,35543,75422,-149595,-17,29592,60,0),
+(9,3332,35543,75458,-149657,-38,26331,60,0),
+(9,3333,35543,75648,-149722,-17,18768,60,0),
+(9,3334,35543,75696,-149796,-17,15968,60,0),
+(9,3335,35543,75536,-149779,-37,31664,60,0),
+(9,3336,35543,75589,-149849,-17,26367,60,0),
+(9,3337,35543,74811,-151089,-17,22430,60,0),
+(9,3338,35543,74897,-151132,-17,17767,60,0),
+(9,3339,35543,74733,-151164,-17,32352,60,0),
+(9,3340,35543,74771,-151193,-17,36079,60,0),
+(9,3341,35543,74845,-151241,-17,36251,60,0),
+(9,3342,35543,74525,-151790,-17,24240,60,0),
+(9,3343,35543,74612,-151802,-17,26244,60,0),
+(9,3344,35543,74475,-151877,-17,31499,60,0),
+(9,3345,35543,74501,-151891,-17,29413,60,0),
+(9,3346,35543,74575,-151919,-17,33837,60,0),
+(9,3347,35543,77320,-149215,366,12416,60,0),
+(9,3348,35543,77324,-149274,366,9802,60,0),
+(9,3349,35543,77327,-149367,366,17306,60,0),
+(9,3350,35543,77216,-149262,345,63334,60,0),
+(9,3351,35543,77196,-149352,366,21093,60,0),
+(9,3352,35543,77801,-149213,366,32325,60,0),
+(9,3353,35543,77908,-149260,366,13331,60,0),
+(9,3354,35543,77928,-149393,366,12310,60,0),
+(9,3355,35543,77786,-149268,366,18565,60,0),
+(9,3356,35543,77771,-149385,366,21406,60,0),
+(9,3357,35543,76796,-151092,117,51978,60,0),
+(9,3358,35543,76754,-151115,117,19244,60,0),
+(9,3359,35543,76714,-151155,117,56189,60,0),
+(9,3360,35543,76651,-151184,117,19615,60,0),
+(9,3361,35543,76617,-151225,117,54682,60,0),
+(9,3362,35543,76575,-151243,117,23850,60,0),
+(9,3363,35543,76545,-151272,117,55285,60,0),
+(9,3364,35543,76815,-151070,117,30312,60,0),
+(9,3365,35543,76088,-151778,117,29991,60,0),
+(9,3366,35543,76115,-151791,117,29154,60,0),
+(9,3367,35543,76133,-151801,117,28258,60,0),
+(9,3368,35543,76156,-151810,117,28373,60,0),
+(9,3369,35543,76095,-151757,117,28077,60,0),
+(9,3370,35543,76113,-151765,117,30288,60,0),
+(9,3371,35543,76011,-151961,117,27560,60,0),
+(9,3372,35543,76040,-151975,117,29497,60,0),
+(9,3373,35543,76059,-151983,117,27831,60,0),
+(9,3374,35543,76077,-151989,117,28276,60,0),
+(9,3375,35543,75997,-151981,117,29991,60,0),
+(9,3376,35543,76017,-151987,117,28276,60,0),
+(9,3377,35543,76981,-153686,-401,44098,60,0),
+(9,3378,35543,77011,-153705,-401,43472,60,0),
+(9,3379,35543,77041,-153720,-401,43794,60,0),
+(9,3380,35543,77071,-153738,-401,43325,60,0),
+(9,3381,35543,77105,-153752,-401,43625,60,0),
+(9,3382,35543,77144,-153778,-401,43845,60,0),
+(9,3383,35543,78321,-151073,117,40411,60,0),
+(9,3384,35543,78342,-151092,117,8192,60,0),
+(9,3385,35543,78363,-151108,117,41905,60,0),
+(9,3386,35543,78389,-151117,117,10576,60,0),
+(9,3387,35543,78414,-151131,117,40960,60,0),
+(9,3388,35543,78440,-151138,117,10081,60,0),
+(9,3389,35543,78456,-151161,117,42440,60,0),
+(9,3390,35543,78488,-151178,117,6971,60,0),
+(9,3391,35543,78126,-153692,-401,53176,60,0),
+(9,3392,35543,78091,-153701,-401,56462,60,0),
+(9,3393,35543,78063,-153725,-401,55522,60,0),
+(9,3394,35543,78036,-153739,-401,52997,60,0),
+(9,3395,35543,78012,-153751,-401,56220,60,0),
+(9,3396,35543,77983,-153770,-401,53832,60,0),
+(9,3397,35543,79121,-151957,117,6134,60,0),
+(9,3398,35543,79102,-151966,117,4837,60,0),
+(9,3399,35543,79077,-151978,117,3743,60,0),
+(9,3400,35543,79017,-152014,110,4837,60,0),
+(9,3401,35543,79125,-151991,117,3356,60,0),
+(9,3402,35543,79103,-151998,117,4555,60,0),
+(9,3403,35543,79026,-151780,117,4737,60,0),
+(9,3404,35543,79002,-151791,117,4168,60,0),
+(9,3405,35543,78983,-151800,117,3682,60,0),
+(9,3406,35543,79021,-151755,117,4776,60,0),
+(9,3407,35543,78997,-151767,117,4661,60,0),
+(9,3408,35543,78971,-151778,117,4555,60,0),
+(9,3409,35543,78094,-149671,-17,12022,60,0),
+(9,3410,35543,78131,-149687,-17,20199,60,0),
+(9,3411,35543,78176,-149700,-17,16819,60,0),
+(9,3412,35543,78315,-149734,-17,12747,60,0),
+(9,3413,35543,78375,-149745,-17,13291,60,0),
+(9,3414,35543,78246,-149773,-17,45261,60,0),
+(9,3415,35543,78289,-149782,-17,55621,60,0),
+(9,3416,35543,78326,-149793,-17,47093,60,0),
+(9,3417,35543,78360,-149802,-17,47188,60,0),
+(9,3418,35543,78430,-149820,-17,44491,60,0),
+(9,3419,35543,78470,-149828,-17,43987,60,0),
+(9,3420,35543,78512,-149842,-17,45688,60,0),
+(9,3421,35543,78614,-149642,-17,15439,60,0),
+(9,3422,35543,78582,-149723,-17,18638,60,0),
+(9,3423,35543,78721,-149649,-17,10357,60,0),
+(9,3424,35543,78718,-149682,-17,8621,60,0),
+(9,3425,35543,78688,-149760,-17,9084,60,0),
+(9,3426,35543,79721,-149542,-17,10295,60,0),
+(9,3427,35543,79685,-149598,-17,9046,60,0),
+(9,3428,35543,79647,-149659,-17,11770,60,0),
+(9,3429,35543,79608,-149721,-17,9138,60,0),
+(9,3430,35543,79489,-149879,-17,11918,60,0),
+(9,3431,35543,79468,-149925,-17,6947,60,0),
+(9,3432,35543,79651,-149482,-17,11095,60,0),
+(9,3433,35543,79611,-149536,-17,10618,60,0),
+(9,3434,35543,79571,-149588,-17,12447,60,0),
+(9,3435,35543,79525,-149660,-17,10304,60,0),
+(9,3436,35543,79422,-149803,-17,11721,60,0),
+(9,3437,35543,79385,-149862,-17,12909,60,0),
+(9,3438,35543,80370,-151161,-17,64261,60,0),
+(9,3439,35543,80333,-151185,-17,2091,60,0),
+(9,3440,35543,80274,-151241,-17,3881,60,0),
+(9,3441,35543,80308,-151100,-17,10501,60,0),
+(9,3442,35543,80222,-151125,-17,9869,60,0),
+(9,3443,35543,80619,-151882,-17,2593,60,0),
+(9,3444,35543,80586,-151902,-17,62409,60,0),
+(9,3445,35543,80496,-151939,-17,61631,60,0),
+(9,3446,35543,80563,-151799,-17,7849,60,0),
+(9,3447,35543,80464,-151813,-17,6828,60,0),
+(8,3448,35486,18535,-49055,-1217,63418,10800,0),
+(8,3449,35486,18535,-49095,-1217,63418,10800,0),
+(8,3450,35486,18535,-49135,-1217,63418,10800,0),
+(8,3451,35486,18535,-49175,-1217,63418,10800,0),
+(8,3452,35486,18535,-49215,-1217,63418,10800,0),
+(8,3453,35490,18555,-49055,-1217,63418,10800,0),
+(8,3454,35490,18555,-49075,-1217,63418,10800,0),
+(8,3455,35490,18555,-49095,-1217,63418,10800,0),
+(8,3456,35490,18555,-49115,-1217,63418,10800,0),
+(8,3457,35490,18555,-49135,-1217,63418,10800,0),
+(8,3458,35490,18555,-49155,-1217,63418,10800,0),
+(8,3459,35490,18555,-49175,-1217,63418,10800,0),
+(8,3460,35490,18555,-49195,-1217,63418,10800,0),
+(8,3461,35490,18555,-49215,-1217,63418,10800,0),
+(8,3462,35490,18555,-49235,-1217,63418,10800,0),
+(8,3463,35490,18575,-49055,-1217,63418,10800,0),
+(8,3464,35488,18575,-49075,-1217,63418,10800,0),
+(8,3465,35487,18575,-49095,-1217,63418,10800,0),
+(8,3466,35488,18575,-49115,-1217,63418,10800,0),
+(8,3467,35487,18575,-49135,-1217,63418,10800,0),
+(8,3468,35488,18575,-49155,-1217,63418,10800,0),
+(8,3469,35487,18575,-49175,-1217,63418,10800,0),
+(8,3470,35488,18575,-49195,-1217,63418,10800,0),
+(8,3471,35487,18575,-49215,-1217,63418,10800,0),
+(8,3472,35488,18575,-49235,-1217,63418,10800,0),
+(8,3473,35487,18595,-49055,-1217,63418,10800,0),
+(8,3474,35489,18595,-49075,-1217,63418,10800,0),
+(8,3475,35489,18595,-49095,-1217,63418,10800,0),
+(8,3476,35489,18595,-49115,-1217,63418,10800,0),
+(8,3477,35489,18595,-49135,-1217,63418,10800,0),
+(8,3478,35484,18595,-49155,-1217,63418,10800,0),
+(8,3479,35489,18595,-49175,-1217,63418,10800,0),
+(8,3480,35489,18595,-49195,-1217,63418,10800,0),
+(8,3481,35489,18595,-49215,-1217,63418,10800,0),
+(8,3482,35489,18595,-49235,-1217,63418,10800,0),
+(8,3483,35486,15490,-49055,-1059,63418,10800,0),
+(8,3484,35486,15490,-49095,-1059,63418,10800,0),
+(8,3485,35486,15490,-49135,-1059,63418,10800,0),
+(8,3486,35486,15490,-49175,-1059,63418,10800,0),
+(8,3487,35486,15490,-49215,-1059,63418,10800,0),
+(8,3488,35490,15510,-49055,-1059,63418,10800,0),
+(8,3489,35490,15510,-49075,-1059,63418,10800,0),
+(8,3490,35490,15510,-49095,-1059,63418,10800,0),
+(8,3491,35490,15510,-49115,-1059,63418,10800,0),
+(8,3492,35490,15510,-49135,-1059,63418,10800,0),
+(8,3493,35490,15510,-49155,-1059,63418,10800,0),
+(8,3494,35490,15510,-49175,-1059,63418,10800,0),
+(8,3495,35490,15510,-49195,-1059,63418,10800,0),
+(8,3496,35490,15510,-49215,-1059,63418,10800,0),
+(8,3497,35490,15510,-49235,-1059,63418,10800,0),
+(8,3498,35490,15530,-49055,-1059,63418,10800,0),
+(8,3499,35488,15530,-49075,-1059,63418,10800,0),
+(8,3500,35487,15530,-49095,-1059,63418,10800,0),
+(8,3501,35488,15530,-49115,-1059,63418,10800,0),
+(8,3502,35487,15530,-49135,-1059,63418,10800,0),
+(8,3503,35488,15530,-49155,-1059,63418,10800,0),
+(8,3504,35487,15530,-49175,-1059,63418,10800,0),
+(8,3505,35488,15530,-49195,-1059,63418,10800,0),
+(8,3506,35487,15530,-49215,-1059,63418,10800,0),
+(8,3507,35488,15530,-49235,-1059,63418,10800,0),
+(8,3508,35487,15550,-49055,-1059,63418,10800,0),
+(8,3509,35489,15550,-49075,-1059,63418,10800,0),
+(8,3510,35489,15550,-49095,-1059,63418,10800,0),
+(8,3511,35489,15550,-49115,-1059,63418,10800,0),
+(8,3512,35489,15550,-49135,-1059,63418,10800,0),
+(8,3513,35484,15550,-49155,-1059,63418,10800,0),
+(8,3514,35489,15550,-49175,-1059,63418,10800,0),
+(8,3515,35489,15550,-49195,-1059,63418,10800,0),
+(8,3516,35489,15550,-49215,-1059,63418,10800,0),
+(8,3517,35489,15550,-49235,-1059,63418,10800,0),
+(8,3518,35486,13395,-49055,-537,63418,10800,0),
+(8,3519,35486,13395,-49095,-537,63418,10800,0),
+(8,3520,35486,13395,-49135,-537,63418,10800,0),
+(8,3521,35486,13395,-49175,-537,63418,10800,0),
+(8,3522,35486,13405,-49215,-537,63418,10800,0),
+(8,3523,35490,13405,-49055,-537,63418,10800,0),
+(8,3524,35490,13405,-49075,-537,63418,10800,0),
+(8,3525,35490,13405,-49095,-537,63418,10800,0),
+(8,3526,35490,13405,-49115,-537,63418,10800,0),
+(8,3527,35490,13405,-49135,-537,63418,10800,0),
+(8,3528,35490,13405,-49155,-537,63418,10800,0),
+(8,3529,35490,13405,-49175,-537,63418,10800,0),
+(8,3530,35490,13405,-49195,-537,63418,10800,0),
+(8,3531,35490,13405,-49215,-537,63418,10800,0),
+(8,3532,35490,13405,-49235,-537,63418,10800,0),
+(8,3533,35490,13415,-49055,-537,63418,10800,0),
+(8,3534,35488,13415,-49075,-537,63418,10800,0),
+(8,3535,35487,13415,-49095,-537,63418,10800,0),
+(8,3536,35488,13415,-49115,-537,63418,10800,0),
+(8,3537,35487,13415,-49135,-537,63418,10800,0),
+(8,3538,35488,13415,-49155,-537,63418,10800,0),
+(8,3539,35487,13415,-49175,-537,63418,10800,0),
+(8,3540,35488,13415,-49195,-537,63418,10800,0),
+(8,3541,35487,13415,-49215,-537,63418,10800,0),
+(8,3542,35488,13415,-49235,-537,63418,10800,0),
+(8,3543,35487,13435,-49055,-537,63418,10800,0),
+(8,3544,35489,13435,-49075,-537,63418,10800,0),
+(8,3545,35489,13435,-49095,-537,63418,10800,0),
+(8,3546,35489,13435,-49115,-537,63418,10800,0),
+(8,3547,35489,13435,-49135,-537,63418,10800,0),
+(8,3548,35484,13435,-49155,-537,63418,10800,0),
+(8,3549,35489,13435,-49175,-537,63418,10800,0),
+(8,3550,35489,13435,-49195,-537,63418,10800,0),
+(8,3551,35489,13435,-49215,-537,63418,10800,0),
+(8,3552,35489,13435,-49235,-537,63418,10800,0),
+(8,3553,35486,11040,-49055,996,63418,10800,0),
+(8,3554,35486,11040,-49095,996,63418,10800,0),
+(8,3555,35486,11040,-49135,996,63418,10800,0),
+(8,3556,35486,11040,-49175,996,63418,10800,0),
+(8,3557,35486,11060,-49215,996,63418,10800,0),
+(8,3558,35490,11060,-49055,996,63418,10800,0),
+(8,3559,35490,11060,-49075,996,63418,10800,0),
+(8,3560,35490,11060,-49095,996,63418,10800,0),
+(8,3561,35490,11060,-49115,996,63418,10800,0),
+(8,3562,35490,11060,-49135,996,63418,10800,0),
+(8,3563,35490,11060,-49155,996,63418,10800,0),
+(8,3564,35490,11060,-49175,996,63418,10800,0),
+(8,3565,35490,11060,-49195,996,63418,10800,0),
+(8,3566,35490,11060,-49215,996,63418,10800,0),
+(8,3567,35490,11060,-49235,996,63418,10800,0),
+(8,3568,35490,11080,-49055,996,63418,10800,0),
+(8,3569,35488,11080,-49075,996,63418,10800,0),
+(8,3570,35487,11080,-49095,996,63418,10800,0),
+(8,3571,35488,11080,-49115,996,63418,10800,0),
+(8,3572,35487,11080,-49135,996,63418,10800,0),
+(8,3573,35488,11080,-49155,996,63418,10800,0),
+(8,3574,35487,11080,-49175,996,63418,10800,0),
+(8,3575,35488,11080,-49195,996,63418,10800,0),
+(8,3576,35487,11080,-49215,996,63418,10800,0),
+(8,3577,35488,11080,-49235,996,63418,10800,0),
+(8,3578,35487,11100,-49055,996,63418,10800,0),
+(8,3579,35489,11100,-49075,996,63418,10800,0),
+(8,3580,35489,11100,-49095,996,63418,10800,0),
+(8,3581,35489,11100,-49115,996,63418,10800,0),
+(8,3582,35489,11100,-49135,996,63418,10800,0),
+(8,3583,35484,11100,-49155,996,63418,10800,0),
+(8,3584,35489,11100,-49175,996,63418,10800,0),
+(8,3585,35489,11100,-49195,996,63418,10800,0),
+(8,3586,35489,11100,-49215,996,63418,10800,0),
+(8,3587,35489,11100,-49235,996,63418,10800,0),
+(8,3588,35486,9445,-49055,996,63418,10800,0),
+(8,3589,35486,9445,-49095,996,63418,10800,0),
+(8,3590,35486,9445,-49135,996,63418,10800,0),
+(8,3591,35486,9445,-49175,996,63418,10800,0),
+(8,3592,35486,9445,-49215,996,63418,10800,0),
+(8,3593,35490,9465,-48905,996,63418,10800,0),
+(8,3594,35490,9465,-48955,996,63418,10800,0),
+(8,3595,35490,9465,-49005,996,63418,10800,0),
+(8,3596,35490,9465,-49055,996,63418,10800,0),
+(8,3597,35490,9465,-49105,996,63418,10800,0),
+(8,3598,35490,9465,-49155,996,63418,10800,0),
+(8,3599,35490,9465,-49205,996,63418,10800,0),
+(8,3600,35490,9465,-49255,996,63418,10800,0),
+(8,3601,35490,9465,-49305,996,63418,10800,0),
+(8,3602,35490,9465,-49355,996,63418,10800,0),
+(8,3603,35490,9485,-48905,996,63418,10800,0),
+(8,3604,35488,9485,-48955,996,63418,10800,0),
+(8,3605,35487,9485,-49005,996,63418,10800,0),
+(8,3606,35488,9485,-49055,996,63418,10800,0),
+(8,3607,35487,9485,-49105,996,63418,10800,0),
+(8,3608,35488,9485,-49155,996,63418,10800,0),
+(8,3609,35487,9485,-49205,996,63418,10800,0),
+(8,3610,35488,9485,-49255,996,63418,10800,0),
+(8,3611,35487,9485,-49305,996,63418,10800,0),
+(8,3612,35488,9485,-49355,996,63418,10800,0),
+(8,3613,35487,9505,-48905,996,63418,10800,0),
+(8,3614,35489,9505,-48955,996,63418,10800,0),
+(8,3615,35489,9505,-49005,996,63418,10800,0),
+(8,3616,35489,9505,-49055,996,63418,10800,0),
+(8,3617,35489,9505,-49105,996,63418,10800,0),
+(8,3618,35484,9505,-49155,996,63418,10800,0),
+(8,3619,35489,9505,-49205,996,63418,10800,0),
+(8,3620,35489,9505,-49255,996,63418,10800,0),
+(8,3621,35489,9505,-49305,996,63418,10800,0),
+(8,3622,35489,9505,-49355,996,63418,10800,0),
+(8,3623,35484,9231,-49151,1093,63418,10800,0),
+(8,3624,35486,9135,-49076,1093,63418,10800,0),
+(8,3625,35486,9135,-49236,1093,63418,10800,0),
+(8,3626,35484,9035,-49151,1093,63418,10800,0),
+(8,3627,35480,8941,-48580,1252,16389,10800,0),
+(8,3628,35480,8974,-48580,1252,16389,10800,0),
+(8,3629,35480,9007,-48580,1252,16389,10800,0),
+(8,3630,35480,9051,-48580,1252,16389,10800,0),
+(8,3631,35480,9074,-48580,1252,16389,10800,0),
+(8,3632,35480,9107,-48580,1252,16389,10800,0),
+(8,3633,35480,9151,-48580,1252,16389,10800,0),
+(8,3634,35480,9174,-48580,1252,16389,10800,0),
+(8,3635,35480,9207,-48580,1252,16389,10800,0),
+(8,3636,35480,9251,-48580,1252,16389,10800,0),
+(8,3637,35480,8941,-48600,1252,16389,10800,0),
+(8,3638,35480,8974,-48600,1252,16389,10800,0),
+(8,3639,35480,9007,-48600,1252,16389,10800,0),
+(8,3640,35480,9051,-48600,1252,16389,10800,0),
+(8,3641,35480,9074,-48600,1252,16389,10800,0),
+(8,3642,35480,9107,-48600,1252,16389,10800,0),
+(8,3643,35480,9151,-48600,1252,16389,10800,0),
+(8,3644,35480,9174,-48600,1252,16389,10800,0),
+(8,3645,35480,9207,-48600,1252,16389,10800,0),
+(8,3646,35480,9251,-48600,1252,16389,10800,0),
+(8,3647,35480,8941,-49701,1252,16389,10800,0),
+(8,3648,35480,8974,-49701,1252,16389,10800,0),
+(8,3649,35480,9007,-49701,1252,16389,10800,0),
+(8,3650,35480,9051,-49701,1252,16389,10800,0),
+(8,3651,35480,9074,-49701,1252,16389,10800,0),
+(8,3652,35480,9107,-49701,1252,16389,10800,0),
+(8,3653,35480,9151,-49701,1252,16389,10800,0),
+(8,3654,35480,9174,-49701,1252,16389,10800,0),
+(8,3655,35480,9207,-49701,1252,16389,10800,0),
+(8,3656,35480,9251,-49701,1252,16389,10800,0),
+(8,3657,35480,8941,-49721,1252,16389,10800,0),
+(8,3658,35480,8974,-49721,1252,16389,10800,0),
+(8,3659,35480,9007,-49721,1252,16389,10800,0),
+(8,3660,35480,9051,-49721,1252,16389,10800,0),
+(8,3661,35480,9074,-49721,1252,16389,10800,0),
+(8,3662,35480,9107,-49721,1252,16389,10800,0),
+(8,3663,35480,9151,-49721,1252,16389,10800,0),
+(8,3664,35480,9174,-49721,1252,16389,10800,0),
+(8,3665,35480,9207,-49721,1252,16389,10800,0),
+(8,3666,35480,9251,-49721,1252,16389,10800,0),
+(8,3667,35477,8484,-48905,1252,63418,10800,0),
+(8,3668,35477,8484,-48955,1252,63418,10800,0),
+(8,3669,35477,8484,-49005,1252,63418,10800,0),
+(8,3670,35477,8484,-49055,1252,63418,10800,0),
+(8,3671,35477,8484,-49105,1252,63418,10800,0),
+(8,3672,35477,8484,-49155,1252,63418,10800,0),
+(8,3673,35477,8484,-49205,1252,63418,10800,0),
+(8,3674,35477,8484,-49255,1252,63418,10800,0),
+(8,3675,35477,8484,-49305,1252,63418,10800,0),
+(8,3676,35477,8484,-49355,1252,63418,10800,0),
+(8,3677,35477,8484,-48905,1252,63418,10800,0),
+(8,3678,35477,8484,-48955,1252,63418,10800,0),
+(8,3679,35477,8484,-49005,1252,63418,10800,0),
+(8,3680,35477,8484,-49055,1252,63418,10800,0),
+(8,3681,35477,8504,-49105,1252,63418,10800,0),
+(8,3682,35477,8505,-49155,1252,63418,10800,0),
+(8,3683,35477,8505,-49205,1252,63418,10800,0),
+(8,3684,35477,8505,-49255,1252,63418,10800,0),
+(8,3685,35477,8505,-49305,1252,63418,10800,0),
+(8,3686,35475,17655,-49140,-1181,63418,10800,0),
+(8,3687,35475,17255,-49140,-1124,63418,10800,0),
+(8,3688,35475,16855,-49140,-1088,63418,10800,0),
+(8,3689,35477,8505,-49355,1252,63418,10800,0);
+/*!40000 ALTER TABLE `castle_siege_guards` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `castle_trapupgrade`
+--
+
+DROP TABLE IF EXISTS `castle_trapupgrade`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `castle_trapupgrade` (
+  `castleId` tinyint(3) unsigned NOT NULL DEFAULT 0,
+  `towerIndex` tinyint(3) unsigned NOT NULL DEFAULT 0,
+  `level` tinyint(3) unsigned NOT NULL DEFAULT 0,
+  PRIMARY KEY (`towerIndex`,`castleId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `castle_trapupgrade`
+--
+
+LOCK TABLES `castle_trapupgrade` WRITE;
+/*!40000 ALTER TABLE `castle_trapupgrade` DISABLE KEYS */;
+/*!40000 ALTER TABLE `castle_trapupgrade` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `character_contacts`
+--
+
+DROP TABLE IF EXISTS `character_contacts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `character_contacts` (
+  `charId` int(10) unsigned NOT NULL DEFAULT 0,
+  `contactId` int(10) unsigned NOT NULL DEFAULT 0,
+  PRIMARY KEY (`charId`,`contactId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `character_contacts`
+--
+
+LOCK TABLES `character_contacts` WRITE;
+/*!40000 ALTER TABLE `character_contacts` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_contacts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `character_friends`
+--
+
+DROP TABLE IF EXISTS `character_friends`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `character_friends` (
+  `charId` int(10) unsigned NOT NULL DEFAULT 0,
+  `friendId` int(10) unsigned NOT NULL DEFAULT 0,
+  `relation` int(10) unsigned NOT NULL DEFAULT 0,
+  PRIMARY KEY (`charId`,`friendId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `character_friends`
+--
+
+LOCK TABLES `character_friends` WRITE;
+/*!40000 ALTER TABLE `character_friends` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_friends` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `character_hennas`
+--
+
+DROP TABLE IF EXISTS `character_hennas`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `character_hennas` (
+  `charId` int(10) unsigned NOT NULL DEFAULT 0,
+  `symbol_id` int(11) DEFAULT NULL,
+  `slot` int(11) NOT NULL DEFAULT 0,
+  `class_index` int(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`charId`,`slot`,`class_index`),
+  KEY `idx_charId_classIndex` (`charId`,`class_index`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `character_hennas`
+--
+
+LOCK TABLES `character_hennas` WRITE;
+/*!40000 ALTER TABLE `character_hennas` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_hennas` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `character_instance_time`
+--
+
+DROP TABLE IF EXISTS `character_instance_time`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `character_instance_time` (
+  `charId` int(10) unsigned NOT NULL DEFAULT 0,
+  `instanceId` int(3) NOT NULL DEFAULT 0,
+  `time` bigint(13) unsigned NOT NULL DEFAULT 0,
+  PRIMARY KEY (`charId`,`instanceId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `character_instance_time`
+--
+
+LOCK TABLES `character_instance_time` WRITE;
+/*!40000 ALTER TABLE `character_instance_time` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_instance_time` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `character_item_reuse_save`
+--
+
+DROP TABLE IF EXISTS `character_item_reuse_save`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `character_item_reuse_save` (
+  `charId` int(11) NOT NULL DEFAULT 0,
+  `itemId` int(11) NOT NULL DEFAULT 0,
+  `itemObjId` int(3) NOT NULL DEFAULT 1,
+  `reuseDelay` int(8) NOT NULL DEFAULT 0,
+  `systime` bigint(20) unsigned NOT NULL DEFAULT 0,
+  PRIMARY KEY (`charId`,`itemId`,`itemObjId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `character_item_reuse_save`
+--
+
+LOCK TABLES `character_item_reuse_save` WRITE;
+/*!40000 ALTER TABLE `character_item_reuse_save` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_item_reuse_save` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `character_macroses`
+--
+
+DROP TABLE IF EXISTS `character_macroses`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `character_macroses` (
+  `charId` int(10) unsigned NOT NULL DEFAULT 0,
+  `id` int(11) NOT NULL DEFAULT 0,
+  `icon` int(11) DEFAULT NULL,
+  `name` varchar(40) DEFAULT NULL,
+  `descr` varchar(80) DEFAULT NULL,
+  `acronym` varchar(4) DEFAULT NULL,
+  `commands` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`charId`,`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `character_macroses`
+--
+
+LOCK TABLES `character_macroses` WRITE;
+/*!40000 ALTER TABLE `character_macroses` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_macroses` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `character_offline_play`
+--
+
+DROP TABLE IF EXISTS `character_offline_play`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `character_offline_play` (
+  `charId` int(10) unsigned NOT NULL DEFAULT 0,
+  `type` tinyint(3) unsigned NOT NULL DEFAULT 0,
+  `id` int(11) NOT NULL DEFAULT 0,
+  KEY `charId` (`charId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `character_offline_play`
+--
+
+LOCK TABLES `character_offline_play` WRITE;
+/*!40000 ALTER TABLE `character_offline_play` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_offline_play` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `character_offline_play_group`
+--
+
+DROP TABLE IF EXISTS `character_offline_play_group`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `character_offline_play_group` (
+  `leaderId` int(10) unsigned NOT NULL DEFAULT 0,
+  `charId` int(10) unsigned NOT NULL DEFAULT 0,
+  `type` tinyint(3) unsigned NOT NULL DEFAULT 0,
+  KEY `leaderId` (`leaderId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `character_offline_play_group`
+--
+
+LOCK TABLES `character_offline_play_group` WRITE;
+/*!40000 ALTER TABLE `character_offline_play_group` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_offline_play_group` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `character_offline_trade`
+--
+
+DROP TABLE IF EXISTS `character_offline_trade`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `character_offline_trade` (
+  `charId` int(10) unsigned NOT NULL,
+  `time` bigint(13) unsigned NOT NULL DEFAULT 0,
+  `type` tinyint(4) NOT NULL DEFAULT 0,
+  `title` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`charId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `character_offline_trade`
+--
+
+LOCK TABLES `character_offline_trade` WRITE;
+/*!40000 ALTER TABLE `character_offline_trade` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_offline_trade` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `character_offline_trade_items`
+--
+
+DROP TABLE IF EXISTS `character_offline_trade_items`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `character_offline_trade_items` (
+  `charId` int(10) unsigned NOT NULL,
+  `item` int(10) unsigned NOT NULL DEFAULT 0,
+  `count` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `price` bigint(20) unsigned NOT NULL DEFAULT 0,
+  KEY `charId` (`charId`),
+  KEY `item` (`item`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `character_offline_trade_items`
+--
+
+LOCK TABLES `character_offline_trade_items` WRITE;
+/*!40000 ALTER TABLE `character_offline_trade_items` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_offline_trade_items` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `character_pet_skills_save`
+--
+
+DROP TABLE IF EXISTS `character_pet_skills_save`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `character_pet_skills_save` (
+  `petObjItemId` int(11) NOT NULL DEFAULT 0,
+  `skill_id` int(11) NOT NULL DEFAULT 0,
+  `skill_level` int(3) NOT NULL DEFAULT 1,
+  `remaining_time` int(11) NOT NULL DEFAULT 0,
+  `buff_index` int(2) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`petObjItemId`,`skill_id`,`skill_level`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `character_pet_skills_save`
+--
+
+LOCK TABLES `character_pet_skills_save` WRITE;
+/*!40000 ALTER TABLE `character_pet_skills_save` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_pet_skills_save` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `character_quests`
+--
+
+DROP TABLE IF EXISTS `character_quests`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `character_quests` (
+  `charId` int(10) unsigned NOT NULL DEFAULT 0,
+  `name` varchar(60) NOT NULL DEFAULT '',
+  `var` varchar(20) NOT NULL DEFAULT '',
+  `value` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`charId`,`name`,`var`),
+  KEY `idx_charId_var` (`charId`,`var`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `character_quests`
+--
+
+LOCK TABLES `character_quests` WRITE;
+/*!40000 ALTER TABLE `character_quests` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_quests` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `character_raid_points`
+--
+
+DROP TABLE IF EXISTS `character_raid_points`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `character_raid_points` (
+  `charId` int(10) unsigned NOT NULL DEFAULT 0,
+  `boss_id` int(10) unsigned NOT NULL DEFAULT 0,
+  `points` int(10) unsigned NOT NULL DEFAULT 0,
+  PRIMARY KEY (`charId`,`boss_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `character_raid_points`
+--
+
+LOCK TABLES `character_raid_points` WRITE;
+/*!40000 ALTER TABLE `character_raid_points` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_raid_points` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `character_recipebook`
+--
+
+DROP TABLE IF EXISTS `character_recipebook`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `character_recipebook` (
+  `charId` int(10) unsigned NOT NULL DEFAULT 0,
+  `id` decimal(11,0) NOT NULL DEFAULT 0,
+  `classIndex` tinyint(4) NOT NULL DEFAULT 0,
+  `type` int(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`,`charId`,`classIndex`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `character_recipebook`
+--
+
+LOCK TABLES `character_recipebook` WRITE;
+/*!40000 ALTER TABLE `character_recipebook` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_recipebook` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `character_recipeshoplist`
+--
+
+DROP TABLE IF EXISTS `character_recipeshoplist`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `character_recipeshoplist` (
+  `charId` int(10) unsigned NOT NULL DEFAULT 0,
+  `recipeId` int(11) unsigned NOT NULL DEFAULT 0,
+  `price` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `index` tinyint(3) unsigned NOT NULL DEFAULT 0,
+  PRIMARY KEY (`charId`,`recipeId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `character_recipeshoplist`
+--
+
+LOCK TABLES `character_recipeshoplist` WRITE;
+/*!40000 ALTER TABLE `character_recipeshoplist` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_recipeshoplist` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `character_recommends`
+--
+
+DROP TABLE IF EXISTS `character_recommends`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `character_recommends` (
+  `charId` int(10) unsigned NOT NULL DEFAULT 0,
+  `target_id` int(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`charId`,`target_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `character_recommends`
+--
+
+LOCK TABLES `character_recommends` WRITE;
+/*!40000 ALTER TABLE `character_recommends` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_recommends` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `character_shortcuts`
+--
+
+DROP TABLE IF EXISTS `character_shortcuts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `character_shortcuts` (
+  `charId` int(10) unsigned NOT NULL DEFAULT 0,
+  `slot` decimal(3,0) NOT NULL DEFAULT 0,
+  `page` decimal(3,0) NOT NULL DEFAULT 0,
+  `type` decimal(3,0) DEFAULT NULL,
+  `shortcut_id` decimal(16,0) DEFAULT NULL,
+  `level` varchar(4) DEFAULT NULL,
+  `class_index` int(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`charId`,`slot`,`page`,`class_index`),
+  KEY `shortcut_id` (`shortcut_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `character_shortcuts`
+--
+
+LOCK TABLES `character_shortcuts` WRITE;
+/*!40000 ALTER TABLE `character_shortcuts` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_shortcuts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `character_skills`
+--
+
+DROP TABLE IF EXISTS `character_skills`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `character_skills` (
+  `charId` int(10) unsigned NOT NULL DEFAULT 0,
+  `skill_id` int(11) NOT NULL DEFAULT 0,
+  `skill_level` int(3) NOT NULL DEFAULT 1,
+  `class_index` int(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`charId`,`skill_id`,`class_index`),
+  KEY `idx_charId_classIndex` (`charId`,`class_index`),
+  KEY `idx_skillId_charId_classIndex` (`skill_id`,`charId`,`class_index`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `character_skills`
+--
+
+LOCK TABLES `character_skills` WRITE;
+/*!40000 ALTER TABLE `character_skills` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_skills` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `character_skills_save`
+--
+
+DROP TABLE IF EXISTS `character_skills_save`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `character_skills_save` (
+  `charId` int(11) NOT NULL DEFAULT 0,
+  `skill_id` int(11) NOT NULL DEFAULT 0,
+  `skill_level` int(3) NOT NULL DEFAULT 1,
+  `remaining_time` int(11) NOT NULL DEFAULT 0,
+  `reuse_delay` int(8) NOT NULL DEFAULT 0,
+  `systime` bigint(13) unsigned NOT NULL DEFAULT 0,
+  `restore_type` int(1) NOT NULL DEFAULT 0,
+  `class_index` int(1) NOT NULL DEFAULT 0,
+  `buff_index` int(2) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`charId`,`skill_id`,`skill_level`,`class_index`),
+  KEY `idx_charId_classIndex_buffIndex` (`charId`,`class_index`,`buff_index`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `character_skills_save`
+--
+
+LOCK TABLES `character_skills_save` WRITE;
+/*!40000 ALTER TABLE `character_skills_save` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_skills_save` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `character_subclasses`
+--
+
+DROP TABLE IF EXISTS `character_subclasses`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `character_subclasses` (
+  `charId` int(10) unsigned NOT NULL DEFAULT 0,
+  `class_id` int(2) NOT NULL DEFAULT 0,
+  `exp` bigint(20) NOT NULL DEFAULT 0,
+  `sp` bigint(10) NOT NULL DEFAULT 0,
+  `level` int(2) NOT NULL DEFAULT 40,
+  `class_index` int(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`charId`,`class_id`),
+  KEY `idx_charId_classIndex` (`charId`,`class_index`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `character_subclasses`
+--
+
+LOCK TABLES `character_subclasses` WRITE;
+/*!40000 ALTER TABLE `character_subclasses` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_subclasses` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `character_summon_skills_save`
+--
+
+DROP TABLE IF EXISTS `character_summon_skills_save`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `character_summon_skills_save` (
+  `ownerId` int(11) NOT NULL DEFAULT 0,
+  `ownerClassIndex` int(1) NOT NULL DEFAULT 0,
+  `summonSkillId` int(11) NOT NULL DEFAULT 0,
+  `skill_id` int(11) NOT NULL DEFAULT 0,
+  `skill_level` int(3) NOT NULL DEFAULT 1,
+  `remaining_time` int(11) NOT NULL DEFAULT 0,
+  `buff_index` int(2) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`ownerId`,`ownerClassIndex`,`summonSkillId`,`skill_id`,`skill_level`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `character_summon_skills_save`
+--
+
+LOCK TABLES `character_summon_skills_save` WRITE;
+/*!40000 ALTER TABLE `character_summon_skills_save` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_summon_skills_save` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `character_summons`
+--
+
+DROP TABLE IF EXISTS `character_summons`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `character_summons` (
+  `ownerId` int(10) unsigned NOT NULL,
+  `summonSkillId` int(10) unsigned NOT NULL,
+  `curHp` int(9) unsigned DEFAULT 0,
+  `curMp` int(9) unsigned DEFAULT 0,
+  `time` int(10) unsigned NOT NULL DEFAULT 0,
+  PRIMARY KEY (`ownerId`,`summonSkillId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `character_summons`
+--
+
+LOCK TABLES `character_summons` WRITE;
+/*!40000 ALTER TABLE `character_summons` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_summons` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `character_transmogs`
+--
+
+DROP TABLE IF EXISTS `character_transmogs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `character_transmogs` (
+  `owner` varchar(45) NOT NULL,
+  `itemId` int(10) unsigned NOT NULL DEFAULT 0,
+  PRIMARY KEY (`owner`,`itemId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `character_transmogs`
+--
+
+LOCK TABLES `character_transmogs` WRITE;
+/*!40000 ALTER TABLE `character_transmogs` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_transmogs` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `character_variables`
+--
+
+DROP TABLE IF EXISTS `character_variables`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `character_variables` (
+  `charId` int(10) unsigned NOT NULL,
+  `var` varchar(191) NOT NULL,
+  `val` text NOT NULL,
+  PRIMARY KEY (`charId`,`var`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `character_variables`
+--
+
+LOCK TABLES `character_variables` WRITE;
+/*!40000 ALTER TABLE `character_variables` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character_variables` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `characters`
+--
+
+DROP TABLE IF EXISTS `characters`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `characters` (
+  `account_name` varchar(45) DEFAULT NULL,
+  `charId` int(10) unsigned NOT NULL DEFAULT 0,
+  `char_name` varchar(35) NOT NULL,
+  `level` tinyint(3) unsigned DEFAULT NULL,
+  `maxHp` mediumint(8) unsigned DEFAULT NULL,
+  `curHp` mediumint(8) unsigned DEFAULT NULL,
+  `maxCp` mediumint(8) unsigned DEFAULT NULL,
+  `curCp` mediumint(8) unsigned DEFAULT NULL,
+  `maxMp` mediumint(8) unsigned DEFAULT NULL,
+  `curMp` mediumint(8) unsigned DEFAULT NULL,
+  `face` tinyint(3) unsigned DEFAULT NULL,
+  `hairStyle` tinyint(3) unsigned DEFAULT NULL,
+  `hairColor` tinyint(3) unsigned DEFAULT NULL,
+  `sex` tinyint(3) unsigned DEFAULT NULL,
+  `heading` mediumint(9) DEFAULT NULL,
+  `x` mediumint(9) DEFAULT NULL,
+  `y` mediumint(9) DEFAULT NULL,
+  `z` mediumint(9) DEFAULT NULL,
+  `exp` bigint(20) unsigned DEFAULT 0,
+  `expBeforeDeath` bigint(20) unsigned DEFAULT 0,
+  `sp` bigint(10) unsigned NOT NULL DEFAULT 0,
+  `karma` int(10) unsigned DEFAULT NULL,
+  `fame` mediumint(8) unsigned NOT NULL DEFAULT 0,
+  `pvpkills` smallint(5) unsigned DEFAULT NULL,
+  `pkkills` smallint(5) unsigned DEFAULT NULL,
+  `clanid` int(10) unsigned DEFAULT NULL,
+  `race` tinyint(3) unsigned DEFAULT NULL,
+  `classid` tinyint(3) unsigned DEFAULT NULL,
+  `base_class` tinyint(3) unsigned NOT NULL DEFAULT 0,
+  `transform_id` smallint(5) unsigned NOT NULL DEFAULT 0,
+  `deletetime` bigint(13) unsigned NOT NULL DEFAULT 0,
+  `cancraft` tinyint(3) unsigned DEFAULT NULL,
+  `title` varchar(21) DEFAULT NULL,
+  `title_color` mediumint(8) unsigned NOT NULL DEFAULT 15530402,
+  `accesslevel` mediumint(9) DEFAULT 0,
+  `online` tinyint(3) unsigned DEFAULT NULL,
+  `onlinetime` int(11) DEFAULT NULL,
+  `char_slot` tinyint(3) unsigned DEFAULT NULL,
+  `newbie` mediumint(8) unsigned DEFAULT 1,
+  `lastAccess` bigint(13) unsigned NOT NULL DEFAULT 0,
+  `clan_privs` int(10) unsigned DEFAULT 0,
+  `wantspeace` tinyint(3) unsigned DEFAULT 0,
+  `isin7sdungeon` tinyint(3) unsigned NOT NULL DEFAULT 0,
+  `power_grade` tinyint(3) unsigned DEFAULT NULL,
+  `nobless` tinyint(3) unsigned NOT NULL DEFAULT 0,
+  `subpledge` smallint(6) NOT NULL DEFAULT 0,
+  `lvl_joined_academy` tinyint(3) unsigned NOT NULL DEFAULT 0,
+  `apprentice` int(10) unsigned NOT NULL DEFAULT 0,
+  `sponsor` int(10) unsigned NOT NULL DEFAULT 0,
+  `clan_join_expiry_time` bigint(13) unsigned NOT NULL DEFAULT 0,
+  `clan_create_expiry_time` bigint(13) unsigned NOT NULL DEFAULT 0,
+  `death_penalty_level` smallint(5) unsigned NOT NULL DEFAULT 0,
+  `bookmarkslot` smallint(5) unsigned NOT NULL DEFAULT 0,
+  `vitality_points` smallint(5) unsigned NOT NULL DEFAULT 0,
+  `createDate` date NOT NULL DEFAULT '2015-01-01',
+  `language` varchar(2) DEFAULT NULL,
+  `faction` tinyint(3) unsigned NOT NULL DEFAULT 0,
+  `pccafe_points` int(6) NOT NULL DEFAULT 0,
+  `last_recom_date` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `rec_have` tinyint(3) unsigned NOT NULL DEFAULT 0,
+  `rec_left` tinyint(3) unsigned NOT NULL DEFAULT 0,
+  PRIMARY KEY (`charId`),
+  KEY `char_name` (`char_name`),
+  KEY `clanid` (`clanid`),
+  KEY `online` (`online`),
+  KEY `idx_accountName_createDate` (`account_name`,`createDate`),
+  KEY `idx_createDate` (`createDate`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `characters`
+--
+
+LOCK TABLES `characters` WRITE;
+/*!40000 ALTER TABLE `characters` DISABLE KEYS */;
+/*!40000 ALTER TABLE `characters` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `clan_data`
+--
+
+DROP TABLE IF EXISTS `clan_data`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `clan_data` (
+  `clan_id` int(11) NOT NULL DEFAULT 0,
+  `clan_name` varchar(45) DEFAULT NULL,
+  `clan_level` int(11) DEFAULT NULL,
+  `reputation_score` int(11) NOT NULL DEFAULT 0,
+  `hasCastle` int(11) DEFAULT NULL,
+  `blood_alliance_count` smallint(5) unsigned NOT NULL DEFAULT 0,
+  `blood_oath_count` smallint(5) unsigned NOT NULL DEFAULT 0,
+  `ally_id` int(11) DEFAULT NULL,
+  `ally_name` varchar(45) DEFAULT NULL,
+  `leader_id` int(11) DEFAULT NULL,
+  `crest_id` int(11) DEFAULT NULL,
+  `crest_large_id` int(11) DEFAULT NULL,
+  `ally_crest_id` int(11) DEFAULT NULL,
+  `auction_bid_at` int(11) NOT NULL DEFAULT 0,
+  `ally_penalty_expiry_time` bigint(13) unsigned NOT NULL DEFAULT 0,
+  `ally_penalty_type` tinyint(1) NOT NULL DEFAULT 0,
+  `char_penalty_expiry_time` bigint(13) unsigned NOT NULL DEFAULT 0,
+  `dissolving_expiry_time` bigint(13) unsigned NOT NULL DEFAULT 0,
+  `new_leader_id` int(10) unsigned NOT NULL DEFAULT 0,
+  PRIMARY KEY (`clan_id`),
+  KEY `ally_id` (`ally_id`),
+  KEY `leader_id` (`leader_id`),
+  KEY `auction_bid_at` (`auction_bid_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `clan_data`
+--
+
+LOCK TABLES `clan_data` WRITE;
+/*!40000 ALTER TABLE `clan_data` DISABLE KEYS */;
+/*!40000 ALTER TABLE `clan_data` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `clan_notices`
+--
+
+DROP TABLE IF EXISTS `clan_notices`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `clan_notices` (
+  `clan_id` int(11) NOT NULL DEFAULT 0,
+  `enabled` enum('true','false') NOT NULL DEFAULT 'false',
+  `notice` text NOT NULL,
+  PRIMARY KEY (`clan_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `clan_notices`
+--
+
+LOCK TABLES `clan_notices` WRITE;
+/*!40000 ALTER TABLE `clan_notices` DISABLE KEYS */;
+/*!40000 ALTER TABLE `clan_notices` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `clan_privs`
+--
+
+DROP TABLE IF EXISTS `clan_privs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `clan_privs` (
+  `clan_id` int(11) NOT NULL DEFAULT 0,
+  `rank` int(11) NOT NULL DEFAULT 0,
+  `party` int(11) NOT NULL DEFAULT 0,
+  `privs` int(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`clan_id`,`rank`,`party`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `clan_privs`
+--
+
+LOCK TABLES `clan_privs` WRITE;
+/*!40000 ALTER TABLE `clan_privs` DISABLE KEYS */;
+/*!40000 ALTER TABLE `clan_privs` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `clan_skills`
+--
+
+DROP TABLE IF EXISTS `clan_skills`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `clan_skills` (
+  `clan_id` int(11) NOT NULL DEFAULT 0,
+  `skill_id` int(11) NOT NULL DEFAULT 0,
+  `skill_level` int(5) NOT NULL DEFAULT 0,
+  `skill_name` varchar(26) DEFAULT NULL,
+  `sub_pledge_id` int(11) NOT NULL DEFAULT -2,
+  PRIMARY KEY (`clan_id`,`skill_id`,`sub_pledge_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `clan_skills`
+--
+
+LOCK TABLES `clan_skills` WRITE;
+/*!40000 ALTER TABLE `clan_skills` DISABLE KEYS */;
+/*!40000 ALTER TABLE `clan_skills` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `clan_subpledges`
+--
+
+DROP TABLE IF EXISTS `clan_subpledges`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `clan_subpledges` (
+  `clan_id` int(11) NOT NULL DEFAULT 0,
+  `sub_pledge_id` int(11) NOT NULL DEFAULT 0,
+  `name` varchar(45) DEFAULT NULL,
+  `leader_id` int(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`clan_id`,`sub_pledge_id`),
+  KEY `leader_id` (`leader_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `clan_subpledges`
+--
+
+LOCK TABLES `clan_subpledges` WRITE;
+/*!40000 ALTER TABLE `clan_subpledges` DISABLE KEYS */;
+/*!40000 ALTER TABLE `clan_subpledges` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `clan_wars`
+--
+
+DROP TABLE IF EXISTS `clan_wars`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `clan_wars` (
+  `clan1` varchar(35) NOT NULL DEFAULT '',
+  `clan2` varchar(35) NOT NULL DEFAULT '',
+  `wantspeace1` decimal(1,0) NOT NULL DEFAULT 0,
+  `wantspeace2` decimal(1,0) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`clan1`,`clan2`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `clan_wars`
+--
+
+LOCK TABLES `clan_wars` WRITE;
+/*!40000 ALTER TABLE `clan_wars` DISABLE KEYS */;
+/*!40000 ALTER TABLE `clan_wars` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `clanhall`
+--
+
+DROP TABLE IF EXISTS `clanhall`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `clanhall` (
+  `id` int(11) NOT NULL DEFAULT 0,
+  `name` varchar(40) NOT NULL DEFAULT '',
+  `ownerId` int(11) NOT NULL DEFAULT 0,
+  `lease` int(10) NOT NULL DEFAULT 0,
+  `desc` text NOT NULL,
+  `location` varchar(15) NOT NULL DEFAULT '',
+  `paidUntil` bigint(13) unsigned NOT NULL DEFAULT 0,
+  `Grade` decimal(1,0) NOT NULL DEFAULT 0,
+  `paid` int(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  KEY `ownerId` (`ownerId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `clanhall`
+--
+
+LOCK TABLES `clanhall` WRITE;
+/*!40000 ALTER TABLE `clanhall` DISABLE KEYS */;
+INSERT INTO `clanhall` VALUES
+(22,'Moonstone Hall',0,500000,'Clan hall located in the Town of Gludio','Gludio',0,2,0),
+(23,'Onyx Hall',0,500000,'Clan hall located in the Town of Gludio','Gludio',0,2,0),
+(24,'Topaz Hall',0,500000,'Clan hall located in the Town of Gludio','Gludio',0,2,0),
+(25,'Ruby Hall',0,500000,'Clan hall located in the Town of Gludio','Gludio',0,2,0),
+(26,'Crystal Hall',0,500000,'Clan hall located in Gludin Village','Gludin',0,2,0),
+(27,'Onyx Hall',0,500000,'Clan hall located in Gludin Village','Gludin',0,2,0),
+(28,'Sapphire Hall',0,500000,'Clan hall located in Gludin Village','Gludin',0,2,0),
+(29,'Moonstone Hall',0,500000,'Clan hall located in Gludin Village','Gludin',0,2,0),
+(30,'Emerald Hall',0,500000,'Clan hall located in Gludin Village','Gludin',0,2,0),
+(31,'The Atramental Barracks',0,200000,'Clan hall located in the Town of Dion','Dion',0,1,0),
+(32,'The Scarlet Barracks',0,200000,'Clan hall located in the Town of Dion','Dion',0,1,0),
+(33,'The Viridian Barracks',0,200000,'Clan hall located in the Town of Dion','Dion',0,1,0),
+(36,'The Golden Chamber',0,1000000,'Clan hall located in the Town of Aden','Aden',0,3,0),
+(37,'The Silver Chamber',0,1000000,'Clan hall located in the Town of Aden','Aden',0,3,0),
+(38,'The Mithril Chamber',0,1000000,'Clan hall located in the Town of Aden','Aden',0,3,0),
+(39,'Silver Manor',0,1000000,'Clan hall located in the Town of Aden','Aden',0,3,0),
+(40,'Gold Manor',0,1000000,'Clan hall located in the Town of Aden','Aden',0,3,0),
+(41,'The Bronze Chamber',0,1000000,'Clan hall located in the Town of Aden','Aden',0,3,0),
+(42,'The Golden Chamber',0,1000000,'Clan hall located in the Town of Giran','Giran',0,3,0),
+(43,'The Silver Chamber',0,1000000,'Clan hall located in the Town of Giran','Giran',0,3,0),
+(44,'The Mithril Chamber',0,1000000,'Clan hall located in the Town of Giran','Giran',0,3,0),
+(45,'The Bronze Chamber',0,1000000,'Clan hall located in the Town of Giran','Giran',0,3,0),
+(46,'Silver Manor',0,1000000,'Clan hall located in the Town of Giran','Giran',0,3,0),
+(47,'Moonstone Hall',0,1000000,'Clan hall located in the Town of Goddard','Goddard',0,3,0),
+(48,'Onyx Hall',0,1000000,'Clan hall located in the Town of Goddard','Goddard',0,3,0),
+(49,'Emerald Hall',0,1000000,'Clan hall located in the Town of Goddard','Goddard',0,3,0),
+(50,'Sapphire Hall',0,1000000,'Clan hall located in the Town of Goddard','Goddard',0,3,0),
+(51,'Mont Chamber',0,1000000,'An upscale Clan hall located in the Rune Township','Rune',0,3,0),
+(52,'Astaire Chamber',0,1000000,'An upscale Clan hall located in the Rune Township','Rune',0,3,0),
+(53,'Aria Chamber',0,1000000,'An upscale Clan hall located in the Rune Township','Rune',0,3,0),
+(54,'Yiana Chamber',0,1000000,'An upscale Clan hall located in the Rune Township','Rune',0,3,0),
+(55,'Roien Chamber',0,1000000,'An upscale Clan hall located in the Rune Township','Rune',0,3,0),
+(56,'Luna Chamber',0,1000000,'An upscale Clan hall located in the Rune Township','Rune',0,3,0),
+(57,'Traban Chamber',0,1000000,'An upscale Clan hall located in the Rune Township','Rune',0,3,0),
+(58,'Eisen Hall',0,500000,'Clan hall located in the Town of Schuttgart','Schuttgart',0,2,0),
+(59,'Heavy Metal Hall',0,500000,'Clan hall located in the Town of Schuttgart','Schuttgart',0,2,0),
+(60,'Molten Ore Hall',0,500000,'Clan hall located in the Town of Schuttgart','Schuttgart',0,2,0),
+(61,'Titan Hall',0,500000,'Clan hall located in the Town of Schuttgart','Schuttgart',0,2,0);
+/*!40000 ALTER TABLE `clanhall` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `clanhall_functions`
+--
+
+DROP TABLE IF EXISTS `clanhall_functions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `clanhall_functions` (
+  `hall_id` int(2) NOT NULL DEFAULT 0,
+  `type` int(1) NOT NULL DEFAULT 0,
+  `lvl` int(3) NOT NULL DEFAULT 0,
+  `lease` int(10) NOT NULL DEFAULT 0,
+  `rate` decimal(20,0) NOT NULL DEFAULT 0,
+  `endTime` bigint(13) unsigned NOT NULL DEFAULT 0,
+  PRIMARY KEY (`hall_id`,`type`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `clanhall_functions`
+--
+
+LOCK TABLES `clanhall_functions` WRITE;
+/*!40000 ALTER TABLE `clanhall_functions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `clanhall_functions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `clanhall_siege_attackers`
+--
+
+DROP TABLE IF EXISTS `clanhall_siege_attackers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `clanhall_siege_attackers` (
+  `clanhall_id` int(3) NOT NULL DEFAULT 0,
+  `attacker_id` int(10) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `clanhall_siege_attackers`
+--
+
+LOCK TABLES `clanhall_siege_attackers` WRITE;
+/*!40000 ALTER TABLE `clanhall_siege_attackers` DISABLE KEYS */;
+/*!40000 ALTER TABLE `clanhall_siege_attackers` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `clanhall_siege_guards`
+--
+
+DROP TABLE IF EXISTS `clanhall_siege_guards`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `clanhall_siege_guards` (
+  `clanHallId` tinyint(2) unsigned NOT NULL DEFAULT 0,
+  `npcId` smallint(5) unsigned NOT NULL DEFAULT 0,
+  `x` mediumint(6) NOT NULL DEFAULT 0,
+  `y` mediumint(6) NOT NULL DEFAULT 0,
+  `z` mediumint(6) NOT NULL DEFAULT 0,
+  `heading` mediumint(6) NOT NULL DEFAULT 0,
+  `respawnDelay` mediumint(5) NOT NULL DEFAULT 0,
+  `isSiegeBoss` enum('false','true') NOT NULL DEFAULT 'false',
+  KEY `clanHallId` (`clanHallId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `clanhall_siege_guards`
+--
+
+LOCK TABLES `clanhall_siege_guards` WRITE;
+/*!40000 ALTER TABLE `clanhall_siege_guards` DISABLE KEYS */;
+INSERT INTO `clanhall_siege_guards` VALUES
+(34,35408,178306,-17535,-2200,32768,7200,'false'),
+(34,35409,178304,-17712,-2200,32768,7200,'false'),
+(34,35413,178222,-14944,-2200,16384,7200,'false'),
+(34,35413,178255,-14944,-2200,16384,7200,'false'),
+(34,35413,178288,-14944,-2200,16384,7200,'false'),
+(34,35413,178321,-14944,-2200,16384,7200,'false'),
+(34,35413,178354,-14944,-2200,16384,7200,'false'),
+(34,35413,178387,-14944,-2200,16384,7200,'false'),
+(34,35413,178420,-14944,-2200,16384,7200,'false'),
+(34,35413,178454,-14944,-2200,16384,7200,'false'),
+(34,35413,178222,-14924,-2200,16384,7200,'false'),
+(34,35413,178255,-14924,-2200,16384,7200,'false'),
+(34,35413,178288,-14924,-2200,16384,7200,'false'),
+(34,35413,178321,-14924,-2200,16384,7200,'false'),
+(34,35413,178354,-14924,-2200,16384,7200,'false'),
+(34,35413,178387,-14924,-2200,16384,7200,'false'),
+(34,35413,178420,-14924,-2200,16384,7200,'false'),
+(34,35413,178454,-14924,-2200,16384,7200,'false'),
+(34,35412,178222,-14904,-2200,16384,7200,'false'),
+(34,35412,178255,-14904,-2200,16384,7200,'false'),
+(34,35412,178288,-14904,-2200,16384,7200,'false'),
+(34,35412,178321,-14904,-2200,16384,7200,'false'),
+(34,35412,178354,-14904,-2200,16384,7200,'false'),
+(34,35412,178387,-14904,-2200,16384,7200,'false'),
+(34,35412,178420,-14904,-2200,16384,7200,'false'),
+(34,35412,178454,-14904,-2200,16384,7200,'false'),
+(34,35412,178222,-14884,-2200,16384,7200,'false'),
+(34,35412,178255,-14884,-2200,16384,7200,'false'),
+(34,35412,178288,-14884,-2200,16384,7200,'false'),
+(34,35412,178321,-14884,-2200,16384,7200,'false'),
+(34,35412,178354,-14884,-2200,16384,7200,'false'),
+(34,35412,178387,-14884,-2200,16384,7200,'false'),
+(34,35412,178420,-14884,-2200,16384,7200,'false'),
+(34,35412,178454,-14884,-2200,16384,7200,'false'),
+(34,35413,178801,-14975,-2080,16384,7200,'false'),
+(34,35413,178822,-14936,-2080,16384,7200,'false'),
+(34,35413,178843,-14897,-2080,16384,7200,'false'),
+(34,35413,178865,-14857,-2080,16384,7200,'false'),
+(34,35413,178886,-14818,-2080,16384,7200,'false'),
+(34,35413,178908,-14778,-2080,16384,7200,'false'),
+(34,35413,178929,-14739,-2080,16384,7200,'false'),
+(34,35413,178951,-14699,-2080,16384,7200,'false'),
+(34,35413,177834,-15015,-2210,16384,7200,'false'),
+(34,35413,177803,-14971,-2210,16384,7200,'false'),
+(34,35413,177772,-14927,-2210,16384,7200,'false'),
+(34,35413,177741,-14883,-2210,16384,7200,'false'),
+(34,35413,177711,-14838,-2210,16384,7200,'false'),
+(34,35413,177680,-14794,-2210,16384,7200,'false'),
+(34,35413,177649,-14750,-2210,16384,7200,'false'),
+(34,35413,177619,-14705,-2210,16384,7200,'false'),
+(34,35413,178640,-18216,-2200,-16384,7200,'false'),
+(34,35413,178661,-18218,-2200,-16384,7200,'false'),
+(34,35413,178682,-18220,-2200,-16384,7200,'false'),
+(34,35413,178703,-18222,-2200,-16384,7200,'false'),
+(34,35413,178724,-18224,-2200,-16384,7200,'false'),
+(34,35413,178745,-18226,-2200,-16384,7200,'false'),
+(34,35413,178766,-18228,-2200,-16384,7200,'false'),
+(34,35413,178788,-18229,-2200,-16384,7200,'false'),
+(34,35414,178640,-18196,-2200,-16384,7200,'false'),
+(34,35414,178661,-18198,-2200,-16384,7200,'false'),
+(34,35414,178682,-18200,-2200,-16384,7200,'false'),
+(34,35414,178703,-18202,-2200,-16384,7200,'false'),
+(34,35414,178724,-18204,-2200,-16384,7200,'false'),
+(34,35414,178745,-18206,-2200,-16384,7200,'false'),
+(34,35414,178766,-18208,-2200,-16384,7200,'false'),
+(34,35414,178788,-18209,-2200,-16384,7200,'false'),
+(34,35412,178640,-18176,-2200,-16384,7200,'false'),
+(34,35412,178661,-18178,-2200,-16384,7200,'false'),
+(34,35412,178682,-18180,-2200,-16384,7200,'false'),
+(34,35412,178703,-18182,-2200,-16384,7200,'false'),
+(34,35412,178724,-18184,-2200,-16384,7200,'false'),
+(34,35412,178745,-18186,-2200,-16384,7200,'false'),
+(34,35412,178766,-18188,-2200,-16384,7200,'false'),
+(34,35412,178788,-18189,-2200,-16384,7200,'false'),
+(34,35413,177335,-17128,-2200,16384,7200,'false'),
+(34,35413,177305,-17128,-2200,16384,7200,'false'),
+(34,35413,177276,-17128,-2200,16384,7200,'false'),
+(34,35413,177246,-17128,-2200,16384,7200,'false'),
+(34,35413,177217,-17128,-2200,16384,7200,'false'),
+(34,35413,177187,-17128,-2200,16384,7200,'false'),
+(34,35413,177158,-17128,-2200,16384,7200,'false'),
+(34,35413,177129,-17128,-2200,16384,7200,'false'),
+(34,35414,177335,-17148,-2200,16384,7200,'false'),
+(34,35414,177305,-17148,-2200,16384,7200,'false'),
+(34,35414,177276,-17148,-2200,16384,7200,'false'),
+(34,35414,177246,-17148,-2200,16384,7200,'false'),
+(34,35414,177217,-17148,-2200,16384,7200,'false'),
+(34,35414,177187,-17148,-2200,16384,7200,'false'),
+(34,35414,177158,-17148,-2200,16384,7200,'false'),
+(34,35414,177129,-17148,-2200,16384,7200,'false'),
+(34,35412,177335,-17168,-2200,16384,7200,'false'),
+(34,35412,177305,-17168,-2200,16384,7200,'false'),
+(34,35412,177276,-17168,-2200,16384,7200,'false'),
+(34,35412,177246,-17168,-2200,16384,7200,'false'),
+(34,35412,177217,-17168,-2200,16384,7200,'false'),
+(34,35412,177187,-17168,-2200,16384,7200,'false'),
+(34,35412,177158,-17168,-2200,16384,7200,'false'),
+(34,35412,177129,-17168,-2200,16384,7200,'false'),
+(34,35413,177707,-15427,-2226,3000,7200,'false'),
+(34,35413,177727,-15464,-2226,3000,7200,'false'),
+(34,35413,177680,-15485,-2226,3000,7200,'false'),
+(34,35413,177745,-15498,-2226,3000,7200,'false'),
+(34,35413,177769,-15540,-2226,3000,7200,'false'),
+(34,35413,177722,-15561,-2226,3000,7200,'false'),
+(34,35413,177788,-15578,-2226,3000,7200,'false'),
+(34,35413,177811,-15622,-2226,3000,7200,'false'),
+(34,35413,177765,-15643,-2226,3000,7200,'false'),
+(34,35413,177838,-15664,-2226,3000,7200,'false'),
+(34,35413,177859,-15704,-2226,3000,7200,'false'),
+(34,35413,177813,-15726,-2226,3000,7200,'false'),
+(34,35413,177880,-15744,-2226,3000,7200,'false'),
+(34,35413,177906,-15791,-2226,3000,7200,'false'),
+(34,35413,177859,-15812,-2226,3000,7200,'false'),
+(34,35411,177470,-15856,-2250,10000,7200,'false'),
+(34,35411,177506,-15887,-2250,10000,7200,'false'),
+(34,35411,177627,-15953,-2250,10000,7200,'false'),
+(34,35411,177703,-15999,-2250,10000,7200,'false'),
+(34,35411,177400,-15854,-2250,10000,7200,'false'),
+(34,35411,177517,-15930,-2250,10000,7200,'false'),
+(34,35411,177564,-15963,-2250,10000,7200,'false'),
+(34,35411,177608,-15985,-2250,10000,7200,'false'),
+(34,35411,177709,-16043,-2253,10000,7200,'false'),
+(34,35411,177387,-15955,-2250,10000,7200,'false'),
+(34,35411,177661,-16014,-2253,10000,7200,'false'),
+(34,35411,177308,-15861,-2253,10000,7200,'false'),
+(34,35411,177606,-16035,-2253,10000,7200,'false'),
+(34,35411,177861,-16164,-2253,10000,7200,'false'),
+(34,35411,177810,-16145,-2253,10000,7200,'false'),
+(34,35411,177719,-15951,-2253,10000,7200,'false'),
+(34,35411,177667,-15921,-2253,10000,7200,'false'),
+(34,35415,177428,-15981,-2250,10000,7200,'false'),
+(34,35415,177473,-16011,-2250,10000,7200,'false'),
+(34,35415,177612,-16090,-2250,10000,7200,'false'),
+(34,35415,177657,-16113,-2250,10000,7200,'false'),
+(34,35415,177387,-15996,-2250,10000,7200,'false'),
+(34,35415,177433,-16026,-2250,10000,7200,'false'),
+(34,35415,177530,-16079,-2250,10000,7200,'false'),
+(34,35415,177571,-16105,-2250,10000,7200,'false'),
+(34,35415,177663,-16154,-2250,10000,7200,'false'),
+(34,35413,179009,-15201,-2221,40000,7200,'false'),
+(34,35413,179052,-15226,-2221,40000,7200,'false'),
+(34,35413,179073,-15203,-2221,40000,7200,'false'),
+(34,35413,179101,-15253,-2221,40000,7200,'false'),
+(34,35413,179144,-15271,-2221,40000,7200,'false'),
+(34,35413,179164,-15247,-2221,40000,7200,'false'),
+(34,35413,179189,-15286,-2221,40000,7200,'false'),
+(34,35413,179226,-15309,-2221,40000,7200,'false'),
+(34,35413,179246,-15285,-2221,40000,7200,'false'),
+(34,35413,179260,-15341,-2221,40000,7200,'false'),
+(34,35413,179302,-15372,-2221,40000,7200,'false'),
+(34,35413,179322,-15349,-2221,40000,7200,'false'),
+(34,35413,179341,-15406,-2221,40000,7200,'false'),
+(34,35413,179391,-15439,-2221,40000,7200,'false'),
+(34,35411,179327,-16101,-2253,25000,7200,'false'),
+(34,35411,179426,-16009,-2253,25000,7200,'false'),
+(34,35415,179491,-15981,-2256,25000,7200,'false'),
+(34,35415,179503,-15925,-2256,25000,7200,'false'),
+(34,35415,179544,-15882,-2256,25000,7200,'false'),
+(34,35415,179570,-15901,-2256,25000,7200,'false'),
+(34,35415,179279,-16219,-2256,25000,7200,'false'),
+(34,35415,179370,-16196,-2256,25000,7200,'false'),
+(34,35415,179408,-16158,-2256,25000,7200,'false'),
+(34,35415,179562,-15984,-2256,25000,7200,'false'),
+(34,35415,179599,-15943,-2256,25000,7200,'false'),
+(34,35411,179433,-16991,-2246,16384,1200,'false'),
+(34,35411,179715,-17454,-2246,16384,1200,'false'),
+(34,35411,179438,-16875,-2246,16384,1200,'false'),
+(34,35411,179540,-16876,-2246,16384,1200,'false'),
+(34,35411,179593,-16876,-2246,16384,1200,'false'),
+(34,35411,179485,-17213,-2246,16384,1200,'false'),
+(34,35411,179537,-17214,-2246,16384,1200,'false'),
+(34,35411,179641,-17215,-2246,16384,1200,'false'),
+(34,35411,179542,-17453,-2246,16384,1200,'false'),
+(34,35411,179594,-17453,-2246,16384,1200,'false'),
+(34,35411,179444,-16937,-2256,16384,1200,'false'),
+(34,35411,179468,-17280,-2256,16384,1200,'false'),
+(34,35411,179514,-17281,-2256,16384,1200,'false'),
+(34,35411,179479,-17133,-2256,16384,1200,'false'),
+(34,35411,179525,-17135,-2256,16384,1200,'false'),
+(34,35415,179576,-17137,-2256,16384,1200,'false'),
+(34,35415,179633,-17137,-2256,16384,1200,'false'),
+(34,35415,179436,-17776,-2256,16384,1200,'false'),
+(34,35415,179636,-17780,-2256,16384,1200,'false'),
+(34,35415,179697,-17781,-2256,16384,1200,'false'),
+(34,35415,179446,-17391,-2252,16384,1200,'false'),
+(34,35415,179508,-17341,-2252,16384,1200,'false'),
+(34,35415,179432,-17719,-2252,16384,1200,'false'),
+(34,35415,179437,-17522,-2252,16384,1200,'false'),
+(34,35415,179557,-17524,-2252,16384,1200,'false'),
+(34,35415,179707,-17722,-2252,16384,1200,'false'),
+(34,35415,179604,-17525,-2252,16384,1200,'false'),
+(34,35415,179665,-17527,-2252,16384,1200,'false'),
+(34,35415,179534,-17892,-2252,16384,1200,'false'),
+(34,35415,179436,-17841,-2252,16384,1200,'false'),
+(34,35415,179482,-17841,-2252,16384,1200,'false'),
+(34,35415,179536,-17842,-2252,16384,1200,'false'),
+(34,35415,179694,-17897,-2252,16384,1200,'false'),
+(34,35415,179696,-17844,-2252,16384,1200,'false'),
+(34,35413,178578,-18383,-2250,0,7200,'false'),
+(34,35413,178577,-18422,-2250,0,7200,'false'),
+(34,35413,178576,-18461,-2250,0,7200,'false'),
+(34,35413,178575,-18500,-2250,0,7200,'false'),
+(34,35413,178574,-18539,-2250,0,7200,'false'),
+(34,35413,178573,-18577,-2250,0,7200,'false'),
+(34,35413,178571,-18618,-2250,0,7200,'false'),
+(34,35413,178571,-18657,-2250,0,7200,'false'),
+(34,35413,178571,-18697,-2250,0,7200,'false'),
+(34,35413,178570,-18736,-2250,0,7200,'false'),
+(34,35413,178530,-18382,-2250,0,7200,'false'),
+(34,35413,178530,-18421,-2250,0,7200,'false'),
+(34,35413,178528,-18461,-2250,0,7200,'false'),
+(34,35413,178528,-18499,-2250,0,7200,'false'),
+(34,35413,178526,-18538,-2250,0,7200,'false'),
+(34,35413,178526,-18576,-2250,0,7200,'false'),
+(34,35413,178524,-18618,-2250,0,7200,'false'),
+(34,35413,178523,-18656,-2250,0,7200,'false'),
+(34,35413,178523,-18696,-2250,0,7200,'false'),
+(34,35413,178523,-18735,-2250,0,7200,'false'),
+(34,35413,178437,-16548,-2217,0,7200,'false'),
+(34,35413,178437,-16587,-2217,0,7200,'false'),
+(34,35413,178435,-16627,-2217,0,7200,'false'),
+(34,35413,178435,-16665,-2217,0,7200,'false'),
+(34,35413,178433,-16704,-2217,0,7200,'false'),
+(34,35413,178433,-16742,-2217,0,7200,'false'),
+(34,35413,178431,-16784,-2217,0,7200,'false'),
+(34,35413,178431,-16822,-2217,0,7200,'false'),
+(34,35413,178430,-16862,-2217,0,7200,'false'),
+(34,35413,178430,-16901,-2217,0,7200,'false'),
+(34,35413,178161,-16562,-2217,0,7200,'false'),
+(34,35413,178160,-16600,-2217,0,7200,'false'),
+(34,35413,178158,-16640,-2217,0,7200,'false'),
+(34,35413,178158,-16679,-2217,0,7200,'false'),
+(34,35413,178156,-16718,-2217,0,7200,'false'),
+(34,35413,178156,-16756,-2217,0,7200,'false'),
+(34,35413,178154,-16797,-2217,0,7200,'false'),
+(34,35413,178154,-16836,-2217,0,7200,'false'),
+(34,35413,178153,-16876,-2217,0,7200,'false'),
+(34,35413,178153,-16914,-2217,0,7200,'false'),
+(34,35413,177876,-16558,-2217,0,7200,'false'),
+(34,35413,177876,-16597,-2217,0,7200,'false'),
+(34,35413,177874,-16637,-2217,0,7200,'false'),
+(34,35413,177873,-16675,-2217,0,7200,'false'),
+(34,35413,177872,-16714,-2217,0,7200,'false'),
+(34,35413,177871,-16752,-2217,0,7200,'false'),
+(34,35413,177870,-16794,-2217,0,7200,'false'),
+(34,35413,177869,-16832,-2217,0,7200,'false'),
+(34,35413,177869,-16873,-2217,0,7200,'false'),
+(34,35413,177868,-16911,-2217,0,7200,'false'),
+(34,35411,178403,-16566,-2218,0,7200,'false'),
+(34,35411,178398,-16781,-2218,0,7200,'false'),
+(34,35411,178397,-16824,-2218,0,7200,'false'),
+(34,35411,178395,-16865,-2218,0,7200,'false'),
+(34,35411,178326,-16720,-2218,0,7200,'false'),
+(34,35411,178324,-16762,-2218,0,7200,'false'),
+(34,35411,178324,-16804,-2218,0,7200,'false'),
+(34,35411,178122,-16672,-2218,0,7200,'false'),
+(34,35411,178120,-16714,-2218,0,7200,'false'),
+(34,35411,178122,-16759,-2218,0,7200,'false'),
+(34,35411,178117,-16885,-2218,0,7200,'false'),
+(34,35411,178061,-16738,-2218,0,7200,'false'),
+(34,35411,178063,-16784,-2218,0,7200,'false'),
+(34,35411,178060,-16826,-2218,0,7200,'false'),
+(34,35411,178060,-16868,-2218,0,7200,'false'),
+(34,35415,178366,-16582,-2217,0,7200,'false'),
+(34,35415,178366,-16674,-2217,0,7200,'false'),
+(34,35415,178366,-16721,-2217,0,7200,'false'),
+(34,35415,178363,-16768,-2217,0,7200,'false'),
+(34,35415,178290,-16550,-2217,0,7200,'false'),
+(34,35415,178290,-16690,-2217,0,7200,'false'),
+(34,35415,178288,-16783,-2217,0,7200,'false'),
+(34,35415,178285,-16832,-2217,0,7200,'false'),
+(34,35415,178095,-16736,-2217,0,7200,'false'),
+(34,35415,178092,-16782,-2217,0,7200,'false'),
+(34,35415,178090,-16878,-2217,0,7200,'false'),
+(34,35415,178029,-16587,-2217,0,7200,'false'),
+(34,35415,178029,-16727,-2217,0,7200,'false'),
+(34,35415,178027,-16773,-2217,0,7200,'false'),
+(34,35415,178027,-16820,-2217,0,7200,'false'),
+(34,35413,177466,-17397,-2207,32768,7200,'false'),
+(34,35415,177440,-17380,-2215,32768,7200,'false'),
+(34,35416,177501,-17384,-2219,32768,7200,'false'),
+(34,35415,177439,-17426,-2215,32768,7200,'false'),
+(34,35415,177438,-17472,-2215,32768,7200,'false'),
+(34,35415,177436,-17605,-2215,32768,7200,'false'),
+(34,35415,177432,-17791,-2215,32768,7200,'false'),
+(34,35415,177431,-17836,-2215,32768,7200,'false'),
+(34,35415,177559,-17708,-2215,32768,7200,'false'),
+(34,35415,177558,-17755,-2215,32768,7200,'false'),
+(34,35415,177564,-17425,-2215,32768,7200,'false'),
+(34,35415,177561,-17563,-2215,32768,7200,'false'),
+(34,35413,177466,-17445,-2207,32768,7200,'false'),
+(34,35413,177466,-17537,-2207,32768,7200,'false'),
+(34,35413,177466,-17627,-2207,32768,7200,'false'),
+(34,35413,177466,-17716,-2207,32768,7200,'false'),
+(34,35413,177467,-17809,-2207,32768,7200,'false'),
+(34,35413,177603,-17446,-2207,32768,7200,'false'),
+(34,35413,177603,-17539,-2207,32768,7200,'false'),
+(34,35413,177604,-17628,-2207,32768,7200,'false'),
+(34,35413,177604,-17718,-2207,32768,7200,'false'),
+(34,35413,177601,-17811,-2207,32768,7200,'false'),
+(34,35413,177693,-17447,-2207,32768,7200,'false'),
+(34,35413,177693,-17539,-2207,32768,7200,'false'),
+(34,35413,177693,-17629,-2207,32768,7200,'false'),
+(34,35413,177693,-17718,-2207,32768,7200,'false'),
+(34,35413,177694,-17811,-2207,32768,7200,'false'),
+(34,35413,177396,-17452,-2207,32768,7200,'false'),
+(34,35413,177396,-17545,-2207,32768,7200,'false'),
+(34,35413,177397,-17634,-2207,32768,7200,'false'),
+(34,35413,177397,-17723,-2207,32768,7200,'false'),
+(34,35413,177398,-17817,-2207,32768,7200,'false'),
+(34,35413,177749,-17446,-2207,32768,7200,'false'),
+(34,35413,177749,-17538,-2207,32768,7200,'false'),
+(34,35413,177750,-17628,-2207,32768,7200,'false'),
+(34,35413,177750,-17717,-2207,32768,7200,'false'),
+(34,35413,177751,-17810,-2207,32768,7200,'false'),
+(34,35415,177531,-17399,-2215,32768,7200,'false'),
+(34,35415,177527,-17537,-2215,32768,7200,'false'),
+(34,35415,177527,-17578,-2215,32768,7200,'false'),
+(34,35415,177524,-17763,-2215,32768,7200,'false'),
+(34,35415,177523,-17810,-2215,32768,7200,'false'),
+(34,35415,177636,-17516,-2215,32768,7200,'false'),
+(34,35415,177635,-17603,-2215,32768,7200,'false'),
+(34,35415,177633,-17740,-2215,32768,7200,'false'),
+(34,35415,177632,-17788,-2215,32768,7200,'false'),
+(34,35415,177631,-17835,-2215,32768,7200,'false'),
+(34,35416,177501,-17424,-2219,32768,7200,'false'),
+(34,35416,177500,-17469,-2219,32768,7200,'false'),
+(34,35416,177496,-17645,-2219,32768,7200,'false'),
+(34,35416,177496,-17686,-2219,32768,7200,'false'),
+(34,35416,177666,-17508,-2219,32768,7200,'false'),
+(34,35416,177664,-17559,-2219,32768,7200,'false'),
+(34,35416,177664,-17599,-2219,32768,7200,'false'),
+(34,35416,177662,-17644,-2219,32768,7200,'false'),
+(34,35416,177662,-17685,-2219,32768,7200,'false'),
+(34,35416,177661,-17818,-2219,32768,7200,'false'),
+(34,35416,177728,-17377,-2219,32768,7200,'false'),
+(34,35416,177725,-17503,-2219,32768,7200,'false'),
+(34,35416,177724,-17553,-2219,32768,7200,'false'),
+(34,35416,177724,-17594,-2219,32768,7200,'false'),
+(34,35416,177722,-17728,-2219,32768,7200,'false'),
+(34,35416,177722,-17768,-2219,32768,7200,'false'),
+(34,35416,177721,-17813,-2219,32768,7200,'false'),
+(34,35416,177567,-17376,-2219,32768,7200,'false'),
+(34,35416,177560,-17849,-2219,32768,7200,'false'),
+(34,35410,178298,-17624,-2194,32768,7200,'true'),
+(21,35369,44545,108867,-2020,0,60,'false'),
+(21,35369,44505,108867,-2020,0,60,'false'),
+(21,35371,44535,108884,-2020,0,60,'false'),
+(21,35371,44515,108884,-2020,0,60,'false'),
+(21,35371,44515,108850,-2020,0,60,'false'),
+(21,35371,44535,108850,-2020,0,60,'false'),
+(21,35370,44565,108867,-2020,0,60,'false'),
+(21,35370,44553,108895,-2020,0,60,'false'),
+(21,35370,44535,108895,-2020,0,60,'false'),
+(21,35370,44497,108895,-2020,0,60,'false'),
+(21,35370,44485,108867,-2020,0,60,'false'),
+(21,35370,44497,108839,-2020,0,60,'false'),
+(21,35370,44525,108827,-2020,0,60,'false'),
+(21,35370,44553,108839,-2020,0,60,'false'),
+(21,35374,44812,109492,-1705,0,60,'false'),
+(21,35373,44788,109492,-1705,0,60,'false'),
+(21,35374,45236,108980,-1705,0,60,'false'),
+(21,35373,45168,109020,-1705,0,60,'false'),
+(21,35382,50343,111282,-1970,0,60,'false'),
+(21,35383,43129,108841,-1980,0,60,'false'),
+(21,35375,44525,108867,-2020,0,10800,'true'),
+(35,35560,79745,-15472,-1792,0,1200,'false'),
+(35,35561,83348,-18267,-1248,14536,1200,'false'),
+(35,35562,81258,-17387,-1248,11144,1200,'false'),
+(35,35563,81832,-14223,-1248,-17664,1200,'false'),
+(35,35564,83687,-14532,-1248,-19008,1200,'false'),
+(35,35565,85263,-15447,-1248,-21328,1200,'false'),
+(63,35612,60606,-93984,-1344,0,1200,'false'),
+(63,35613,56098,-91770,-1360,0,1200,'false'),
+(63,35614,58276,-90672,-1360,0,1200,'false'),
+(63,35615,59970,-92422,-1360,0,1200,'false'),
+(63,35616,58783,-94540,-1360,0,1200,'false'),
+(63,35617,56415,-94126,-1360,0,1200,'false'),
+(64,35630,59282,-26496,568,49000,7200,'false'),
+(64,35631,56619,-27866,568,49000,7200,'false'),
+(64,35634,57931,-29540,565,49152,7200,'false'),
+(64,35634,57888,-29540,565,49152,7200,'false'),
+(64,35634,57845,-29540,565,49152,7200,'false'),
+(64,35634,57801,-29540,565,49152,7200,'false'),
+(64,35634,57758,-29540,565,49152,7200,'false'),
+(64,35634,58150,-29540,565,49152,7200,'false'),
+(64,35634,58107,-29540,565,49152,7200,'false'),
+(64,35634,58063,-29540,565,49152,7200,'false'),
+(64,35634,58020,-29540,565,49152,7200,'false'),
+(64,35634,57977,-29540,565,49152,7200,'false'),
+(64,35634,57783,-29569,565,49152,7200,'false'),
+(64,35634,57740,-29569,565,49152,7200,'false'),
+(64,35634,58170,-29570,565,49152,7200,'false'),
+(64,35634,58128,-29570,565,49152,7200,'false'),
+(64,35633,57929,-29570,575,49152,7200,'false'),
+(64,35633,57885,-29570,575,49152,7200,'false'),
+(64,35633,57836,-29570,575,49152,7200,'false'),
+(64,35633,58072,-29570,575,49152,7200,'false'),
+(64,35633,58029,-29570,575,49152,7200,'false'),
+(64,35633,57980,-29570,575,49152,7200,'false'),
+(64,35633,57928,-29606,575,49152,7200,'false'),
+(64,35633,57885,-29606,575,49152,7200,'false'),
+(64,35633,57836,-29606,575,49152,7200,'false'),
+(64,35633,58072,-29607,575,49152,7200,'false'),
+(64,35633,58028,-29607,575,49152,7200,'false'),
+(64,35633,57979,-29607,575,49152,7200,'false'),
+(64,35633,57780,-29606,575,49152,7200,'false'),
+(64,35633,57731,-29606,575,49152,7200,'false'),
+(64,35633,58172,-29608,575,49152,7200,'false'),
+(64,35633,58123,-29608,575,49152,7200,'false'),
+(64,35634,58435,-29647,567,49152,7200,'false'),
+(64,35634,58450,-29681,567,49152,7200,'false'),
+(64,35634,58468,-29713,567,49152,7200,'false'),
+(64,35634,58484,-29745,567,49152,7200,'false'),
+(64,35634,58500,-29777,567,49152,7200,'false'),
+(64,35634,58520,-29815,587,49152,7200,'false'),
+(64,35634,58536,-29848,587,49152,7200,'false'),
+(64,35634,58556,-29886,567,49152,7200,'false'),
+(64,35634,57473,-29664,567,49152,7200,'false'),
+(64,35634,57452,-29695,567,49152,7200,'false'),
+(64,35634,57435,-29728,567,49152,7200,'false'),
+(64,35634,57420,-29760,567,49152,7200,'false'),
+(64,35634,57409,-29791,567,49152,7200,'false'),
+(64,35634,57394,-29824,580,49152,7200,'false'),
+(64,35634,57379,-29856,580,49152,7200,'false'),
+(64,35634,57363,-29888,567,49152,7200,'false'),
+(64,35634,57893,-26684,591,-88,7200,'false'),
+(64,35634,57893,-26722,591,-88,7200,'false'),
+(64,35634,57893,-26759,591,-88,7200,'false'),
+(64,35634,57893,-26646,591,-88,7200,'false'),
+(64,35634,57863,-26646,591,-88,7200,'false'),
+(64,35634,57863,-26684,591,-88,7200,'false'),
+(64,35634,57863,-26722,591,-88,7200,'false'),
+(64,35634,57863,-26758,591,-88,7200,'false'),
+(64,35635,57973,-26684,591,-88,7200,'false'),
+(64,35635,57973,-26722,591,-88,7200,'false'),
+(64,35635,57973,-26759,591,-88,7200,'false'),
+(64,35635,57973,-26646,591,-88,7200,'false'),
+(64,35635,57943,-26646,591,-88,7200,'false'),
+(64,35635,57943,-26684,591,-88,7200,'false'),
+(64,35635,57943,-26721,591,-88,7200,'false'),
+(64,35635,57943,-26758,591,-88,7200,'false'),
+(64,35633,58046,-26682,591,-88,7200,'false'),
+(64,35633,58046,-26720,591,-88,7200,'false'),
+(64,35633,58046,-26758,591,-88,7200,'false'),
+(64,35633,58046,-26644,591,-88,7200,'false'),
+(64,35633,58017,-26644,591,-88,7200,'false'),
+(64,35633,58017,-26682,591,-88,7200,'false'),
+(64,35633,58017,-26720,591,-88,7200,'false'),
+(64,35633,58017,-26757,591,-88,7200,'false'),
+(64,35634,58889,-26764,565,-88,7200,'false'),
+(64,35634,58889,-26802,565,-88,7200,'false'),
+(64,35634,58889,-26840,565,-88,7200,'false'),
+(64,35634,58889,-26876,565,-88,7200,'false'),
+(64,35634,58889,-26726,565,-88,7200,'false'),
+(64,35634,58889,-26570,565,-88,7200,'false'),
+(64,35634,58889,-26608,565,-88,7200,'false'),
+(64,35634,58889,-26645,565,-88,7200,'false'),
+(64,35634,58889,-26682,565,-88,7200,'false'),
+(64,35634,58889,-26532,565,-88,7200,'false'),
+(64,35634,58887,-26379,565,-88,7200,'false'),
+(64,35634,58887,-26417,565,-88,7200,'false'),
+(64,35634,58887,-26454,565,-88,7200,'false'),
+(64,35634,58887,-26491,565,-88,7200,'false'),
+(64,35634,58887,-26341,565,-88,7200,'false'),
+(64,35632,56669,-26839,592,16384,7200,'false'),
+(64,35634,56708,-26902,565,16448,7200,'false'),
+(64,35634,56746,-26902,565,16448,7200,'false'),
+(64,35634,56784,-26902,565,16448,7200,'false'),
+(64,35634,56820,-26902,565,16448,7200,'false'),
+(64,35634,56858,-26903,565,16448,7200,'false'),
+(64,35634,56894,-26903,565,16448,7200,'false'),
+(64,35634,56670,-26902,565,16448,7200,'false'),
+(64,35634,56935,-26903,565,16448,7200,'false'),
+(64,35634,57018,-26902,565,16448,7200,'false'),
+(64,35634,57056,-26902,565,16448,7200,'false'),
+(64,35634,57093,-26902,565,16448,7200,'false'),
+(64,35634,57130,-26902,565,16448,7200,'false'),
+(64,35634,57168,-26903,565,16448,7200,'false'),
+(64,35634,57204,-26903,565,16448,7200,'false'),
+(64,35634,56980,-26902,565,16448,7200,'false'),
+(64,35634,56708,-26874,565,16448,7200,'false'),
+(64,35634,56746,-26874,565,16448,7200,'false'),
+(64,35634,56783,-26874,565,16448,7200,'false'),
+(64,35634,56820,-26874,565,16448,7200,'false'),
+(64,35634,56857,-26875,565,16448,7200,'false'),
+(64,35634,56894,-26875,565,16448,7200,'false'),
+(64,35634,56670,-26874,565,16448,7200,'false'),
+(64,35634,56935,-26875,565,16448,7200,'false'),
+(64,35634,57018,-26875,565,16448,7200,'false'),
+(64,35634,57056,-26875,565,16448,7200,'false'),
+(64,35634,57094,-26875,565,16448,7200,'false'),
+(64,35634,57131,-26875,565,16448,7200,'false'),
+(64,35634,57168,-26876,565,16448,7200,'false'),
+(64,35634,57205,-26876,565,16448,7200,'false'),
+(64,35634,56980,-26875,565,16448,7200,'false'),
+(64,35632,56708,-26839,592,16384,7200,'false'),
+(64,35632,56748,-26839,592,16384,7200,'false'),
+(64,35632,56788,-26839,592,16384,7200,'false'),
+(64,35632,56829,-26839,592,16384,7200,'false'),
+(64,35632,56870,-26839,592,16384,7200,'false'),
+(64,35632,56910,-26839,592,16384,7200,'false'),
+(64,35632,56950,-26839,592,16384,7200,'false'),
+(64,35632,56989,-26839,592,16384,7200,'false'),
+(64,35632,57030,-26839,592,16384,7200,'false'),
+(64,35632,56667,-26799,592,16384,7200,'false'),
+(64,35632,56706,-26799,592,16384,7200,'false'),
+(64,35632,56747,-26799,592,16384,7200,'false'),
+(64,35632,56786,-26799,592,16384,7200,'false'),
+(64,35632,56827,-26799,592,16384,7200,'false'),
+(64,35636,56869,-26802,587,16384,7200,'false'),
+(64,35636,56908,-26802,587,16384,7200,'false'),
+(64,35636,56948,-26802,587,16384,7200,'false'),
+(64,35636,56989,-26802,587,16384,7200,'false'),
+(64,35636,57030,-26802,587,16384,7200,'false'),
+(64,35636,57071,-26804,587,16384,7200,'false'),
+(64,35636,57111,-26804,587,16384,7200,'false'),
+(64,35636,57151,-26804,587,16384,7200,'false'),
+(64,35636,57191,-26804,587,16384,7200,'false'),
+(64,35636,57233,-26804,587,16384,7200,'false'),
+(64,35636,57070,-26842,587,16384,7200,'false'),
+(64,35636,57110,-26842,587,16384,7200,'false'),
+(64,35636,57150,-26842,587,16384,7200,'false'),
+(64,35636,57190,-26842,587,16384,7200,'false'),
+(64,35636,57232,-26842,587,16384,7200,'false'),
+(64,35634,57461,-28550,565,0,7200,'false'),
+(64,35634,57461,-28503,565,0,7200,'false'),
+(64,35634,57461,-28455,565,0,7200,'false'),
+(64,35634,57461,-28408,565,0,7200,'false'),
+(64,35634,57461,-28360,565,0,7200,'false'),
+(64,35634,57461,-28791,565,0,7200,'false'),
+(64,35634,57461,-28744,565,0,7200,'false'),
+(64,35634,57461,-28696,565,0,7200,'false'),
+(64,35634,57461,-28649,565,0,7200,'false'),
+(64,35634,57461,-28601,565,0,7200,'false'),
+(64,35632,57543,-28587,592,0,7200,'false'),
+(64,35636,57605,-28901,587,0,7200,'false'),
+(64,35632,57543,-28632,592,0,7200,'false'),
+(64,35632,57543,-28678,592,0,7200,'false'),
+(64,35632,57543,-28727,592,0,7200,'false'),
+(64,35632,57543,-28775,592,0,7200,'false'),
+(64,35632,57606,-28399,592,0,7200,'false'),
+(64,35632,57543,-28398,592,0,7200,'false'),
+(64,35632,57543,-28444,592,0,7200,'false'),
+(64,35632,57543,-28494,592,0,7200,'false'),
+(64,35632,57543,-28541,592,0,7200,'false'),
+(64,35636,57605,-28856,587,0,7200,'false'),
+(64,35636,57605,-28807,587,0,7200,'false'),
+(64,35636,57605,-28761,587,0,7200,'false'),
+(64,35636,57605,-28716,587,0,7200,'false'),
+(64,35636,57605,-28668,587,0,7200,'false'),
+(64,35636,57605,-28624,587,0,7200,'false'),
+(64,35636,57605,-28575,587,0,7200,'false'),
+(64,35636,57605,-28529,587,0,7200,'false'),
+(64,35636,57605,-28483,587,0,7200,'false'),
+(64,35632,57543,-28826,592,0,7200,'false'),
+(64,35632,57545,-28882,592,0,7200,'false'),
+(64,35632,57545,-28933,592,0,7200,'false'),
+(64,35634,57462,-29031,565,0,7200,'false'),
+(64,35634,57462,-28984,565,0,7200,'false'),
+(64,35634,57462,-28937,565,0,7200,'false'),
+(64,35634,57462,-28889,565,0,7200,'false'),
+(64,35634,57462,-28841,565,0,7200,'false'),
+(64,35632,57546,-28986,592,0,7200,'false'),
+(64,35632,57606,-28984,592,0,7200,'false'),
+(64,35632,58972,-28365,592,-24512,7200,'false'),
+(64,35634,58879,-28217,565,-24440,7200,'false'),
+(64,35634,58913,-28250,565,-24440,7200,'false'),
+(64,35634,58948,-28284,565,-24440,7200,'false'),
+(64,35634,58980,-28316,565,-24440,7200,'false'),
+(64,35634,59015,-28349,565,-24440,7200,'false'),
+(64,35634,59050,-28384,565,-24440,7200,'false'),
+(64,35634,59084,-28417,565,-24440,7200,'false'),
+(64,35634,59119,-28450,565,-24440,7200,'false'),
+(64,35634,59151,-28481,565,-24440,7200,'false'),
+(64,35634,59187,-28518,565,-24440,7200,'false'),
+(64,35634,59222,-28552,565,-24440,7200,'false'),
+(64,35634,59256,-28585,565,-24440,7200,'false'),
+(64,35634,59291,-28619,565,-24440,7200,'false'),
+(64,35634,59322,-28650,565,-24440,7200,'false'),
+(64,35632,59166,-28557,592,-24512,7200,'false'),
+(64,35636,58894,-28289,587,41088,7200,'false'),
+(64,35636,58931,-28325,587,41088,7200,'false'),
+(64,35636,59007,-28399,587,41088,7200,'false'),
+(64,35636,59044,-28435,587,41088,7200,'false'),
+(64,35636,59090,-28484,587,41088,7200,'false'),
+(64,35636,59127,-28519,587,41088,7200,'false'),
+(64,35636,59207,-28597,587,41088,7200,'false'),
+(64,35636,59244,-28633,587,41088,7200,'false'),
+(64,35634,56938,-27347,576,32768,7200,'false'),
+(64,35634,56938,-27309,576,32768,7200,'false'),
+(64,35634,56938,-27271,576,32768,7200,'false'),
+(64,35634,56938,-27235,576,32768,7200,'false'),
+(64,35634,56940,-27197,576,32768,7200,'false'),
+(64,35634,56940,-27160,576,32768,7200,'false'),
+(64,35634,56938,-27385,576,32768,7200,'false'),
+(64,35634,56940,-27120,576,32768,7200,'false'),
+(64,35635,56910,-27347,576,32768,7200,'false'),
+(64,35635,56910,-27309,576,32768,7200,'false'),
+(64,35635,56910,-27271,576,32768,7200,'false'),
+(64,35635,56910,-27234,576,32768,7200,'false'),
+(64,35635,56912,-27197,576,32768,7200,'false'),
+(64,35635,56912,-27160,576,32768,7200,'false'),
+(64,35635,56910,-27385,576,32768,7200,'false'),
+(64,35635,56912,-27119,576,32768,7200,'false'),
+(64,35633,56880,-27346,576,32768,7200,'false'),
+(64,35633,56881,-27308,576,32768,7200,'false'),
+(64,35633,56881,-27271,576,32768,7200,'false'),
+(64,35633,56881,-27234,576,32768,7200,'false'),
+(64,35633,56882,-27197,576,32768,7200,'false'),
+(64,35633,56882,-27160,576,32768,7200,'false'),
+(64,35633,56880,-27384,576,32768,7200,'false'),
+(64,35633,56883,-27119,576,32768,7200,'false'),
+(64,35632,59015,-27459,575,49152,7200,'false'),
+(64,35632,59054,-27459,575,49152,7200,'false'),
+(64,35632,59094,-27459,575,49152,7200,'false'),
+(64,35632,59134,-27459,575,49152,7200,'false'),
+(64,35632,59175,-27459,575,49152,7200,'false'),
+(64,35632,59220,-27459,575,49152,7200,'false'),
+(64,35632,59259,-27459,575,49152,7200,'false'),
+(64,35632,59299,-27459,575,49152,7200,'false'),
+(64,35632,59015,-27409,575,49152,7200,'false'),
+(64,35632,59054,-27409,575,49152,7200,'false'),
+(64,35632,59094,-27409,575,49152,7200,'false'),
+(64,35632,59133,-27409,575,49152,7200,'false'),
+(64,35632,59174,-27409,575,49152,7200,'false'),
+(64,35632,59220,-27409,575,49152,7200,'false'),
+(64,35632,59259,-27409,575,49152,7200,'false'),
+(64,35632,59299,-27409,575,49152,7200,'false'),
+(64,35636,59015,-27352,575,49152,7200,'false'),
+(64,35636,59054,-27352,575,49152,7200,'false'),
+(64,35636,59094,-27352,575,49152,7200,'false'),
+(64,35636,59134,-27352,575,49152,7200,'false'),
+(64,35636,59175,-27352,575,49152,7200,'false'),
+(64,35636,59220,-27352,575,49152,7200,'false'),
+(64,35636,59259,-27352,575,49152,7200,'false'),
+(64,35636,59299,-27352,575,49152,7200,'false'),
+(64,35636,59016,-27299,575,49152,7200,'false'),
+(64,35636,59055,-27299,575,49152,7200,'false'),
+(64,35636,59095,-27299,575,49152,7200,'false'),
+(64,35636,59134,-27299,575,49152,7200,'false'),
+(64,35636,59175,-27299,575,49152,7200,'false'),
+(64,35636,59220,-27299,575,49152,7200,'false'),
+(64,35636,59260,-27299,575,49152,7200,'false'),
+(64,35636,59300,-27299,575,49152,7200,'false'),
+(64,35637,57288,-27776,587,32768,7200,'false'),
+(64,35636,57174,-27680,587,32768,7200,'false'),
+(64,35636,57175,-27643,587,32768,7200,'false'),
+(64,35636,57175,-27606,587,32768,7200,'false'),
+(64,35636,57175,-27755,587,32768,7200,'false'),
+(64,35636,57174,-27718,587,32768,7200,'false'),
+(64,35634,57237,-27608,576,32768,7200,'false'),
+(64,35634,57239,-27763,576,32768,7200,'false'),
+(64,35636,57209,-27701,587,32768,7200,'false'),
+(64,35636,57210,-27664,587,32768,7200,'false'),
+(64,35636,57209,-27627,587,32768,7200,'false'),
+(64,35636,57210,-27776,587,32768,7200,'false'),
+(64,35636,57209,-27739,587,32768,7200,'false'),
+(64,35634,57239,-27725,576,32768,7200,'false'),
+(64,35634,57238,-27687,576,32768,7200,'false'),
+(64,35634,57237,-27648,576,32768,7200,'false'),
+(64,35634,57260,-27625,576,32768,7200,'false'),
+(64,35634,57262,-27779,576,32768,7200,'false'),
+(64,35634,57262,-27742,576,32768,7200,'false'),
+(64,35634,57262,-27704,576,32768,7200,'false'),
+(64,35634,57261,-27665,576,32768,7200,'false'),
+(64,35637,57288,-27732,587,32768,7200,'false'),
+(64,35637,57288,-27687,587,32768,7200,'false'),
+(64,35637,57288,-27644,587,32768,7200,'false'),
+(64,35637,57288,-27599,587,32768,7200,'false'),
+(64,35637,57256,-27574,587,32768,7200,'false'),
+(64,35637,57543,-27786,587,32768,1200,'false'),
+(64,35636,57429,-27690,587,32768,1200,'false'),
+(64,35636,57430,-27653,587,32768,1200,'false'),
+(64,35636,57429,-27616,587,32768,1200,'false'),
+(64,35636,57430,-27765,587,32768,1200,'false'),
+(64,35636,57429,-27727,587,32768,1200,'false'),
+(64,35634,57492,-27618,576,32768,1200,'false'),
+(64,35634,57494,-27772,576,32768,1200,'false'),
+(64,35636,57464,-27711,587,32768,1200,'false'),
+(64,35636,57465,-27674,587,32768,1200,'false'),
+(64,35636,57464,-27637,587,32768,1200,'false'),
+(64,35636,57464,-27785,587,32768,1200,'false'),
+(64,35636,57463,-27748,587,32768,1200,'false'),
+(64,35634,57494,-27735,576,32768,1200,'false'),
+(64,35634,57493,-27697,576,32768,1200,'false'),
+(64,35634,57492,-27658,576,32768,1200,'false'),
+(64,35634,57515,-27634,576,32768,1200,'false'),
+(64,35634,57517,-27789,576,32768,1200,'false'),
+(64,35634,57517,-27752,576,32768,1200,'false'),
+(64,35634,57516,-27714,576,32768,1200,'false'),
+(64,35634,57515,-27675,576,32768,1200,'false'),
+(64,35637,57543,-27742,587,32768,1200,'false'),
+(64,35637,57543,-27697,587,32768,1200,'false'),
+(64,35637,57543,-27654,587,32768,1200,'false'),
+(64,35637,57543,-27609,587,32768,1200,'false'),
+(64,35637,57578,-27783,587,32768,1200,'false'),
+(64,35637,57578,-27739,587,32768,1200,'false'),
+(64,35637,57578,-27695,587,32768,1200,'false'),
+(64,35637,57578,-27651,587,32768,1200,'false'),
+(64,35637,57578,-27607,587,32768,1200,'false'),
+(64,35637,57476,-27575,587,32768,1200,'false'),
+(64,35637,57511,-27573,587,32768,1200,'false'),
+(64,35637,57473,-27837,587,32768,1200,'false'),
+(64,35637,57508,-27835,587,32768,1200,'false'),
+(64,35637,57905,-27648,576,32768,7200,'false'),
+(64,35637,57905,-27712,576,32768,7200,'false'),
+(64,35637,58233,-27182,576,32768,7200,'false'),
+(64,35637,58233,-27232,576,32768,7200,'false'),
+(64,35637,58233,-27282,576,32768,7200,'false'),
+(64,35637,58233,-27332,576,32768,7200,'false'),
+(64,35637,58233,-27382,576,32768,7200,'false'),
+(64,35637,58233,-27432,576,32768,7200,'false'),
+(64,35637,58233,-27482,576,32768,7200,'false'),
+(64,35637,58233,-27532,576,32768,7200,'false'),
+(64,35637,58233,-27582,576,32768,7200,'false'),
+(64,35637,58233,-27632,576,32768,7200,'false'),
+(64,35637,58233,-27682,576,32768,7200,'false'),
+(64,35637,58233,-27732,576,32768,7200,'false'),
+(64,35637,58233,-27782,576,32768,7200,'false'),
+(64,35629,58680,-27507,592,32768,7200,'true'),
+(62,35596,151552,-127075,-2208,5896,60,'false'),
+(62,35588,151557,-126987,-2224,0,7200,'false'),
+(62,35597,153136,-125333,-2208,-16328,60,'false'),
+(62,35589,153135,-125425,-2224,0,7200,'false'),
+(62,35598,155660,-125753,-2208,-16496,60,'false'),
+(62,35590,155661,-125844,-2224,0,7200,'false'),
+(62,35599,153887,-127538,-2208,15992,60,'false'),
+(62,35591,153888,-127444,-2224,0,7200,'false');
+/*!40000 ALTER TABLE `clanhall_siege_guards` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `crests`
+--
+
+DROP TABLE IF EXISTS `crests`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `crests` (
+  `crest_id` int(11) NOT NULL,
+  `data` varbinary(2176) NOT NULL,
+  `type` tinyint(4) NOT NULL,
+  PRIMARY KEY (`crest_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `crests`
+--
+
+LOCK TABLES `crests` WRITE;
+/*!40000 ALTER TABLE `crests` DISABLE KEYS */;
+/*!40000 ALTER TABLE `crests` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cursed_weapons`
+--
+
+DROP TABLE IF EXISTS `cursed_weapons`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cursed_weapons` (
+  `itemId` int(11) NOT NULL,
+  `charId` int(10) unsigned NOT NULL DEFAULT 0,
+  `playerKarma` int(11) DEFAULT 0,
+  `playerPkKills` int(11) DEFAULT 0,
+  `nbKills` int(11) DEFAULT 0,
+  `endTime` bigint(13) unsigned NOT NULL DEFAULT 0,
+  PRIMARY KEY (`itemId`),
+  KEY `charId` (`charId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cursed_weapons`
+--
+
+LOCK TABLES `cursed_weapons` WRITE;
+/*!40000 ALTER TABLE `cursed_weapons` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cursed_weapons` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `custom_mail`
+--
+
+DROP TABLE IF EXISTS `custom_mail`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `custom_mail` (
+  `date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `receiver` int(10) unsigned NOT NULL DEFAULT 0,
+  `subject` tinytext NOT NULL,
+  `message` text NOT NULL,
+  `items` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `custom_mail`
+--
+
+LOCK TABLES `custom_mail` WRITE;
+/*!40000 ALTER TABLE `custom_mail` DISABLE KEYS */;
+/*!40000 ALTER TABLE `custom_mail` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `dimensional_rift`
+--
+
+DROP TABLE IF EXISTS `dimensional_rift`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `dimensional_rift` (
+  `type` tinyint(1) unsigned NOT NULL,
+  `room_id` tinyint(1) unsigned NOT NULL,
+  `xMin` mediumint(6) NOT NULL,
+  `xMax` mediumint(6) NOT NULL,
+  `yMin` mediumint(6) NOT NULL,
+  `yMax` mediumint(6) NOT NULL,
+  `zMin` mediumint(6) NOT NULL,
+  `zMax` mediumint(6) NOT NULL,
+  `xT` mediumint(6) NOT NULL,
+  `yT` mediumint(6) NOT NULL,
+  `zT` mediumint(6) NOT NULL,
+  `boss` tinyint(1) unsigned NOT NULL DEFAULT 0,
+  PRIMARY KEY (`type`,`room_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `dimensional_rift`
+--
+
+LOCK TABLES `dimensional_rift` WRITE;
+/*!40000 ALTER TABLE `dimensional_rift` DISABLE KEYS */;
+INSERT INTO `dimensional_rift` VALUES
+(0,0,-115440,-114160,-182160,-178048,-6816,-6240,-114790,-180576,-6752,0),
+(0,1,-120576,-109024,-187328,-172880,-6816,-6240,0,0,0,0),
+(1,1,-112368,-111584,-182832,-182064,-6816,-6240,-111976,-182448,-6752,0),
+(1,2,-111472,-110704,-182832,-182064,-6816,-6240,-111088,-182448,-6752,0),
+(1,3,-110688,-109904,-180944,-180176,-6816,-6240,-110296,-180560,-6752,0),
+(1,4,-109808,-109024,-180944,-180176,-6816,-6240,-109416,-180560,-6752,0),
+(1,5,-114032,-112496,-181968,-181072,-6816,-6240,-113264,-181520,-6752,0),
+(1,6,-112368,-110816,-181008,-180112,-6816,-6240,-111592,-180560,-6752,0),
+(1,7,-110576,-109024,-182896,-182000,-6816,-6240,-109800,-182448,-6752,0),
+(1,8,-112368,-110816,-181968,-181072,-6816,-6240,-111592,-181520,-6752,0),
+(1,9,-110688,-109136,-181968,-181072,-6816,-6240,-109912,-181520,-6752,1),
+(2,1,-112368,-111584,-180016,-179232,-6816,-6240,-111976,-179624,-6752,0),
+(2,2,-111472,-110704,-180016,-179232,-6816,-6240,-111088,-179624,-6752,0),
+(2,3,-110688,-109904,-178128,-177360,-6816,-6240,-110296,-177744,-6752,0),
+(2,4,-109808,-109024,-178128,-177360,-6816,-6240,-109416,-177744,-6752,0),
+(2,5,-114032,-112496,-179136,-178240,-6816,-6240,-113264,-178688,-6752,0),
+(2,6,-112368,-110816,-178192,-177296,-6816,-6240,-111592,-177744,-6752,0),
+(2,7,-110576,-109024,-180064,-179168,-6816,-6240,-109800,-179624,-6752,0),
+(2,8,-112368,-110816,-179136,-178240,-6816,-6240,-111592,-178688,-6752,0),
+(2,9,-110688,-109136,-179136,-178240,-6816,-6240,-109912,-178688,-6752,1),
+(3,1,-114256,-113488,-176208,-175440,-6816,-6240,-113872,-175824,-6752,0),
+(3,2,-114256,-113488,-175328,-174560,-6816,-6240,-113872,-174944,-6752,0),
+(3,3,-116144,-115360,-174544,-173760,-6816,-6240,-115752,-174152,-6752,0),
+(3,4,-116144,-115360,-173648,-172880,-6816,-6240,-115752,-173264,-6752,0),
+(3,5,-115248,-114352,-177888,-176352,-6816,-6240,-114800,-177120,-6752,0),
+(3,6,-116208,-115312,-176208,-174672,-6816,-6240,-115760,-175440,-6752,0),
+(3,7,-114320,-113424,-174416,-172880,-6816,-6240,-113872,-173648,-6752,0),
+(3,8,-115248,-114352,-176208,-174672,-6816,-6240,-114800,-175440,-6752,0),
+(3,9,-115248,-114352,-174528,-172992,-6816,-6240,-114800,-173832,-6752,1),
+(4,1,-118016,-117248,-178144,-177376,-6816,-6240,-117632,-177760,-6752,0),
+(4,2,-118896,-118128,-178144,-177376,-6816,-6240,-118512,-177760,-6752,0),
+(4,3,-119696,-118912,-180032,-179248,-6816,-6240,-119304,-179640,-6752,0),
+(4,4,-120576,-119808,-180032,-179248,-6816,-6240,-120192,-179640,-6752,0),
+(4,5,-117104,-115568,-179136,-178240,-6816,-6240,-116336,-178688,-6752,0),
+(4,6,-118784,-117248,-180096,-179200,-6816,-6240,-118016,-179648,-6752,0),
+(4,7,-120576,-119040,-178208,-177312,-6816,-6240,-119808,-177760,-6752,0),
+(4,8,-118784,-117248,-179136,-178240,-6816,-6240,-118016,-178688,-6752,0),
+(4,9,-120464,-118928,-179136,-178240,-6816,-6240,-119696,-178688,-6752,1),
+(5,1,-118016,-117248,-180976,-180192,-6816,-6240,-117632,-180584,-6752,0),
+(5,2,-118896,-118128,-180976,-180192,-6816,-6240,-118512,-180584,-6752,0),
+(5,3,-119696,-118912,-182848,-182080,-6816,-6240,-119304,-182464,-6752,0),
+(5,4,-120576,-119808,-182848,-182080,-6816,-6240,-120192,-182464,-6752,0),
+(5,5,-117104,-115568,-181968,-181072,-6816,-6240,-116336,-181520,-6752,0),
+(5,6,-118784,-117248,-182912,-182016,-6816,-6240,-118016,-182464,-6752,0),
+(5,7,-120576,-119040,-181040,-180144,-6816,-6240,-119808,-180592,-6752,0),
+(5,8,-118784,-117248,-181968,-181072,-6816,-6240,-118016,-181520,-6752,0),
+(5,9,-120464,-118928,-181968,-181072,-6816,-6240,-119696,-181520,-6752,1),
+(6,1,-116112,-115344,-184768,-184000,-6816,-6240,-115728,-184384,-6752,0),
+(6,2,-116112,-115344,-185648,-184880,-6816,-6240,-115728,-185264,-6752,0),
+(6,3,-114240,-113472,-186448,-185680,-6816,-6240,-113856,-186064,-6752,0),
+(6,4,-114240,-113472,-187328,-186560,-6816,-6240,-113856,-186944,-6752,0),
+(6,5,-115248,-114352,-183856,-182320,-6816,-6240,-114800,-183088,-6752,0),
+(6,6,-114304,-113408,-185536,-184000,-6816,-6240,-113856,-184768,-6752,0),
+(6,7,-116176,-115280,-187328,-185792,-6816,-6240,-115728,-186560,-6752,0),
+(6,8,-115248,-114352,-185536,-184000,-6816,-6240,-114800,-184768,-6752,0),
+(6,9,-115248,-114352,-187216,-185680,-6816,-6240,-114800,-186448,-6752,1);
+/*!40000 ALTER TABLE `dimensional_rift` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `fishing_championship`
+--
+
+DROP TABLE IF EXISTS `fishing_championship`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `fishing_championship` (
+  `player_name` varchar(35) NOT NULL,
+  `fish_length` double(10,3) NOT NULL,
+  `rewarded` int(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `fishing_championship`
+--
+
+LOCK TABLES `fishing_championship` WRITE;
+/*!40000 ALTER TABLE `fishing_championship` DISABLE KEYS */;
+/*!40000 ALTER TABLE `fishing_championship` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `forums`
+--
+
+DROP TABLE IF EXISTS `forums`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `forums` (
+  `forum_id` int(8) NOT NULL DEFAULT 0,
+  `forum_name` varchar(255) NOT NULL DEFAULT '',
+  `forum_parent` int(8) NOT NULL DEFAULT 0,
+  `forum_post` int(8) NOT NULL DEFAULT 0,
+  `forum_type` int(8) NOT NULL DEFAULT 0,
+  `forum_perm` int(8) NOT NULL DEFAULT 0,
+  `forum_owner_id` int(8) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`forum_id`),
+  KEY `forum_owner_id` (`forum_owner_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `forums`
+--
+
+LOCK TABLES `forums` WRITE;
+/*!40000 ALTER TABLE `forums` DISABLE KEYS */;
+INSERT INTO `forums` VALUES
+(1,'NormalRoot',0,0,0,1,0),
+(2,'ClanRoot',0,0,0,0,0),
+(3,'MemoRoot',0,0,0,0,0),
+(4,'MailRoot',0,0,0,0,0);
+/*!40000 ALTER TABLE `forums` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `gameservers`
+--
+
+DROP TABLE IF EXISTS `gameservers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `gameservers` (
+  `server_id` int(11) NOT NULL DEFAULT 0,
+  `hexid` varchar(50) NOT NULL DEFAULT '',
+  `host` varchar(50) NOT NULL DEFAULT '',
+  PRIMARY KEY (`server_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `gameservers`
+--
+
+LOCK TABLES `gameservers` WRITE;
+/*!40000 ALTER TABLE `gameservers` DISABLE KEYS */;
+INSERT INTO `gameservers` VALUES
+(2,'-2ad66b3f483c22be097019f55c8abdf0','');
+/*!40000 ALTER TABLE `gameservers` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `global_variables`
+--
+
+DROP TABLE IF EXISTS `global_variables`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `global_variables` (
+  `var` varchar(191) NOT NULL DEFAULT '',
+  `value` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`var`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `global_variables`
+--
+
+LOCK TABLES `global_variables` WRITE;
+/*!40000 ALTER TABLE `global_variables` DISABLE KEYS */;
+/*!40000 ALTER TABLE `global_variables` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `grandboss_data`
+--
+
+DROP TABLE IF EXISTS `grandboss_data`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `grandboss_data` (
+  `boss_id` smallint(5) unsigned NOT NULL,
+  `loc_x` mediumint(6) NOT NULL,
+  `loc_y` mediumint(6) NOT NULL,
+  `loc_z` mediumint(6) NOT NULL,
+  `heading` mediumint(6) NOT NULL DEFAULT 0,
+  `respawn_time` bigint(13) unsigned NOT NULL DEFAULT 0,
+  `currentHP` decimal(30,15) NOT NULL,
+  `currentMP` decimal(30,15) NOT NULL,
+  `status` tinyint(1) unsigned NOT NULL DEFAULT 0,
+  PRIMARY KEY (`boss_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `grandboss_data`
+--
+
+LOCK TABLES `grandboss_data` WRITE;
+/*!40000 ALTER TABLE `grandboss_data` DISABLE KEYS */;
+INSERT INTO `grandboss_data` VALUES
+(25512,96320,-110912,-3328,8191,0,0.000000000000000,0.000000000000000,0),
+(29001,-21610,181594,-5734,0,0,229898.000000000000000,667.000000000000000,0),
+(29006,17726,108915,-6480,0,0,622493.000000000000000,3793.000000000000000,0),
+(29014,55024,17368,-5412,10126,0,622493.000000000000000,3793.000000000000000,0),
+(29019,185708,114298,-8221,0,0,17850000.000000000000000,39960.000000000000000,0),
+(29020,116033,17447,10107,-25348,0,4068372.000000000000000,39960.000000000000000,0),
+(29022,55312,219168,-3223,0,0,858518.000000000000000,399600.000000000000000,0),
+(29028,220963,-104895,-1615,0,0,17850000.000000000000000,2445572.000000000000000,0),
+(29045,0,0,0,0,0,1216600.000000000000000,11100.000000000000000,0);
+/*!40000 ALTER TABLE `grandboss_data` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `grandboss_list`
+--
+
+DROP TABLE IF EXISTS `grandboss_list`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `grandboss_list` (
+  `player_id` decimal(11,0) NOT NULL,
+  `zone` decimal(11,0) NOT NULL,
+  PRIMARY KEY (`player_id`,`zone`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `grandboss_list`
+--
+
+LOCK TABLES `grandboss_list` WRITE;
+/*!40000 ALTER TABLE `grandboss_list` DISABLE KEYS */;
+/*!40000 ALTER TABLE `grandboss_list` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `herb_droplist_groups`
+--
+
+DROP TABLE IF EXISTS `herb_droplist_groups`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `herb_droplist_groups` (
+  `groupId` tinyint(1) unsigned NOT NULL DEFAULT 0,
+  `itemId` smallint(5) unsigned NOT NULL DEFAULT 0,
+  `min` smallint(2) unsigned NOT NULL DEFAULT 0,
+  `max` smallint(2) unsigned NOT NULL DEFAULT 0,
+  `category` smallint(3) NOT NULL DEFAULT 0,
+  `chance` mediumint(7) unsigned NOT NULL DEFAULT 0,
+  PRIMARY KEY (`groupId`,`itemId`,`category`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `herb_droplist_groups`
+--
+
+LOCK TABLES `herb_droplist_groups` WRITE;
+/*!40000 ALTER TABLE `herb_droplist_groups` DISABLE KEYS */;
+INSERT INTO `herb_droplist_groups` VALUES
+(1,8600,1,1,1,100000),
+(1,8601,1,1,1,40000),
+(1,8602,1,1,1,8000),
+(1,8603,1,1,2,100000),
+(1,8604,1,1,2,40000),
+(1,8605,1,1,2,8000),
+(1,8606,1,1,4,150000),
+(1,8607,1,1,5,150000),
+(1,8608,1,1,6,150000),
+(1,8609,1,1,7,150000),
+(1,8610,1,1,8,150000),
+(1,8611,1,1,9,150000),
+(1,8612,1,1,3,2000),
+(1,8613,1,1,3,2000),
+(1,8614,1,1,3,2000),
+(1,10655,1,1,10,150000),
+(1,10656,1,1,11,150000),
+(1,10657,1,1,12,50000),
+(1,13028,1,1,0,20000),
+(2,8600,1,1,1,200000),
+(2,8601,1,1,1,80000),
+(2,8602,1,1,1,16000),
+(2,8603,1,1,2,150000),
+(2,8604,1,1,2,60000),
+(2,8605,1,1,2,12000),
+(2,8607,1,1,4,150000),
+(2,8609,1,1,5,150000),
+(2,8611,1,1,6,150000),
+(2,8613,1,1,3,4000),
+(2,8614,1,1,3,4000),
+(2,10657,1,1,7,75000),
+(2,13028,1,1,0,20000),
+(3,8600,1,1,1,210000),
+(3,8601,1,1,1,150000),
+(3,8602,1,1,1,35000),
+(3,8603,1,1,2,190000),
+(3,8604,1,1,2,180000),
+(3,8605,1,1,2,50000),
+(3,8606,1,1,4,60000),
+(3,8607,1,1,5,60000),
+(3,8608,1,1,6,80000),
+(3,8609,1,1,7,40000),
+(3,8610,1,1,8,20000),
+(3,8611,1,1,9,90000),
+(3,8612,1,1,3,2000),
+(3,8613,1,1,3,10000),
+(3,8614,1,1,3,2000),
+(3,10655,1,1,10,60000),
+(3,10656,1,1,11,30000),
+(3,10657,1,1,12,5000),
+(3,13028,1,1,0,5000),
+(3,14824,1,1,13,9000),
+(3,14825,1,1,13,9000),
+(3,14826,1,1,13,25000),
+(3,14827,1,1,13,30000),
+(4,8600,1,1,1,231000),
+(4,8601,1,1,1,159600),
+(4,8602,1,1,1,29400),
+(4,8603,1,1,2,44000),
+(4,8604,1,1,2,57200),
+(4,8605,1,1,2,8800),
+(4,8606,1,1,4,50000),
+(4,8607,1,1,5,50000),
+(4,8608,1,1,4,50000),
+(4,8609,1,1,5,50000),
+(4,8610,1,1,4,50000),
+(4,8611,1,1,6,103400),
+(4,8612,1,1,3,3300),
+(4,8613,1,1,3,3300),
+(4,8614,1,1,3,3400),
+(4,10655,1,1,4,50000),
+(4,10656,1,1,4,50000),
+(4,10657,1,1,6,3299),
+(4,13028,1,1,0,3299),
+(5,8600,1,1,1,275000),
+(5,8601,1,1,1,190000),
+(5,8602,1,1,1,35000),
+(6,8600,1,1,1,231000),
+(6,8601,1,1,1,159600),
+(6,8602,1,1,1,29400),
+(6,8603,1,1,2,44000),
+(6,8604,1,1,2,57200),
+(6,8605,1,1,2,8800),
+(6,8606,1,1,3,50000),
+(6,8607,1,1,4,50000),
+(6,8608,1,1,3,50000),
+(6,8609,1,1,4,50000),
+(6,8610,1,1,3,50000),
+(6,8611,1,1,6,103400),
+(6,8612,1,1,5,3300),
+(6,8613,1,1,5,3300),
+(6,8614,1,1,5,3400),
+(6,10655,1,1,3,50000),
+(6,10655,1,1,7,450000),
+(6,10656,1,1,3,50000),
+(6,10657,1,1,6,3300),
+(6,13028,1,1,0,3300),
+(7,8952,10,20,1,1000000),
+(7,8953,10,20,2,1000000),
+(8,8952,10,20,1,1000000),
+(8,8953,10,20,2,1000000);
+/*!40000 ALTER TABLE `herb_droplist_groups` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `heroes`
+--
+
+DROP TABLE IF EXISTS `heroes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `heroes` (
+  `charId` int(10) unsigned NOT NULL DEFAULT 0,
+  `class_id` decimal(3,0) NOT NULL DEFAULT 0,
+  `count` decimal(3,0) NOT NULL DEFAULT 0,
+  `played` decimal(1,0) NOT NULL DEFAULT 0,
+  `claimed` enum('true','false') NOT NULL DEFAULT 'false',
+  `message` varchar(300) NOT NULL DEFAULT '',
+  PRIMARY KEY (`charId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `heroes`
+--
+
+LOCK TABLES `heroes` WRITE;
+/*!40000 ALTER TABLE `heroes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `heroes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `heroes_diary`
+--
+
+DROP TABLE IF EXISTS `heroes_diary`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `heroes_diary` (
+  `charId` int(10) unsigned NOT NULL,
+  `time` bigint(13) unsigned NOT NULL DEFAULT 0,
+  `action` tinyint(2) unsigned NOT NULL DEFAULT 0,
+  `param` int(11) unsigned NOT NULL DEFAULT 0,
+  KEY `charId` (`charId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `heroes_diary`
+--
+
+LOCK TABLES `heroes_diary` WRITE;
+/*!40000 ALTER TABLE `heroes_diary` DISABLE KEYS */;
+/*!40000 ALTER TABLE `heroes_diary` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `item_attributes`
+--
+
+DROP TABLE IF EXISTS `item_attributes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `item_attributes` (
+  `itemId` int(11) NOT NULL DEFAULT 0,
+  `augAttributes` int(11) NOT NULL DEFAULT -1,
+  PRIMARY KEY (`itemId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `item_attributes`
+--
+
+LOCK TABLES `item_attributes` WRITE;
+/*!40000 ALTER TABLE `item_attributes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `item_attributes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `item_auction`
+--
+
+DROP TABLE IF EXISTS `item_auction`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `item_auction` (
+  `auctionId` int(11) NOT NULL,
+  `instanceId` int(11) NOT NULL,
+  `auctionItemId` int(11) NOT NULL,
+  `startingTime` bigint(13) unsigned NOT NULL DEFAULT 0,
+  `endingTime` bigint(13) unsigned NOT NULL DEFAULT 0,
+  `auctionStateId` tinyint(1) NOT NULL,
+  PRIMARY KEY (`auctionId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `item_auction`
+--
+
+LOCK TABLES `item_auction` WRITE;
+/*!40000 ALTER TABLE `item_auction` DISABLE KEYS */;
+/*!40000 ALTER TABLE `item_auction` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `item_auction_bid`
+--
+
+DROP TABLE IF EXISTS `item_auction_bid`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `item_auction_bid` (
+  `auctionId` int(11) NOT NULL,
+  `playerObjId` int(11) NOT NULL,
+  `playerBid` bigint(20) NOT NULL,
+  PRIMARY KEY (`auctionId`,`playerObjId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `item_auction_bid`
+--
+
+LOCK TABLES `item_auction_bid` WRITE;
+/*!40000 ALTER TABLE `item_auction_bid` DISABLE KEYS */;
+/*!40000 ALTER TABLE `item_auction_bid` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `item_variables`
+--
+
+DROP TABLE IF EXISTS `item_variables`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `item_variables` (
+  `id` int(10) unsigned NOT NULL,
+  `var` varchar(191) NOT NULL,
+  `val` text NOT NULL,
+  PRIMARY KEY (`id`,`var`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `item_variables`
+--
+
+LOCK TABLES `item_variables` WRITE;
+/*!40000 ALTER TABLE `item_variables` DISABLE KEYS */;
+/*!40000 ALTER TABLE `item_variables` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `items`
+--
+
+DROP TABLE IF EXISTS `items`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `items` (
+  `owner_id` int(11) DEFAULT NULL,
+  `object_id` int(11) NOT NULL DEFAULT 0,
+  `item_id` int(11) DEFAULT NULL,
+  `count` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `enchant_level` int(11) DEFAULT NULL,
+  `loc` varchar(10) DEFAULT NULL,
+  `loc_data` int(11) DEFAULT NULL,
+  `time_of_use` int(11) DEFAULT NULL,
+  `custom_type1` int(11) DEFAULT 0,
+  `custom_type2` int(11) DEFAULT 0,
+  `mana_left` decimal(5,0) NOT NULL DEFAULT -1,
+  `time` decimal(13,0) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`object_id`),
+  KEY `item_id` (`item_id`),
+  KEY `loc` (`loc`),
+  KEY `time_of_use` (`time_of_use`),
+  KEY `idx_owner_id_item_id` (`owner_id`,`item_id`),
+  KEY `idx_owner_id_loc_locdata_enchant` (`owner_id`,`loc`,`loc_data`,`enchant_level`,`item_id`,`object_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `items`
+--
+
+LOCK TABLES `items` WRITE;
+/*!40000 ALTER TABLE `items` DISABLE KEYS */;
+/*!40000 ALTER TABLE `items` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `itemsonground`
+--
+
+DROP TABLE IF EXISTS `itemsonground`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `itemsonground` (
+  `object_id` int(11) NOT NULL DEFAULT 0,
+  `item_id` int(11) DEFAULT NULL,
+  `count` bigint(20) unsigned NOT NULL DEFAULT 0,
+  `enchant_level` int(11) DEFAULT NULL,
+  `x` int(11) DEFAULT NULL,
+  `y` int(11) DEFAULT NULL,
+  `z` int(11) DEFAULT NULL,
+  `drop_time` bigint(13) NOT NULL DEFAULT 0,
+  `equipable` int(1) DEFAULT 0,
+  PRIMARY KEY (`object_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `itemsonground`
+--
+
+LOCK TABLES `itemsonground` WRITE;
+/*!40000 ALTER TABLE `itemsonground` DISABLE KEYS */;
+/*!40000 ALTER TABLE `itemsonground` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `lottery`
+--
+
+DROP TABLE IF EXISTS `lottery`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `lottery` (
+  `id` int(11) NOT NULL DEFAULT 0,
+  `idnr` int(11) NOT NULL DEFAULT 0,
+  `number1` int(11) NOT NULL DEFAULT 0,
+  `number2` int(11) NOT NULL DEFAULT 0,
+  `prize` int(11) NOT NULL DEFAULT 0,
+  `newprize` int(11) NOT NULL DEFAULT 0,
+  `prize1` int(11) NOT NULL DEFAULT 0,
+  `prize2` int(11) NOT NULL DEFAULT 0,
+  `prize3` int(11) NOT NULL DEFAULT 0,
+  `enddate` bigint(13) unsigned NOT NULL DEFAULT 0,
+  `finished` int(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`,`idnr`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `lottery`
+--
+
+LOCK TABLES `lottery` WRITE;
+/*!40000 ALTER TABLE `lottery` DISABLE KEYS */;
+INSERT INTO `lottery` VALUES
+(1,1,0,0,50000,50000,0,0,0,1789920000815,0);
+/*!40000 ALTER TABLE `lottery` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `mdt_bets`
+--
+
+DROP TABLE IF EXISTS `mdt_bets`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `mdt_bets` (
+  `lane_id` int(1) NOT NULL DEFAULT 0,
+  `bet` int(11) DEFAULT 0,
+  PRIMARY KEY (`lane_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `mdt_bets`
+--
+
+LOCK TABLES `mdt_bets` WRITE;
+/*!40000 ALTER TABLE `mdt_bets` DISABLE KEYS */;
+INSERT INTO `mdt_bets` VALUES
+(1,0),
+(2,0),
+(3,0),
+(4,0),
+(5,0),
+(6,0),
+(7,0),
+(8,0);
+/*!40000 ALTER TABLE `mdt_bets` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `mdt_history`
+--
+
+DROP TABLE IF EXISTS `mdt_history`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `mdt_history` (
+  `race_id` mediumint(9) NOT NULL DEFAULT 0,
+  `first` int(1) DEFAULT 0,
+  `second` int(1) DEFAULT 0,
+  `odd_rate` double(10,2) DEFAULT 0.00,
+  PRIMARY KEY (`race_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `mdt_history`
+--
+
+LOCK TABLES `mdt_history` WRITE;
+/*!40000 ALTER TABLE `mdt_history` DISABLE KEYS */;
+/*!40000 ALTER TABLE `mdt_history` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `merchant_lease`
+--
+
+DROP TABLE IF EXISTS `merchant_lease`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `merchant_lease` (
+  `merchant_id` int(11) NOT NULL DEFAULT 0,
+  `player_id` int(11) NOT NULL DEFAULT 0,
+  `bid` int(11) DEFAULT NULL,
+  `type` int(11) NOT NULL DEFAULT 0,
+  `player_name` varchar(35) DEFAULT NULL,
+  PRIMARY KEY (`merchant_id`,`player_id`,`type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `merchant_lease`
+--
+
+LOCK TABLES `merchant_lease` WRITE;
+/*!40000 ALTER TABLE `merchant_lease` DISABLE KEYS */;
+/*!40000 ALTER TABLE `merchant_lease` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `messages`
+--
+
+DROP TABLE IF EXISTS `messages`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `messages` (
+  `messageId` int(11) NOT NULL DEFAULT 0,
+  `senderId` int(11) NOT NULL DEFAULT 0,
+  `receiverId` int(11) NOT NULL DEFAULT 0,
+  `subject` tinytext DEFAULT NULL,
+  `content` text DEFAULT NULL,
+  `expiration` bigint(13) unsigned NOT NULL DEFAULT 0,
+  `reqAdena` bigint(20) NOT NULL DEFAULT 0,
+  `hasAttachments` enum('true','false') NOT NULL DEFAULT 'false',
+  `isUnread` enum('true','false') NOT NULL DEFAULT 'true',
+  `isDeletedBySender` enum('true','false') NOT NULL DEFAULT 'false',
+  `isDeletedByReceiver` enum('true','false') NOT NULL DEFAULT 'false',
+  `isLocked` enum('true','false') NOT NULL DEFAULT 'false',
+  `sendBySystem` tinyint(1) NOT NULL DEFAULT 0,
+  `isReturned` enum('true','false') NOT NULL DEFAULT 'false',
+  PRIMARY KEY (`messageId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `messages`
+--
+
+LOCK TABLES `messages` WRITE;
+/*!40000 ALTER TABLE `messages` DISABLE KEYS */;
+/*!40000 ALTER TABLE `messages` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `mods_wedding`
+--
+
+DROP TABLE IF EXISTS `mods_wedding`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `mods_wedding` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `player1Id` int(11) NOT NULL DEFAULT 0,
+  `player2Id` int(11) NOT NULL DEFAULT 0,
+  `married` varchar(5) DEFAULT NULL,
+  `affianceDate` decimal(20,0) DEFAULT 0,
+  `weddingDate` decimal(20,0) DEFAULT 0,
+  PRIMARY KEY (`id`),
+  KEY `player1Id` (`player1Id`),
+  KEY `player2Id` (`player2Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `mods_wedding`
+--
+
+LOCK TABLES `mods_wedding` WRITE;
+/*!40000 ALTER TABLE `mods_wedding` DISABLE KEYS */;
+/*!40000 ALTER TABLE `mods_wedding` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `olympiad_data`
+--
+
+DROP TABLE IF EXISTS `olympiad_data`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `olympiad_data` (
+  `id` tinyint(3) unsigned NOT NULL DEFAULT 0,
+  `current_cycle` mediumint(8) unsigned NOT NULL DEFAULT 1,
+  `period` mediumint(8) unsigned NOT NULL DEFAULT 0,
+  `olympiad_end` bigint(13) unsigned NOT NULL DEFAULT 0,
+  `validation_end` bigint(13) unsigned NOT NULL DEFAULT 0,
+  `next_weekly_change` bigint(13) unsigned NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `olympiad_data`
+--
+
+LOCK TABLES `olympiad_data` WRITE;
+/*!40000 ALTER TABLE `olympiad_data` DISABLE KEYS */;
+/*!40000 ALTER TABLE `olympiad_data` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `olympiad_fights`
+--
+
+DROP TABLE IF EXISTS `olympiad_fights`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `olympiad_fights` (
+  `charOneId` int(10) unsigned NOT NULL,
+  `charTwoId` int(10) unsigned NOT NULL,
+  `charOneClass` tinyint(3) unsigned NOT NULL DEFAULT 0,
+  `charTwoClass` tinyint(3) unsigned NOT NULL DEFAULT 0,
+  `winner` tinyint(1) unsigned NOT NULL DEFAULT 0,
+  `start` bigint(13) unsigned NOT NULL DEFAULT 0,
+  `time` bigint(13) unsigned NOT NULL DEFAULT 0,
+  `classed` tinyint(1) unsigned NOT NULL DEFAULT 0,
+  KEY `charOneId` (`charOneId`),
+  KEY `charTwoId` (`charTwoId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `olympiad_fights`
+--
+
+LOCK TABLES `olympiad_fights` WRITE;
+/*!40000 ALTER TABLE `olympiad_fights` DISABLE KEYS */;
+/*!40000 ALTER TABLE `olympiad_fights` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `olympiad_nobles`
+--
+
+DROP TABLE IF EXISTS `olympiad_nobles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `olympiad_nobles` (
+  `charId` int(10) unsigned NOT NULL DEFAULT 0,
+  `class_id` decimal(3,0) NOT NULL DEFAULT 0,
+  `olympiad_points` decimal(10,0) NOT NULL DEFAULT 0,
+  `competitions_done` decimal(3,0) NOT NULL DEFAULT 0,
+  `competitions_won` decimal(3,0) NOT NULL DEFAULT 0,
+  `competitions_lost` decimal(3,0) NOT NULL DEFAULT 0,
+  `competitions_drawn` decimal(3,0) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`charId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `olympiad_nobles`
+--
+
+LOCK TABLES `olympiad_nobles` WRITE;
+/*!40000 ALTER TABLE `olympiad_nobles` DISABLE KEYS */;
+/*!40000 ALTER TABLE `olympiad_nobles` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `olympiad_nobles_eom`
+--
+
+DROP TABLE IF EXISTS `olympiad_nobles_eom`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `olympiad_nobles_eom` (
+  `charId` int(10) unsigned NOT NULL DEFAULT 0,
+  `class_id` decimal(3,0) NOT NULL DEFAULT 0,
+  `olympiad_points` decimal(10,0) NOT NULL DEFAULT 0,
+  `competitions_done` decimal(3,0) NOT NULL DEFAULT 0,
+  `competitions_won` decimal(3,0) NOT NULL DEFAULT 0,
+  `competitions_lost` decimal(3,0) NOT NULL DEFAULT 0,
+  `competitions_drawn` decimal(3,0) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`charId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `olympiad_nobles_eom`
+--
+
+LOCK TABLES `olympiad_nobles_eom` WRITE;
+/*!40000 ALTER TABLE `olympiad_nobles_eom` DISABLE KEYS */;
+/*!40000 ALTER TABLE `olympiad_nobles_eom` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `petition_feedback`
+--
+
+DROP TABLE IF EXISTS `petition_feedback`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `petition_feedback` (
+  `charName` varchar(35) NOT NULL,
+  `gmName` varchar(35) NOT NULL,
+  `rate` tinyint(1) unsigned NOT NULL DEFAULT 2,
+  `message` text NOT NULL,
+  `date` bigint(13) unsigned NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `petition_feedback`
+--
+
+LOCK TABLES `petition_feedback` WRITE;
+/*!40000 ALTER TABLE `petition_feedback` DISABLE KEYS */;
+/*!40000 ALTER TABLE `petition_feedback` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `pets`
+--
+
+DROP TABLE IF EXISTS `pets`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `pets` (
+  `item_obj_id` int(10) unsigned NOT NULL,
+  `name` varchar(16) DEFAULT NULL,
+  `level` smallint(2) unsigned NOT NULL,
+  `curHp` int(9) unsigned DEFAULT 0,
+  `curMp` int(9) unsigned DEFAULT 0,
+  `exp` bigint(20) unsigned DEFAULT 0,
+  `sp` int(10) unsigned DEFAULT 0,
+  `fed` int(10) unsigned DEFAULT 0,
+  `ownerId` int(10) NOT NULL DEFAULT 0,
+  `restore` enum('true','false') NOT NULL DEFAULT 'false',
+  PRIMARY KEY (`item_obj_id`),
+  KEY `ownerId` (`ownerId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `pets`
+--
+
+LOCK TABLES `pets` WRITE;
+/*!40000 ALTER TABLE `pets` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pets` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `posts`
+--
+
+DROP TABLE IF EXISTS `posts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `posts` (
+  `post_id` int(8) NOT NULL DEFAULT 0,
+  `post_owner_name` varchar(255) NOT NULL DEFAULT '',
+  `post_ownerid` int(8) NOT NULL DEFAULT 0,
+  `post_date` bigint(13) unsigned NOT NULL DEFAULT 0,
+  `post_topic_id` int(8) NOT NULL DEFAULT 0,
+  `post_forum_id` int(8) NOT NULL DEFAULT 0,
+  `post_txt` text NOT NULL,
+  KEY `post_forum_id` (`post_forum_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `posts`
+--
+
+LOCK TABLES `posts` WRITE;
+/*!40000 ALTER TABLE `posts` DISABLE KEYS */;
+/*!40000 ALTER TABLE `posts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `punishments`
+--
+
+DROP TABLE IF EXISTS `punishments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `punishments` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `key` varchar(255) NOT NULL,
+  `affect` varchar(255) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `expiration` bigint(20) NOT NULL,
+  `reason` text NOT NULL,
+  `punishedBy` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `punishments`
+--
+
+LOCK TABLES `punishments` WRITE;
+/*!40000 ALTER TABLE `punishments` DISABLE KEYS */;
+/*!40000 ALTER TABLE `punishments` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `raidboss_spawnlist`
+--
+
+DROP TABLE IF EXISTS `raidboss_spawnlist`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `raidboss_spawnlist` (
+  `boss_id` smallint(5) unsigned NOT NULL,
+  `amount` tinyint(1) unsigned NOT NULL DEFAULT 1,
+  `loc_x` mediumint(6) NOT NULL,
+  `loc_y` mediumint(6) NOT NULL,
+  `loc_z` mediumint(6) NOT NULL,
+  `heading` mediumint(6) NOT NULL DEFAULT 0,
+  `respawn_delay` mediumint(6) unsigned NOT NULL DEFAULT 129600,
+  `respawn_random` mediumint(6) unsigned NOT NULL DEFAULT 86400,
+  `respawn_time` bigint(13) unsigned NOT NULL DEFAULT 0,
+  `currentHp` decimal(8,0) DEFAULT NULL,
+  `currentMp` decimal(8,0) DEFAULT NULL,
+  PRIMARY KEY (`boss_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `raidboss_spawnlist`
+--
+
+LOCK TABLES `raidboss_spawnlist` WRITE;
+/*!40000 ALTER TABLE `raidboss_spawnlist` DISABLE KEYS */;
+INSERT INTO `raidboss_spawnlist` VALUES
+(25001,1,-54416,146480,-2887,0,129600,86400,0,95986,514),
+(25004,1,-94208,100240,-3520,0,129600,86400,0,168366,731),
+(25007,1,124240,75376,-2800,0,129600,86400,0,331522,1178),
+(25010,1,113920,52960,-3735,0,129600,86400,0,624464,1975),
+(25013,1,169744,11920,-2732,0,129600,86400,0,507285,1660),
+(25016,1,76787,245775,-10376,0,129600,86400,0,730956,2301),
+(25019,1,7376,169376,-3600,0,129600,86400,0,206185,575),
+(25020,1,90384,125568,-2128,0,129600,86400,0,156584,860),
+(25023,1,27280,101744,-3696,0,129600,86400,0,208019,860),
+(25026,1,92976,7920,-3914,0,129600,86400,0,352421,1598),
+(25029,1,54941,206705,-3728,0,129600,86400,0,578190,1847),
+(25032,1,88532,245798,-10376,0,129600,86400,0,690320,2169),
+(25035,1,180968,12035,-2720,0,129600,86400,0,888658,2987),
+(25038,1,-57360,186272,-4967,0,129600,86400,0,116581,668),
+(25041,1,10416,126880,-3676,0,129600,86400,0,165289,893),
+(25044,1,107792,27728,-3488,0,129600,86400,0,319791,1476),
+(25047,1,116352,27648,-3319,0,129600,86400,0,352421,1598),
+(25050,1,125520,27216,-3632,0,129600,86400,0,771340,1722),
+(25051,1,117760,-9072,-3264,0,129600,86400,0,818959,2639),
+(25054,1,113432,16403,3960,0,129600,86400,0,945900,3347),
+(25057,1,107056,168176,-3456,0,129600,86400,0,288415,1355),
+(25060,1,-60428,188264,-4512,0,129600,86400,0,99367,545),
+(25063,1,-91024,116304,-3466,0,129600,86400,0,330579,893),
+(25064,1,96891,93825,-3720,0,129600,86400,0,218810,1062),
+(25067,1,94992,-23168,-2176,0,129600,86400,0,554640,1784),
+(25070,1,125600,50100,-3600,0,129600,86400,0,451391,1975),
+(25073,1,143265,110044,-3944,0,129600,86400,0,875948,2917),
+(25076,1,-60976,127552,-2960,0,129600,86400,0,103092,575),
+(25079,1,53712,102656,-1072,0,129600,86400,0,168366,731),
+(25082,1,88512,140576,-3483,0,129600,86400,0,206753,1028),
+(25085,1,66944,67504,-3704,0,129600,86400,0,371721,1296),
+(25088,1,90848,16368,-5296,0,129600,86400,0,702418,1237),
+(25089,1,165424,93776,-2992,0,129600,86400,0,512194,2235),
+(25092,1,116151,16227,1944,0,129600,86400,0,888658,2987),
+(25095,1,-37856,198128,-2672,0,129600,86400,0,121941,699),
+(25098,1,123536,133504,-3584,0,129600,86400,0,330579,893),
+(25099,1,64048,16048,-3536,0,129600,86400,0,273375,1296),
+(25102,1,113840,84256,-2480,0,129600,86400,0,576831,1355),
+(25103,1,135872,94592,-3735,0,129600,86400,0,451391,1975),
+(25106,1,173880,-11412,-2880,0,129600,86400,0,526218,2301),
+(25109,1,152660,110387,-5520,0,129600,86400,0,935092,3274),
+(25112,1,116128,139392,-3640,0,129600,86400,0,127782,731),
+(25115,1,125789,207644,-3752,0,129600,86400,0,294846,1062),
+(25118,1,50896,146576,-3645,0,129600,86400,0,330579,893),
+(25119,1,121872,64032,-3536,0,129600,86400,0,507285,1660),
+(25122,1,86290,-8232,-3032,0,129600,86400,0,467209,2039),
+(25125,1,170656,85184,-2000,0,129600,86400,0,1637918,2639),
+(25126,1,116263,15916,6992,0,129600,86400,0,1974940,3643),
+(25127,1,-47552,219232,-2413,0,129600,86400,0,198734,545),
+(25128,1,17696,179056,-3520,0,129600,86400,0,148507,827),
+(25131,1,75488,-9360,-2720,0,129600,86400,0,369009,1660),
+(25134,1,87536,75872,-3591,0,129600,86400,0,218810,1062),
+(25137,1,125280,102576,-3305,0,129600,86400,0,451391,1975),
+(25140,1,191610,56235,-7616,0,129600,86400,0,818959,2639),
+(25143,1,113102,16002,6992,0,129600,86400,0,977229,3568),
+(25146,1,-13056,215680,-3760,0,129600,86400,0,90169,455),
+(25149,1,-12656,138176,-3584,0,129600,86400,0,103092,575),
+(25152,1,43872,123968,-2928,0,129600,86400,0,165289,893),
+(25155,1,73520,66912,-3728,0,129600,86400,0,294846,1053),
+(25158,1,77104,5408,-3088,0,129600,86400,0,920790,1523),
+(25159,1,124984,86400,-3625,0,129600,86400,0,435256,1911),
+(25162,1,193902,54135,-4355,0,129600,86400,0,1461912,2301),
+(25163,1,130500,59098,3584,0,129600,86400,0,1777317,2987),
+(25166,1,-21800,152000,-2900,0,129600,86400,0,134813,575),
+(25169,1,-54464,170288,-3136,0,129600,86400,0,336732,731),
+(25170,1,26064,121808,-3738,0,129600,86400,0,195371,994),
+(25173,1,75968,110784,-2512,0,129600,86400,0,288415,1355),
+(25176,1,92544,115232,-3200,0,129600,86400,0,451391,1975),
+(25179,1,181814,52379,-4344,0,129600,86400,0,526218,2301),
+(25182,1,41966,215417,-3728,0,129600,86400,0,512194,2235),
+(25185,1,88123,166312,-3412,0,129600,86400,0,165289,893),
+(25188,1,127544,215264,-2960,0,129600,86400,0,255564,731),
+(25189,1,68832,203024,-3547,0,129600,86400,0,156584,860),
+(25192,1,125920,190208,-3291,0,129600,86400,0,258849,1237),
+(25198,1,102656,157424,-3735,0,129600,86400,0,1777317,2987),
+(25199,1,108096,157408,-3688,0,129600,86400,0,912634,3130),
+(25202,1,119760,157392,-3744,0,129600,86400,0,935092,3274),
+(25205,1,123808,153408,-3671,0,129600,86400,0,956490,3420),
+(25208,1,73776,201552,-3760,0,129600,86400,0,218810,1062),
+(25211,1,76352,193216,-3648,0,129600,86400,0,174646,927),
+(25214,1,111582,209341,-3687,0,129600,86400,0,218810,1062),
+(25217,1,89904,105712,-3292,0,129600,86400,0,369009,1660),
+(25220,1,113551,17083,-2120,0,129600,86400,0,924022,3202),
+(25223,1,43152,152352,-2848,0,129600,86400,0,165289,893),
+(25226,1,104240,-3664,-3392,0,129600,86400,0,768537,2435),
+(25229,1,137568,-19488,-3552,0,129600,86400,0,1891801,3347),
+(25230,1,66672,46704,-3920,0,129600,86400,0,482650,2104),
+(25233,1,185800,-26500,-2000,0,129600,86400,0,1256671,2917),
+(25234,1,120080,111248,-3047,0,129600,86400,0,1052436,2301),
+(25235,1,116400,-62528,-3264,0,129600,86400,0,912634,3130),
+(25238,1,155000,85400,-3200,0,129600,86400,0,512194,2235),
+(25241,1,165984,88048,-2384,0,129600,86400,0,624464,1975),
+(25244,1,187261,46176,-5848,0,129600,86400,0,1891801,3347),
+(25245,1,172451,55410,-5928,0,129600,86400,0,977229,3568),
+(25248,1,127903,-13399,-3720,0,129600,86400,0,1825269,3130),
+(25249,1,147104,-20560,-3377,0,129600,86400,0,945900,3347),
+(25252,1,192376,22087,-3608,0,129600,86400,0,888658,2987),
+(25255,1,170048,-24896,-3440,0,129600,86400,0,1637918,2639),
+(25256,1,170320,42640,-4832,0,129600,86400,0,526218,2301),
+(25259,1,42050,208107,-3752,0,129600,86400,0,1248928,1975),
+(25260,1,93120,19440,-3607,0,129600,86400,0,392985,1355),
+(25263,1,144400,-28192,-1920,0,129600,86400,0,848789,2777),
+(25266,1,188983,13647,-2672,0,129600,86400,0,945900,3347),
+(25269,1,123504,-23696,-3481,0,129600,86400,0,888658,3058),
+(25272,1,49248,127792,-3552,0,129600,86400,0,233163,1415),
+(25276,1,154088,-14116,-3736,0,129600,86400,0,1891801,3347),
+(25277,1,54651,180269,-4976,0,129600,86400,0,507285,1660),
+(25280,1,-12621,-240437,-8160,0,129600,86400,0,1248928,1975),
+(25281,1,151053,88124,-5424,0,129600,86400,0,1777317,2987),
+(25282,1,179311,-7632,-4896,0,129600,86400,0,1891801,3347),
+(25293,1,134672,-115600,-1216,0,129600,86400,0,977229,3568),
+(25299,1,148160,-73808,-4919,0,129600,86400,0,714778,3718),
+(25302,1,145504,-81664,-6016,0,129600,86400,0,773553,4183),
+(25305,1,145008,-84992,-6240,0,129600,86400,0,1639965,4553),
+(25309,1,115552,-39200,-2480,0,129600,86400,0,714778,3718),
+(25312,1,109216,-36160,-938,0,129600,86400,0,773553,4183),
+(25315,1,105584,-43024,-1728,0,129600,86400,0,1639965,4553),
+(25319,1,184542,-106330,-6304,0,129600,86400,0,1100996,4304),
+(25322,1,93296,-75104,-1824,0,129600,86400,0,834231,2707),
+(25325,1,91008,-85904,-2736,0,129600,86400,0,888658,2987),
+(25352,1,-16912,174912,-3264,0,129600,86400,0,127782,731),
+(25354,1,-16096,184288,-3817,0,129600,86400,0,165289,893),
+(25357,1,-3456,112864,-3456,0,129600,86400,0,90169,455),
+(25360,1,29216,179280,-3624,0,129600,86400,0,107186,606),
+(25362,1,-55920,186768,-3336,0,129600,86400,0,95986,514),
+(25365,1,-62000,190256,-3687,0,129600,86400,0,214372,606),
+(25366,1,-62368,179440,-3594,0,129600,86400,0,95986,514),
+(25369,1,-45616,111024,-3808,0,129600,86400,0,103092,575),
+(25372,1,48000,243376,-6611,0,129600,86400,0,175392,426),
+(25373,1,9649,77467,-3808,0,129600,86400,0,90169,455),
+(25375,1,22500,80300,-2772,0,129600,86400,0,87696,426),
+(25378,1,-54096,84288,-3512,0,129600,86400,0,87696,426),
+(25380,1,-47367,51548,-5904,0,129600,86400,0,90169,455),
+(25383,1,51632,153920,-3552,0,129600,86400,0,156584,860),
+(25385,1,53600,143472,-3872,0,129600,86400,0,174646,927),
+(25388,1,40128,101920,-1241,0,129600,86400,0,165289,893),
+(25391,1,45600,120592,-2455,0,129600,86400,0,297015,827),
+(25392,1,29928,107160,-3708,0,129600,86400,0,141034,795),
+(25394,1,101888,200224,-3708,0,129600,86400,0,390743,994),
+(25395,1,15000,119000,-11900,0,129600,86400,0,288415,1355),
+(25398,1,5000,189000,-3728,0,129600,86400,0,165289,893),
+(25401,1,117808,102880,-3600,0,129600,86400,0,141034,795),
+(25404,1,35992,191312,-3104,0,129600,86400,0,148507,827),
+(25407,1,115072,112272,-3018,0,129600,86400,0,526218,2301),
+(25410,1,72192,125424,-3657,0,129600,86400,0,218810,1062),
+(25412,1,81920,113136,-3056,0,129600,86400,0,319791,1476),
+(25415,1,128352,138464,-3467,0,129600,86400,0,218810,1062),
+(25418,1,62416,8096,-3376,0,129600,86400,0,273375,1296),
+(25420,1,42032,24128,-4704,0,129600,86400,0,335987,1537),
+(25423,1,113600,47120,-4640,0,129600,86400,0,539706,2368),
+(25426,1,-18048,-101264,-2112,0,129600,86400,0,103092,575),
+(25429,1,172064,-214752,-3565,0,129600,86400,0,103092,575),
+(25431,1,79648,18320,-5232,0,129600,86400,0,273375,1296),
+(25434,1,104096,-16896,-1803,0,129600,86400,0,451391,1975),
+(25437,1,67296,64128,-3723,0,129600,86400,0,576831,1355),
+(25438,1,107000,92000,-2272,0,129600,86400,0,273375,1296),
+(25441,1,111440,82912,-2912,0,129600,86400,0,288415,1355),
+(25444,1,113232,17456,-4384,0,129600,86400,0,588136,2639),
+(25447,1,113200,17552,-1424,0,129600,86400,0,645953,3058),
+(25450,1,113600,15104,9559,0,129600,86400,0,987470,3643),
+(25453,1,156704,-6096,-4185,0,129600,86400,0,888658,2987),
+(25456,1,133632,87072,-3623,0,129600,86400,0,352421,1598),
+(25460,1,150304,67776,-3688,0,129600,86400,0,385670,1722),
+(25463,1,166288,68096,-3264,0,129600,86400,0,467209,2039),
+(25467,1,186210,61479,-4147,0,129600,86400,0,576851,2570),
+(25470,1,186919,56297,-4563,0,129600,86400,0,598898,2707),
+(25473,1,175712,29856,-3776,0,129600,86400,0,402319,1784),
+(25475,1,183568,24560,-3184,0,129600,86400,0,451391,1975),
+(25478,1,168288,28368,-3632,0,129600,86400,0,588136,2639),
+(25481,1,53517,205413,-3728,0,129600,86400,0,418874,1847),
+(25484,1,43160,220463,-3680,0,129600,86400,0,369009,1660),
+(25487,1,83056,183232,-3587,0,129600,86400,0,218810,1062),
+(25490,1,86534,216888,-3555,0,129600,86400,0,218810,1062),
+(25493,1,83174,254428,-10873,0,129600,86400,0,451391,1975),
+(25496,1,88300,258000,-10200,0,129600,86400,0,402319,1784),
+(25498,1,126624,174448,-3056,0,129600,86400,0,288415,1355),
+(25501,1,48575,-106191,-1568,0,129600,86400,0,127782,731),
+(25504,1,123000,-141000,-1100,0,129600,86400,0,206753,1028),
+(25506,1,127900,-160600,-1100,0,129600,86400,0,184670,960),
+(25509,1,74441,-101924,-960,0,129600,86400,0,418874,1847),
+(25514,1,79631,-55433,-6104,0,129600,86400,0,714778,3718),
+(25523,1,170000,-60000,-3500,0,129600,86400,0,1848045,3202),
+(25524,1,144600,-5500,-4100,0,129600,86400,0,956490,3420),
+(25527,1,3776,-6768,-3276,0,129600,86400,0,1608553,451),
+(29040,1,189400,-105702,-782,0,604800,0,0,520605,4140),
+(29054,1,11882,-49216,-3008,0,0,0,0,1352750,1494),
+(29062,1,-16382,-53450,-10432,43200,129600,86400,0,275385,9999),
+(29095,1,147408,-43552,-2328,0,129600,86400,0,2289038,4553),
+(29096,1,112798,-76800,-10,-15544,129600,86400,0,2231403,48422);
+/*!40000 ALTER TABLE `raidboss_spawnlist` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rainbowsprings_attacker_list`
+--
+
+DROP TABLE IF EXISTS `rainbowsprings_attacker_list`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `rainbowsprings_attacker_list` (
+  `clanId` int(10) DEFAULT NULL,
+  `war_decrees_count` double(20,0) DEFAULT NULL,
+  KEY `clanid` (`clanId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rainbowsprings_attacker_list`
+--
+
+LOCK TABLES `rainbowsprings_attacker_list` WRITE;
+/*!40000 ALTER TABLE `rainbowsprings_attacker_list` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rainbowsprings_attacker_list` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `random_spawn`
+--
+
+DROP TABLE IF EXISTS `random_spawn`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `random_spawn` (
+  `groupId` tinyint(3) unsigned NOT NULL,
+  `npcId` smallint(5) unsigned NOT NULL,
+  `count` tinyint(1) unsigned NOT NULL DEFAULT 1,
+  `initialDelay` int(8) NOT NULL DEFAULT -1,
+  `respawnDelay` int(8) NOT NULL DEFAULT -1,
+  `despawnDelay` int(8) NOT NULL DEFAULT -1,
+  `broadcastSpawn` enum('true','false') NOT NULL DEFAULT 'false',
+  `randomSpawn` enum('true','false') NOT NULL DEFAULT 'true',
+  PRIMARY KEY (`groupId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `random_spawn`
+--
+
+LOCK TABLES `random_spawn` WRITE;
+/*!40000 ALTER TABLE `random_spawn` DISABLE KEYS */;
+INSERT INTO `random_spawn` VALUES
+(11,31113,1,-1,-1,-1,'true','true'),
+(12,31126,1,-1,-1,-1,'true','true'),
+(13,31094,1,-1,60,0,'false','false'),
+(14,31094,1,-1,60,0,'false','false'),
+(15,31094,1,-1,60,0,'false','false'),
+(16,31094,1,-1,60,0,'false','false'),
+(17,31094,1,-1,60,0,'false','false'),
+(18,31094,1,-1,60,0,'false','false'),
+(19,31094,1,-1,60,0,'false','false'),
+(20,31094,1,-1,60,0,'false','false'),
+(21,31094,1,-1,60,0,'false','false'),
+(22,31094,1,-1,60,0,'false','false'),
+(23,31094,1,-1,60,0,'false','false'),
+(24,31094,1,-1,60,0,'false','false'),
+(25,31094,1,-1,60,0,'false','false'),
+(26,31094,1,-1,60,0,'false','false'),
+(27,31094,1,-1,60,0,'false','false'),
+(28,31094,1,-1,60,0,'false','false'),
+(29,31094,1,-1,60,0,'false','false'),
+(30,31094,1,-1,60,0,'false','false'),
+(31,31094,1,-1,60,0,'false','false'),
+(32,31094,1,-1,60,0,'false','false'),
+(33,31094,1,-1,60,0,'false','false'),
+(34,31094,1,-1,60,0,'false','false'),
+(35,31094,1,-1,60,0,'false','false'),
+(36,31094,1,-1,60,0,'false','false'),
+(37,31094,1,-1,60,0,'false','false'),
+(38,31094,1,-1,60,0,'false','false'),
+(39,31094,1,-1,60,0,'false','false'),
+(40,31094,1,-1,60,0,'false','false'),
+(41,31093,1,-1,60,0,'false','false'),
+(42,31093,1,-1,60,0,'false','false'),
+(43,31093,1,-1,60,0,'false','false'),
+(44,31093,1,-1,60,0,'false','false'),
+(45,31093,1,-1,60,0,'false','false'),
+(46,31093,1,-1,60,0,'false','false'),
+(47,31093,1,-1,60,0,'false','false'),
+(48,31093,1,-1,60,0,'false','false'),
+(49,31093,1,-1,60,0,'false','false'),
+(50,31093,1,-1,60,0,'false','false'),
+(51,31093,1,-1,60,0,'false','false'),
+(52,31093,1,-1,60,0,'false','false'),
+(53,31093,1,-1,60,0,'false','false'),
+(54,31093,1,-1,60,0,'false','false'),
+(55,31093,1,-1,60,0,'false','false'),
+(56,31093,1,-1,60,0,'false','false'),
+(57,31093,1,-1,60,0,'false','false'),
+(58,31093,1,-1,60,0,'false','false'),
+(59,31093,1,-1,60,0,'false','false'),
+(60,31093,1,-1,60,0,'false','false'),
+(61,31093,1,-1,60,0,'false','false'),
+(62,31093,1,-1,60,0,'false','false'),
+(63,31093,1,-1,60,0,'false','false'),
+(64,31093,1,-1,60,0,'false','false'),
+(65,31093,1,-1,60,0,'false','false'),
+(66,31093,1,-1,60,0,'false','false'),
+(67,31093,1,-1,60,0,'false','false'),
+(68,31093,1,-1,60,0,'false','false'),
+(69,31093,1,-1,60,0,'false','false'),
+(70,31093,1,-1,60,0,'false','false'),
+(71,31093,1,-1,60,0,'false','false'),
+(72,31093,1,-1,60,0,'false','false'),
+(73,31093,1,-1,60,0,'false','false'),
+(74,31093,1,-1,60,0,'false','false'),
+(75,31093,1,-1,60,0,'false','false'),
+(76,31093,1,-1,60,0,'false','false'),
+(77,31093,1,-1,60,0,'false','false'),
+(78,31093,1,-1,60,0,'false','false'),
+(79,31093,1,-1,60,0,'false','false'),
+(80,31093,1,-1,60,0,'false','false'),
+(81,31093,1,-1,60,0,'false','false'),
+(82,31170,1,-1,60,0,'false','false'),
+(83,31171,1,-1,60,0,'false','false'),
+(84,31170,1,-1,60,0,'false','false'),
+(85,31171,1,-1,60,0,'false','false'),
+(86,31170,1,-1,60,0,'false','false'),
+(87,31171,1,-1,60,0,'false','false'),
+(88,31170,1,-1,60,0,'false','false'),
+(89,31171,1,-1,60,0,'false','false'),
+(90,31170,1,-1,60,0,'false','false'),
+(91,31171,1,-1,60,0,'false','false'),
+(92,31170,1,-1,60,0,'false','false'),
+(93,31171,1,-1,60,0,'false','false'),
+(94,31170,1,-1,60,0,'false','false'),
+(95,31171,1,-1,60,0,'false','false'),
+(96,31170,1,-1,60,0,'false','false'),
+(97,31171,1,-1,60,0,'false','false'),
+(98,31170,1,-1,60,0,'false','false'),
+(99,31171,1,-1,60,0,'false','false'),
+(100,31170,1,-1,60,0,'false','false'),
+(101,31171,1,-1,60,0,'false','false'),
+(102,31170,1,-1,60,0,'false','false'),
+(103,31171,1,-1,60,0,'false','false'),
+(104,31170,1,-1,60,0,'false','false'),
+(105,31171,1,-1,60,0,'false','false'),
+(106,31170,1,-1,60,0,'false','false'),
+(107,31171,1,-1,60,0,'false','false'),
+(108,31170,1,-1,60,0,'false','false'),
+(109,31171,1,-1,60,0,'false','false'),
+(110,25283,1,-1,86400,0,'false','false'),
+(111,25286,1,-1,86400,0,'false','false'),
+(113,31094,1,-1,60,0,'false','false'),
+(114,31093,1,-1,60,0,'false','false'),
+(115,31094,1,-1,60,0,'false','false'),
+(116,31093,1,-1,60,0,'false','false'),
+(117,31094,1,-1,60,0,'false','false'),
+(118,31093,1,-1,60,0,'false','false'),
+(119,31094,1,-1,60,0,'false','false'),
+(120,31093,1,-1,60,0,'false','false'),
+(121,31093,1,-1,60,0,'false','false'),
+(122,31094,1,-1,60,0,'false','false'),
+(123,31093,1,-1,60,0,'false','false'),
+(124,31093,1,-1,60,0,'false','false'),
+(125,31094,1,-1,60,0,'false','false'),
+(126,31094,1,-1,60,0,'false','false'),
+(127,31093,1,-1,60,0,'false','false'),
+(128,31094,1,-1,60,0,'false','false'),
+(129,31093,1,-1,60,0,'false','false'),
+(130,31094,1,-1,60,0,'false','false'),
+(131,31093,1,-1,60,0,'false','false'),
+(132,31094,1,-1,60,0,'false','false'),
+(133,32014,1,-1,3600000,0,'false','true'),
+(134,32013,1,-1,3600000,0,'false','true'),
+(136,32012,1,-1,3600000,0,'false','true');
+/*!40000 ALTER TABLE `random_spawn` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `random_spawn_loc`
+--
+
+DROP TABLE IF EXISTS `random_spawn_loc`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `random_spawn_loc` (
+  `groupId` tinyint(3) unsigned NOT NULL,
+  `x` mediumint(6) NOT NULL,
+  `y` mediumint(6) NOT NULL,
+  `z` mediumint(6) NOT NULL,
+  `heading` mediumint(6) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`groupId`,`x`,`y`,`z`,`heading`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `random_spawn_loc`
+--
+
+LOCK TABLES `random_spawn_loc` WRITE;
+/*!40000 ALTER TABLE `random_spawn_loc` DISABLE KEYS */;
+INSERT INTO `random_spawn_loc` VALUES
+(11,-52172,78884,-4741,-1),
+(11,-41350,209876,-5087,-1),
+(11,-21657,77164,-5173,-1),
+(11,45029,123802,-5413,-1),
+(11,83175,208998,-5439,-1),
+(11,111337,173804,-5439,-1),
+(11,118343,132578,-4831,-1),
+(11,172373,-17833,-4901,-1),
+(12,-53131,-250502,-7909,-1),
+(12,-20485,-251008,-8165,-1),
+(12,-19360,13278,-4901,-1),
+(12,12669,-248698,-9581,-1),
+(12,46303,170091,-4981,-1),
+(12,140519,79464,-5429,-1),
+(13,-84356,152742,-3204,-1),
+(14,-83157,149846,-3155,-1),
+(15,-79563,152726,-3204,-1),
+(16,-79123,155098,-3204,-1),
+(17,-16168,124129,-3143,-1),
+(18,-14563,121461,-3015,-1),
+(19,-14199,126128,-3171,-1),
+(20,-12344,123605,-3132,-1),
+(21,16901,144748,-3027,-1),
+(22,17557,147084,-3150,-1),
+(23,19038,142923,-3078,-1),
+(24,20826,145769,-3171,-1),
+(25,77830,148627,-3623,-1),
+(26,81540,144204,-3559,-1),
+(27,81556,152183,-3559,-1),
+(28,83872,143882,-3431,-1),
+(29,85328,147352,-3431,-1),
+(30,114907,77916,-2662,-1),
+(31,115509,74857,-2625,-1),
+(32,118273,74592,-2529,-1),
+(33,107251,218166,-3701,-1),
+(34,115482,219266,-3689,-1),
+(35,80039,54291,-1586,-1),
+(36,81002,53495,-1586,-1),
+(37,81527,56009,-1551,-1),
+(38,143926,26468,-2338,-1),
+(39,147460,20537,-2101,-1),
+(40,150417,25182,-2141,-1),
+(41,-83107,150270,-3155,-1),
+(42,-83070,152740,-3204,-1),
+(43,-80752,152738,-3204,-1),
+(44,-80690,149996,-3070,-1),
+(45,-80037,154344,-3204,-1),
+(46,-15549,124170,-3143,-1),
+(47,-14480,122330,-3126,-1),
+(48,-14268,124941,-3156,-1),
+(49,-13252,123689,-3143,-1),
+(50,-12591,122673,-3142,-1),
+(51,15722,142877,-2732,-1),
+(52,18172,145740,-3140,-1),
+(53,19096,143980,-3096,-1),
+(54,19823,145863,-3142,-1),
+(55,79825,148619,-3559,-1),
+(56,81535,146866,-3559,-1),
+(57,81547,150347,-3559,-1),
+(58,83319,148054,-3431,-1),
+(59,83894,147495,-3431,-1),
+(60,115893,77551,-2729,-1),
+(61,115936,75382,-2625,-1),
+(62,117098,77066,-2720,-1),
+(63,118049,75783,-2715,-1),
+(64,107256,218615,-3701,-1),
+(65,109660,217339,-3775,-1),
+(66,110189,221393,-3569,-1),
+(67,111389,219257,-3572,-1),
+(68,113479,217795,-3731,-1),
+(69,114086,220214,-3568,-1),
+(70,80416,55959,-1586,-1),
+(71,80617,54116,-1586,-1),
+(72,82048,55417,-1551,-1),
+(73,82863,53290,-1522,-1),
+(74,145015,25269,-2167,-1),
+(75,145394,27629,-2295,-1),
+(76,146616,25816,-2039,-1),
+(77,147440,30047,-2487,-1),
+(78,147459,21148,-2167,-1),
+(79,148013,27029,-2231,-1),
+(80,149515,27641,-2295,-1),
+(81,149899,24719,-2167,-1),
+(82,-41312,206625,-3412,-1),
+(83,-41312,206625,-3412,-1),
+(84,-55428,79357,-3059,-1),
+(85,-55428,79357,-3059,-1),
+(86,-24895,77634,-3495,-1),
+(87,-24895,77634,-3495,-1),
+(88,-22594,13760,-3216,-1),
+(89,-22594,13760,-3216,-1),
+(90,43074,170560,-3298,-1),
+(91,43074,170560,-3298,-1),
+(92,39872,144193,-3707,-1),
+(93,39872,144193,-3707,-1),
+(94,45504,127550,-3734,-1),
+(95,45504,127550,-3734,-1),
+(96,79946,209470,-3760,-1),
+(97,79946,209470,-3760,-1),
+(98,108097,174274,-3769,-1),
+(99,108097,174274,-3769,-1),
+(100,115136,133057,-3161,-1),
+(101,115136,133057,-3161,-1),
+(102,74561,78656,-3446,-1),
+(103,74561,78656,-3446,-1),
+(104,110784,84800,-4867,-1),
+(105,110784,84800,-4867,-1),
+(106,137278,79936,-3751,-1),
+(107,137278,79936,-3751,-1),
+(108,169152,-17344,-3228,-1),
+(109,169152,-17344,-3228,-1),
+(110,184410,-10111,-5488,-1),
+(111,185000,-13000,-5488,-1),
+(113,147943,-56176,-2781,-1),
+(114,148064,-56288,-2781,-1),
+(115,147703,-58879,-2981,-1),
+(116,147704,-58710,-2981,-1),
+(117,150550,-57471,-2981,-1),
+(118,150425,-57370,-2981,-1),
+(119,144841,-57493,-2981,-1),
+(120,144980,-57403,-2981,-1),
+(121,148867,-58156,-2981,-1),
+(122,149180,-58022,-2981,-1),
+(123,87500,-142523,-1336,-1),
+(124,87302,-140189,-1536,-1),
+(125,87363,-142460,-1336,-1),
+(126,87390,-140065,-1536,-1),
+(127,89738,-141420,-1536,-1),
+(128,89661,-141242,-1536,-1),
+(129,43961,-50913,-792,-1),
+(130,43859,-50954,-796,-1),
+(131,38588,-48222,896,-1),
+(132,38695,-48308,896,-1),
+(133,104000,-156496,-1968,-1),
+(133,107888,-144688,-3660,-1),
+(133,108912,-150000,-2416,-1),
+(133,117024,-150304,-2320,-1),
+(133,118176,-161008,-1072,-1),
+(133,120880,-156720,-1673,-1),
+(133,123248,-147680,-3520,-1),
+(134,66768,72016,-3677,-1),
+(134,67920,77888,-3616,-1),
+(134,69152,88816,-3408,-1),
+(134,71520,67936,-3564,-1),
+(134,75392,87600,-3344,-1),
+(134,76544,73616,-3709,-1),
+(136,77584,-1120,-3626,0),
+(136,79232,-5904,-2864,0),
+(136,89856,-7248,-3034,0),
+(136,94416,-10256,-3245,0),
+(136,96640,-1296,-3648,0);
+/*!40000 ALTER TABLE `random_spawn_loc` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rebirth_system`
+--
+
+DROP TABLE IF EXISTS `rebirth_system`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `rebirth_system` (
+  `charId` int(11) NOT NULL,
+  `rebirthCount` int(11) NOT NULL DEFAULT 0,
+  `selectedSkills` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`charId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rebirth_system`
+--
+
+LOCK TABLES `rebirth_system` WRITE;
+/*!40000 ALTER TABLE `rebirth_system` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rebirth_system` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `seven_signs`
+--
+
+DROP TABLE IF EXISTS `seven_signs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `seven_signs` (
+  `charId` int(10) unsigned NOT NULL DEFAULT 0,
+  `cabal` varchar(4) NOT NULL DEFAULT '',
+  `seal` int(1) NOT NULL DEFAULT 0,
+  `red_stones` int(11) NOT NULL DEFAULT 0,
+  `green_stones` int(11) NOT NULL DEFAULT 0,
+  `blue_stones` int(11) NOT NULL DEFAULT 0,
+  `ancient_adena_amount` decimal(20,0) NOT NULL DEFAULT 0,
+  `contribution_score` decimal(20,0) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`charId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `seven_signs`
+--
+
+LOCK TABLES `seven_signs` WRITE;
+/*!40000 ALTER TABLE `seven_signs` DISABLE KEYS */;
+/*!40000 ALTER TABLE `seven_signs` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `seven_signs_festival`
+--
+
+DROP TABLE IF EXISTS `seven_signs_festival`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `seven_signs_festival` (
+  `festivalId` int(1) NOT NULL DEFAULT 0,
+  `cabal` varchar(4) NOT NULL DEFAULT '',
+  `cycle` int(4) NOT NULL DEFAULT 0,
+  `date` bigint(13) unsigned NOT NULL DEFAULT 0,
+  `score` int(5) NOT NULL DEFAULT 0,
+  `members` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`festivalId`,`cabal`,`cycle`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `seven_signs_festival`
+--
+
+LOCK TABLES `seven_signs_festival` WRITE;
+/*!40000 ALTER TABLE `seven_signs_festival` DISABLE KEYS */;
+INSERT INTO `seven_signs_festival` VALUES
+(0,'dawn',1,0,0,''),
+(0,'dusk',1,0,0,''),
+(1,'dawn',1,0,0,''),
+(1,'dusk',1,0,0,''),
+(2,'dawn',1,0,0,''),
+(2,'dusk',1,0,0,''),
+(3,'dawn',1,0,0,''),
+(3,'dusk',1,0,0,''),
+(4,'dawn',1,0,0,''),
+(4,'dusk',1,0,0,'');
+/*!40000 ALTER TABLE `seven_signs_festival` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `seven_signs_status`
+--
+
+DROP TABLE IF EXISTS `seven_signs_status`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `seven_signs_status` (
+  `id` int(3) NOT NULL DEFAULT 0,
+  `current_cycle` int(10) NOT NULL DEFAULT 1,
+  `festival_cycle` int(10) NOT NULL DEFAULT 1,
+  `active_period` int(10) NOT NULL DEFAULT 1,
+  `date` bigint(13) unsigned NOT NULL DEFAULT 0,
+  `previous_winner` int(10) NOT NULL DEFAULT 0,
+  `dawn_stone_score` decimal(20,0) NOT NULL DEFAULT 0,
+  `dawn_festival_score` int(10) NOT NULL DEFAULT 0,
+  `dusk_stone_score` decimal(20,0) NOT NULL DEFAULT 0,
+  `dusk_festival_score` int(10) NOT NULL DEFAULT 0,
+  `avarice_owner` int(10) NOT NULL DEFAULT 0,
+  `gnosis_owner` int(10) NOT NULL DEFAULT 0,
+  `strife_owner` int(10) NOT NULL DEFAULT 0,
+  `avarice_dawn_score` int(10) NOT NULL DEFAULT 0,
+  `gnosis_dawn_score` int(10) NOT NULL DEFAULT 0,
+  `strife_dawn_score` int(10) NOT NULL DEFAULT 0,
+  `avarice_dusk_score` int(10) NOT NULL DEFAULT 0,
+  `gnosis_dusk_score` int(10) NOT NULL DEFAULT 0,
+  `strife_dusk_score` int(10) NOT NULL DEFAULT 0,
+  `accumulated_bonus0` int(10) NOT NULL DEFAULT 0,
+  `accumulated_bonus1` int(10) NOT NULL DEFAULT 0,
+  `accumulated_bonus2` int(10) NOT NULL DEFAULT 0,
+  `accumulated_bonus3` int(10) NOT NULL DEFAULT 0,
+  `accumulated_bonus4` int(10) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `seven_signs_status`
+--
+
+LOCK TABLES `seven_signs_status` WRITE;
+/*!40000 ALTER TABLE `seven_signs_status` DISABLE KEYS */;
+INSERT INTO `seven_signs_status` VALUES
+(0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+/*!40000 ALTER TABLE `seven_signs_status` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `siegable_clanhall`
+--
+
+DROP TABLE IF EXISTS `siegable_clanhall`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `siegable_clanhall` (
+  `clanHallId` int(10) NOT NULL DEFAULT 0,
+  `name` varchar(45) DEFAULT NULL,
+  `ownerId` int(10) DEFAULT NULL,
+  `desc` varchar(100) DEFAULT NULL,
+  `location` varchar(100) DEFAULT NULL,
+  `nextSiege` bigint(20) DEFAULT NULL,
+  `siegeLength` int(10) DEFAULT NULL,
+  `schedule_config` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`clanHallId`),
+  KEY `ownerId` (`ownerId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `siegable_clanhall`
+--
+
+LOCK TABLES `siegable_clanhall` WRITE;
+/*!40000 ALTER TABLE `siegable_clanhall` DISABLE KEYS */;
+INSERT INTO `siegable_clanhall` VALUES
+(21,'Fortress of Resistance',0,'Contestable Clan Hall','Dion',1790499600509,3600000,'14;0;0;12;00'),
+(34,'Devastated Castle',0,'Contestable Clan Hall','Aden',1790499600514,3600000,'14;0;0;12;00'),
+(35,'Bandit StrongHold',0,'Contestable Clan Hall','Oren',1790499600516,3600000,'14;0;0;12;00'),
+(62,'Rainbow Springs',0,'Contestable Clan Hall','Goddard',1790499600518,3600000,'14;0;0;12;00'),
+(63,'Beast Farm',0,'Contestable Clan Hall','Rune',1790499600520,3600000,'14;0;0;12;00'),
+(64,'Fortress of the Dead',0,'Contestable Clan Hall','Rune',1790499600522,3600000,'14;0;0;12;00');
+/*!40000 ALTER TABLE `siegable_clanhall` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `siegable_hall_flagwar_attackers`
+--
+
+DROP TABLE IF EXISTS `siegable_hall_flagwar_attackers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `siegable_hall_flagwar_attackers` (
+  `hall_id` tinyint(2) unsigned NOT NULL DEFAULT 0,
+  `flag` int(10) unsigned NOT NULL DEFAULT 0,
+  `npc` int(10) unsigned NOT NULL DEFAULT 0,
+  `clan_id` int(10) unsigned NOT NULL DEFAULT 0,
+  PRIMARY KEY (`flag`),
+  KEY `hall_id` (`hall_id`),
+  KEY `clan_id` (`clan_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `siegable_hall_flagwar_attackers`
+--
+
+LOCK TABLES `siegable_hall_flagwar_attackers` WRITE;
+/*!40000 ALTER TABLE `siegable_hall_flagwar_attackers` DISABLE KEYS */;
+/*!40000 ALTER TABLE `siegable_hall_flagwar_attackers` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `siegable_hall_flagwar_attackers_members`
+--
+
+DROP TABLE IF EXISTS `siegable_hall_flagwar_attackers_members`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `siegable_hall_flagwar_attackers_members` (
+  `hall_id` tinyint(2) unsigned NOT NULL DEFAULT 0,
+  `clan_id` int(10) unsigned NOT NULL DEFAULT 0,
+  `object_id` int(10) unsigned NOT NULL DEFAULT 0,
+  KEY `hall_id` (`hall_id`),
+  KEY `clan_id` (`clan_id`),
+  KEY `object_id` (`object_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `siegable_hall_flagwar_attackers_members`
+--
+
+LOCK TABLES `siegable_hall_flagwar_attackers_members` WRITE;
+/*!40000 ALTER TABLE `siegable_hall_flagwar_attackers_members` DISABLE KEYS */;
+/*!40000 ALTER TABLE `siegable_hall_flagwar_attackers_members` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `siege_clans`
+--
+
+DROP TABLE IF EXISTS `siege_clans`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `siege_clans` (
+  `castle_id` int(1) NOT NULL DEFAULT 0,
+  `clan_id` int(11) NOT NULL DEFAULT 0,
+  `type` int(1) DEFAULT NULL,
+  `castle_owner` int(1) DEFAULT NULL,
+  PRIMARY KEY (`clan_id`,`castle_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `siege_clans`
+--
+
+LOCK TABLES `siege_clans` WRITE;
+/*!40000 ALTER TABLE `siege_clans` DISABLE KEYS */;
+/*!40000 ALTER TABLE `siege_clans` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `topic`
+--
+
+DROP TABLE IF EXISTS `topic`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `topic` (
+  `topic_id` int(8) NOT NULL DEFAULT 0,
+  `topic_forum_id` int(8) NOT NULL DEFAULT 0,
+  `topic_name` varchar(255) NOT NULL DEFAULT '',
+  `topic_date` bigint(13) unsigned NOT NULL DEFAULT 0,
+  `topic_ownername` varchar(255) NOT NULL DEFAULT '0',
+  `topic_ownerid` int(8) NOT NULL DEFAULT 0,
+  `topic_type` int(8) NOT NULL DEFAULT 0,
+  `topic_reply` int(8) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `topic`
+--
+
+LOCK TABLES `topic` WRITE;
+/*!40000 ALTER TABLE `topic` DISABLE KEYS */;
+/*!40000 ALTER TABLE `topic` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping events for database 'l2jmobiusinterlude'
+--
+
+--
+-- Dumping routines for database 'l2jmobiusinterlude'
+--
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*M!100616 SET NOTE_VERBOSITY=@OLD_NOTE_VERBOSITY */;
+
+-- Dump completed

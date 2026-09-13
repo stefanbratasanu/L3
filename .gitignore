@@ -33,6 +33,14 @@
 *.log
 /server/dist/game/config/hexid.txt
 
+# === DB snapshot: KEEP the .sql (this is how the DB syncs between machines),
+#     ignore its transient siblings written during dump/restore ===
+!/server/dist/db_snapshot/l2jmobiusinterlude.sql
+/server/dist/db_snapshot/*.tmp
+/server/dist/db_snapshot/*.err
+/server/dist/db_snapshot/*.out
+/server/dist/db_snapshot/.last-restored-hash
+
 # === IDE / OS cruft ===
 .idea/
 *.iml
