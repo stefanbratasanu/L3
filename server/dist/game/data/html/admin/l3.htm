@@ -1,0 +1,69 @@
+<html><title>L3 Agents</title><body>
+<center>
+<table width=270><tr>
+	<td align=center><button value="Main" action="bypass admin_admin" width=45 height=15 back="sek.cbui94" fore="sek.cbui92"></td>
+	<td align=center width=180>L3 Agent Control</td>
+	<td align=center><button value="Refresh" action="bypass admin_npcspawn" width=50 height=15 back="sek.cbui94" fore="sek.cbui92"></td>
+</tr></table>
+</center>
+<br>
+<center><font color="LEVEL">Population: %agents% / %cap%</font></center>
+<br>
+<center><font color="LEVEL">Populate the world</font></center>
+<font color="A0A0A0">Spread across hunting grounds and towns.</font><br>
+<center>
+<table width=270>
+<tr>
+	<td align=center><button value="+10" action="bypass -h admin_populate 10" width=60 height=21 back="bigbutton_over" fore="bigbutton"></td>
+	<td align=center><button value="+50" action="bypass -h admin_populate 50" width=60 height=21 back="bigbutton_over" fore="bigbutton"></td>
+	<td align=center><button value="+100" action="bypass -h admin_populate 100" width=60 height=21 back="bigbutton_over" fore="bigbutton"></td>
+	<td align=center><button value="+250" action="bypass -h admin_populate 250" width=60 height=21 back="bigbutton_over" fore="bigbutton"></td>
+</tr>
+<tr>
+	<td align=center><button value="+500" action="bypass -h admin_populate 500" width=60 height=21 back="bigbutton_over" fore="bigbutton"></td>
+	<td align=center><button value="+1000" action="bypass -h admin_populate 1000" width=60 height=21 back="bigbutton_over" fore="bigbutton"></td>
+	<td align=center></td>
+	<td align=center></td>
+</tr>
+</table>
+</center>
+<br>
+<center><font color="LEVEL">Spawn next to me</font></center>
+<center>
+<table width=270>
+<tr>
+	<td align=center><button value="1" action="bypass -h admin_l3spawn 1" width=60 height=21 back="bigbutton_over" fore="bigbutton"></td>
+	<td align=center><button value="5" action="bypass -h admin_l3spawn 5" width=60 height=21 back="bigbutton_over" fore="bigbutton"></td>
+	<td align=center><button value="20" action="bypass -h admin_l3spawn 20" width=60 height=21 back="bigbutton_over" fore="bigbutton"></td>
+	<td align=center><button value="Turbo" action="bypass -h admin_l3spawnturbo" width=60 height=21 back="bigbutton_over" fore="bigbutton"></td>
+</tr>
+</table>
+</center>
+<br>
+<center><font color="LEVEL">Spawn a named agent</font></center>
+<center>
+<edit var="agentname" width=150 height=15>
+<button value="Create" action="bypass -h admin_l3spawnname $agentname" width=70 height=21 back="bigbutton_over" fore="bigbutton">
+</center>
+<br>
+<center><font color="LEVEL">Inspect</font></center>
+<center>
+<table width=270>
+<tr>
+	<td align=center><button value="Go to next" action="bypass -h admin_gotonext" width=95 height=21 back="bigbutton_over" fore="bigbutton"></td>
+	<td align=center><button value="Population info" action="bypass -h admin_l3info" width=120 height=21 back="bigbutton_over" fore="bigbutton"></td>
+</tr>
+</table>
+</center>
+<br>
+<center><font color="LEVEL">Danger zone</font></center>
+<font color="A0A0A0">Clean removes agents spawned this session. Wipe rebuilds the whole database and shuts the server down.</font><br>
+<center>
+<table width=270>
+<tr>
+	<td align=center><button value="Clean session" action="bypass -h admin_l3clean" width=110 height=21 back="bigbutton_over" fore="bigbutton"></td>
+	<td align=center><button value="Wipe DB + stop" action="bypass -h admin_sdwipedb" width=110 height=21 back="bigbutton_over" fore="bigbutton"></td>
+</tr>
+</table>
+</center>
+</body></html>

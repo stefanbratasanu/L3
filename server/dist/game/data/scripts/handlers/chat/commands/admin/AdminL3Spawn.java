@@ -20,6 +20,8 @@
  */
 package handlers.chat.commands.admin;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -29,11 +31,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.l2jmobius.commons.util.Rnd;
+import org.l2jmobius.gameserver.Shutdown;
 import org.l2jmobius.gameserver.entity.Location;
 import org.l2jmobius.gameserver.entity.World;
 import org.l2jmobius.gameserver.entity.actor.Player;
 import org.l2jmobius.gameserver.handler.IAdminCommandHandler;
 import org.l2jmobius.gameserver.network.GameClient;
+import org.l2jmobius.gameserver.network.serverpackets.NpcHtmlMessage;
 
 import l3.L3Config;
 import l3.L3Locations;
@@ -53,7 +57,7 @@ import l3.agent.L3AgentManager;
  * <li>{@code //l3spawn clean} - delete the agents spawned by these commands this session.</li>
  * </ul>
  * Agents created here are part of the <b>permanent</b> population: real characters that survive
- * restarts and get topped back up to {@link L3Config#POPULATION_TARGET}. Turbo agents are the
+ * restarts, up to {@link L3Config#POPULATION_CAP}. Turbo agents are the
  * exception - their stats are runtime-only, so they live on a separate throwaway account.
  *
  * @author L3
@@ -68,6 +72,11 @@ public class AdminL3Spawn implements IAdminCommandHandler
 		"admin_l3spawnname",
 		"admin_l3spawnturbo",
 		"admin_l3spawnworld",
+		"admin_populate",
+		"admin_npcspawn",
+		"admin_l3info",
+		"admin_l3clean",
+		"admin_sdwipedb",
 		"admin_gotonext"
 	};
 
@@ -100,6 +109,29 @@ public class AdminL3Spawn implements IAdminCommandHandler
 			case "admin_gotonext":
 			{
 				return gotoNext(activeChar);
+			}
+			case "admin_npcspawn":
+			{
+				showPanel(activeChar);
+				return true;
+			}
+			case "admin_l3info":
+			{
+				showInfo(activeChar);
+				return true;
+			}
+			case "admin_populate":
+			{
+				return populate(activeChar, parseCount(arg, 10));
+			}
+			case "admin_l3clean":
+			{
+				cleanup(activeChar);
+				return true;
+			}
+			case "admin_sdwipedb":
+			{
+				return shutdownAndWipe(activeChar);
 			}
 			case "admin_l3spawnturbo":
 			{
@@ -197,22 +229,33 @@ public class AdminL3Spawn implements IAdminCommandHandler
 		return true;
 	}
 
-	/** Agents scattered across the towns of the world, to populate it rather than crowd one spot. */
-	private boolean spawnWorld(Player observer, int count)
+	/**
+	 * The bulk world-populate: agents spread over hunting grounds and towns. This is the one to use
+	 * for building a living world, and it is what {@code //populate} and {@code //l3spawnworld} both
+	 * do - most agents land in fields, because that is where there is anything to do.
+	 */
+	private boolean populate(Player observer, int count)
 	{
-		int made = 0;
-		for (int i = 0; i < count; i++)
+		final L3AgentManager manager = L3AgentManager.getInstance();
+		final int before = manager.size();
+		final int made = manager.populate(count);
+
+		// Track them so //l3clean can undo a populate run.
+		for (L3Agent agent : manager.getAgents())
 		{
-			if (spawn(observer, L3Locations.randomTownScattered(L3Config.SPAWN_SCATTER), null, false) != null)
-			{
-				made++;
-			}
+			SPAWNED.add(agent.getObjectId());
 		}
 
-		observer.sendSysMessage("L3: spawned " + made + " of " + count + " agents across " + L3Locations.TOWNS.length + " towns. Agents: " + L3AgentManager.getInstance().size());
-		observer.sendSysMessage("L3: use //gotonext to visit them.");
-		LOGGER.info("L3Spawn: " + observer.getName() + " spawned " + made + " agents across the world.");
+		observer.sendSysMessage("L3: created " + made + " of " + count + " agents (" + before + " -> " + manager.size() + ", cap " + L3Config.POPULATION_CAP + ").");
+		observer.sendSysMessage("L3: spread over " + L3Locations.FARM_AREAS.length + " hunting grounds and " + L3Locations.TOWNS.length + " towns. //gotonext to visit.");
+		LOGGER.info("L3Spawn: " + observer.getName() + " populated " + made + " agents.");
 		return made > 0;
+	}
+
+	/** Kept as an alias of //populate, since it does exactly the same thing. */
+	private boolean spawnWorld(Player observer, int count)
+	{
+		return populate(observer, count);
 	}
 
 	private L3Agent spawn(Player observer, Location location, String name, boolean turbo)
@@ -253,6 +296,71 @@ public class AdminL3Spawn implements IAdminCommandHandler
 		}
 
 		LOGGER.info("L3Spawn: " + observer.getName() + " spawned " + made + "/" + asked + " agents.");
+	}
+
+	// --- panel & info ---------------------------------------------------------------------------
+
+	/** Opens the L3 control panel (data/html/admin/l3.htm), the same way //spawn opens its window. */
+	private void showPanel(Player observer)
+	{
+		final NpcHtmlMessage html = new NpcHtmlMessage(0, 1);
+		html.setFile(observer, "data/html/admin/l3.htm");
+		html.replace("%agents%", String.valueOf(L3AgentManager.getInstance().size()));
+		html.replace("%cap%", String.valueOf(L3Config.POPULATION_CAP));
+		observer.sendPacket(html);
+	}
+
+	/** A population readout, so the panel can show live numbers without reading the server log. */
+	private void showInfo(Player observer)
+	{
+		final L3AgentManager manager = L3AgentManager.getInstance();
+		final int[] lod = manager.countByLod();
+		observer.sendSysMessage("=== L3 population ===");
+		observer.sendSysMessage("Agents: " + manager.size() + " / " + L3Config.POPULATION_CAP + " (pending restore: " + manager.pendingRestoreCount() + ")");
+		observer.sendSysMessage("Detail: HOT " + lod[0] + " | WARM " + lod[1] + " | COLD " + lod[2]);
+		observer.sendSysMessage("Humans online: " + manager.getHumans().size() + " | levels " + L3Config.LEVEL_MIN + "-" + L3Config.LEVEL_MAX + (L3Config.TEST_IMMORTAL ? " | IMMORTAL (test)" : ""));
+	}
+
+	// --- shutdown + wipe ------------------------------------------------------------------------
+
+	/**
+	 * Requests a database wipe and shuts the server down.
+	 * <p>
+	 * The wipe itself is deliberately <b>not</b> done from inside the game server: it holds open
+	 * connections to the very database being dropped, and would be tearing down around itself. So
+	 * this drops a marker file and shuts down cleanly; {@code L3-run.ps1} sees the marker after the
+	 * process exits and rebuilds the schema between runs, which is the only safe moment.
+	 */
+	private boolean shutdownAndWipe(Player observer)
+	{
+		// Working directory is server/dist/game, so this lands in server/dist/db_snapshot/.
+		final File marker = new File("../db_snapshot/.wipe-requested");
+		try
+		{
+			final File parent = marker.getParentFile();
+			if ((parent != null) && !parent.exists() && !parent.mkdirs())
+			{
+				observer.sendSysMessage("L3: could not create " + parent.getPath() + " - wipe NOT scheduled.");
+				return false;
+			}
+
+			try (FileWriter writer = new FileWriter(marker, false))
+			{
+				writer.write("requested by " + observer.getName() + " at " + System.currentTimeMillis() + System.lineSeparator());
+			}
+		}
+		catch (Exception e)
+		{
+			LOGGER.log(Level.WARNING, "L3: could not write the wipe marker.", e);
+			observer.sendSysMessage("L3: could not schedule the wipe (" + e.getMessage() + "). Nothing was shut down.");
+			return false;
+		}
+
+		observer.sendSysMessage("L3: database wipe scheduled. Shutting down now; the DB is rebuilt before the next start.");
+		LOGGER.warning("L3: DATABASE WIPE requested by " + observer.getName() + " (" + observer.getObjectId() + "); marker written to " + marker.getAbsolutePath());
+
+		Shutdown.getInstance().startShutdown(observer, 0, false);
+		return true;
 	}
 
 	// --- navigation -----------------------------------------------------------------------------
@@ -329,7 +437,7 @@ public class AdminL3Spawn implements IAdminCommandHandler
 			}
 		}
 
-		observer.sendSysMessage("L3: cleaned " + removed + " of " + ids.length + ". Population will refill toward " + L3Config.POPULATION_TARGET + ".");
+		observer.sendSysMessage("L3: cleaned " + removed + " of " + ids.length + ". Cap is " + L3Config.POPULATION_CAP + ".");
 		LOGGER.info("L3Spawn: " + observer.getName() + " cleaned " + removed + " agent(s).");
 	}
 

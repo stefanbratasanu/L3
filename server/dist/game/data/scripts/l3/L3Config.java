@@ -104,23 +104,48 @@ public class L3Config
 	public static final String AGENT_ACCOUNT = "l3agents";
 
 	/**
-	 * Target population, and the replacement cap: the system tops the world up to this many agents
-	 * and never exceeds it. Losing an agent causes a replacement to be created, up to this number.
+	 * Replacement cap: the most agents that may exist. Nothing is created automatically - use
+	 * {@code //populate X} to add agents. Existing agents ARE restored on boot, so the population
+	 * you build persists; it simply never grows on its own.
 	 */
-	public static final int POPULATION_TARGET = 1000;
+	public static final int POPULATION_CAP = 1000;
 
-	/** How often the population is checked and topped up. */
+	/** How often existing agents are restored into the world after a restart. */
 	public static final int POPULATION_MAINTAIN_MS = 4000;
 
 	/**
-	 * Agents created per top-up pass. Deliberately incremental: creating a thousand characters in
-	 * one go would stall boot, hammer the database, and make the very first run look like a hang.
-	 * Filling gradually keeps the server responsive and spreads the write load.
+	 * Agents restored per pass. Deliberately incremental: a thousand {@code Player.load} calls in
+	 * one loop would stall boot and make the first run look like a hang.
 	 */
 	public static final int POPULATION_BATCH = 25;
 
-	/** How far apart to scatter newly created agents around a town centre. */
+	/** How far apart to scatter newly created agents around a spawn point. */
 	public static final int SPAWN_SCATTER = 400;
+
+	/** Chance (percent) that {@code //populate} places an agent in a town rather than a hunting
+	 * field. Most should be in the fields, because that is where there is anything to do. */
+	public static final int POPULATE_TOWN_PERCENT = 25;
+
+	// --- Agent build ----------------------------------------------------------------------------
+	/** Level range agents are created at, so the population is not uniformly level 1. */
+	public static final int LEVEL_MIN = 20;
+	public static final int LEVEL_MAX = 78;
+
+	/** Soulshots/spiritshots handed to each agent. They are consumed, so this is a working stock. */
+	public static final int SHOT_COUNT = 1000;
+
+	/** Re-stock an agent's shots when they run out, so agents do not silently stop using them. */
+	public static final boolean AUTO_RESTOCK_SHOTS = true;
+
+	/**
+	 * TESTING ONLY: agents cannot die. Implemented as engine invulnerability, which is stronger
+	 * than a hit-point floor - they take no damage at all - and is the robust way to guarantee an
+	 * agent survives a demonstration. Turn this off to see real survivability.
+	 */
+	public static final boolean TEST_IMMORTAL = true;
+
+	/** Hit-point floor used when {@link #TEST_IMMORTAL} is on but something still drains an agent. */
+	public static final int IMMORTAL_HP_FLOOR = 2;
 
 	// --- Turbo test agent -----------------------------------------------------------------------
 	// A deliberately overpowered agent, for watching behaviour without it dying mid-demonstration.

@@ -94,7 +94,7 @@ public class L3ThinkTaskManager
 
 		// Permanent population: restore known agents, then top up toward the target. Incremental by
 		// design - a thousand characters created in one pass would stall the server.
-		if (L3Config.POPULATION_TARGET > 0)
+		if (L3Config.POPULATION_CAP > 0)
 		{
 			L3AgentManager.getInstance().scanForRestore();
 			ThreadPool.scheduleAtFixedRate(() ->
@@ -219,7 +219,7 @@ public class L3ThinkTaskManager
 		}
 
 		final int[] lod = manager.countByLod();
-		LOGGER.info("L3: " + total + "/" + L3Config.POPULATION_TARGET + " agents in " + POOLS.size() + " pools - HOT " + lod[0] + ", WARM " + lod[1] + ", COLD " + lod[2] + "; pending restore " + manager.pendingRestoreCount() + "; humans online: " + manager.getHumans().size() + ".");
+		LOGGER.info("L3: " + total + "/" + L3Config.POPULATION_CAP + " agents in " + POOLS.size() + " pools - HOT " + lod[0] + ", WARM " + lod[1] + ", COLD " + lod[2] + "; pending restore " + manager.pendingRestoreCount() + "; humans online: " + manager.getHumans().size() + ".");
 	}
 
 	public static L3ThinkTaskManager getInstance()

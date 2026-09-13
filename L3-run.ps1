@@ -286,14 +286,40 @@ Say '  Server(s) stopped.' 'Green'
 # 8. dump DB, stop MariaDB, commit + push the snapshot
 # -----------------------------------------------------------------------------
 Section '8/8  Syncing database + logs back to git'
-try {
-  & (Join-Path $serverDir 'db-dump.ps1') -Database $Database
-  # record the hash we just dumped so the next start doesn't needlessly re-restore
-  if (Test-Path $snapshot) {
-    Set-Content -Path $stamp -Value (Get-FileHash $snapshot -Algorithm SHA256).Hash -Encoding ascii
+
+# Did the game ask for a database wipe (//sdwipedb)? The server cannot drop the database it is
+# connected to, so it leaves a marker and we do the work here - the only safe moment, with the
+# servers stopped and MariaDB still up.
+$wipeMarker = Join-Path $serverDir 'dist\db_snapshot\.wipe-requested'
+$wipeRequested = Test-Path $wipeMarker
+
+if ($wipeRequested) {
+  Say '  WIPE REQUESTED (//sdwipedb): rebuilding the database from the stock schema.' 'Yellow'
+  try {
+    # Drop and reload stock Mobius tables. No dump of the old data first - the point is to discard it.
+    & (Join-Path $serverDir 'db-load-schema.ps1') -Database $Database -Fresh
+    Say '  Database rebuilt.' 'Green'
+    # Dump the fresh database so the committed snapshot matches reality instead of the wiped data.
+    & (Join-Path $serverDir 'db-dump.ps1') -Database $Database
+    if (Test-Path $snapshot) {
+      Set-Content -Path $stamp -Value (Get-FileHash $snapshot -Algorithm SHA256).Hash -Encoding ascii
+    }
+  } catch {
+    Say "  WIPE FAILED: $_" 'Red'
+    Say '  Leaving the database as it is; investigate before the next run.' 'Red'
   }
-} catch {
-  Say "  DB dump failed: $_" 'Red'
+
+  [System.IO.File]::Delete($wipeMarker)
+} else {
+  try {
+    & (Join-Path $serverDir 'db-dump.ps1') -Database $Database
+    # record the hash we just dumped so the next start doesn't needlessly re-restore
+    if (Test-Path $snapshot) {
+      Set-Content -Path $stamp -Value (Get-FileHash $snapshot -Algorithm SHA256).Hash -Encoding ascii
+    }
+  } catch {
+    Say "  DB dump failed: $_" 'Red'
+  }
 }
 
 # Stop MariaDB now that we've dumped - but only if WE started it. If it was already up, another

@@ -82,9 +82,6 @@ public class L3AgentManager
 	/** Marker used as the owner of turbo stat functions. */
 	private static final String TURBO_OWNER = "l3-turbo";
 
-	/** classId 0 = Human Fighter: a valid Interlude starting class, so a template always exists. */
-	private static final int DEFAULT_CLASS_ID = 0;
-
 	/** objectId -> agent. Concurrent because pool tasks read it while spawns mutate it. */
 	private static final Map<Integer, L3Agent> AGENTS = new ConcurrentHashMap<>();
 
@@ -173,10 +170,19 @@ public class L3AgentManager
 	 */
 	public L3Agent spawnNew(Location location, String name, boolean turbo)
 	{
-		final PlayerTemplate template = PlayerTemplateData.getInstance().getTemplate(DEFAULT_CLASS_ID);
+		if (AGENTS.size() >= L3Config.POPULATION_CAP)
+		{
+			return null;
+		}
+
+		// A varied population: random starting class, random level, gear to match both.
+		final int classId = L3Outfitter.randomClassId();
+		final int level = L3Outfitter.randomLevel();
+
+		final PlayerTemplate template = PlayerTemplateData.getInstance().getTemplate(classId);
 		if (template == null)
 		{
-			LOGGER.warning("L3: no player template for classId " + DEFAULT_CLASS_ID);
+			LOGGER.warning("L3: no player template for classId " + classId);
 			return null;
 		}
 
@@ -208,6 +214,9 @@ public class L3AgentManager
 		{
 			return null;
 		}
+
+		// Level, class skills, grade-appropriate weapon, shots, and test immortality.
+		L3Outfitter.outfit(player, classId, level);
 
 		if (turbo)
 		{
@@ -302,20 +311,21 @@ public class L3AgentManager
 			LOGGER.log(Level.WARNING, "L3: could not scan for existing agents.", e);
 		}
 
-		LOGGER.info("L3: " + PENDING_RESTORE.size() + " existing agent characters found; restoring gradually (target " + L3Config.POPULATION_TARGET + ").");
+		LOGGER.info("L3: " + PENDING_RESTORE.size() + " existing agent characters found; restoring gradually (cap " + L3Config.POPULATION_CAP + ").");
 	}
 
 	/**
-	 * One population pass: restore some known agents, then create new ones if still short of the
-	 * target. Both are capped at {@link L3Config#POPULATION_BATCH} per pass so the work is spread
-	 * over time instead of stalling the server.
+	 * One restore pass: puts existing agent characters back into the world, a batch at a time.
+	 * <p>
+	 * Note what this deliberately does <b>not</b> do: create agents. Nothing spawns automatically -
+	 * the population only grows when you ask for it with {@code //populate X}. Agents you have
+	 * already made are permanent and come back here after every restart.
 	 */
 	public void maintainPopulation()
 	{
 		int budget = L3Config.POPULATION_BATCH;
 
-		// 1. Put existing characters back in the world first - they carry real progress.
-		while ((budget > 0) && !PENDING_RESTORE.isEmpty() && (AGENTS.size() < L3Config.POPULATION_TARGET))
+		while ((budget > 0) && !PENDING_RESTORE.isEmpty() && (AGENTS.size() < L3Config.POPULATION_CAP))
 		{
 			final Integer charId = PENDING_RESTORE.poll();
 			if (charId == null)
@@ -349,15 +359,30 @@ public class L3AgentManager
 			}
 		}
 
-		// 2. Top up toward the target - this is the "replacement" half of the cap.
-		while ((budget > 0) && (AGENTS.size() < L3Config.POPULATION_TARGET) && PENDING_RESTORE.isEmpty())
+	}
+
+	/**
+	 * Creates a batch of agents spread across the world - mostly hunting grounds, some towns, since
+	 * fields are where there is anything to do. This is what {@code //populate X} calls.
+	 * @return how many were actually created
+	 */
+	public int populate(int count)
+	{
+		int made = 0;
+		for (int i = 0; i < count; i++)
 		{
-			budget--;
-			if (spawnNew(L3Locations.randomTownScattered(L3Config.SPAWN_SCATTER), null, false) == null)
+			if (AGENTS.size() >= L3Config.POPULATION_CAP)
 			{
-				break; // Creation is failing; do not spin.
+				break;
+			}
+
+			if (spawnNew(L3Locations.randomSpawnPoint(L3Config.POPULATE_TOWN_PERCENT, L3Config.SPAWN_SCATTER), null, false) != null)
+			{
+				made++;
 			}
 		}
+
+		return made;
 	}
 
 	// --- Level of detail ------------------------------------------------------------------------

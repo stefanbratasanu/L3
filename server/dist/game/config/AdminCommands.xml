@@ -319,6 +319,11 @@
 	<admin command="l3spawnturbo" description="Spawn one overpowered L3 test agent." accessLevel="100" />
 	<admin command="l3spawnworld" description="Spawn L3 agents scattered across the towns of the world." accessLevel="100" />
 	<admin command="gotonext" description="Teleport to the next L3 agent, cycling through them." accessLevel="100" />
+	<admin command="populate" description="Create N L3 agents across hunting grounds and towns." accessLevel="100" />
+	<admin command="npcspawn" description="Open the L3 agent control panel." accessLevel="100" />
+	<admin command="l3info" description="Show L3 population and level-of-detail counts." accessLevel="100" />
+	<admin command="l3clean" description="Delete L3 agents spawned during this session." accessLevel="100" />
+	<admin command="sdwipedb" description="Shut down and rebuild the database from scratch." accessLevel="100" confirmDlg="true" />
 
 	<!-- ADMIN LEVEL -->
 	<admin command="add_level" description="Add specified number of levels to the target player." accessLevel="100" />

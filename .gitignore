@@ -50,6 +50,8 @@
 /server/dist/db_snapshot/*.err
 /server/dist/db_snapshot/*.out
 /server/dist/db_snapshot/.last-restored-hash
+# Marker written by //sdwipedb and consumed by L3-run.ps1 between runs; never travels.
+/server/dist/db_snapshot/.wipe-requested
 
 # === IDE / OS cruft ===
 .idea/
