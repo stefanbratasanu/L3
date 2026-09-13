@@ -81,6 +81,36 @@ The server and the client run on **this same machine**, so the client connects t
 
 ---
 
+## Making a character a GM (needed for `//` commands like `//l3spawn`)
+
+GM rights are stored **per character** in the database. To grant them, the character must
+already exist and be **logged out** (a character's save writes its own access level back, so
+editing it while online gets overwritten).
+
+With the servers closed:
+```
+cd C:\Agentic\L3\server
+.\db-start.ps1                        # MariaDB alone (the servers stop it when they close)
+.\db-set-access.ps1 -Name admin       # grant level 100 "Master" to the character 'admin'
+.\db-stop.ps1
+```
+Then launch `L3-run.bat` and log in as that character. Useful variants:
+
+| Command | Effect |
+|---|---|
+| `.\db-set-access.ps1 -List` | list every character and its access level |
+| `.\db-set-access.ps1 -Name admin` | grant level 100 (Master — full GM) |
+| `.\db-set-access.ps1 -Name admin -Level 0` | back to a normal player |
+
+Access levels are defined in `server/dist/game/config/AccessLevels.xml`
+(0 = User, 30 = General GM, 70 = Admin, 100 = Master).
+
+> Don't be tempted by `EverybodyHasAdminRights = True` in `game/config/General.ini`. It applies
+> to *every* player at access-check time, which would also make every spawned L3 agent a GM —
+> and GM status changes how many game systems treat a character.
+
+---
+
 ## Command-line options (optional)
 
 Run from PowerShell in `C:\Agentic\L3` if you want more control:
