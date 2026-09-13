@@ -1,0 +1,36 @@
+2026.09.13 22:52:50,257	INFO	3	org.l2jmobius.commons.util.IXmlReader	Network Config: ipconfig.xml exists, using manual configuration...
+2026.09.13 22:52:50,355	INFO	3	org.l2jmobius.gameserver.config.ServerConfig	Loaded 6 Filter Words.
+2026.09.13 22:52:50,417	INFO	3	org.l2jmobius.gameserver.GameServer	------------------------------------------------=[ Database ]
+2026.09.13 22:52:50,569	INFO	3	org.l2jmobius.commons.database.DatabaseFactory	Database: HikariCP pool initialized successfully.
+2026.09.13 22:52:50,752	INFO	3	org.l2jmobius.commons.database.DatabaseFactory	Database: Initialized with a valid connection.
+2026.09.13 22:52:50,765	INFO	3	org.l2jmobius.gameserver.GameServer	----------------------------------------------=[ ThreadPool ]
+2026.09.13 22:52:50,766	INFO	3	org.l2jmobius.commons.threads.ThreadPool	ThreadPool: Initializing.
+2026.09.13 22:52:50,768	INFO	3	org.l2jmobius.commons.threads.ThreadPool	...scheduled pool executor with 16 high priority threads.
+2026.09.13 22:52:50,775	INFO	3	org.l2jmobius.commons.threads.ThreadPool	...scheduled pool executor with 64 total threads.
+2026.09.13 22:52:50,775	INFO	3	org.l2jmobius.commons.threads.ThreadPool	...instant pool executor with 32 total threads.
+2026.09.13 22:52:50,791	INFO	3	org.l2jmobius.gameserver.GameServer	-----------------------------------------------=[ IdManager ]
+2026.09.13 22:52:50,821	INFO	3	org.l2jmobius.gameserver.managers.DatabaseIdManager	DatabaseIdManager: Cleaned 0 elements in 0 seconds.
+2026.09.13 22:52:50,824	INFO	3	org.l2jmobius.gameserver.managers.DatabaseIdManager	DatabaseIdManager: Updated character online status.
+2026.09.13 22:52:50,831	INFO	3	org.l2jmobius.gameserver.managers.DatabaseIdManager	DatabaseIdManager: Cleaned 0 expired timestamps.
+2026.09.13 22:52:50,842	INFO	3	org.l2jmobius.gameserver.managers.IdManager	IdManager: 102912 ids available.
+2026.09.13 22:52:50,842	INFO	3	org.l2jmobius.gameserver.GameServer	----------------------------------------=[ Scripting Engine ]
+2026.09.13 22:52:51,041	INFO	3	org.l2jmobius.gameserver.scripting.ScriptEngine	Loaded 386 files to exclude.
+2026.09.13 22:52:51,041	INFO	3	org.l2jmobius.gameserver.GameServer	---------------------------------------------------=[ World ]
+2026.09.13 22:52:51,048	INFO	3	org.l2jmobius.commons.util.IXmlReader	InstanceManager: Multiverse Instance created.
+2026.09.13 22:52:51,048	INFO	3	org.l2jmobius.commons.util.IXmlReader	InstanceManager: Universe Instance created.
+2026.09.13 22:52:51,068	INFO	3	org.l2jmobius.commons.util.IXmlReader	InstanceManager: Loaded 2 instance templates.
+2026.09.13 22:52:51,996	INFO	3	org.l2jmobius.gameserver.data.xml.MapRegionData	MapRegionData: Loaded 42 map regions.
+2026.09.13 22:52:52,003	INFO	3	org.l2jmobius.gameserver.managers.GlobalVariablesManager	GlobalVariablesManager: Loaded 4 variables.
+2026.09.13 22:52:52,003	INFO	3	org.l2jmobius.gameserver.GameServer	----------------------------------------------------=[ Data ]
+2026.09.13 22:52:52,027	INFO	3	org.l2jmobius.gameserver.data.xml.CategoryData	CategoryData: Loaded 160 categories.
+2026.09.13 22:52:52,070	INFO	3	org.l2jmobius.gameserver.data.xml.CubicData	CubicData: Loaded 67 cubic templates.
+2026.09.13 22:52:52,075	INFO	3	org.l2jmobius.gameserver.GameServer	--------------------------------------------------=[ Skills ]
+2026.09.13 22:52:53,715	INFO	3	handlers.EffectMasterHandler	EffectMasterHandler: Loaded 146 effect handlers.
+2026.09.13 22:52:53,969	INFO	3	org.l2jmobius.gameserver.data.xml.EnchantSkillTreeData	EnchantSkillTreeData: Loaded 14551 enchant skills.
+2026.09.13 22:52:54,481	INFO	3	org.l2jmobius.commons.util.IXmlReader	SkillTreeData: Loaded 13777 Class Skills for 89 class skill trees.
+2026.09.13 22:52:54,482	INFO	3	org.l2jmobius.commons.util.IXmlReader	SkillTreeData: Loaded 117 fishing skills, 8 Dwarven only fishing skills.
+2026.09.13 22:52:54,484	INFO	3	org.l2jmobius.commons.util.IXmlReader	SkillTreeData: Loaded 64 clan skills, 64 for clan and 0 residential.
+2026.09.13 22:52:54,484	INFO	3	org.l2jmobius.commons.util.IXmlReader	SkillTreeData: Loaded 8 noble skills.
+2026.09.13 22:52:54,484	INFO	3	org.l2jmobius.commons.util.IXmlReader	SkillTreeData: Loaded 5 hero skills.
+2026.09.13 22:52:54,484	INFO	3	org.l2jmobius.commons.util.IXmlReader	SkillTreeData: Loaded 25 game master skills.
+2026.09.13 22:52:54,485	INFO	3	org.l2jmobius.commons.util.IXmlReader	SkillTreeData: Loaded 1 game master aura skills.
