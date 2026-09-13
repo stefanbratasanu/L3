@@ -135,17 +135,51 @@ Access levels are defined in `server/dist/game/config/AccessLevels.xml`
 
 ---
 
+## Running the two servers separately
+
+Sometimes you don't want both. The login server barely ever changes, while the
+**game** server is where all L3 code lives — and `dist/game/data/scripts` is
+recompiled at every boot. So the fast iteration loop is: leave the login server
+up, and restart only the game server when agent/AI code changes.
+
+Double-click either of these:
+
+| File | Starts |
+|---|---|
+| `L3-run.bat` | both servers (the normal way) |
+| `L3-run-login.bat` | **only** the LoginServer |
+| `L3-run-game.bat` | **only** the GameServer |
+
+Typical loop: start `L3-run-login.bat` once and leave that window alone, then
+use `L3-run-game.bat` repeatedly — each time pulling new code, running, and
+committing the DB + logs on `.sd`.
+
+**What the script does differently when they run separately:**
+- It only stops MariaDB if *it* started it, so the second window can't pull the
+  database out from under the first.
+- It won't reload the DB snapshot if MariaDB was already running, since that
+  recreates tables and would wipe a live server's state. Pass `-FreshDb` to
+  force it (with everything else stopped).
+- It waits for the first of *its own* servers to exit, then stops the rest — so
+  `.sd`, or closing a window, still ends that session cleanly and syncs.
+
+---
+
 ## Command-line options (optional)
 
 Run from PowerShell in `C:\Agentic\L3` if you want more control:
 
 | Command | Effect |
 |---|---|
-| `.\L3-run.ps1` | normal run (pull → start → on close: commit+push DB) |
+| `.\L3-run.ps1` | normal run (pull → start → on close: commit+push DB + logs) |
+| `.\L3-run.ps1 -LoginOnly` | start only the LoginServer |
+| `.\L3-run.ps1 -GameOnly` | start only the GameServer |
 | `.\L3-run.ps1 -NoPull` | don't pull first (offline / local iteration) |
 | `.\L3-run.ps1 -NoPush` | commit the DB locally on close, but don't push |
 | `.\L3-run.ps1 -NoCommit` | don't touch git at all on close |
 | `.\L3-run.ps1 -FreshDb` | wipe & reload the DB from the pulled snapshot before starting |
+
+`-LoginOnly` and `-GameOnly` are mutually exclusive; omit both to run the pair.
 
 ---
 

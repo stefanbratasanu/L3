@@ -13,6 +13,9 @@
 #       so the build box stays in sync with whatever you did while testing.
 #
 #  You normally launch this by double-clicking  L3-run.bat  (which just calls this).
+#  To run one side only:  L3-run-login.bat / L3-run-game.bat, or -LoginOnly / -GameOnly.
+#  The game server is the fast-iteration one: it recompiles dist\game\data\scripts at every
+#  boot, so restarting it alone picks up new L3 agent/AI code.
 #  Nothing here needs administrator rights. If Windows shows a UAC/SmartScreen
 #  prompt for java.exe, it is your endpoint-security agent inspecting an unknown
 #  portable exe, NOT a real elevation requirement — you can decline it safely.
@@ -23,10 +26,18 @@ param(
   [switch]$NoCommit,        # skip the on-close DB commit+push
   [switch]$NoPush,          # commit the DB snapshot locally but do not push
   [switch]$FreshDb,         # drop & reload the DB from the snapshot before starting
+  [switch]$LoginOnly,       # start ONLY the LoginServer
+  [switch]$GameOnly,        # start ONLY the GameServer (fast iteration on L3 code)
   [string]$Database = 'l2jmobiusinterlude'
 )
 
 $ErrorActionPreference = 'Stop'
+
+if ($LoginOnly -and $GameOnly) {
+  throw "-LoginOnly and -GameOnly are mutually exclusive. Omit both to run the pair."
+}
+$runLogin = -not $GameOnly
+$runGame  = -not $LoginOnly
 $repoRoot   = $PSScriptRoot                      # C:\Agentic\L3
 $serverDir  = Join-Path $repoRoot 'server'
 $envScript  = Join-Path $repoRoot 'env.ps1'
@@ -129,8 +140,16 @@ if ($needSetup) {
 # -----------------------------------------------------------------------------
 # 3. start MariaDB (portable)
 # -----------------------------------------------------------------------------
+# Note whether the DB was ALREADY up. With -LoginOnly / -GameOnly you can have two of these
+# scripts running at once, and the second one must not stop MariaDB (step 8) or reload the
+# snapshot (step 4) underneath the first one's live server.
 Section '3/8  Starting MariaDB'
-& (Join-Path $serverDir 'db-start.ps1')
+$dbWasRunning = [bool](Get-NetTCPConnection -LocalPort $L3_DB_PORT -State Listen -ErrorAction SilentlyContinue)
+if ($dbWasRunning) {
+  Say "  MariaDB is already running on port $L3_DB_PORT - leaving it alone." 'Green'
+} else {
+  & (Join-Path $serverDir 'db-start.ps1')
+}
 
 # -----------------------------------------------------------------------------
 # 4. restore DB snapshot (first run, -FreshDb, or snapshot changed since last restore)
@@ -149,12 +168,19 @@ function Db-Empty {
 if (Test-Path $snapshot) {
   $curHash  = (Get-FileHash $snapshot -Algorithm SHA256).Hash
   $lastHash = if (Test-Path $stamp) { (Get-Content $stamp -Raw).Trim() } else { '' }
-  if ($FreshDb -or (Db-Empty) -or ($curHash -ne $lastHash)) {
+  $dbEmpty  = Db-Empty
+  if (-not ($FreshDb -or $dbEmpty -or ($curHash -ne $lastHash))) {
+    Say '  DB already matches the current snapshot - no restore needed.' 'Green'
+  } elseif ($dbWasRunning -and -not $dbEmpty -and -not $FreshDb) {
+    # Refuse to reload under a possibly-live server: db-restore recreates the tables, which would
+    # destroy whatever another running GameServer/LoginServer is using right now.
+    Say '  Snapshot differs, but MariaDB was ALREADY running - not reloading it.' 'Yellow'
+    Say '  Another L3-run instance may have a live server attached, and a reload would wipe it.' 'Yellow'
+    Say '  Stop everything first, or pass -FreshDb to force the reload.' 'Yellow'
+  } else {
     Say '  Restoring snapshot into the DB...' 'Yellow'
     & (Join-Path $serverDir 'db-restore.ps1') -Database $Database -Fresh:$FreshDb
     Set-Content -Path $stamp -Value $curHash -Encoding ascii
-  } else {
-    Say '  DB already matches the current snapshot — no restore needed.' 'Green'
   }
 } else {
   Say '  No snapshot in repo yet — loading the stock Mobius schema instead.' 'Yellow'
@@ -190,36 +216,61 @@ Section '6/8  Launching servers'
 function Start-Node([string]$name, [string]$sub, [string]$jar) {
   $dir = Join-Path $serverDir "dist\$sub"
   $cfg = (Get-Content (Join-Path $dir 'java.cfg') -Raw).Trim()
-  $args = @($cfg -split '\s+') + @('-jar', "..\libs\$jar")
+  # Not $args - that is an automatic variable inside a function, and assigning to it is asking
+  # for trouble.
+  $javaArgs = @($cfg -split '\s+') + @('-jar', "..\libs\$jar")
   Say "  starting $name ..." 'Green'
   # A normal (visible) window so you can watch/close it. Closing the window ends the JVM.
-  return Start-Process -FilePath $javaExe -ArgumentList $args -WorkingDirectory $dir -PassThru
+  return Start-Process -FilePath $javaExe -ArgumentList $javaArgs -WorkingDirectory $dir -PassThru
 }
-$loginProc = Start-Node 'LoginServer' 'login' 'LoginServer.jar'
-Start-Sleep -Seconds 8    # let login bind :9014 before the game server dials in
-$gameProc  = Start-Node 'GameServer'  'game'  'GameServer.jar'
+# $nodes keeps only the servers this invocation actually started, so steps 7 and 8 behave the same
+# whether you launched the pair, just the login server, or just the game server. Both are java.exe,
+# so we carry our own label rather than relying on ProcessName.
+$nodes = @()
 
-Say "`n  LoginServer PID $($loginProc.Id)   GameServer PID $($gameProc.Id)" 'Cyan'
-Say '  Servers are starting. Point the client at this machine, log in, and test.' 'Cyan'
-Say '  >>> To finish: type  .sd  in game (GM), or close either server window. <<<' 'Yellow'
-Say '      Either way this script then dumps + commits the DB.' 'Yellow'
+if ($runLogin) {
+  $nodes += [pscustomobject]@{ Name = 'LoginServer'; Proc = (Start-Node 'LoginServer' 'login' 'LoginServer.jar') }
+  if ($runGame) {
+    Start-Sleep -Seconds 8    # let login bind :9014 before the game server dials in
+  }
+}
+
+if ($runGame) {
+  $nodes += [pscustomobject]@{ Name = 'GameServer'; Proc = (Start-Node 'GameServer' 'game' 'GameServer.jar') }
+}
+
+Say ''
+foreach ($n in $nodes) { Say "  $($n.Name) PID $($n.Proc.Id)" 'Cyan' }
+
+if (-not $runGame) {
+  Say '  LoginServer only. Clients can authenticate but there is no game world to enter.' 'Yellow'
+  Say '  Start the game side in another window:  .\L3-run.ps1 -GameOnly' 'Yellow'
+} elseif (-not $runLogin) {
+  Say '  GameServer only. It needs a LoginServer to register with, or clients cannot log in.' 'Yellow'
+  Say '  If one is not already running:  .\L3-run.ps1 -LoginOnly' 'Yellow'
+} else {
+  Say '  Servers are starting. Point the client at this machine, log in, and test.' 'Cyan'
+}
+Say '  >>> To finish: type  .sd  in game (GM), or close a server window. <<<' 'Yellow'
+Say '      This script then dumps + commits the DB and logs.' 'Yellow'
 
 # -----------------------------------------------------------------------------
 # 7. wait for the session to end
 # -----------------------------------------------------------------------------
-# We wait for EITHER process to exit, then stop the other. That way one action ends the whole
-# session: an in-game `.sd` (which only shuts down the game server), or closing either window.
-# Waiting for both in sequence would hang forever after a `.sd`, because the login server would
+# We wait for the FIRST of our processes to exit, then stop the rest. That way one action ends the
+# session: an in-game `.sd` (which only shuts down the game server), or closing any server window.
+# Waiting for them in sequence would hang forever after a `.sd`, because the login server would
 # still be running with nobody left to close it.
-Section '7/8  Running — waiting for shutdown (.sd in game, or close a server window)'
-while (-not $loginProc.HasExited -and -not $gameProc.HasExited) {
+Section '7/8  Running - waiting for shutdown (.sd in game, or close a server window)'
+while (-not ($nodes | Where-Object { $_.Proc.HasExited })) {
   Start-Sleep -Seconds 2
 }
 
-$first = if ($gameProc.HasExited) { 'GameServer' } else { 'LoginServer' }
-Say "  $first stopped - shutting the other one down too." 'Yellow'
+$first = ($nodes | Where-Object { $_.Proc.HasExited } | Select-Object -First 1)
+Say "  $($first.Name) (PID $($first.Proc.Id)) stopped." 'Yellow'
+if ($nodes.Count -gt 1) { Say '  Shutting the other server down too.' 'Yellow' }
 
-foreach ($p in @($gameProc, $loginProc)) {
+foreach ($p in ($nodes | ForEach-Object { $_.Proc })) {
   if ($p.HasExited) { continue }
   # Ask politely first (Mobius closes its window cleanly), then insist.
   try { $null = $p.CloseMainWindow() } catch { }
@@ -229,7 +280,7 @@ foreach ($p in @($gameProc, $loginProc)) {
     try { $null = $p.WaitForExit(10000) } catch { }
   }
 }
-Say '  Both servers have stopped.' 'Green'
+Say '  Server(s) stopped.' 'Green'
 
 # -----------------------------------------------------------------------------
 # 8. dump DB, stop MariaDB, commit + push the snapshot
@@ -245,8 +296,13 @@ try {
   Say "  DB dump failed: $_" 'Red'
 }
 
-# stop MariaDB now that we've dumped
-& (Join-Path $serverDir 'db-stop.ps1')
+# Stop MariaDB now that we've dumped - but only if WE started it. If it was already up, another
+# L3-run instance owns it (and may still have a live server attached), so leave it running.
+if ($dbWasRunning) {
+  Say '  Leaving MariaDB running (it was already up when this instance started).' 'Yellow'
+} else {
+  & (Join-Path $serverDir 'db-stop.ps1')
+}
 
 # ---------------------------------------------------------------------------
 # Collect the server logs so the build box can read what actually happened.
