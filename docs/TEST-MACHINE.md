@@ -40,9 +40,9 @@ When both server windows say they're loaded, **launch your L2 client** and log i
 (see below). Play / test as long as you want.
 
 **When you're done, type `.sd` in game** (in normal "All" chat — you must be a GM).
-That does a *graceful* shutdown, which matters: characters and agents are saved
-**before** the database is dumped. Variants: `.sd now` (immediate), `.sd 60`
-(after 60s), `.sd abort` (cancel).
+It shuts down **immediately**. It's a *graceful* shutdown, which matters: characters
+and agents are saved **before** the database is dumped. Variants: `.sd 60` (after
+60 seconds), `.sd abort` (cancel a countdown).
 
 Closing either server window works too — the script notices and stops the other one.
 

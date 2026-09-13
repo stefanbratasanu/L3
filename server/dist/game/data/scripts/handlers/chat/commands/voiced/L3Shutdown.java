@@ -39,9 +39,8 @@ import org.l2jmobius.gameserver.handler.IVoicedCommandHandler;
  * {@code L3-run.ps1} step 7 watches for either one to exit and then stops the other, so a single
  * {@code .sd} still ends the whole session cleanly.
  * <ul>
- * <li>{@code .sd} — shut down after a short countdown (10s, enough to abort a mistake).</li>
- * <li>{@code .sd 0} / {@code .sd now} — shut down immediately.</li>
- * <li>{@code .sd 60} — shut down after 60 seconds.</li>
+ * <li>{@code .sd} — shut down immediately.</li>
+ * <li>{@code .sd 30} — shut down after 30 seconds (use {@code .sd abort} to cancel).</li>
  * <li>{@code .sd abort} — cancel a countdown already running.</li>
  * </ul>
  * GM only. It is a voiced command (leading dot, typed in normal "All" chat) because voiced
@@ -58,8 +57,11 @@ public class L3Shutdown implements IVoicedCommandHandler
 		"sd"
 	};
 
-	/** Long enough to notice a mistake and type {@code .sd abort}, short enough not to wait around. */
-	private static final int DEFAULT_DELAY_SECONDS = 10;
+	/**
+	 * Instant by default: this is a private dev box, so waiting out a countdown is pure friction.
+	 * Use {@code .sd <seconds>} when you actually want a delay.
+	 */
+	private static final int DEFAULT_DELAY_SECONDS = 0;
 
 	@Override
 	public boolean onCommand(String command, Player player, String target)
@@ -109,7 +111,14 @@ public class L3Shutdown implements IVoicedCommandHandler
 			}
 		}
 
-		player.sendMessage("Server shutting down in " + seconds + "s. The database will be committed and pushed. (.sd abort to cancel)");
+		if (seconds == 0)
+		{
+			player.sendMessage("Shutting down now. The database and logs will be committed and pushed.");
+		}
+		else
+		{
+			player.sendMessage("Server shutting down in " + seconds + "s. DB and logs will be committed and pushed. (.sd abort to cancel)");
+		}
 		LOGGER.warning("L3Shutdown: " + player.getName() + " (" + player.getObjectId() + ") requested shutdown in " + seconds + "s via .sd");
 
 		Shutdown.getInstance().startShutdown(player, seconds, false);

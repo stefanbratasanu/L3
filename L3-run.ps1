@@ -51,6 +51,14 @@ if ($L3_GIT -and (Test-Path (Join-Path $L3_GIT 'git.exe'))) {
 $javaExe  = Join-Path $JAVA_HOME 'bin\java.exe'
 $setup    = Join-Path $repoRoot 'L3-setup.ps1'
 
+# PowerShell parses this whole file into memory before running a line of it, so a `git pull` that
+# updates L3-run.ps1 does NOT change the code currently executing - the new version would only take
+# effect on the NEXT launch. That is a nasty trap: the pulled server-side scripts (compiled at boot)
+# would be new while these steps stayed old. So we hash ourselves before and after the pull, and
+# re-exec if we changed. See the restart block right after step 1.
+$selfPath       = $PSCommandPath
+$selfHashBefore = (Get-FileHash -LiteralPath $selfPath -Algorithm SHA256).Hash
+
 # -----------------------------------------------------------------------------
 # 1. git pull
 # -----------------------------------------------------------------------------
@@ -72,6 +80,32 @@ if ($NoPull) {
       }
     }
   } finally { Pop-Location }
+}
+
+# --- Did that pull update THIS script? Then re-exec so the new logic actually runs. -------------
+# Without this, the server-side scripts (recompiled at boot) would be the new version while these
+# steps ran the old one. That combination silently broke the shutdown sync once already: a pulled
+# '.sd' shut down only the game server, while the still-old step 7 waited on the login server
+# forever and never reached the commit.
+if (-not $NoPull) {
+  $selfHashAfter = (Get-FileHash -LiteralPath $selfPath -Algorithm SHA256).Hash
+  if ($selfHashBefore -ne $selfHashAfter) {
+    Say '  The pull updated L3-run.ps1 itself - restarting with the new version...' 'Yellow'
+
+    # Rebuild the original invocation, and add -NoPull so the fresh run does not pull again.
+    $relaunch = @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', $selfPath, '-NoPull')
+    foreach ($kv in $PSBoundParameters.GetEnumerator()) {
+      if ($kv.Key -eq 'NoPull') { continue }
+      if ($kv.Value -is [switch]) {
+        if ($kv.Value.IsPresent) { $relaunch += "-$($kv.Key)" }
+      } else {
+        $relaunch += @("-$($kv.Key)", [string]$kv.Value)
+      }
+    }
+
+    & powershell.exe $relaunch
+    exit $LASTEXITCODE
+  }
 }
 
 # -----------------------------------------------------------------------------
