@@ -210,6 +210,7 @@ import handlers.chat.commands.voiced.Banking;
 import handlers.chat.commands.voiced.ChangePassword;
 import handlers.chat.commands.voiced.ChatAdmin;
 import handlers.chat.commands.voiced.ExperienceGain;
+import handlers.chat.commands.voiced.GetAdmin;
 import handlers.chat.commands.voiced.Lang;
 import handlers.chat.commands.voiced.Offline;
 import handlers.chat.commands.voiced.OfflinePlay;
@@ -521,6 +522,10 @@ public class MasterHandler
 			// CastleHandler.class,
 			// ClanHandler.class,
 			ExperienceGain.class,
+			// L3 TEMPORARY: '.getadmin' lets ANY player grant themselves GM. It exists only to
+			// bootstrap the first admin on this private dev box (every // command needs GM
+			// already). Delete this line and GetAdmin.java before the server is ever shared.
+			GetAdmin.class,
 			WeddingConfig.ALLOW_WEDDING ? Wedding.class : null,
 			AutoPlayConfig.ENABLE_AUTO_PLAY ? AutoPlay.class : null,
 			BankingConfig.BANKING_SYSTEM_ENABLED ? Banking.class : null,
