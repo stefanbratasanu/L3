@@ -35,6 +35,10 @@ import org.l2jmobius.gameserver.entity.actor.templates.PlayerTemplate;
 import org.l2jmobius.gameserver.handler.IAdminCommandHandler;
 import org.l2jmobius.gameserver.network.GameClient;
 
+import l3.agent.L3Agent;
+import l3.agent.L3AgentManager;
+import l3.ai.L3ThinkTaskManager;
+
 /**
  * L3 v1 spawn primitive test.<br>
  * Proves the clientless-Player mechanism (the same one {@code OfflinePlayTable} uses) works on
@@ -134,7 +138,19 @@ public class AdminL3Spawn implements IAdminCommandHandler
 
 			SPAWNED.add(puppet.getObjectId());
 
-			observer.sendSysMessage("L3: spawned " + name + " (objId " + puppet.getObjectId() + "). Total puppets: " + SPAWNED.size());
+			// Hand the body to the brain: register it and put it in a thinking pool. Without this
+			// the puppet just stands there (which is all v1 did).
+			final L3Agent agent = L3AgentManager.getInstance().register(puppet);
+			if (agent == null)
+			{
+				observer.sendSysMessage("L3: spawned " + name + " but could NOT register it (population ceiling?). It will not act.");
+			}
+			else
+			{
+				L3ThinkTaskManager.getInstance().add(agent);
+			}
+
+			observer.sendSysMessage("L3: spawned " + name + " (objId " + puppet.getObjectId() + "). Agents: " + L3AgentManager.getInstance().size());
 			LOGGER.info("L3Spawn: " + observer.getName() + " spawned clientless puppet " + name + " (" + puppet.getObjectId() + ") at " + x + "," + y + "," + z);
 		}
 		catch (Exception e)
@@ -176,6 +192,14 @@ public class AdminL3Spawn implements IAdminCommandHandler
 		{
 			try
 			{
+				// Take it out of the thinking pools first, so no tick can touch a deleted player.
+				final L3Agent agent = L3AgentManager.getInstance().get(objId);
+				if (agent != null)
+				{
+					L3ThinkTaskManager.getInstance().remove(agent);
+					L3AgentManager.getInstance().unregister(objId);
+				}
+
 				final Player puppet = World.getPlayer(objId);
 				if (puppet != null)
 				{
