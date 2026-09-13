@@ -56,13 +56,17 @@
 </table>
 </center>
 <br>
-<center><font color="LEVEL">Danger zone</font></center>
-<font color="A0A0A0">Clean removes agents spawned this session. Wipe rebuilds the whole database and shuts the server down.</font><br>
+<center><font color="LEVEL">Remove agents</font></center>
+<font color="A0A0A0">Clean removes only what this session spawned. Wipe deletes every agent character. Your own account and characters are never touched.</font><br>
 <center>
 <table width=270>
 <tr>
 	<td align=center><button value="Clean session" action="bypass -h admin_l3clean" width=110 height=21 back="bigbutton_over" fore="bigbutton"></td>
-	<td align=center><button value="Wipe DB + stop" action="bypass -h admin_sdwipedb" width=110 height=21 back="bigbutton_over" fore="bigbutton"></td>
+	<td align=center><button value="Wipe all agents" action="bypass -h admin_l3wipe" width=110 height=21 back="bigbutton_over" fore="bigbutton"></td>
+</tr>
+<tr>
+	<td align=center><button value="Wipe + shut down" action="bypass -h admin_sdwipedb" width=110 height=21 back="bigbutton_over" fore="bigbutton"></td>
+	<td align=center></td>
 </tr>
 </table>
 </center>

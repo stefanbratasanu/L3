@@ -92,9 +92,10 @@ public class L3ThinkTaskManager
 			}
 		}, L3Config.LOD_REFRESH_MS, L3Config.LOD_REFRESH_MS);
 
-		// Permanent population: restore known agents, then top up toward the target. Incremental by
-		// design - a thousand characters created in one pass would stall the server.
-		if (L3Config.POPULATION_CAP > 0)
+		// Restoring the existing population at boot is OPT-IN and off by default. With it on, a boot
+		// after a large populate spends minutes dragging characters back in, and it kept hammering
+		// the database during shutdown ("Failed loading character"). Populate on demand instead.
+		if (L3Config.RESTORE_ON_BOOT)
 		{
 			L3AgentManager.getInstance().scanForRestore();
 			ThreadPool.scheduleAtFixedRate(() ->

@@ -323,7 +323,8 @@
 	<admin command="npcspawn" description="Open the L3 agent control panel." accessLevel="100" />
 	<admin command="l3info" description="Show L3 population and level-of-detail counts." accessLevel="100" />
 	<admin command="l3clean" description="Delete L3 agents spawned during this session." accessLevel="100" />
-	<admin command="sdwipedb" description="Shut down and rebuild the database from scratch." accessLevel="100" confirmDlg="true" />
+	<admin command="l3wipe" description="Delete all L3 agent characters (human accounts untouched)." accessLevel="100" confirmDlg="true" />
+	<admin command="sdwipedb" description="Delete all L3 agent characters, then shut down." accessLevel="100" confirmDlg="true" />
 
 	<!-- ADMIN LEVEL -->
 	<admin command="add_level" description="Add specified number of levels to the target player." accessLevel="100" />

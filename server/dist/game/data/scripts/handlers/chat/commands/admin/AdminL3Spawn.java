@@ -20,8 +20,6 @@
  */
 package handlers.chat.commands.admin;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -76,6 +74,7 @@ public class AdminL3Spawn implements IAdminCommandHandler
 		"admin_npcspawn",
 		"admin_l3info",
 		"admin_l3clean",
+		"admin_l3wipe",
 		"admin_sdwipedb",
 		"admin_gotonext"
 	};
@@ -132,6 +131,10 @@ public class AdminL3Spawn implements IAdminCommandHandler
 			case "admin_sdwipedb":
 			{
 				return shutdownAndWipe(activeChar);
+			}
+			case "admin_l3wipe":
+			{
+				return wipeAgents(activeChar);
 			}
 			case "admin_l3spawnturbo":
 			{
@@ -324,41 +327,27 @@ public class AdminL3Spawn implements IAdminCommandHandler
 	// --- shutdown + wipe ------------------------------------------------------------------------
 
 	/**
-	 * Requests a database wipe and shuts the server down.
+	 * Deletes every agent character, leaving human accounts alone.
 	 * <p>
-	 * The wipe itself is deliberately <b>not</b> done from inside the game server: it holds open
-	 * connections to the very database being dropped, and would be tearing down around itself. So
-	 * this drops a marker file and shuts down cleanly; {@code L3-run.ps1} sees the marker after the
-	 * process exits and rebuilds the schema between runs, which is the only safe moment.
+	 * This replaces an earlier version that rebuilt the entire database schema. That was the wrong
+	 * scope: it also destroyed the human account and its GM access level, which is not what "wipe the
+	 * NPC characters" means. Removing our own rows needs no database teardown at all, so it now runs
+	 * safely in-game with the server up.
 	 */
+	private boolean wipeAgents(Player observer)
+	{
+		final int deleted = L3AgentManager.getInstance().purgeAgentCharacters();
+		SPAWNED.clear();
+		observer.sendSysMessage("L3: deleted " + deleted + " agent character(s). Your account and characters are untouched.");
+		return true;
+	}
+
+	/** Wipe the agents, then shut down so the database sync commits the cleaned state. */
 	private boolean shutdownAndWipe(Player observer)
 	{
-		// Working directory is server/dist/game, so this lands in server/dist/db_snapshot/.
-		final File marker = new File("../db_snapshot/.wipe-requested");
-		try
-		{
-			final File parent = marker.getParentFile();
-			if ((parent != null) && !parent.exists() && !parent.mkdirs())
-			{
-				observer.sendSysMessage("L3: could not create " + parent.getPath() + " - wipe NOT scheduled.");
-				return false;
-			}
-
-			try (FileWriter writer = new FileWriter(marker, false))
-			{
-				writer.write("requested by " + observer.getName() + " at " + System.currentTimeMillis() + System.lineSeparator());
-			}
-		}
-		catch (Exception e)
-		{
-			LOGGER.log(Level.WARNING, "L3: could not write the wipe marker.", e);
-			observer.sendSysMessage("L3: could not schedule the wipe (" + e.getMessage() + "). Nothing was shut down.");
-			return false;
-		}
-
-		observer.sendSysMessage("L3: database wipe scheduled. Shutting down now; the DB is rebuilt before the next start.");
-		LOGGER.warning("L3: DATABASE WIPE requested by " + observer.getName() + " (" + observer.getObjectId() + "); marker written to " + marker.getAbsolutePath());
-
+		wipeAgents(observer);
+		observer.sendSysMessage("L3: shutting down now.");
+		LOGGER.warning("L3: agent wipe + shutdown requested by " + observer.getName() + " (" + observer.getObjectId() + ").");
 		Shutdown.getInstance().startShutdown(observer, 0, false);
 		return true;
 	}

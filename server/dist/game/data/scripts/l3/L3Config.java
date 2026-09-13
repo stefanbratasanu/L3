@@ -104,13 +104,23 @@ public class L3Config
 	public static final String AGENT_ACCOUNT = "l3agents";
 
 	/**
-	 * Replacement cap: the most agents that may exist. Nothing is created automatically - use
-	 * {@code //populate X} to add agents. Existing agents ARE restored on boot, so the population
-	 * you build persists; it simply never grows on its own.
+	 * The most agents that may exist. Small on purpose: the work has moved from "can we run
+	 * thousands" (answered - we can) to "are they convincingly smart", and a small population is far
+	 * easier to watch, reason about and debug. The scaling machinery (level of detail, target
+	 * rationing, staggered pools) all stays in place, so raising this again costs nothing.
 	 */
-	public static final int POPULATION_CAP = 1000;
+	public static final int POPULATION_CAP = 20;
 
-	/** How often existing agents are restored into the world after a restart. */
+	/**
+	 * Whether agents already in the database are put back into the world at startup.
+	 * <p>
+	 * Off deliberately. When this was on, a boot after a large populate spent minutes dragging a
+	 * thousand characters back in ("pending restore 985"), which is both slow and impossible to
+	 * reason about while developing behaviour. Populate what you want, when you want it.
+	 */
+	public static final boolean RESTORE_ON_BOOT = false;
+
+	/** How often existing agents are restored into the world, when {@link #RESTORE_ON_BOOT} is on. */
 	public static final int POPULATION_MAINTAIN_MS = 4000;
 
 	/**
@@ -156,8 +166,9 @@ public class L3Config
 	public static final int TURBO_PHYSICAL_ATTACK = 10000;
 
 	// --- Safety ---------------------------------------------------------------------------------
-	/** Hard ceiling on live agents, so a bad config or a loop cannot spawn the box to death. */
-	public static final int MAX_AGENTS = 5000;
+	/** Absolute ceiling, independent of {@link #POPULATION_CAP}, so a bug cannot spawn the box to
+	 * death. Kept a little above the cap rather than equal to it, so the cap is what you tune. */
+	public static final int MAX_AGENTS = 64;
 
 	/** Log a one-line summary of the whole population this often. Set to 0 to disable. */
 	public static final int STATS_INTERVAL_MS = 60000;

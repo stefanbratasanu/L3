@@ -46,6 +46,19 @@ $snapshot   = Join-Path $serverDir 'dist\db_snapshot\l2jmobiusinterlude.sql'
 function Say([string]$m, [string]$c = 'Gray') { Write-Host $m -ForegroundColor $c }
 function Section([string]$m) { Write-Host "`n=== $m ===" -ForegroundColor Cyan }
 
+# Record this console to test-logs/, which travels back to the build box with the server logs.
+# Without it, everything PowerShell does here (DB restore, dump, commit, push, any failure) is
+# invisible to anyone not sitting at this machine - which made one confusing session much harder to
+# diagnose than it needed to be. Best-effort only: never fail a run over logging.
+$runnerLog = Join-Path $repoRoot 'test-logs\runner.log'
+function Stop-RunnerLog { try { Stop-Transcript | Out-Null } catch { } }
+try {
+  New-Item -ItemType Directory -Force -Path (Split-Path $runnerLog -Parent) | Out-Null
+  Start-Transcript -Path $runnerLog -Force | Out-Null
+} catch {
+  Write-Host "(could not start the runner transcript: $_)" -ForegroundColor DarkYellow
+}
+
 # --- Load the portable toolchain env (JAVA_HOME, MariaDB, git on PATH) ----------
 if (-not (Test-Path $envScript)) { throw "env.ps1 not found at $envScript (are you in the L3 repo root?)" }
 . $envScript
@@ -114,6 +127,8 @@ if (-not $NoPull) {
       }
     }
 
+    # Hand the transcript over to the child, or both would fight over the same file.
+    Stop-RunnerLog
     & powershell.exe $relaunch
     exit $LASTEXITCODE
   }
@@ -287,39 +302,23 @@ Say '  Server(s) stopped.' 'Green'
 # -----------------------------------------------------------------------------
 Section '8/8  Syncing database + logs back to git'
 
-# Did the game ask for a database wipe (//sdwipedb)? The server cannot drop the database it is
-# connected to, so it leaves a marker and we do the work here - the only safe moment, with the
-# servers stopped and MariaDB still up.
-$wipeMarker = Join-Path $serverDir 'dist\db_snapshot\.wipe-requested'
-$wipeRequested = Test-Path $wipeMarker
+# A stale marker from the old, over-broad wipe implementation. That version rebuilt the entire
+# schema - destroying the human account and its GM access along with the agents - so it is gone.
+# Agent wipes now happen in-game (//l3wipe, //sdwipedb) and touch only agent characters.
+$staleWipeMarker = Join-Path $serverDir 'dist\db_snapshot\.wipe-requested'
+if (Test-Path $staleWipeMarker) {
+  Say '  Ignoring a leftover .wipe-requested marker (full-DB wipe was removed; agents are wiped in-game).' 'DarkYellow'
+  [System.IO.File]::Delete($staleWipeMarker)
+}
 
-if ($wipeRequested) {
-  Say '  WIPE REQUESTED (//sdwipedb): rebuilding the database from the stock schema.' 'Yellow'
-  try {
-    # Drop and reload stock Mobius tables. No dump of the old data first - the point is to discard it.
-    & (Join-Path $serverDir 'db-load-schema.ps1') -Database $Database -Fresh
-    Say '  Database rebuilt.' 'Green'
-    # Dump the fresh database so the committed snapshot matches reality instead of the wiped data.
-    & (Join-Path $serverDir 'db-dump.ps1') -Database $Database
-    if (Test-Path $snapshot) {
-      Set-Content -Path $stamp -Value (Get-FileHash $snapshot -Algorithm SHA256).Hash -Encoding ascii
-    }
-  } catch {
-    Say "  WIPE FAILED: $_" 'Red'
-    Say '  Leaving the database as it is; investigate before the next run.' 'Red'
+try {
+  & (Join-Path $serverDir 'db-dump.ps1') -Database $Database
+  # record the hash we just dumped so the next start doesn't needlessly re-restore
+  if (Test-Path $snapshot) {
+    Set-Content -Path $stamp -Value (Get-FileHash $snapshot -Algorithm SHA256).Hash -Encoding ascii
   }
-
-  [System.IO.File]::Delete($wipeMarker)
-} else {
-  try {
-    & (Join-Path $serverDir 'db-dump.ps1') -Database $Database
-    # record the hash we just dumped so the next start doesn't needlessly re-restore
-    if (Test-Path $snapshot) {
-      Set-Content -Path $stamp -Value (Get-FileHash $snapshot -Algorithm SHA256).Hash -Encoding ascii
-    }
-  } catch {
-    Say "  DB dump failed: $_" 'Red'
-  }
+} catch {
+  Say "  DB dump failed: $_" 'Red'
 }
 
 # Stop MariaDB now that we've dumped - but only if WE started it. If it was already up, another
@@ -354,6 +353,10 @@ foreach ($node in @(@{ src = 'dist\game\log'; dst = 'game' }, @{ src = 'dist\log
 }
 Say "  logs collected into test-logs\ ." 'Green'
 
+# Close the transcript now, before the commit, so the runner log is complete in what gets committed
+# rather than captured mid-write.
+Stop-RunnerLog
+
 if ($NoCommit) {
   Say '  -NoCommit set; leaving the snapshot uncommitted.' 'DarkYellow'
 } else {
@@ -384,3 +387,4 @@ if ($NoCommit) {
 
 Section 'Done'
 Say 'You can close this window.' 'Cyan'
+Stop-RunnerLog

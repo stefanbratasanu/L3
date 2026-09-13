@@ -42,6 +42,7 @@ import org.l2jmobius.gameserver.entity.actor.appearance.PlayerAppearance;
 import org.l2jmobius.gameserver.entity.actor.templates.PlayerTemplate;
 import org.l2jmobius.gameserver.mechanics.stats.Stat;
 import org.l2jmobius.gameserver.mechanics.stats.functions.FuncAdd;
+import org.l2jmobius.gameserver.network.GameClient;
 
 import l3.L3Config;
 import l3.L3Locations;
@@ -78,6 +79,9 @@ public class L3AgentManager
 	private static final Logger LOGGER = Logger.getLogger(L3AgentManager.class.getName());
 
 	private static final String SELECT_AGENT_IDS = "SELECT charId FROM characters WHERE account_name=?";
+
+	/** Matches the agent account and its variants (e.g. the turbo account), for a full purge. */
+	private static final String SELECT_AGENT_IDS_LIKE = "SELECT charId FROM characters WHERE account_name LIKE ?";
 
 	/** Marker used as the owner of turbo stat functions. */
 	private static final String TURBO_OWNER = "l3-turbo";
@@ -383,6 +387,83 @@ public class L3AgentManager
 		}
 
 		return made;
+	}
+
+	// --- Purge ----------------------------------------------------------------------------------
+
+	/**
+	 * Deletes every agent character - and <b>only</b> agent characters - from the world and the
+	 * database.
+	 * <p>
+	 * Scope matters here. An earlier version of the wipe rebuilt the whole schema, which also
+	 * destroyed the human account and its GM access level: far more than anyone asked for. This
+	 * instead selects the characters on the agent accounts and removes each one through
+	 * {@code GameClient.deleteCharByObjId}, the same call the game uses when a player deletes a
+	 * character, so dependent rows (items, skills, variables) go with it. Nothing else is touched.
+	 * @return how many characters were deleted
+	 */
+	public int purgeAgentCharacters()
+	{
+		// Live agents first: out of the thinking pools and out of the world.
+		for (L3Agent agent : new ArrayList<>(AGENTS.values()))
+		{
+			try
+			{
+				unregister(agent.getObjectId());
+				final Player player = agent.getPlayer();
+				if ((player != null) && (World.getPlayer(agent.getObjectId()) != null))
+				{
+					player.deleteMe();
+				}
+			}
+			catch (Exception e)
+			{
+				LOGGER.log(Level.WARNING, "L3: could not remove agent " + agent.getObjectId() + " from the world.", e);
+			}
+		}
+
+		PENDING_RESTORE.clear();
+
+		// Then every agent character in the database, whether it was loaded or not.
+		final List<Integer> ids = new ArrayList<>();
+		try (Connection con = DatabaseFactory.getConnection();
+			PreparedStatement ps = con.prepareStatement(SELECT_AGENT_IDS_LIKE))
+		{
+			ps.setString(1, L3Config.AGENT_ACCOUNT + "%");
+
+			try (ResultSet rs = ps.executeQuery())
+			{
+				while (rs.next())
+				{
+					ids.add(rs.getInt("charId"));
+				}
+			}
+		}
+		catch (Exception e)
+		{
+			LOGGER.log(Level.WARNING, "L3: could not list agent characters to purge.", e);
+			return 0;
+		}
+
+		int deleted = 0;
+		for (int charId : ids)
+		{
+			try
+			{
+				GameClient.deleteCharByObjId(charId);
+				deleted++;
+			}
+			catch (Exception e)
+			{
+				LOGGER.log(Level.WARNING, "L3: could not delete agent charId " + charId, e);
+			}
+		}
+
+		// Allow a later restore scan to run again against the now-empty set.
+		_restoreScanned = false;
+
+		LOGGER.warning("L3: purged " + deleted + " agent characters (of " + ids.size() + " found). Human accounts untouched.");
+		return deleted;
 	}
 
 	// --- Level of detail ------------------------------------------------------------------------
