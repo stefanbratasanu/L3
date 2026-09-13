@@ -50,17 +50,34 @@ The script then automatically:
 
 ---
 
-## Pointing the client at this machine
+## Pointing the client at the server
 
-- The server is this machine. On the client, set the login server IP to this
-  machine's LAN address (the build box currently sees it as **`192.168.1.141`** —
-  confirm with `ipconfig` if your wifi assigned a different one).
-- Edit the client's `system\l2.ini` (or the launcher's server list) so the login
-  server host is that IP, port **2106**.
-- **GameGuard is disabled server-side**, so you should not need the GameGuard
-  process. If your client force-launches GG, use a no-GG / offline launcher.
-- A test account is created automatically (login-server auto-create is on for dev).
-  Just type a new username/password at the login screen; it registers on first use.
+The server and the client run on **this same machine**, so the client connects to
+**`127.0.0.1` (localhost)** — no LAN IP, no firewall to open.
+
+- Edit the client's `system\l2.ini` so the login server host is **`127.0.0.1`**,
+  port **2106**. Typical Interlude `l2.ini`:
+  ```
+  [Server]
+  ServerAddr=127.0.0.1
+  ServerPort=2106
+  ```
+  (Some clients keep the server list in the launcher instead — set it there.)
+- The server is already configured to advertise `127.0.0.1` to a local client
+  (`server/dist/game/config/ipconfig.xml`), so after login you'll be sent to the
+  game world on `127.0.0.1:7777` — this is the step that usually breaks on other
+  setups, and it's pre-solved here.
+- **GameGuard**: this Interlude build has no server-side GameGuard enforcement.
+  If your *client* force-launches GameGuard on its own, use a no-GG / offline
+  launcher (or an `l2.ini` that skips it).
+- A test account is created automatically (`AutoCreateAccounts = True`). Just type
+  a new username/password at the login screen; it registers on first use.
+
+> **Running the client from a *different* machine instead?** Then edit
+> `server/dist/game/config/ipconfig.xml`: add `<define subnet="192.168.1.0/24"
+> address="<this box's LAN IP>" />` and set the root/catch-all address to that LAN
+> IP — and you'll also have to open ports 2106+7777 through this machine's firewall
+> (which is why same-machine is the default).
 
 ---
 

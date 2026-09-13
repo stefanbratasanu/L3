@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ipconfig.xml — game-server IP advertised to clients, per client subnet.
+
+  Mobius hands the client THIS address (not GameserverHostname) to connect to the
+  game world after login. Getting it wrong = you authenticate, then get kicked at
+  character-select because the client tries an IP it can't reach.
+
+  L3 default: server and client run on the SAME machine (the test box), so the
+  client always connects from loopback. We pin loopback -> 127.0.0.1 and make the
+  catch-all loopback too, so a same-box client is always told 127.0.0.1.
+
+  If you ever run the client from ANOTHER machine on the LAN, add a define for that
+  LAN subnet, e.g.:
+      <define subnet="192.168.1.0/24" address="192.168.1.141" />
+  (address = the LAN IP of the machine running the game server), and set the root
+  address / catch-all to that LAN IP. First match wins by subnet.
+-->
+<gameserver address="127.0.0.1">
+	<define subnet="127.0.0.0/8" address="127.0.0.1" />
+	<define subnet="0.0.0.0/0" address="127.0.0.1" />
+</gameserver>
