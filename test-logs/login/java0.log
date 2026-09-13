@@ -18,3 +18,9 @@
 2026.09.13 22:37:18,709	INFO	63	org.l2jmobius.loginserver.GameServerThread	127.0.0.1/0.0.0.0/0
 2026.09.13 22:39:22,218	INFO	63	org.l2jmobius.loginserver.GameServerThread	GameServer [1] Bartz: Connection lost - Connection reset
 2026.09.13 22:39:22,218	INFO	63	org.l2jmobius.loginserver.GameServerThread	Server [1] Bartz is now marked as disconnected.
+2026.09.13 22:53:14,668	INFO	76	org.l2jmobius.loginserver.GameServerThread	Updated Gameserver [1] Bartz IP's:
+2026.09.13 22:53:14,669	INFO	76	org.l2jmobius.loginserver.GameServerThread	127.0.0.1/127.0.0.0/8
+2026.09.13 22:53:14,669	INFO	76	org.l2jmobius.loginserver.GameServerThread	127.0.0.1/0.0.0.0/0
+2026.09.13 22:53:14,669	INFO	76	org.l2jmobius.loginserver.GameServerThread	127.0.0.1/0.0.0.0/0
+2026.09.13 22:53:34,210	INFO	76	org.l2jmobius.loginserver.GameServerThread	GameServer [1] Bartz: Connection lost - Connection reset
+2026.09.13 22:53:34,210	INFO	76	org.l2jmobius.loginserver.GameServerThread	Server [1] Bartz is now marked as disconnected.
