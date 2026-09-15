@@ -56,6 +56,28 @@ public class L3Config
 	 * this is the *fastest* anything thinks, not how often every agent thinks. */
 	public static final int TICK_MS = 700;
 
+	/** Runtime multiplier for L3 agent thinking; one is normal speed and zero pauses decisions. */
+	private static volatile double _gameSpeed = 1.0;
+
+	public static double getGameSpeed()
+	{
+		return _gameSpeed;
+	}
+
+	public static void setGameSpeed(double speed)
+	{
+		_gameSpeed = speed;
+	}
+
+	public static int scaleThinkInterval(int intervalMs)
+	{
+		if (_gameSpeed <= 0)
+		{
+			return Integer.MAX_VALUE;
+		}
+		return Math.max(50, (int) Math.round(intervalMs / _gameSpeed));
+	}
+
 	// --- Level of detail ------------------------------------------------------------------------
 	/** Within this distance of a real player an agent is fully simulated - it must look right,
 	 * because someone is watching. */

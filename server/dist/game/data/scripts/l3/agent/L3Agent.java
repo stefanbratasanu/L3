@@ -186,7 +186,12 @@ public class L3Agent
 
 	public void scheduleNextThink(long now)
 	{
-		_nextThinkAt = now + getThinkIntervalMs();
+		_nextThinkAt = now + L3Config.scaleThinkInterval(getThinkIntervalMs());
+	}
+
+	public void wakeNow()
+	{
+		_nextThinkAt = 0;
 	}
 
 	// --- Target acquisition rationing -----------------------------------------------------------

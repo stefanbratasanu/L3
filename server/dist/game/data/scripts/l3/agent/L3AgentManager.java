@@ -158,6 +158,14 @@ public class L3AgentManager
 		return AGENTS.size();
 	}
 
+	public void wakeAgents()
+	{
+		for (L3Agent agent : AGENTS.values())
+		{
+			agent.wakeNow();
+		}
+	}
+
 	public int pendingRestoreCount()
 	{
 		return PENDING_RESTORE.size();
