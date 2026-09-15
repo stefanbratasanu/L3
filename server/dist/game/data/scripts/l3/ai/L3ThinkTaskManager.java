@@ -26,6 +26,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.l2jmobius.commons.threads.ThreadPool;
+import org.l2jmobius.commons.time.GameTime;
 
 import l3.L3Config;
 import l3.agent.L3Agent;
@@ -167,7 +168,7 @@ public class L3ThinkTaskManager
 	/** One tick of one pool. */
 	private void runPool(List<L3Agent> pool)
 	{
-		final long now = System.currentTimeMillis();
+		final long now = GameTime.currentTimeMillis();
 
 		// Snapshot under the pool lock, then think outside it: thinking can take a while and must
 		// not block spawns joining the pool.

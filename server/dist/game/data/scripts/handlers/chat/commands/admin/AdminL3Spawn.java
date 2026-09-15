@@ -29,6 +29,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.l2jmobius.commons.util.Rnd;
+import org.l2jmobius.commons.time.GameTime;
 import org.l2jmobius.gameserver.Shutdown;
 import org.l2jmobius.gameserver.entity.Location;
 import org.l2jmobius.gameserver.entity.World;
@@ -81,7 +82,8 @@ public class AdminL3Spawn implements IAdminCommandHandler
 		"admin_l3debug",
 		"admin_l3agent",
 		"admin_l3spawnprius",
-		"admin_safepoint"
+		"admin_safepoint",
+		"admin_gamespeed"
 	};
 
 	/** Distance in front of the observer to place a single agent. */
@@ -135,6 +137,10 @@ public class AdminL3Spawn implements IAdminCommandHandler
 				L3Debug.marker(activeChar.getName(), arg);
 				activeChar.sendSysMessage("L3: safe point recorded: " + arg);
 				return true;
+			}
+			case "admin_gamespeed":
+			{
+				return setGameSpeed(activeChar, arg);
 			}
 			case "admin_gotonext":
 			{
@@ -232,6 +238,35 @@ public class AdminL3Spawn implements IAdminCommandHandler
 			LOGGER.info("L3Spawn: " + observer.getName() + " spawned deterministic test agent Prius.");
 			return true;
 		}
+
+	private boolean setGameSpeed(Player observer, String arg)
+	{
+		if (arg.isEmpty())
+		{
+			observer.sendSysMessage("Game speed: " + GameTime.getSpeed() + "x (0 pauses game-time progression).");
+			return true;
+		}
+
+		try
+		{
+			final double speed = Double.parseDouble(arg);
+			if ((speed < 0) || (speed > 20))
+			{
+				observer.sendSysMessage("Usage: //gamespeed <0-20> (0 pauses game-time progression).");
+				return false;
+			}
+
+			GameTime.setSpeed(speed);
+			L3Debug.marker(observer.getName(), "gamespeed=" + speed);
+			observer.sendSysMessage("Game speed set to " + speed + "x.");
+			return true;
+		}
+		catch (NumberFormatException e)
+		{
+			observer.sendSysMessage("Usage: //gamespeed <0-20> (0 pauses game-time progression).");
+			return false;
+		}
+	}
 
 	private static int parseCount(String arg, int fallback)
 	{

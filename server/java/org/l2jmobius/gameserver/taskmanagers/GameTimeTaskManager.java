@@ -23,6 +23,7 @@ package org.l2jmobius.gameserver.taskmanagers;
 import java.util.Calendar;
 
 import org.l2jmobius.commons.threads.ThreadPool;
+import org.l2jmobius.commons.time.GameTime;
 import org.l2jmobius.gameserver.entity.World;
 import org.l2jmobius.gameserver.entity.actor.Player;
 import org.l2jmobius.gameserver.entity.actor.enums.creature.Race;
@@ -76,7 +77,7 @@ public class GameTimeTaskManager extends Thread
 	{
 		while (true)
 		{
-			_gameTicks = (int) ((System.currentTimeMillis() - _referenceTime) / MILLIS_IN_TICK);
+			_gameTicks = (int) ((GameTime.currentTimeMillis() - _referenceTime) / MILLIS_IN_TICK);
 			_gameTime = (_gameTicks % TICKS_PER_IG_DAY) / MILLIS_IN_TICK;
 			_gameHour = _gameTime / 60;
 			

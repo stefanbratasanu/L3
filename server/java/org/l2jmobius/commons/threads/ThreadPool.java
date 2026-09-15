@@ -30,6 +30,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 import org.l2jmobius.commons.config.ThreadConfig;
+import org.l2jmobius.commons.time.GameTime;
 import org.l2jmobius.commons.util.StringUtil;
 import org.l2jmobius.commons.util.TraceUtil;
 
@@ -118,7 +119,7 @@ public class ThreadPool
 	{
 		try
 		{
-			return SCHEDULED_POOL.schedule(new RunnableWrapper(runnable), validateDelay(delay), TimeUnit.MILLISECONDS);
+			return SCHEDULED_POOL.schedule(new RunnableWrapper(runnable), validateDelay(GameTime.scaleDelay(delay)), TimeUnit.MILLISECONDS);
 		}
 		catch (Exception e)
 		{
@@ -138,7 +139,7 @@ public class ThreadPool
 	{
 		try
 		{
-			return SCHEDULED_POOL.scheduleAtFixedRate(new RunnableWrapper(runnable), validateDelay(initialDelay), validateDelay(period), TimeUnit.MILLISECONDS);
+			return SCHEDULED_POOL.scheduleAtFixedRate(new RunnableWrapper(runnable), validateDelay(GameTime.scaleDelay(initialDelay)), validateDelay(GameTime.scaleDelay(period)), TimeUnit.MILLISECONDS);
 		}
 		catch (Exception e)
 		{
@@ -164,7 +165,7 @@ public class ThreadPool
 		
 		try
 		{
-			return HIGH_PRIORITY_SCHEDULED_POOL.scheduleAtFixedRate(new RunnableWrapper(runnable), validateDelay(initialDelay), validateDelay(period), TimeUnit.MILLISECONDS);
+			return HIGH_PRIORITY_SCHEDULED_POOL.scheduleAtFixedRate(new RunnableWrapper(runnable), validateDelay(GameTime.scaleDelay(initialDelay)), validateDelay(GameTime.scaleDelay(period)), TimeUnit.MILLISECONDS);
 		}
 		catch (Exception e)
 		{

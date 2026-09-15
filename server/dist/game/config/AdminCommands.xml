@@ -27,6 +27,7 @@
 	<admin command="l3agent" description="Inspect an L3 agent state." accessLevel="100" />
 	<admin command="l3spawnprius" description="Spawn the deterministic Human Mage test agent Prius." accessLevel="100" />
 	<admin command="safepoint" description="Record a named L3 debugging safe point." accessLevel="100" />
+	<admin command="gamespeed" description="Set the engine-wide game-time speed multiplier." accessLevel="100" />
 
 	<!-- ADMIN ANNOUNCEMENTS -->
 	<admin command="announce" description="Send a announcment to all players." accessLevel="30" />
