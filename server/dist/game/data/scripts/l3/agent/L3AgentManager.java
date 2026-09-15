@@ -48,6 +48,7 @@ import l3.L3Config;
 import l3.L3Locations;
 import l3.L3Names;
 import l3.agent.L3Agent.Lod;
+import l3.agent.L3AgentGoal;
 import l3.ai.L3ThinkTaskManager;
 
 /**
@@ -133,6 +134,11 @@ public class L3AgentManager
 
 		L3ThinkTaskManager.getInstance().add(agent);
 		return agent;
+	}
+
+	public boolean isGeneralHunting(L3Agent agent)
+	{
+		return agent != null && (agent.getGoal() == L3AgentGoal.REACH_LEVEL_20);
 	}
 
 	public void unregister(int objectId)

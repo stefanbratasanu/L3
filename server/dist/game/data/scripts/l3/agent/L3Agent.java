@@ -97,6 +97,10 @@ public class L3Agent
 	private long _nextPotionAt;
 	private long _nextPickupAt;
 	private long _nextSkillAt;
+	private int _huntingAnchorX;
+	private int _huntingAnchorY;
+	private int _huntingAnchorZ;
+	private boolean _hasHuntingAnchor;
 
 	public L3Agent(Player player)
 	{
@@ -255,6 +259,34 @@ public class L3Agent
 	public void resetStuckTicks()
 	{
 		_stuckTicks = 0;
+	}
+
+	public void rememberHuntingAnchor(int x, int y, int z)
+	{
+		_huntingAnchorX = x;
+		_huntingAnchorY = y;
+		_huntingAnchorZ = z;
+		_hasHuntingAnchor = true;
+	}
+
+	public boolean hasHuntingAnchor()
+	{
+		return _hasHuntingAnchor;
+	}
+
+	public int getHuntingAnchorX()
+	{
+		return _huntingAnchorX;
+	}
+
+	public int getHuntingAnchorY()
+	{
+		return _huntingAnchorY;
+	}
+
+	public int getHuntingAnchorZ()
+	{
+		return _huntingAnchorZ;
 	}
 
 	public boolean toggleChatDebug()

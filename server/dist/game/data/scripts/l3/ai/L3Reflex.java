@@ -147,10 +147,12 @@ public class L3Reflex
 			if (target == null)
 			{
 				agent.onAcquireFailed(now);
+				returnToHuntingAnchor(agent);
 				return;
 			}
 
 			agent.onAcquireSucceeded(now, target.getObjectId());
+			agent.rememberHuntingAnchor(target.getX(), target.getY(), target.getZ());
 			agent.setState(L3AgentState.HUNTING);
 			L3Debug.event(agent, "TARGET", "monster=" + target.getObjectId());
 			player.setTarget(target);
@@ -213,6 +215,7 @@ public class L3Reflex
 					agent.shoutDebug("casting " + skill.getName());
 					return true;
 				}
+
 			}
 			return false;
 		}
@@ -299,6 +302,7 @@ public class L3Reflex
 			{
 				if (item.getOwnerId() != 0 && (item.getOwnerId() != player.getObjectId()))
 				{
+					item.getDropProtection().unprotect();
 					item.setOwnerId(0);
 				}
 				player.doPickupItem(item);
@@ -309,7 +313,24 @@ public class L3Reflex
 			return true;
 		}
 
-		/**
+		private static void returnToHuntingAnchor(L3Agent agent)
+		{
+			final Player player = agent.getPlayer();
+			if (!L3AgentManager.getInstance().isGeneralHunting(agent) || !agent.hasHuntingAnchor() || player.isMoving() || !player.hasAI())
+			{
+				return;
+			}
+
+			final double distance = Math.sqrt(Math.pow(player.getX() - agent.getHuntingAnchorX(), 2) + Math.pow(player.getY() - agent.getHuntingAnchorY(), 2));
+			if (distance > 150)
+			{
+				agent.setState(L3AgentState.TRAVELING);
+				player.getAI().setIntentionMoveTo(new org.l2jmobius.gameserver.entity.Location(agent.getHuntingAnchorX(), agent.getHuntingAnchorY(), agent.getHuntingAnchorZ()));
+				L3Debug.event(agent, "NAVIGATION", "RETURN_TO_HUNTING_ANCHOR");
+			}
+		}
+
+			/**
 	 * A COLD tick: nobody is anywhere near this agent, so it must not touch the world.
 	 * <p>
 	 * For now this only keeps the agent tidy (it should not be stuck in a combat intention while
