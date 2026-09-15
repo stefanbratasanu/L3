@@ -1,4 +1,4 @@
-Sep 15, 2026 9:00:53 PM org.l2jmobius.gameserver.GameServer <init>
+Sep 15, 2026 9:04:11 PM org.l2jmobius.gameserver.GameServer <init>
 WARNING: Failed to execute script list!
 java.lang.RuntimeException: 
 ----------------
@@ -8,19 +8,10 @@ File diagnostics
 -----------------------
 Compilation diagnostics
 -----------------------
-	ERROR: data\scripts\l3\ai\L3Reflex.java, Line 189, Column 25
-		code: compiler.err.illegal.start.of.expr
-		message: illegal start of expression
-	ERROR: data\scripts\l3\ai\L3Reflex.java, Line 266, Column 25
-		code: compiler.err.statement.not.expected
-		message: statements not expected outside of methods and initializers
-	ERROR: data\scripts\l3\ai\L3Reflex.java, Line 271, Column 9
-		code: compiler.err.expected4
-		message: class, interface, enum, or record expected
-	ERROR: data\scripts\l3\ai\L3Reflex.java, Line 366, Column 17
+	ERROR: data\scripts\l3\ai\L3Reflex.java, Line 367, Column 17
 		code: compiler.err.invalid.meth.decl.ret.type.req
 		message: invalid method declaration; return type required
-	ERROR: data\scripts\l3\ai\L3Reflex.java, Line 369, Column 1
+	ERROR: data\scripts\l3\ai\L3Reflex.java, Line 370, Column 1
 		code: compiler.err.expected4
 		message: class, interface, enum, or record expected
 	ERROR: data\scripts\l3\ai\L3Reflex.java, Line 21, Column 1
@@ -32,21 +23,6 @@ Compilation diagnostics
   bad source file: data\scripts\l3\ai\L3Reflex.java
     file does not contain class l3.ai.L3Reflex
     Please remove or make sure it appears in the correct subdirectory of the sourcepath.
-	ERROR: data\scripts\l3\ai\L3Reflex.java, Line 266, Column 29
-		code: compiler.err.cant.resolve.location
-		message: cannot find symbol
-  symbol:   variable agent
-  location: class L3Reflex.L3Reflex
-	ERROR: data\scripts\l3\ai\L3Reflex.java, Line 268, Column 44
-		code: compiler.err.cant.resolve.location
-		message: cannot find symbol
-  symbol:   variable agent
-  location: class L3Reflex.L3Reflex
-	ERROR: data\scripts\l3\ai\L3Reflex.java, Line 268, Column 51
-		code: compiler.err.cant.resolve.location
-		message: cannot find symbol
-  symbol:   variable player
-  location: class L3Reflex.L3Reflex
 	ERROR: data\scripts\l3\ai\L3Reflex.java, Line 66, Column 1
 		code: compiler.err.implicit.class.does.not.have.main.method
 		message: compact source file does not have main method in the form of void main() or void main(String[] args)

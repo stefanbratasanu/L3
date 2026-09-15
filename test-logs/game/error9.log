@@ -1,22 +1,15 @@
-Sep 15, 2026 8:42:38 PM org.l2jmobius.gameserver.GameServer <init>
-WARNING: Failed to execute script list!
-java.lang.RuntimeException: 
-----------------
-File diagnostics
-----------------
-
------------------------
-Compilation diagnostics
------------------------
-	ERROR: data\scripts\l3\ai\L3ThinkTaskManager.java, Line 150, Column 27
-		code: compiler.err.cant.resolve.location.args
-		message: cannot find symbol
-  symbol:   method scheduleAtFixedRateRealTime(()->runPool(pool),long,int)
-  location: class org.l2jmobius.commons.threads.ThreadPool
-
-	at org.l2jmobius.gameserver.scripting.engine.ScriptExecutor.executeScripts(ScriptExecutor.java:104)
-	at org.l2jmobius.gameserver.scripting.engine.ScriptExecutor.executeScript(ScriptExecutor.java:209)
-	at org.l2jmobius.gameserver.scripting.ScriptEngine.executeScript(ScriptEngine.java:176)
-	at org.l2jmobius.gameserver.GameServer.<init>(GameServer.java:331)
-	at org.l2jmobius.gameserver.GameServer.main(GameServer.java:491)
+Sep 15, 2026 8:49:23 PM l3.agent.L3AgentManager placeInWorld
+WARNING: L3: failed to place Prius in the world.
+java.lang.NullPointerException: Cannot invoke "org.l2jmobius.gameserver.entity.WorldRegion.addVisibleObject(org.l2jmobius.gameserver.entity.WorldObject)" because "this._worldRegion" is null
+	at org.l2jmobius.gameserver.entity.WorldObject.spawnMe(WorldObject.java:171)
+	at org.l2jmobius.gameserver.entity.WorldObject.spawnMe(WorldObject.java:214)
+	at l3.agent.L3AgentManager.placeInWorld(L3AgentManager.java:312)
+	at l3.agent.L3AgentManager.spawnNew(L3AgentManager.java:201)
+	at handlers.chat.commands.admin.AdminL3Spawn.spawnPrius(AdminL3Spawn.java:229)
+	at handlers.chat.commands.admin.AdminL3Spawn.onCommand(AdminL3Spawn.java:127)
+	at org.l2jmobius.gameserver.handler.AdminCommandHandler.lambda$onCommand$0(AdminCommandHandler.java:129)
+	at org.l2jmobius.commons.threads.ThreadPool$RunnableWrapper.run(ThreadPool.java:310)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
 

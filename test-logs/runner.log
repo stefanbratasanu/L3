@@ -1,12 +1,12 @@
 ﻿**********************
 Windows PowerShell transcript start
-Start time: 20260915213625
+Start time: 20260915224351
 Username: Desktop-1H06Q\Brata
 RunAs User: Desktop-1H06Q\Brata
 Configuration Name: 
 Machine: Desktop-1H06Q (Microsoft Windows NT 10.0.19045.0)
 Host Application: powershell -NoProfile -ExecutionPolicy Bypass -File C:\Agentic\l3\L3-run.ps1
-Process ID: 30268
+Process ID: 28524
 PSVersion: 5.1.19041.7291
 PSEdition: Desktop
 PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.19041.7291
@@ -44,16 +44,16 @@ Quick checks:  java -version | ant -version | mariadbd --version | git --version
   starting LoginServer ...
   starting GameServer ...
 
-  LoginServer PID 27416
-  GameServer PID 19168
+  LoginServer PID 4268
+  GameServer PID 29432
   Servers are starting. Point the client at this machine, log in, and test.
   >>> To finish: type  .sd  in game (GM), or close a server window. <<<
       This script then dumps the DB and logs locally.
 
 === 7/8  Running - waiting for shutdown (.sd in game, or close a server window) ===
-  GameServer (PID 19168) stopped.
+  GameServer (PID 29432) stopped.
   Shutting the other server down too.
-  Stopping 27416 without a GUI shutdown prompt.
+  Stopping 4268 without a GUI shutdown prompt.
   Server(s) stopped.
 
 === 8/8  Saving database + logs locally ===
@@ -64,5 +64,5 @@ Dumping l2jmobiusinterlude -> C:\Agentic\l3\server\dist\db_snapshot\l2jmobiusint
   logs collected into test-logs\ .
 **********************
 Windows PowerShell transcript end
-End time: 20260915213951
+End time: 20260915224813
 **********************
