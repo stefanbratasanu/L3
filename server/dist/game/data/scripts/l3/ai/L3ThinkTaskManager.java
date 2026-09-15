@@ -145,9 +145,9 @@ public class L3ThinkTaskManager
 		POOLS.add(pool);
 
 		final int index = POOLS.size() - 1;
-		final long offset = (long) ((L3Config.TICK_MS / (double) Math.max(1, L3Config.POOL_SIZE)) * index) % L3Config.TICK_MS;
+		final long offset = (long) ((L3Config.AI_HEARTBEAT_MS / (double) Math.max(1, L3Config.POOL_SIZE)) * index) % L3Config.AI_HEARTBEAT_MS;
 
-		ThreadPool.scheduleAtFixedRate(() -> runPool(pool), L3Config.TICK_MS + offset, L3Config.TICK_MS);
+		ThreadPool.scheduleAtFixedRateRealTime(() -> runPool(pool), L3Config.AI_HEARTBEAT_MS + offset, L3Config.AI_HEARTBEAT_MS);
 		LOGGER.info("L3ThinkTaskManager: pool " + index + " scheduled (offset " + offset + "ms).");
 	}
 

@@ -147,6 +147,26 @@ public class ThreadPool
 			return null;
 		}
 	}
+
+	/**
+	 * Schedules infrastructure polling on wall-clock time rather than virtual game time.
+	 * @param runnable the runnable to execute
+	 * @param initialDelay the real-time delay to first execution
+	 * @param period the real-time period between executions
+	 * @return a scheduled future
+	 */
+	public static ScheduledFuture<?> scheduleAtFixedRateRealTime(Runnable runnable, long initialDelay, long period)
+	{
+		try
+		{
+			return SCHEDULED_POOL.scheduleAtFixedRate(new RunnableWrapper(runnable), validateDelay(initialDelay), validateDelay(period), TimeUnit.MILLISECONDS);
+		}
+		catch (Exception e)
+		{
+			LOGGER.warning(StringUtil.concat("ThreadPool: Failed to schedule real-time recurring task ", runnable.getClass().getSimpleName(), " with initial delay ", String.valueOf(initialDelay), "ms and period ", String.valueOf(period), "ms: ", e.getMessage(), System.lineSeparator(), TraceUtil.getStackTrace(e)));
+			return null;
+		}
+	}
 	
 	/**
 	 * Creates and executes a periodic action using high priority thread pool.<br>

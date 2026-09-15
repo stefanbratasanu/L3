@@ -52,9 +52,14 @@ public class L3Config
 	 * tick walks; the pools are spread across the tick window instead of all firing at once. */
 	public static final int POOL_SIZE = 100;
 
-	/** The scheduler's heartbeat. Individual agents are gated by their own LOD on top of this, so
-	 * this is the *fastest* anything thinks, not how often every agent thinks. */
+	/** The normal HOT think interval. Individual agents are gated by their own LOD on top of this. */
 	public static final int TICK_MS = 700;
+
+	/**
+	 * Real-time polling cadence for the AI pipeline. It is deliberately shorter than the minimum
+	 * virtual interval so changing the shared game speed affects already-running agents promptly.
+	 */
+	public static final int AI_HEARTBEAT_MS = 25;
 
 	// --- Level of detail ------------------------------------------------------------------------
 	/** Within this distance of a real player an agent is fully simulated - it must look right,
