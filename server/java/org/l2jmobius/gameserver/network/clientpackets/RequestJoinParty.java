@@ -63,7 +63,8 @@ public class RequestJoinParty extends ClientPacket
 			return;
 		}
 		
-		if ((target.getClient() == null) || target.getClient().isDetached())
+		final boolean clientlessAgent = (target.getClient() == null) && target.getAccountName().startsWith("l3agents");
+		if (((target.getClient() == null) || target.getClient().isDetached()) && !clientlessAgent)
 		{
 			requestor.sendMessage("Player is in offline mode.");
 			return;
@@ -117,6 +118,25 @@ public class RequestJoinParty extends ClientPacket
 			sm = new SystemMessage(SystemMessageId.S1_IS_A_MEMBER_OF_ANOTHER_PARTY_AND_CANNOT_BE_INVITED);
 			sm.addString(target.getName());
 			requestor.sendPacket(sm);
+			return;
+		}
+
+		if (clientlessAgent)
+		{
+			if (!requestor.isInParty())
+			{
+				final PartyDistributionType distributionType = PartyDistributionType.findById(_partyDistributionTypeId);
+				if (distributionType == null)
+				{
+					return;
+				}
+				requestor.setParty(new Party(requestor, distributionType));
+			}
+			if ((requestor.getParty() != null) && (requestor.getParty().getMemberCount() < 9))
+			{
+				target.joinParty(requestor.getParty());
+				requestor.sendMessage(target.getName() + " accepted the party invitation.");
+			}
 			return;
 		}
 		

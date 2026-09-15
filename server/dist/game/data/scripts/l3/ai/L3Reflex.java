@@ -31,6 +31,7 @@ import org.l2jmobius.gameserver.geoengine.GeoEngine;
 import org.l2jmobius.gameserver.handler.ItemHandler;
 import org.l2jmobius.gameserver.mechanics.skill.Skill;
 import org.l2jmobius.commons.util.Rnd;
+import java.util.List;
 
 import l3.L3Config;
 import l3.L3Debug;
@@ -204,20 +205,28 @@ public class L3Reflex
 			{
 				return false;
 			}
+			Skill selected = null;
 			for (Skill skill : player.getSkills().values())
 			{
 				if (skill.isDamage() && !skill.isPassive() && !skill.isToggle() && !player.hasSkillReuse(skill.getReuseHashCode()) && skill.checkCondition(player, target, false))
 				{
-					player.setTarget(target);
-					player.useMagic(skill, true, false);
-					agent.cooldownSkill(now, 1000);
-					L3Debug.event(agent, "COMBAT", "SKILL", skill.getName());
-					agent.shoutDebug("casting " + skill.getName());
-					return true;
+					if ((selected == null) || (skill.getId() == 3) || skill.getName().equalsIgnoreCase("Power Strike"))
+					{
+						selected = skill;
+					}
 				}
-
 			}
-			return false;
+			if (selected == null)
+			{
+				L3Debug.event(agent, "COMBAT", "SKILL_UNAVAILABLE", "no usable weapon skill");
+				return false;
+			}
+			player.setTarget(target);
+			player.useMagic(selected, true, false);
+			agent.cooldownSkill(now, 1000);
+			L3Debug.event(agent, "COMBAT", "SKILL", selected.getName());
+			agent.shoutDebug("casting " + selected.getName());
+			return true;
 		}
 
 		private static boolean useHealingPotion(L3Agent agent)
@@ -270,24 +279,32 @@ public class L3Reflex
 			{
 				return false;
 			}
-			final Item item = World.getFirstVisibleObjectInRange(player, Item.class, 200, dropped ->
+			final List<Item> items = World.getVisibleObjectsInRange(player, Item.class, 200);
+			Item item = null;
+			String skipReason = "no visible item";
+			for (Item dropped : items)
 			{
 				if (!dropped.isSpawned())
 				{
-					return false;
+					skipReason = "item despawned";
+					continue;
 				}
 
-				if (!dropped.isProtected() || (dropped.getOwnerId() == player.getObjectId()))
+				if (dropped.isProtected() && (dropped.getOwnerId() != player.getObjectId()))
 				{
-					return true;
+					final Player owner = World.getPlayer(dropped.getOwnerId());
+					if ((owner == null) || L3AgentManager.getInstance().isAgent(owner) || (owner.calculateDistance2D(player) > 250))
+					{
+						skipReason = "drop protected for another player";
+						continue;
+					}
 				}
-
-				// Items deliberately dropped by a nearby human are valid hand-offs to an AI agent.
-				final Player owner = World.getPlayer(dropped.getOwnerId());
-				return (owner != null) && !L3AgentManager.getInstance().isAgent(owner) && (owner.calculateDistance2D(player) <= 250);
-			});
+				item = dropped;
+				break;
+			}
 			if (item == null)
 			{
+				L3Debug.event(agent, "SURVIVAL", "PICKUP_SKIPPED", skipReason);
 				agent.cooldownPickup(now, 1000);
 				return false;
 			}
@@ -306,8 +323,15 @@ public class L3Reflex
 					item.setOwnerId(0);
 				}
 				player.doPickupItem(item);
-				agent.shoutDebug("picked up an item");
-				L3Debug.event(agent, "SURVIVAL", "PICKUP", item.getTemplate().getName());
+				if (item.isSpawned())
+				{
+					L3Debug.event(agent, "SURVIVAL", "PICKUP_FAILED", "engine rejected " + item.getTemplate().getName());
+				}
+				else
+				{
+					agent.shoutDebug("picked up " + item.getTemplate().getName());
+					L3Debug.event(agent, "SURVIVAL", "PICKUP", item.getTemplate().getName());
+				}
 			}
 			agent.cooldownPickup(now, 500);
 			return true;
@@ -316,17 +340,37 @@ public class L3Reflex
 		private static void returnToHuntingAnchor(L3Agent agent)
 		{
 			final Player player = agent.getPlayer();
-			if (!L3AgentManager.getInstance().isGeneralHunting(agent) || !agent.hasHuntingAnchor() || player.isMoving() || !player.hasAI())
+			if (!L3AgentManager.getInstance().isGeneralHunting(agent) || !agent.hasHuntingAnchor() || !player.hasAI())
 			{
 				return;
 			}
 
-			final double distance = Math.sqrt(Math.pow(player.getX() - agent.getHuntingAnchorX(), 2) + Math.pow(player.getY() - agent.getHuntingAnchorY(), 2));
+			int anchorX = agent.getHuntingAnchorX();
+			int anchorY = agent.getHuntingAnchorY();
+			int anchorZ = agent.getHuntingAnchorZ();
+			int selectedAnchor = 0;
+			double distance = Double.MAX_VALUE;
+			for (int i = 0; i < agent.getHuntingAnchorCount(); i++)
+			{
+				final double candidateDistance = Math.hypot(player.getX() - agent.getHuntingAnchorX(i), player.getY() - agent.getHuntingAnchorY(i));
+				if (candidateDistance > 150)
+				{
+					anchorX = agent.getHuntingAnchorX(i);
+					anchorY = agent.getHuntingAnchorY(i);
+					anchorZ = agent.getHuntingAnchorZ(i);
+					selectedAnchor = i;
+					distance = candidateDistance;
+					break;
+				}
+			}
 			if (distance > 150)
 			{
 				agent.setState(L3AgentState.TRAVELING);
-				player.getAI().setIntentionMoveTo(new org.l2jmobius.gameserver.entity.Location(agent.getHuntingAnchorX(), agent.getHuntingAnchorY(), agent.getHuntingAnchorZ()));
-				L3Debug.event(agent, "NAVIGATION", "RETURN_TO_HUNTING_ANCHOR");
+				if (!player.isMoving())
+				{
+					player.getAI().setIntentionMoveTo(new org.l2jmobius.gameserver.entity.Location(anchorX, anchorY, anchorZ));
+					L3Debug.event(agent, "NAVIGATION", "RETURN_TO_HUNTING_ANCHOR", "spot=" + selectedAnchor);
+				}
 			}
 		}
 

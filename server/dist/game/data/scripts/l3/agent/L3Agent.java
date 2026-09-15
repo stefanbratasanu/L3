@@ -101,6 +101,10 @@ public class L3Agent
 	private int _huntingAnchorY;
 	private int _huntingAnchorZ;
 	private boolean _hasHuntingAnchor;
+	private final int[] _huntingAnchorsX = new int[3];
+	private final int[] _huntingAnchorsY = new int[3];
+	private final int[] _huntingAnchorsZ = new int[3];
+	private int _huntingAnchorCount;
 
 	public L3Agent(Player player)
 	{
@@ -263,10 +267,40 @@ public class L3Agent
 
 	public void rememberHuntingAnchor(int x, int y, int z)
 	{
+		for (int i = Math.min(_huntingAnchorCount, _huntingAnchorsX.length - 1); i > 0; i--)
+		{
+			_huntingAnchorsX[i] = _huntingAnchorsX[i - 1];
+			_huntingAnchorsY[i] = _huntingAnchorsY[i - 1];
+			_huntingAnchorsZ[i] = _huntingAnchorsZ[i - 1];
+		}
+		_huntingAnchorsX[0] = x;
+		_huntingAnchorsY[0] = y;
+		_huntingAnchorsZ[0] = z;
+		_huntingAnchorCount = Math.min(_huntingAnchorCount + 1, _huntingAnchorsX.length);
 		_huntingAnchorX = x;
 		_huntingAnchorY = y;
 		_huntingAnchorZ = z;
 		_hasHuntingAnchor = true;
+	}
+
+	public int getHuntingAnchorCount()
+	{
+		return _huntingAnchorCount;
+	}
+
+	public int getHuntingAnchorX(int index)
+	{
+		return _huntingAnchorsX[index];
+	}
+
+	public int getHuntingAnchorY(int index)
+	{
+		return _huntingAnchorsY[index];
+	}
+
+	public int getHuntingAnchorZ(int index)
+	{
+		return _huntingAnchorsZ[index];
 	}
 
 	public boolean hasHuntingAnchor()
