@@ -94,6 +94,9 @@ public class L3Agent
 	private boolean _revivePending;
 	private int _lastLevel;
 	private int _lastSkillCount;
+	private long _nextPotionAt;
+	private long _nextPickupAt;
+	private long _nextSkillAt;
 
 	public L3Agent(Player player)
 	{
@@ -264,6 +267,36 @@ public class L3Agent
 	public boolean isChatDebug()
 	{
 		return _chatDebug;
+	}
+
+	public boolean mayUsePotion(long now)
+	{
+		return now >= _nextPotionAt;
+	}
+
+	public void cooldownPotion(long now, long delay)
+	{
+		_nextPotionAt = now + delay;
+	}
+
+	public boolean mayPickup(long now)
+	{
+		return now >= _nextPickupAt;
+	}
+
+	public void cooldownPickup(long now, long delay)
+	{
+		_nextPickupAt = now + delay;
+	}
+
+	public boolean mayUseSkill(long now)
+	{
+		return now >= _nextSkillAt;
+	}
+
+	public void cooldownSkill(long now, long delay)
+	{
+		_nextSkillAt = now + delay;
 	}
 
 	public boolean isRevivePending()

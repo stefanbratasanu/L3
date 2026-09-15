@@ -116,7 +116,7 @@ public class L3Reflex
 			return;
 		}
 
-		if (pickupNearby(agent))
+		if (pickupNearby(agent, now))
 		{
 			return;
 		}
@@ -173,7 +173,7 @@ public class L3Reflex
 		if (player.hasAI() && !player.isAttackingNow() && !player.isMoving())
 		{
 			agent.setState(L3AgentState.HUNTING);
-			if ((player.getCurrentMp() > (player.getMaxMp() * 0.20)) && useAttackSkill(agent, target))
+			if ((player.getCurrentMp() > (player.getMaxMp() * 0.20)) && useAttackSkill(agent, target, now))
 			{
 				return;
 			}
@@ -194,14 +194,20 @@ public class L3Reflex
 		}
 	}
 
-	private static boolean useAttackSkill(L3Agent agent, Creature target)
+		private static boolean useAttackSkill(L3Agent agent, Creature target, long now)
 		{
 			final Player player = agent.getPlayer();
+			if (!agent.mayUseSkill(now))
+			{
+				return false;
+			}
 			for (Skill skill : player.getSkills().values())
 			{
 				if (skill.isDamage() && !skill.isPassive() && !skill.isToggle() && !player.hasSkillReuse(skill.getReuseHashCode()) && skill.checkCondition(player, target, false))
 				{
 					player.getAI().setIntentionCast(skill, target);
+					agent.cooldownSkill(now, 1000);
+					L3Debug.event(agent, "COMBAT", "SKILL", skill.getName());
 					agent.shoutDebug("casting " + skill.getName());
 					return true;
 				}
@@ -212,6 +218,11 @@ public class L3Reflex
 		private static boolean useHealingPotion(L3Agent agent)
 		{
 			final Player player = agent.getPlayer();
+			final long now = org.l2jmobius.commons.time.GameTime.currentTimeMillis();
+			if (!agent.mayUsePotion(now))
+			{
+				return false;
+			}
 			if (player.getCurrentHp() >= (player.getMaxHp() * 0.60))
 			{
 				return false;
@@ -237,6 +248,8 @@ public class L3Reflex
 								player.addTimeStampItem(item, item.getReuseDelay());
 							}
 							agent.shoutDebug("used a healing potion");
+							agent.cooldownPotion(now, Math.max(1000, item.getReuseDelay()));
+							L3Debug.event(agent, "SURVIVAL", "POTION", item.getTemplate().getName());
 							return true;
 						}
 					}
@@ -245,12 +258,17 @@ public class L3Reflex
 			return false;
 		}
 
-		private static boolean pickupNearby(L3Agent agent)
+		private static boolean pickupNearby(L3Agent agent, long now)
 		{
 			final Player player = agent.getPlayer();
+			if (!agent.mayPickup(now))
+			{
+				return false;
+			}
 			final Item item = World.getFirstVisibleObjectInRange(player, Item.class, 200, dropped -> dropped.isSpawned() && (!dropped.isProtected() || (dropped.getOwnerId() == player.getObjectId())));
 			if (item == null)
 			{
+				agent.cooldownPickup(now, 1000);
 				return false;
 			}
 			if (player.calculateDistance2D(item) > 20)
@@ -264,7 +282,9 @@ public class L3Reflex
 			{
 				player.doPickupItem(item);
 				agent.shoutDebug("picked up an item");
+				L3Debug.event(agent, "SURVIVAL", "PICKUP", item.getTemplate().getName());
 			}
+			agent.cooldownPickup(now, 500);
 			return true;
 		}
 

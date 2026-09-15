@@ -32,8 +32,30 @@ public final class L3Debug
 
 	public static synchronized void event(L3Agent agent, String type, String detail)
 	{
-		final String record = "{\"at\":\"" + Instant.now() + "\",\"charId\":" + agent.getPlayer().getObjectId() + ",\"name\":\"" + escape(agent.getPlayer().getName()) + "\",\"level\":" + agent.getPlayer().getLevel() + ",\"lod\":\"" + agent.getLod() + "\",\"goal\":\"" + agent.getGoal() + "\",\"state\":\"" + agent.getState() + "\",\"type\":\"" + escape(type) + "\",\"detail\":\"" + escape(detail) + "\"}";
+		event(agent, categoryFor(type), type, detail);
+	}
+
+	public static synchronized void event(L3Agent agent, String category, String type, String detail)
+	{
+		final String record = "{\"at\":\"" + Instant.now() + "\",\"charId\":" + agent.getPlayer().getObjectId() + ",\"name\":\"" + escape(agent.getPlayer().getName()) + "\",\"level\":" + agent.getPlayer().getLevel() + ",\"lod\":\"" + agent.getLod() + "\",\"goal\":\"" + agent.getGoal() + "\",\"state\":\"" + agent.getState() + "\",\"category\":\"" + escape(category) + "\",\"type\":\"" + escape(type) + "\",\"detail\":\"" + escape(detail) + "\"}";
 		write(record, "TICK".equals(type));
+	}
+
+	private static String categoryFor(String type)
+	{
+		switch (type)
+		{
+			case "TARGET":
+			case "TICK":
+				return "PERCEPTION";
+			case "STATE":
+			case "GOAL":
+				return "DECISION";
+			case "REGISTERED":
+				return "LIFECYCLE";
+			default:
+				return "ACTION";
+		}
 	}
 
 	public static synchronized void marker(String author, String detail)

@@ -110,7 +110,17 @@ public class L3AgentManager
 	 */
 	public L3Agent register(Player player)
 	{
-		if ((player == null) || (AGENTS.size() >= L3Config.MAX_AGENTS))
+		if (player == null)
+		{
+			return null;
+		}
+
+		final L3Agent existing = AGENTS.get(player.getObjectId());
+		if (existing != null)
+		{
+			return existing;
+		}
+		if (AGENTS.size() >= L3Config.MAX_AGENTS)
 		{
 			return null;
 		}
