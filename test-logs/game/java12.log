@@ -1,250 +1,186 @@
-2026.09.15 01:26:59,536	INFO	3	org.l2jmobius.commons.util.IXmlReader	Network Config: ipconfig.xml exists, using manual configuration...
-2026.09.15 01:26:59,673	INFO	3	org.l2jmobius.gameserver.config.ServerConfig	Loaded 6 Filter Words.
-2026.09.15 01:26:59,747	INFO	3	org.l2jmobius.gameserver.GameServer	------------------------------------------------=[ Database ]
-2026.09.15 01:26:59,913	INFO	3	org.l2jmobius.commons.database.DatabaseFactory	Database: HikariCP pool initialized successfully.
-2026.09.15 01:27:00,110	INFO	3	org.l2jmobius.commons.database.DatabaseFactory	Database: Initialized with a valid connection.
-2026.09.15 01:27:00,123	INFO	3	org.l2jmobius.gameserver.GameServer	----------------------------------------------=[ ThreadPool ]
-2026.09.15 01:27:00,124	INFO	3	org.l2jmobius.commons.threads.ThreadPool	ThreadPool: Initializing.
-2026.09.15 01:27:00,127	INFO	3	org.l2jmobius.commons.threads.ThreadPool	...scheduled pool executor with 16 high priority threads.
-2026.09.15 01:27:00,134	INFO	3	org.l2jmobius.commons.threads.ThreadPool	...scheduled pool executor with 64 total threads.
-2026.09.15 01:27:00,134	INFO	3	org.l2jmobius.commons.threads.ThreadPool	...instant pool executor with 32 total threads.
-2026.09.15 01:27:00,153	INFO	3	org.l2jmobius.gameserver.GameServer	-----------------------------------------------=[ IdManager ]
-2026.09.15 01:27:00,213	INFO	3	org.l2jmobius.gameserver.managers.DatabaseIdManager	DatabaseIdManager: Cleaned 0 elements in 0 seconds.
-2026.09.15 01:27:00,219	INFO	3	org.l2jmobius.gameserver.managers.DatabaseIdManager	DatabaseIdManager: Updated character online status.
-2026.09.15 01:27:00,226	INFO	3	org.l2jmobius.gameserver.managers.DatabaseIdManager	DatabaseIdManager: Cleaned 0 expired timestamps.
-2026.09.15 01:27:00,240	INFO	3	org.l2jmobius.gameserver.managers.IdManager	IdManager: 102912 ids available.
-2026.09.15 01:27:00,241	INFO	3	org.l2jmobius.gameserver.GameServer	----------------------------------------=[ Scripting Engine ]
-2026.09.15 01:27:00,450	INFO	3	org.l2jmobius.gameserver.scripting.ScriptEngine	Loaded 386 files to exclude.
-2026.09.15 01:27:00,451	INFO	3	org.l2jmobius.gameserver.GameServer	---------------------------------------------------=[ World ]
-2026.09.15 01:27:00,460	INFO	3	org.l2jmobius.commons.util.IXmlReader	InstanceManager: Multiverse Instance created.
-2026.09.15 01:27:00,460	INFO	3	org.l2jmobius.commons.util.IXmlReader	InstanceManager: Universe Instance created.
-2026.09.15 01:27:00,482	INFO	3	org.l2jmobius.commons.util.IXmlReader	InstanceManager: Loaded 2 instance templates.
-2026.09.15 01:27:01,449	INFO	3	org.l2jmobius.gameserver.data.xml.MapRegionData	MapRegionData: Loaded 42 map regions.
-2026.09.15 01:27:01,462	INFO	3	org.l2jmobius.gameserver.managers.GlobalVariablesManager	GlobalVariablesManager: Loaded 4 variables.
-2026.09.15 01:27:01,462	INFO	3	org.l2jmobius.gameserver.GameServer	----------------------------------------------------=[ Data ]
-2026.09.15 01:27:01,486	INFO	3	org.l2jmobius.gameserver.data.xml.CategoryData	CategoryData: Loaded 160 categories.
-2026.09.15 01:27:01,535	INFO	3	org.l2jmobius.gameserver.data.xml.CubicData	CubicData: Loaded 67 cubic templates.
-2026.09.15 01:27:01,542	INFO	3	org.l2jmobius.gameserver.GameServer	--------------------------------------------------=[ Skills ]
-2026.09.15 01:27:03,233	INFO	3	handlers.EffectMasterHandler	EffectMasterHandler: Loaded 146 effect handlers.
-2026.09.15 01:27:03,506	INFO	3	org.l2jmobius.gameserver.data.xml.EnchantSkillTreeData	EnchantSkillTreeData: Loaded 14551 enchant skills.
-2026.09.15 01:27:04,017	INFO	3	org.l2jmobius.commons.util.IXmlReader	SkillTreeData: Loaded 13777 Class Skills for 89 class skill trees.
-2026.09.15 01:27:04,017	INFO	3	org.l2jmobius.commons.util.IXmlReader	SkillTreeData: Loaded 117 fishing skills, 8 Dwarven only fishing skills.
-2026.09.15 01:27:04,019	INFO	3	org.l2jmobius.commons.util.IXmlReader	SkillTreeData: Loaded 64 clan skills, 64 for clan and 0 residential.
-2026.09.15 01:27:04,020	INFO	3	org.l2jmobius.commons.util.IXmlReader	SkillTreeData: Loaded 8 noble skills.
-2026.09.15 01:27:04,020	INFO	3	org.l2jmobius.commons.util.IXmlReader	SkillTreeData: Loaded 5 hero skills.
-2026.09.15 01:27:04,020	INFO	3	org.l2jmobius.commons.util.IXmlReader	SkillTreeData: Loaded 25 game master skills.
-2026.09.15 01:27:04,020	INFO	3	org.l2jmobius.commons.util.IXmlReader	SkillTreeData: Loaded 1 game master aura skills.
-2026.09.15 01:27:05,953	INFO	3	org.l2jmobius.gameserver.data.xml.SkillData	SkillData: Loaded 29867 Skill templates from XML files.
-2026.09.15 01:27:05,982	INFO	3	org.l2jmobius.gameserver.data.xml.PetSkillData	PetSkillData: Loaded 795 skills.
-2026.09.15 01:27:05,982	INFO	3	org.l2jmobius.gameserver.GameServer	---------------------------------------------------=[ Items ]
-2026.09.15 01:27:06,326	INFO	3	org.l2jmobius.gameserver.data.xml.ItemData	ItemData: Highest item id used: 50000
-2026.09.15 01:27:06,328	INFO	3	org.l2jmobius.gameserver.data.xml.ItemData	ItemData: Loaded 6882 etc items.
-2026.09.15 01:27:06,329	INFO	3	org.l2jmobius.gameserver.data.xml.ItemData	ItemData: Loaded 1106 armor items.
-2026.09.15 01:27:06,329	INFO	3	org.l2jmobius.gameserver.data.xml.ItemData	ItemData: Loaded 1223 weapon items.
-2026.09.15 01:27:06,329	INFO	3	org.l2jmobius.gameserver.data.xml.ItemData	ItemData: Loaded 9211 items in total.
-2026.09.15 01:27:06,335	INFO	3	org.l2jmobius.commons.util.IXmlReader	EnchantItemGroupsData: Loaded 4 item group templates.
-2026.09.15 01:27:06,336	INFO	3	org.l2jmobius.commons.util.IXmlReader	EnchantItemGroupsData: Loaded 1 scroll group templates.
-2026.09.15 01:27:06,336	INFO	3	org.l2jmobius.commons.util.IXmlReader	EnchantItemGroupsData: Max weapon enchant is set to 16.
-2026.09.15 01:27:06,336	INFO	3	org.l2jmobius.commons.util.IXmlReader	EnchantItemGroupsData: Max armor enchant is set to 16.
-2026.09.15 01:27:06,336	INFO	3	org.l2jmobius.commons.util.IXmlReader	EnchantItemGroupsData: Max accessory enchant is set to 16.
-2026.09.15 01:27:06,342	INFO	3	org.l2jmobius.commons.util.IXmlReader	EnchantItemData: Loaded 30 enchant scrolls.
-2026.09.15 01:27:06,922	INFO	3	org.l2jmobius.gameserver.data.xml.OptionData	OptionData: Loaded 16380 options.
-2026.09.15 01:27:06,931	INFO	3	org.l2jmobius.commons.util.IXmlReader	EnchantItemHPBonusData: Loaded 6 enchant HP bonuses.
-2026.09.15 01:27:06,934	INFO	3	org.l2jmobius.gameserver.data.MerchantPriceConfigTable	MerchantPriceConfigTable: Loaded 27 merchant price configs.
-2026.09.15 01:27:07,936	WARNING	3	org.l2jmobius.commons.util.IXmlReader	Directory not found: C:\Agentic\l3\server\dist\game\.\data\buylists\custom
-2026.09.15 01:27:07,936	INFO	3	org.l2jmobius.gameserver.data.xml.BuyListData	BuyListData: Loaded 616 buyLists.
-2026.09.15 01:27:08,380	INFO	3	org.l2jmobius.commons.util.IXmlReader	MultisellData: Loaded 208 multisell lists.
-2026.09.15 01:27:08,415	INFO	3	org.l2jmobius.commons.util.IXmlReader	RecipeData: Loaded 871 recipes.
-2026.09.15 01:27:08,435	INFO	3	org.l2jmobius.commons.util.IXmlReader	ArmorSetData: Loaded 51 armor sets.
-2026.09.15 01:27:08,445	INFO	3	org.l2jmobius.commons.util.IXmlReader	FishData: Loaded 278 fishes.
-2026.09.15 01:27:08,448	INFO	3	org.l2jmobius.commons.util.IXmlReader	FishingMonstersData: Loaded 8 fishing monsters.
-2026.09.15 01:27:08,451	INFO	3	org.l2jmobius.commons.util.IXmlReader	FishingRodsData: Loaded 6 fishing rods.
-2026.09.15 01:27:08,474	INFO	3	org.l2jmobius.commons.util.IXmlReader	HennaData: Loaded 180 henna data.
-2026.09.15 01:27:08,475	INFO	3	org.l2jmobius.gameserver.GameServer	----------------------------------------------=[ Characters ]
-2026.09.15 01:27:08,479	INFO	3	org.l2jmobius.gameserver.data.xml.ClassListData	ClassListData: Loaded 89 class data.
-2026.09.15 01:27:08,485	INFO	3	org.l2jmobius.gameserver.data.xml.InitialEquipmentData	InitialEquipmentData: Loaded 9 initial equipment data.
-2026.09.15 01:27:08,489	INFO	3	org.l2jmobius.gameserver.data.xml.InitialShortcutData	InitialShortcutData: Loaded 5 initial global shortcut data.
-2026.09.15 01:27:08,489	INFO	3	org.l2jmobius.gameserver.data.xml.InitialShortcutData	InitialShortcutData: Loaded 4 initial shortcut data.
-2026.09.15 01:27:08,489	INFO	3	org.l2jmobius.gameserver.data.xml.InitialShortcutData	InitialShortcutData: Loaded 0 macro presets.
-2026.09.15 01:27:08,493	INFO	3	org.l2jmobius.gameserver.data.xml.ExperienceData	ExperienceData: Loaded 81 levels.
-2026.09.15 01:27:08,494	INFO	3	org.l2jmobius.gameserver.data.xml.ExperienceData	ExperienceData: Max Player Level is 80.
-2026.09.15 01:27:08,494	INFO	3	org.l2jmobius.gameserver.data.xml.ExperienceData	ExperienceData: Max Pet Level is 80.
-2026.09.15 01:27:08,497	INFO	3	org.l2jmobius.gameserver.data.xml.ExperienceLossData	ExperienceLossData: Loaded 80 levels.
-2026.09.15 01:27:08,500	INFO	3	org.l2jmobius.gameserver.data.xml.KarmaLossData	KarmaLossData: Loaded 80 modifiers.
-2026.09.15 01:27:08,503	INFO	3	org.l2jmobius.commons.util.IXmlReader	HitConditionBonusData: Loaded hit condition bonuses.
-2026.09.15 01:27:08,824	INFO	3	org.l2jmobius.gameserver.data.xml.PlayerTemplateData	PlayerTemplateData: Loaded 89 player templates.
-2026.09.15 01:27:08,825	INFO	3	org.l2jmobius.gameserver.data.xml.PlayerTemplateData	PlayerTemplateData: Loaded 42720 level up gain records.
-2026.09.15 01:27:08,834	INFO	3	org.l2jmobius.gameserver.data.sql.CharInfoTable	CharInfoTable: Loaded 1047 char names.
-2026.09.15 01:27:08,840	INFO	3	org.l2jmobius.gameserver.data.xml.AdminData	AdminData: Loaded 10 access levels.
-2026.09.15 01:27:08,847	INFO	3	org.l2jmobius.gameserver.data.xml.AdminData	AdminData: Loaded 440 access commands.
-2026.09.15 01:27:08,850	INFO	3	org.l2jmobius.gameserver.managers.RaidBossPointsManager	RaidBossPointsManager: Loaded 0 Characters Raid Points.
-2026.09.15 01:27:08,942	INFO	3	org.l2jmobius.commons.util.IXmlReader	PetDataTable: Loaded 12 pets.
-2026.09.15 01:27:08,948	INFO	3	org.l2jmobius.gameserver.GameServer	---------------------------------------------------=[ Clans ]
-2026.09.15 01:27:08,963	INFO	3	org.l2jmobius.gameserver.communitybbs.Manager.ForumsBBSManager	ForumsBBSManager: Loaded 4 forums. Last forum id used: 4
-2026.09.15 01:27:08,964	INFO	3	org.l2jmobius.gameserver.data.sql.ClanTable	ClanTable: Restored 0 clans from the database.
-2026.09.15 01:27:08,972	INFO	3	org.l2jmobius.gameserver.managers.CHSiegeManager	CHSiegeManager: Loaded 6 conquerable clan halls.
-2026.09.15 01:27:09,019	INFO	3	org.l2jmobius.gameserver.managers.ClanHallAuctionManager	ClanHallAuctionManager: Loaded 38 auction(s)
-2026.09.15 01:27:09,021	INFO	3	org.l2jmobius.gameserver.data.sql.ClanHallTable	ClanHallTable: Loaded 0 clan halls
-2026.09.15 01:27:09,021	INFO	3	org.l2jmobius.gameserver.data.sql.ClanHallTable	ClanHallTable: Loaded 38 free clan halls
-2026.09.15 01:27:09,021	INFO	3	org.l2jmobius.gameserver.GameServer	-------------------------------------------------=[ Geodata ]
-2026.09.15 01:27:09,051	INFO	3	org.l2jmobius.gameserver.geoengine.GeoEngine	GeoEngine: Loaded 0 regions.
-2026.09.15 01:27:09,052	INFO	3	org.l2jmobius.gameserver.geoengine.GeoEngine	GeoEngine: Pathfinding is disabled.
-2026.09.15 01:27:09,052	INFO	3	org.l2jmobius.gameserver.GameServer	----------------------------------------------------=[ NPCs ]
-2026.09.15 01:27:09,078	INFO	3	org.l2jmobius.gameserver.managers.ZoneManager	ZoneManager 12 by 17 Zone Region Grid set up.
-2026.09.15 01:27:10,485	INFO	3	org.l2jmobius.commons.util.IXmlReader	NpcData: Loaded 6519 NPCs.
-2026.09.15 01:27:10,538	INFO	3	org.l2jmobius.commons.util.IXmlReader	NpcData: Loaded 22 custom NPCs.
-2026.09.15 01:27:10,545	INFO	3	org.l2jmobius.commons.util.IXmlReader	SkillLearnData: Loaded 217 skill learn data.
-2026.09.15 01:27:10,550	INFO	3	org.l2jmobius.gameserver.managers.GrandBossManager	GrandBossManager: Gigantic Chaos Golem(25512) status is 0.
-2026.09.15 01:27:10,551	INFO	3	org.l2jmobius.gameserver.managers.GrandBossManager	GrandBossManager: Queen Ant(29001) status is 0.
-2026.09.15 01:27:10,551	INFO	3	org.l2jmobius.gameserver.managers.GrandBossManager	GrandBossManager: Core(29006) status is 0.
-2026.09.15 01:27:10,551	INFO	3	org.l2jmobius.gameserver.managers.GrandBossManager	GrandBossManager: Orfen(29014) status is 0.
-2026.09.15 01:27:10,551	INFO	3	org.l2jmobius.gameserver.managers.GrandBossManager	GrandBossManager: Antharas(29019) status is 0.
-2026.09.15 01:27:10,552	INFO	3	org.l2jmobius.gameserver.managers.GrandBossManager	GrandBossManager: Baium(29020) status is 0.
-2026.09.15 01:27:10,552	INFO	3	org.l2jmobius.gameserver.managers.GrandBossManager	GrandBossManager: Zaken(29022) status is 0.
-2026.09.15 01:27:10,552	INFO	3	org.l2jmobius.gameserver.managers.GrandBossManager	GrandBossManager: Valakas(29028) status is 0.
-2026.09.15 01:27:10,552	INFO	3	org.l2jmobius.gameserver.managers.GrandBossManager	GrandBossManager: Frintezza(29045) status is 0.
-2026.09.15 01:27:10,552	INFO	3	org.l2jmobius.gameserver.managers.GrandBossManager	GrandBossManager: Loaded 9 Instances
-2026.09.15 01:27:10,708	INFO	3	org.l2jmobius.gameserver.managers.ZoneManager	ZoneManager: Loaded 30 zone classes and 2411 zones.
-2026.09.15 01:27:10,715	INFO	3	org.l2jmobius.gameserver.managers.ZoneManager	ZoneManager: Last static id 200224.
-2026.09.15 01:27:10,765	INFO	3	org.l2jmobius.commons.util.IXmlReader	DoorData: Loaded 547 doors.
-2026.09.15 01:27:10,773	INFO	3	FenceData	FenceData: Loaded 1 fences.
-2026.09.15 01:27:10,787	INFO	3	org.l2jmobius.gameserver.data.xml.LevelUpCrystalData	Soul crystal data : Loaded 39
-2026.09.15 01:27:10,787	INFO	3	org.l2jmobius.gameserver.data.xml.LevelUpCrystalData	Npc leveling crystal data : Loaded 125
-2026.09.15 01:27:10,799	INFO	3	org.l2jmobius.gameserver.managers.WalkingManager	WalkingManager: Loaded 14 walking routes.
-2026.09.15 01:27:10,808	INFO	3	org.l2jmobius.commons.util.IXmlReader	StaticObjectData: Loaded 29 static object templates.
-2026.09.15 01:27:10,824	INFO	3	org.l2jmobius.gameserver.managers.CastleManager	CastleManager: Loaded 9 castles
-2026.09.15 01:27:10,832	INFO	3	org.l2jmobius.gameserver.data.SchemeBufferTable	SchemeBufferTable: Loaded 8 categories and 135 entries.
-2026.09.15 01:27:10,834	INFO	3	org.l2jmobius.gameserver.data.SchemeBufferTable	SchemeBufferTable: Loaded 0 scheme entries from database.
-2026.09.15 01:27:10,835	INFO	3	org.l2jmobius.gameserver.data.SchemeBufferTable	SchemeBufferTable: Loaded 0 players and 85 available skills.
-2026.09.15 01:27:10,836	INFO	3	org.l2jmobius.gameserver.managers.GrandBossManager	GrandBossManager: Initialized 10 Grand Boss Zones
-2026.09.15 01:27:10,837	INFO	3	org.l2jmobius.gameserver.GameServer	------------------------------------------------=[ Olympiad ]
-2026.09.15 01:27:10,850	INFO	3	org.l2jmobius.gameserver.mechanics.olympiad.Olympiad	Olympiad System: Loading Olympiad System....
-2026.09.15 01:27:10,850	INFO	3	org.l2jmobius.gameserver.mechanics.olympiad.Olympiad	Olympiad System: Currently in Olympiad Period
-2026.09.15 01:27:10,851	INFO	3	org.l2jmobius.gameserver.mechanics.olympiad.Olympiad	Olympiad System: 16 days, 10 hours and 32 mins until period ends.
-2026.09.15 01:27:10,851	INFO	3	org.l2jmobius.gameserver.mechanics.olympiad.Olympiad	Olympiad System: Next weekly change is in 5 days, 16 hours and 34 mins.
-2026.09.15 01:27:10,851	INFO	3	org.l2jmobius.gameserver.mechanics.olympiad.Olympiad	Olympiad System: Loaded 0 Nobles
-2026.09.15 01:27:10,859	INFO	3	org.l2jmobius.gameserver.mechanics.olympiad.Olympiad	Olympiad System: Competition Period Starts in 0 days, 16 hours and 32 mins.
-2026.09.15 01:27:10,867	INFO	3	org.l2jmobius.gameserver.mechanics.olympiad.Olympiad	Olympiad System: Event starts/started : Tue Sep 15 18:00:10 EEST 2026
-2026.09.15 01:27:10,872	INFO	3	org.l2jmobius.gameserver.mechanics.olympiad.Hero	Hero System: Loaded 0 Heroes.
-2026.09.15 01:27:10,873	INFO	3	org.l2jmobius.gameserver.mechanics.olympiad.Hero	Hero System: Loaded 0 all time Heroes.
-2026.09.15 01:27:10,873	INFO	3	org.l2jmobius.gameserver.GameServer	---------------------------------------------=[ Seven Signs ]
-2026.09.15 01:27:10,877	INFO	3	org.l2jmobius.gameserver.mechanics.sevensigns.SevenSigns	SevenSigns: Currently in the Competition (Quest Event) period!
-2026.09.15 01:27:10,877	INFO	3	org.l2jmobius.gameserver.mechanics.sevensigns.SevenSigns	SevenSigns: The Seal of Avarice remains unclaimed.
-2026.09.15 01:27:10,878	INFO	3	org.l2jmobius.gameserver.mechanics.sevensigns.SevenSigns	SevenSigns: The Seal of Gnosis remains unclaimed.
-2026.09.15 01:27:10,878	INFO	3	org.l2jmobius.gameserver.mechanics.sevensigns.SevenSigns	SevenSigns: The Seal of Strife remains unclaimed.
-2026.09.15 01:27:10,878	INFO	3	org.l2jmobius.gameserver.mechanics.sevensigns.SevenSigns	SevenSigns: The competition, if the current trend continues, will end in a tie this week.
-2026.09.15 01:27:10,878	INFO	3	org.l2jmobius.gameserver.mechanics.sevensigns.SevenSigns	SevenSigns: Next period change was in the past (server was offline), changing periods now!
-2026.09.15 01:27:10,878	INFO	3	org.l2jmobius.gameserver.mechanics.sevensigns.SevenSigns	SevenSigns: Next period begins in 0 milliseconds
-2026.09.15 01:27:10,878	INFO	3	org.l2jmobius.gameserver.GameServer	---------------------------------------------------=[ Cache ]
-2026.09.15 01:27:10,879	INFO	3	org.l2jmobius.gameserver.cache.HtmCache	Cache[HTML]: Running lazy cache.
-2026.09.15 01:27:10,882	INFO	3	org.l2jmobius.gameserver.data.sql.CrestTable	CrestTable: Loaded 0 Crests.
-2026.09.15 01:27:11,038	INFO	75	org.l2jmobius.gameserver.mechanics.sevensigns.SevenSignsFestival	SevenSignsFestival: The first Festival of Darkness cycle begins in 2 minute(s).
-2026.09.15 01:27:11,110	INFO	75	org.l2jmobius.gameserver.mechanics.sevensigns.SevenSigns	SevenSigns: The Quest Event Results period has begun!
-2026.09.15 01:27:11,110	INFO	75	org.l2jmobius.gameserver.mechanics.sevensigns.SevenSigns	SevenSigns: Next period change set to Tue Sep 15 01:42:10 EEST 2026
-2026.09.15 01:27:11,294	INFO	3	org.l2jmobius.gameserver.data.xml.TeleporterData	TeleporterData: Loaded 143 npc teleporters.
-2026.09.15 01:27:11,347	INFO	3	org.l2jmobius.gameserver.data.AugmentationData	AugmentationData: Loaded 22640 augmentations.
-2026.09.15 01:27:11,354	INFO	3	org.l2jmobius.gameserver.managers.CursedWeaponsManager	CursedWeaponsManager: Loaded : 2 cursed weapon(s).
-2026.09.15 01:27:11,354	INFO	3	org.l2jmobius.gameserver.GameServer	-------------------------------------------------=[ Scripts ]
-2026.09.15 01:27:11,355	INFO	3	org.l2jmobius.gameserver.GameServer	Loading server scripts...
-2026.09.15 01:27:13,877	INFO	3	handlers.MasterHandler	Loading Handlers...
-2026.09.15 01:27:13,965	INFO	3	handlers.MasterHandler	ActionClickHandler: Loaded 10 handlers.
-2026.09.15 01:27:13,966	INFO	3	handlers.MasterHandler	ActionShiftHandler: Loaded 6 handlers.
-2026.09.15 01:27:13,966	INFO	3	handlers.MasterHandler	AdminCommandHandler: Loaded 454 handlers.
-2026.09.15 01:27:13,966	INFO	3	handlers.MasterHandler	BypassHandler: Loaded 44 handlers.
-2026.09.15 01:27:13,966	INFO	3	handlers.MasterHandler	ChatHandler: Loaded 14 handlers.
-2026.09.15 01:27:13,966	INFO	3	handlers.MasterHandler	CommunityBoardHandler: Loaded 27 handlers.
-2026.09.15 01:27:13,966	INFO	3	handlers.MasterHandler	ItemHandler: Loaded 25 handlers.
-2026.09.15 01:27:13,966	INFO	3	handlers.MasterHandler	PunishmentHandler: Loaded 3 handlers.
-2026.09.15 01:27:13,966	INFO	3	handlers.MasterHandler	UserCommandHandler: Loaded 15 handlers.
-2026.09.15 01:27:13,966	INFO	3	handlers.MasterHandler	VoicedCommandHandler: Loaded 11 handlers.
-2026.09.15 01:27:13,966	INFO	3	handlers.MasterHandler	TargetHandler: Loaded 34 handlers.
-2026.09.15 01:27:13,966	INFO	3	handlers.MasterHandler	Handlers Loaded...
-2026.09.15 01:27:22,943	INFO	3	ai.areas.ImperialTomb.FourSepulchers.FourSepulchers	[Four Sepulchers] Loaded 762 spawn zones data.
-2026.09.15 01:27:23,015	INFO	3	org.l2jmobius.commons.util.IXmlReader	NpcBuffersData: Loaded 10 buffers data.
-2026.09.15 01:27:23,042	CONFIG	3	conquerablehalls.BanditStronghold.BanditStronghold	Bandit StrongHold siege scheduled for Sun Sep 27 12:00:00 EEST 2026.
-2026.09.15 01:27:23,045	CONFIG	3	conquerablehalls.DevastatedCastle.DevastatedCastle	Devastated Castle siege scheduled for Sun Sep 27 12:00:00 EEST 2026.
-2026.09.15 01:27:23,047	CONFIG	3	conquerablehalls.FortressOfResistance.FortressOfResistance	Fortress of Resistance siege scheduled for Sun Sep 27 12:00:00 EEST 2026.
-2026.09.15 01:27:23,051	CONFIG	3	conquerablehalls.FortressOfTheDead.FortressOfTheDead	Fortress of the Dead siege scheduled for Sun Sep 27 12:00:00 EEST 2026.
-2026.09.15 01:27:23,053	CONFIG	3	conquerablehalls.RainbowSpringsChateau.RainbowSpringsChateau	Rainbow Springs siege scheduled for Sun Sep 27 12:00:00 EEST 2026.
-2026.09.15 01:27:23,057	CONFIG	3	conquerablehalls.WildBeastReserve.WildBeastReserve	Beast Farm siege scheduled for Sun Sep 27 12:00:00 EEST 2026.
-2026.09.15 01:27:23,111	INFO	3	org.l2jmobius.gameserver.mechanics.script.Quest	Event Christmas has passed... Ignored 
-2026.09.15 01:27:23,115	INFO	3	org.l2jmobius.gameserver.mechanics.script.Quest	Event Heavy Medal has passed... Ignored 
-2026.09.15 01:27:23,119	INFO	3	org.l2jmobius.gameserver.mechanics.script.Quest	Event L2 Day has passed... Ignored 
-2026.09.15 01:27:23,122	INFO	3	l3.ai.L3ThinkTaskManager	L3ThinkTaskManager: started (tick 700ms, pool size 100).
-2026.09.15 01:27:23,122	INFO	3	l3.L3Bootstrap	L3: agent system ready. Spawn with //l3spawn, remove with //l3spawn clean.
-2026.09.15 01:27:23,344	INFO	3	org.l2jmobius.gameserver.data.xml.SpawnData	SpawnData: Initializing spawns...
-2026.09.15 01:27:24,948	INFO	3	org.l2jmobius.gameserver.data.xml.SpawnData	SpawnData: 186 spawn files parsed.
-2026.09.15 01:27:24,949	INFO	3	org.l2jmobius.gameserver.data.xml.SpawnData	SpawnData: 34121 spawns have been initialized!
-2026.09.15 01:27:24,951	INFO	3	org.l2jmobius.gameserver.managers.DayNightSpawnManager	DayNightSpawnManager: Removed 0 night creatures
-2026.09.15 01:27:24,954	INFO	3	org.l2jmobius.gameserver.managers.DayNightSpawnManager	DayNightSpawnManager: Spawned 232 day creatures
-2026.09.15 01:27:24,960	INFO	3	org.l2jmobius.gameserver.managers.DimensionalRiftManager	DimensionalRiftManager: Loaded 7 room types with 56 rooms.
-2026.09.15 01:27:24,967	INFO	3	org.l2jmobius.gameserver.managers.DimensionalRiftManager	DimensionalRiftManager: Loaded 462 dimensional rift spawns, 0 errors.
-2026.09.15 01:27:24,991	INFO	3	org.l2jmobius.gameserver.managers.RaidBossSpawnManager	RaidBossSpawnManager: Loaded 189 Instances
-2026.09.15 01:27:24,991	INFO	3	org.l2jmobius.gameserver.managers.RaidBossSpawnManager	RaidBossSpawnManager: Scheduled 0 Instances
-2026.09.15 01:27:24,991	INFO	3	org.l2jmobius.gameserver.GameServer	---------------------------------------------------=[ Siege ]
-2026.09.15 01:27:25,003	INFO	3	org.l2jmobius.gameserver.data.xml.SiegeScheduleData	SiegeScheduleData: Loaded 9 siege schedulers.
-2026.09.15 01:27:25,003	INFO	3	org.l2jmobius.gameserver.mechanics.siege.Siege	Siege of Gludio: Sun Sep 27 16:00:00 EEST 2026
-2026.09.15 01:27:25,005	INFO	3	org.l2jmobius.gameserver.mechanics.siege.Siege	Siege of Dion: Sun Sep 27 20:00:00 EEST 2026
-2026.09.15 01:27:25,007	INFO	3	org.l2jmobius.gameserver.mechanics.siege.Siege	Siege of Giran: Sun Sep 27 16:00:00 EEST 2026
-2026.09.15 01:27:25,008	INFO	3	org.l2jmobius.gameserver.mechanics.siege.Siege	Siege of Oren: Sun Sep 27 20:00:00 EEST 2026
-2026.09.15 01:27:25,009	INFO	3	org.l2jmobius.gameserver.mechanics.siege.Siege	Siege of Aden: Sun Sep 27 16:00:00 EEST 2026
-2026.09.15 01:27:25,010	INFO	3	org.l2jmobius.gameserver.mechanics.siege.Siege	Siege of Innadril: Sun Sep 27 20:00:00 EEST 2026
-2026.09.15 01:27:25,010	INFO	3	org.l2jmobius.gameserver.mechanics.siege.Siege	Siege of Goddard: Sun Sep 27 16:00:00 EEST 2026
-2026.09.15 01:27:25,011	INFO	3	org.l2jmobius.gameserver.mechanics.siege.Siege	Siege of Rune: Sun Sep 27 20:00:00 EEST 2026
-2026.09.15 01:27:25,012	INFO	3	org.l2jmobius.gameserver.mechanics.siege.Siege	Siege of Schuttgart: Sun Sep 27 16:00:00 EEST 2026
-2026.09.15 01:27:25,026	INFO	3	org.l2jmobius.gameserver.managers.CastleManorManager	CastleManorManager: Loaded 258 seeds.
-2026.09.15 01:27:25,035	INFO	3	org.l2jmobius.gameserver.managers.CastleManorManager	CastleManorManager: Manor data loaded.
-2026.09.15 01:27:25,040	INFO	3	org.l2jmobius.gameserver.managers.MercTicketManager	MercTicketManager: Loaded 0 Mercenary Tickets
-2026.09.15 01:27:25,040	INFO	3	org.l2jmobius.gameserver.managers.ScriptManager	ScriptManager: Loaded 342 quests.
-2026.09.15 01:27:25,040	INFO	3	org.l2jmobius.gameserver.managers.ScriptManager	ScriptManager: Loaded 126 scripts.
-2026.09.15 01:27:25,044	INFO	3	org.l2jmobius.gameserver.managers.games.MonsterRaceManager	MonsterRace: loaded 3 records, currently on race #4
-2026.09.15 01:27:25,056	INFO	3	org.l2jmobius.gameserver.GameServer	AutoSpawnHandler: Loaded 124 handlers in total.
-2026.09.15 01:27:25,059	INFO	3	org.l2jmobius.gameserver.managers.DailyResetManager	DailyResetManager: Next schedule at 15/09/2026 06:30:00.
-2026.09.15 01:27:25,063	INFO	3	org.l2jmobius.gameserver.managers.PunishmentManager	PunishmentManager: Loaded 0 active and 0 expired punishments.
-2026.09.15 01:27:25,064	INFO	3	org.l2jmobius.gameserver.GameServer	IdManager: Free ObjectID's remaining: 1879008788
-2026.09.15 01:27:25,065	INFO	3	org.l2jmobius.gameserver.data.sql.OfflineTraderTable	OfflineTraderTable: Loading offline traders...
-2026.09.15 01:27:25,066	INFO	3	org.l2jmobius.gameserver.data.sql.OfflineTraderTable	OfflineTraderTable: Loaded 0 offline traders.
-2026.09.15 01:27:25,068	INFO	185	org.l2jmobius.gameserver.util.DeadlockWatcher	DeadlockWatcher: Thread started.
-2026.09.15 01:27:26,099	INFO	3	org.l2jmobius.gameserver.GameServer	GameServer: Started, using 1060 of 4096 MB total memory.
-2026.09.15 01:27:26,099	INFO	3	org.l2jmobius.gameserver.GameServer	GameServer: Maximum number of connected players is 2000.
-2026.09.15 01:27:26,099	INFO	3	org.l2jmobius.gameserver.GameServer	GameServer: Server loaded in 27 seconds.
-2026.09.15 01:27:26,117	INFO	191	org.l2jmobius.gameserver.LoginServerThread	LoginServerThread: Connecting to login on 127.0.0.1:9014
-2026.09.15 01:27:26,157	INFO	191	org.l2jmobius.gameserver.LoginServerThread	LoginServerThread: Registered on login as Server 2: Sieghardt
-2026.09.15 01:27:42,910	WARNING	206	org.l2jmobius.gameserver.entity.actor.Creature	Master access level set for character admin! Just a warning to be careful ;)
-2026.09.15 01:27:47,493	INFO	157	l3.ai.L3ThinkTaskManager	L3ThinkTaskManager: pool 0 scheduled (offset 0ms).
-2026.09.15 01:27:47,726	INFO	157	handlers.chat.commands.admin.AdminL3Spawn	L3Spawn: admin spawned 10/10 agents.
-2026.09.15 01:27:48,342	INFO	61	org.l2jmobius.gameserver.ui.SystemPanel	New maximum connected count of 11!
-2026.09.15 01:28:08,107	WARNING	59	org.l2jmobius.gameserver.Shutdown	Server scheduled restart issued shutdown command. Shutdown in 1 seconds!
-2026.09.15 01:28:09,108	WARNING	271	org.l2jmobius.gameserver.Shutdown	GM shutdown countdown is over. shutting down NOW!
-2026.09.15 01:28:09,151	INFO	271	org.l2jmobius.gameserver.Shutdown	All players disconnected and saved(43ms).
-2026.09.15 01:28:09,151	INFO	271	org.l2jmobius.gameserver.Shutdown	Game Time Task Manager: Thread interruped(0ms).
-2026.09.15 01:28:09,152	INFO	271	org.l2jmobius.commons.threads.ThreadPool	ThreadPool: Shutting down all thread pools.
-2026.09.15 01:28:09,153	INFO	271	org.l2jmobius.gameserver.Shutdown	Thread Pool Manager: Manager has been shut down(2ms).
-2026.09.15 01:28:09,153	INFO	271	org.l2jmobius.gameserver.Shutdown	Login Server Thread: Thread interruped(0ms).
-2026.09.15 01:28:09,153	INFO	271	org.l2jmobius.gameserver.Shutdown	GM shutdown received. Shutting down NOW!
-2026.09.15 01:28:09,156	INFO	271	org.l2jmobius.gameserver.Shutdown	SevenSignsFestival: Festival data saved(2ms).
-2026.09.15 01:28:09,156	INFO	271	org.l2jmobius.gameserver.Shutdown	SevenSigns: Seven Signs data saved(0ms).
-2026.09.15 01:28:09,157	INFO	271	org.l2jmobius.gameserver.Shutdown	SevenSigns: Seven Signs status saved(1ms).
-2026.09.15 01:28:09,184	INFO	271	org.l2jmobius.gameserver.Shutdown	RaidBossSpawnManager: All raidboss info saved(27ms).
-2026.09.15 01:28:09,188	INFO	271	org.l2jmobius.gameserver.Shutdown	GrandBossManager: All Grand Boss info saved(4ms).
-2026.09.15 01:28:09,189	INFO	271	org.l2jmobius.gameserver.Shutdown	Olympiad System: Data saved(1ms).
-2026.09.15 01:28:09,189	INFO	271	org.l2jmobius.gameserver.Shutdown	Hero System: Data saved(0ms).
-2026.09.15 01:28:09,190	INFO	271	org.l2jmobius.gameserver.Shutdown	Clan System: Data saved(0ms).
-2026.09.15 01:28:09,191	INFO	271	org.l2jmobius.gameserver.Shutdown	Cursed Weapons Manager: Data saved(2ms).
-2026.09.15 01:28:09,192	INFO	271	org.l2jmobius.gameserver.Shutdown	Castle Manor Manager: Data saved(1ms).
-2026.09.15 01:28:09,192	CONFIG	271	conquerablehalls.FortressOfTheDead.FortressOfTheDead	FortressOfTheDead: Successfully saved attackers to database.
-2026.09.15 01:28:09,193	CONFIG	271	conquerablehalls.DevastatedCastle.DevastatedCastle	DevastatedCastle: Successfully saved attackers to database.
-2026.09.15 01:28:09,193	CONFIG	271	conquerablehalls.BanditStronghold.BanditStronghold	BanditStronghold: Successfully saved attackers to database.
-2026.09.15 01:28:09,194	CONFIG	271	conquerablehalls.FortressOfResistance.FortressOfResistance	FortressOfResistance: Successfully saved attackers to database.
-2026.09.15 01:28:09,194	CONFIG	271	conquerablehalls.RainbowSpringsChateau.RainbowSpringsChateau	RainbowSpringsChateau: Successfully saved attackers to database.
-2026.09.15 01:28:09,194	CONFIG	271	conquerablehalls.WildBeastReserve.WildBeastReserve	WildBeastReserve: Successfully saved attackers to database.
-2026.09.15 01:28:09,194	INFO	271	org.l2jmobius.gameserver.Shutdown	CHSiegeManager: Siegable hall attacker lists saved!
-2026.09.15 01:28:09,195	INFO	271	org.l2jmobius.gameserver.Shutdown	Script Manager: Data saved(3ms).
-2026.09.15 01:28:09,199	INFO	271	org.l2jmobius.gameserver.managers.GlobalVariablesManager	GlobalVariablesManager: Stored 4 variables.
-2026.09.15 01:28:09,199	INFO	271	org.l2jmobius.gameserver.Shutdown	Global Variables Manager: Variables saved(4ms).
-2026.09.15 01:28:09,200	INFO	271	org.l2jmobius.gameserver.Shutdown	Fishing Championship Manager: Data saved(0ms).
-2026.09.15 01:28:09,207	INFO	271	org.l2jmobius.gameserver.Shutdown	SchemeBufferTable: Data saved(8ms).
-2026.09.15 01:28:12,778	WARNING	191	org.l2jmobius.gameserver.LoginServerThread	LoginServerThread: LoginServer not available, trying to reconnect...
-2026.09.15 01:28:14,217	INFO	271	org.l2jmobius.commons.database.DatabaseFactory	Database: HikariCP pool closed successfully.
-2026.09.15 01:28:14,217	INFO	271	org.l2jmobius.gameserver.Shutdown	Database Factory: Database connection has been shut down(9ms).
-2026.09.15 01:28:14,217	INFO	271	org.l2jmobius.gameserver.Shutdown	The server has been successfully shut down in 5seconds.
+2026.09.15 02:07:23,901	INFO	3	org.l2jmobius.commons.util.IXmlReader	Network Config: ipconfig.xml exists, using manual configuration...
+2026.09.15 02:07:24,048	INFO	3	org.l2jmobius.gameserver.config.ServerConfig	Loaded 6 Filter Words.
+2026.09.15 02:07:24,112	INFO	3	org.l2jmobius.gameserver.GameServer	------------------------------------------------=[ Database ]
+2026.09.15 02:07:24,272	INFO	3	org.l2jmobius.commons.database.DatabaseFactory	Database: HikariCP pool initialized successfully.
+2026.09.15 02:07:24,455	INFO	3	org.l2jmobius.commons.database.DatabaseFactory	Database: Initialized with a valid connection.
+2026.09.15 02:07:24,464	INFO	3	org.l2jmobius.gameserver.GameServer	----------------------------------------------=[ ThreadPool ]
+2026.09.15 02:07:24,466	INFO	3	org.l2jmobius.commons.threads.ThreadPool	ThreadPool: Initializing.
+2026.09.15 02:07:24,468	INFO	3	org.l2jmobius.commons.threads.ThreadPool	...scheduled pool executor with 16 high priority threads.
+2026.09.15 02:07:24,474	INFO	3	org.l2jmobius.commons.threads.ThreadPool	...scheduled pool executor with 64 total threads.
+2026.09.15 02:07:24,474	INFO	3	org.l2jmobius.commons.threads.ThreadPool	...instant pool executor with 32 total threads.
+2026.09.15 02:07:24,488	INFO	3	org.l2jmobius.gameserver.GameServer	-----------------------------------------------=[ IdManager ]
+2026.09.15 02:07:24,548	INFO	3	org.l2jmobius.gameserver.managers.DatabaseIdManager	DatabaseIdManager: Cleaned 0 elements in 0 seconds.
+2026.09.15 02:07:24,553	INFO	3	org.l2jmobius.gameserver.managers.DatabaseIdManager	DatabaseIdManager: Updated character online status.
+2026.09.15 02:07:24,563	INFO	3	org.l2jmobius.gameserver.managers.DatabaseIdManager	DatabaseIdManager: Cleaned 0 expired timestamps.
+2026.09.15 02:07:24,577	INFO	3	org.l2jmobius.gameserver.managers.IdManager	IdManager: 102912 ids available.
+2026.09.15 02:07:24,577	INFO	3	org.l2jmobius.gameserver.GameServer	----------------------------------------=[ Scripting Engine ]
+2026.09.15 02:07:24,781	INFO	3	org.l2jmobius.gameserver.scripting.ScriptEngine	Loaded 386 files to exclude.
+2026.09.15 02:07:24,781	INFO	3	org.l2jmobius.gameserver.GameServer	---------------------------------------------------=[ World ]
+2026.09.15 02:07:24,787	INFO	3	org.l2jmobius.commons.util.IXmlReader	InstanceManager: Multiverse Instance created.
+2026.09.15 02:07:24,788	INFO	3	org.l2jmobius.commons.util.IXmlReader	InstanceManager: Universe Instance created.
+2026.09.15 02:07:24,808	INFO	3	org.l2jmobius.commons.util.IXmlReader	InstanceManager: Loaded 2 instance templates.
+2026.09.15 02:07:25,653	INFO	3	org.l2jmobius.gameserver.data.xml.MapRegionData	MapRegionData: Loaded 42 map regions.
+2026.09.15 02:07:25,662	INFO	3	org.l2jmobius.gameserver.managers.GlobalVariablesManager	GlobalVariablesManager: Loaded 4 variables.
+2026.09.15 02:07:25,663	INFO	3	org.l2jmobius.gameserver.GameServer	----------------------------------------------------=[ Data ]
+2026.09.15 02:07:25,688	INFO	3	org.l2jmobius.gameserver.data.xml.CategoryData	CategoryData: Loaded 160 categories.
+2026.09.15 02:07:25,733	INFO	3	org.l2jmobius.gameserver.data.xml.CubicData	CubicData: Loaded 67 cubic templates.
+2026.09.15 02:07:25,739	INFO	3	org.l2jmobius.gameserver.GameServer	--------------------------------------------------=[ Skills ]
+2026.09.15 02:07:27,301	INFO	3	handlers.EffectMasterHandler	EffectMasterHandler: Loaded 146 effect handlers.
+2026.09.15 02:07:27,527	INFO	3	org.l2jmobius.gameserver.data.xml.EnchantSkillTreeData	EnchantSkillTreeData: Loaded 14551 enchant skills.
+2026.09.15 02:07:28,018	INFO	3	org.l2jmobius.commons.util.IXmlReader	SkillTreeData: Loaded 13777 Class Skills for 89 class skill trees.
+2026.09.15 02:07:28,019	INFO	3	org.l2jmobius.commons.util.IXmlReader	SkillTreeData: Loaded 117 fishing skills, 8 Dwarven only fishing skills.
+2026.09.15 02:07:28,020	INFO	3	org.l2jmobius.commons.util.IXmlReader	SkillTreeData: Loaded 64 clan skills, 64 for clan and 0 residential.
+2026.09.15 02:07:28,021	INFO	3	org.l2jmobius.commons.util.IXmlReader	SkillTreeData: Loaded 8 noble skills.
+2026.09.15 02:07:28,021	INFO	3	org.l2jmobius.commons.util.IXmlReader	SkillTreeData: Loaded 5 hero skills.
+2026.09.15 02:07:28,021	INFO	3	org.l2jmobius.commons.util.IXmlReader	SkillTreeData: Loaded 25 game master skills.
+2026.09.15 02:07:28,021	INFO	3	org.l2jmobius.commons.util.IXmlReader	SkillTreeData: Loaded 1 game master aura skills.
+2026.09.15 02:07:29,881	INFO	3	org.l2jmobius.gameserver.data.xml.SkillData	SkillData: Loaded 29867 Skill templates from XML files.
+2026.09.15 02:07:29,911	INFO	3	org.l2jmobius.gameserver.data.xml.PetSkillData	PetSkillData: Loaded 795 skills.
+2026.09.15 02:07:29,911	INFO	3	org.l2jmobius.gameserver.GameServer	---------------------------------------------------=[ Items ]
+2026.09.15 02:07:30,257	INFO	3	org.l2jmobius.gameserver.data.xml.ItemData	ItemData: Highest item id used: 50000
+2026.09.15 02:07:30,259	INFO	3	org.l2jmobius.gameserver.data.xml.ItemData	ItemData: Loaded 6882 etc items.
+2026.09.15 02:07:30,259	INFO	3	org.l2jmobius.gameserver.data.xml.ItemData	ItemData: Loaded 1106 armor items.
+2026.09.15 02:07:30,259	INFO	3	org.l2jmobius.gameserver.data.xml.ItemData	ItemData: Loaded 1223 weapon items.
+2026.09.15 02:07:30,259	INFO	3	org.l2jmobius.gameserver.data.xml.ItemData	ItemData: Loaded 9211 items in total.
+2026.09.15 02:07:30,263	INFO	3	org.l2jmobius.commons.util.IXmlReader	EnchantItemGroupsData: Loaded 4 item group templates.
+2026.09.15 02:07:30,264	INFO	3	org.l2jmobius.commons.util.IXmlReader	EnchantItemGroupsData: Loaded 1 scroll group templates.
+2026.09.15 02:07:30,264	INFO	3	org.l2jmobius.commons.util.IXmlReader	EnchantItemGroupsData: Max weapon enchant is set to 16.
+2026.09.15 02:07:30,264	INFO	3	org.l2jmobius.commons.util.IXmlReader	EnchantItemGroupsData: Max armor enchant is set to 16.
+2026.09.15 02:07:30,264	INFO	3	org.l2jmobius.commons.util.IXmlReader	EnchantItemGroupsData: Max accessory enchant is set to 16.
+2026.09.15 02:07:30,268	INFO	3	org.l2jmobius.commons.util.IXmlReader	EnchantItemData: Loaded 30 enchant scrolls.
+2026.09.15 02:07:30,811	INFO	3	org.l2jmobius.gameserver.data.xml.OptionData	OptionData: Loaded 16380 options.
+2026.09.15 02:07:30,819	INFO	3	org.l2jmobius.commons.util.IXmlReader	EnchantItemHPBonusData: Loaded 6 enchant HP bonuses.
+2026.09.15 02:07:30,822	INFO	3	org.l2jmobius.gameserver.data.MerchantPriceConfigTable	MerchantPriceConfigTable: Loaded 27 merchant price configs.
+2026.09.15 02:07:31,791	WARNING	3	org.l2jmobius.commons.util.IXmlReader	Directory not found: C:\Agentic\l3\server\dist\game\.\data\buylists\custom
+2026.09.15 02:07:31,791	INFO	3	org.l2jmobius.gameserver.data.xml.BuyListData	BuyListData: Loaded 616 buyLists.
+2026.09.15 02:07:32,220	INFO	3	org.l2jmobius.commons.util.IXmlReader	MultisellData: Loaded 208 multisell lists.
+2026.09.15 02:07:32,254	INFO	3	org.l2jmobius.commons.util.IXmlReader	RecipeData: Loaded 871 recipes.
+2026.09.15 02:07:32,271	INFO	3	org.l2jmobius.commons.util.IXmlReader	ArmorSetData: Loaded 51 armor sets.
+2026.09.15 02:07:32,284	INFO	3	org.l2jmobius.commons.util.IXmlReader	FishData: Loaded 278 fishes.
+2026.09.15 02:07:32,287	INFO	3	org.l2jmobius.commons.util.IXmlReader	FishingMonstersData: Loaded 8 fishing monsters.
+2026.09.15 02:07:32,290	INFO	3	org.l2jmobius.commons.util.IXmlReader	FishingRodsData: Loaded 6 fishing rods.
+2026.09.15 02:07:32,309	INFO	3	org.l2jmobius.commons.util.IXmlReader	HennaData: Loaded 180 henna data.
+2026.09.15 02:07:32,310	INFO	3	org.l2jmobius.gameserver.GameServer	----------------------------------------------=[ Characters ]
+2026.09.15 02:07:32,314	INFO	3	org.l2jmobius.gameserver.data.xml.ClassListData	ClassListData: Loaded 89 class data.
+2026.09.15 02:07:32,319	INFO	3	org.l2jmobius.gameserver.data.xml.InitialEquipmentData	InitialEquipmentData: Loaded 9 initial equipment data.
+2026.09.15 02:07:32,324	INFO	3	org.l2jmobius.gameserver.data.xml.InitialShortcutData	InitialShortcutData: Loaded 5 initial global shortcut data.
+2026.09.15 02:07:32,324	INFO	3	org.l2jmobius.gameserver.data.xml.InitialShortcutData	InitialShortcutData: Loaded 4 initial shortcut data.
+2026.09.15 02:07:32,324	INFO	3	org.l2jmobius.gameserver.data.xml.InitialShortcutData	InitialShortcutData: Loaded 0 macro presets.
+2026.09.15 02:07:32,329	INFO	3	org.l2jmobius.gameserver.data.xml.ExperienceData	ExperienceData: Loaded 81 levels.
+2026.09.15 02:07:32,329	INFO	3	org.l2jmobius.gameserver.data.xml.ExperienceData	ExperienceData: Max Player Level is 80.
+2026.09.15 02:07:32,329	INFO	3	org.l2jmobius.gameserver.data.xml.ExperienceData	ExperienceData: Max Pet Level is 80.
+2026.09.15 02:07:32,332	INFO	3	org.l2jmobius.gameserver.data.xml.ExperienceLossData	ExperienceLossData: Loaded 80 levels.
+2026.09.15 02:07:32,336	INFO	3	org.l2jmobius.gameserver.data.xml.KarmaLossData	KarmaLossData: Loaded 80 modifiers.
+2026.09.15 02:07:32,338	INFO	3	org.l2jmobius.commons.util.IXmlReader	HitConditionBonusData: Loaded hit condition bonuses.
+2026.09.15 02:07:32,623	INFO	3	org.l2jmobius.gameserver.data.xml.PlayerTemplateData	PlayerTemplateData: Loaded 89 player templates.
+2026.09.15 02:07:32,623	INFO	3	org.l2jmobius.gameserver.data.xml.PlayerTemplateData	PlayerTemplateData: Loaded 42720 level up gain records.
+2026.09.15 02:07:32,633	INFO	3	org.l2jmobius.gameserver.data.sql.CharInfoTable	CharInfoTable: Loaded 1057 char names.
+2026.09.15 02:07:32,638	INFO	3	org.l2jmobius.gameserver.data.xml.AdminData	AdminData: Loaded 10 access levels.
+2026.09.15 02:07:32,644	INFO	3	org.l2jmobius.gameserver.data.xml.AdminData	AdminData: Loaded 443 access commands.
+2026.09.15 02:07:32,647	INFO	3	org.l2jmobius.gameserver.managers.RaidBossPointsManager	RaidBossPointsManager: Loaded 0 Characters Raid Points.
+2026.09.15 02:07:32,733	INFO	3	org.l2jmobius.commons.util.IXmlReader	PetDataTable: Loaded 12 pets.
+2026.09.15 02:07:32,738	INFO	3	org.l2jmobius.gameserver.GameServer	---------------------------------------------------=[ Clans ]
+2026.09.15 02:07:32,748	INFO	3	org.l2jmobius.gameserver.communitybbs.Manager.ForumsBBSManager	ForumsBBSManager: Loaded 4 forums. Last forum id used: 4
+2026.09.15 02:07:32,749	INFO	3	org.l2jmobius.gameserver.data.sql.ClanTable	ClanTable: Restored 0 clans from the database.
+2026.09.15 02:07:32,756	INFO	3	org.l2jmobius.gameserver.managers.CHSiegeManager	CHSiegeManager: Loaded 6 conquerable clan halls.
+2026.09.15 02:07:32,802	INFO	3	org.l2jmobius.gameserver.managers.ClanHallAuctionManager	ClanHallAuctionManager: Loaded 38 auction(s)
+2026.09.15 02:07:32,803	INFO	3	org.l2jmobius.gameserver.data.sql.ClanHallTable	ClanHallTable: Loaded 0 clan halls
+2026.09.15 02:07:32,804	INFO	3	org.l2jmobius.gameserver.data.sql.ClanHallTable	ClanHallTable: Loaded 38 free clan halls
+2026.09.15 02:07:32,804	INFO	3	org.l2jmobius.gameserver.GameServer	-------------------------------------------------=[ Geodata ]
+2026.09.15 02:07:32,828	INFO	3	org.l2jmobius.gameserver.geoengine.GeoEngine	GeoEngine: Loaded 0 regions.
+2026.09.15 02:07:32,828	INFO	3	org.l2jmobius.gameserver.geoengine.GeoEngine	GeoEngine: Pathfinding is disabled.
+2026.09.15 02:07:32,828	INFO	3	org.l2jmobius.gameserver.GameServer	----------------------------------------------------=[ NPCs ]
+2026.09.15 02:07:32,852	INFO	3	org.l2jmobius.gameserver.managers.ZoneManager	ZoneManager 12 by 17 Zone Region Grid set up.
+2026.09.15 02:07:34,038	INFO	3	org.l2jmobius.commons.util.IXmlReader	NpcData: Loaded 6519 NPCs.
+2026.09.15 02:07:34,081	INFO	3	org.l2jmobius.commons.util.IXmlReader	NpcData: Loaded 22 custom NPCs.
+2026.09.15 02:07:34,087	INFO	3	org.l2jmobius.commons.util.IXmlReader	SkillLearnData: Loaded 217 skill learn data.
+2026.09.15 02:07:34,092	INFO	3	org.l2jmobius.gameserver.managers.GrandBossManager	GrandBossManager: Gigantic Chaos Golem(25512) status is 0.
+2026.09.15 02:07:34,093	INFO	3	org.l2jmobius.gameserver.managers.GrandBossManager	GrandBossManager: Queen Ant(29001) status is 0.
+2026.09.15 02:07:34,093	INFO	3	org.l2jmobius.gameserver.managers.GrandBossManager	GrandBossManager: Core(29006) status is 0.
+2026.09.15 02:07:34,093	INFO	3	org.l2jmobius.gameserver.managers.GrandBossManager	GrandBossManager: Orfen(29014) status is 0.
+2026.09.15 02:07:34,093	INFO	3	org.l2jmobius.gameserver.managers.GrandBossManager	GrandBossManager: Antharas(29019) status is 0.
+2026.09.15 02:07:34,094	INFO	3	org.l2jmobius.gameserver.managers.GrandBossManager	GrandBossManager: Baium(29020) status is 0.
+2026.09.15 02:07:34,094	INFO	3	org.l2jmobius.gameserver.managers.GrandBossManager	GrandBossManager: Zaken(29022) status is 0.
+2026.09.15 02:07:34,094	INFO	3	org.l2jmobius.gameserver.managers.GrandBossManager	GrandBossManager: Valakas(29028) status is 0.
+2026.09.15 02:07:34,094	INFO	3	org.l2jmobius.gameserver.managers.GrandBossManager	GrandBossManager: Frintezza(29045) status is 0.
+2026.09.15 02:07:34,094	INFO	3	org.l2jmobius.gameserver.managers.GrandBossManager	GrandBossManager: Loaded 9 Instances
+2026.09.15 02:07:34,231	INFO	3	org.l2jmobius.gameserver.managers.ZoneManager	ZoneManager: Loaded 30 zone classes and 2411 zones.
+2026.09.15 02:07:34,235	INFO	3	org.l2jmobius.gameserver.managers.ZoneManager	ZoneManager: Last static id 200224.
+2026.09.15 02:07:34,280	INFO	3	org.l2jmobius.commons.util.IXmlReader	DoorData: Loaded 547 doors.
+2026.09.15 02:07:34,285	INFO	3	FenceData	FenceData: Loaded 1 fences.
+2026.09.15 02:07:34,297	INFO	3	org.l2jmobius.gameserver.data.xml.LevelUpCrystalData	Soul crystal data : Loaded 39
+2026.09.15 02:07:34,297	INFO	3	org.l2jmobius.gameserver.data.xml.LevelUpCrystalData	Npc leveling crystal data : Loaded 125
+2026.09.15 02:07:34,308	INFO	3	org.l2jmobius.gameserver.managers.WalkingManager	WalkingManager: Loaded 14 walking routes.
+2026.09.15 02:07:34,315	INFO	3	org.l2jmobius.commons.util.IXmlReader	StaticObjectData: Loaded 29 static object templates.
+2026.09.15 02:07:34,328	INFO	3	org.l2jmobius.gameserver.managers.CastleManager	CastleManager: Loaded 9 castles
+2026.09.15 02:07:34,334	INFO	3	org.l2jmobius.gameserver.data.SchemeBufferTable	SchemeBufferTable: Loaded 8 categories and 135 entries.
+2026.09.15 02:07:34,337	INFO	3	org.l2jmobius.gameserver.data.SchemeBufferTable	SchemeBufferTable: Loaded 0 scheme entries from database.
+2026.09.15 02:07:34,337	INFO	3	org.l2jmobius.gameserver.data.SchemeBufferTable	SchemeBufferTable: Loaded 0 players and 85 available skills.
+2026.09.15 02:07:34,339	INFO	3	org.l2jmobius.gameserver.managers.GrandBossManager	GrandBossManager: Initialized 10 Grand Boss Zones
+2026.09.15 02:07:34,339	INFO	3	org.l2jmobius.gameserver.GameServer	------------------------------------------------=[ Olympiad ]
+2026.09.15 02:07:34,351	INFO	3	org.l2jmobius.gameserver.mechanics.olympiad.Olympiad	Olympiad System: Loading Olympiad System....
+2026.09.15 02:07:34,352	INFO	3	org.l2jmobius.gameserver.mechanics.olympiad.Olympiad	Olympiad System: Currently in Olympiad Period
+2026.09.15 02:07:34,352	INFO	3	org.l2jmobius.gameserver.mechanics.olympiad.Olympiad	Olympiad System: 16 days, 9 hours and 52 mins until period ends.
+2026.09.15 02:07:34,352	INFO	3	org.l2jmobius.gameserver.mechanics.olympiad.Olympiad	Olympiad System: Next weekly change is in 5 days, 15 hours and 33 mins.
+2026.09.15 02:07:34,352	INFO	3	org.l2jmobius.gameserver.mechanics.olympiad.Olympiad	Olympiad System: Loaded 0 Nobles
+2026.09.15 02:07:34,359	INFO	3	org.l2jmobius.gameserver.mechanics.olympiad.Olympiad	Olympiad System: Competition Period Starts in 0 days, 15 hours and 53 mins.
+2026.09.15 02:07:34,365	INFO	3	org.l2jmobius.gameserver.mechanics.olympiad.Olympiad	Olympiad System: Event starts/started : Tue Sep 15 18:00:34 EEST 2026
+2026.09.15 02:07:34,370	INFO	3	org.l2jmobius.gameserver.mechanics.olympiad.Hero	Hero System: Loaded 0 Heroes.
+2026.09.15 02:07:34,370	INFO	3	org.l2jmobius.gameserver.mechanics.olympiad.Hero	Hero System: Loaded 0 all time Heroes.
+2026.09.15 02:07:34,370	INFO	3	org.l2jmobius.gameserver.GameServer	---------------------------------------------=[ Seven Signs ]
+2026.09.15 02:07:34,375	INFO	3	org.l2jmobius.gameserver.mechanics.sevensigns.SevenSigns	SevenSigns: Currently in the Seal Validation period!
+2026.09.15 02:07:34,375	INFO	3	org.l2jmobius.gameserver.mechanics.sevensigns.SevenSigns	SevenSigns: The Seal of Avarice remains unclaimed.
+2026.09.15 02:07:34,375	INFO	3	org.l2jmobius.gameserver.mechanics.sevensigns.SevenSigns	SevenSigns: The Seal of Gnosis remains unclaimed.
+2026.09.15 02:07:34,375	INFO	3	org.l2jmobius.gameserver.mechanics.sevensigns.SevenSigns	SevenSigns: The Seal of Strife remains unclaimed.
+2026.09.15 02:07:34,375	INFO	3	org.l2jmobius.gameserver.mechanics.sevensigns.SevenSigns	SevenSigns: The competition ended with a tie last week.
+2026.09.15 02:07:34,375	INFO	3	org.l2jmobius.gameserver.mechanics.sevensigns.SevenSigns	SevenSigns: Next period change set to Mon Sep 21 18:00:34 EEST 2026
+2026.09.15 02:07:34,376	INFO	3	org.l2jmobius.gameserver.mechanics.sevensigns.SevenSigns	SevenSigns: Next period begins in 6 days, 15 hours, 52 minutes, 59 seconds, 997 milliseconds
+2026.09.15 02:07:34,376	INFO	3	org.l2jmobius.gameserver.GameServer	---------------------------------------------------=[ Cache ]
+2026.09.15 02:07:34,377	INFO	3	org.l2jmobius.gameserver.cache.HtmCache	Cache[HTML]: Running lazy cache.
+2026.09.15 02:07:34,379	INFO	3	org.l2jmobius.gameserver.data.sql.CrestTable	CrestTable: Loaded 0 Crests.
+2026.09.15 02:07:34,677	INFO	3	org.l2jmobius.gameserver.data.xml.TeleporterData	TeleporterData: Loaded 143 npc teleporters.
+2026.09.15 02:07:34,721	INFO	3	org.l2jmobius.gameserver.data.AugmentationData	AugmentationData: Loaded 22640 augmentations.
+2026.09.15 02:07:34,726	INFO	3	org.l2jmobius.gameserver.managers.CursedWeaponsManager	CursedWeaponsManager: Loaded : 2 cursed weapon(s).
+2026.09.15 02:07:34,726	INFO	3	org.l2jmobius.gameserver.GameServer	-------------------------------------------------=[ Scripts ]
+2026.09.15 02:07:34,727	INFO	3	org.l2jmobius.gameserver.GameServer	Loading server scripts...
+2026.09.15 02:07:36,445	WARNING	3	org.l2jmobius.gameserver.GameServer	Failed to execute script list!
+2026.09.15 02:07:36,451	INFO	3	org.l2jmobius.gameserver.data.xml.SpawnData	SpawnData: Initializing spawns...
+2026.09.15 02:07:38,136	INFO	3	org.l2jmobius.gameserver.data.xml.SpawnData	SpawnData: 186 spawn files parsed.
+2026.09.15 02:07:38,136	INFO	3	org.l2jmobius.gameserver.data.xml.SpawnData	SpawnData: 34121 spawns have been initialized!
+2026.09.15 02:07:38,138	INFO	3	org.l2jmobius.gameserver.managers.DayNightSpawnManager	DayNightSpawnManager: Removed 0 night creatures
+2026.09.15 02:07:38,141	INFO	3	org.l2jmobius.gameserver.managers.DayNightSpawnManager	DayNightSpawnManager: Spawned 232 day creatures
+2026.09.15 02:07:38,147	INFO	3	org.l2jmobius.gameserver.managers.DimensionalRiftManager	DimensionalRiftManager: Loaded 7 room types with 56 rooms.
+2026.09.15 02:07:38,152	INFO	3	org.l2jmobius.gameserver.managers.DimensionalRiftManager	DimensionalRiftManager: Loaded 462 dimensional rift spawns, 0 errors.
+2026.09.15 02:07:38,175	INFO	3	org.l2jmobius.gameserver.managers.RaidBossSpawnManager	RaidBossSpawnManager: Loaded 189 Instances
+2026.09.15 02:07:38,175	INFO	3	org.l2jmobius.gameserver.managers.RaidBossSpawnManager	RaidBossSpawnManager: Scheduled 0 Instances
+2026.09.15 02:07:38,175	INFO	3	org.l2jmobius.gameserver.GameServer	---------------------------------------------------=[ Siege ]
+2026.09.15 02:07:38,185	INFO	3	org.l2jmobius.gameserver.data.xml.SiegeScheduleData	SiegeScheduleData: Loaded 9 siege schedulers.
+2026.09.15 02:07:38,185	INFO	3	org.l2jmobius.gameserver.mechanics.siege.Siege	Siege of Gludio: Sun Sep 27 16:00:00 EEST 2026
+2026.09.15 02:07:38,187	INFO	3	org.l2jmobius.gameserver.mechanics.siege.Siege	Siege of Dion: Sun Sep 27 20:00:00 EEST 2026
+2026.09.15 02:07:38,189	INFO	3	org.l2jmobius.gameserver.mechanics.siege.Siege	Siege of Giran: Sun Sep 27 16:00:00 EEST 2026
+2026.09.15 02:07:38,190	INFO	3	org.l2jmobius.gameserver.mechanics.siege.Siege	Siege of Oren: Sun Sep 27 20:00:00 EEST 2026
+2026.09.15 02:07:38,191	INFO	3	org.l2jmobius.gameserver.mechanics.siege.Siege	Siege of Aden: Sun Sep 27 16:00:00 EEST 2026
+2026.09.15 02:07:38,191	INFO	3	org.l2jmobius.gameserver.mechanics.siege.Siege	Siege of Innadril: Sun Sep 27 20:00:00 EEST 2026
+2026.09.15 02:07:38,192	INFO	3	org.l2jmobius.gameserver.mechanics.siege.Siege	Siege of Goddard: Sun Sep 27 16:00:00 EEST 2026
+2026.09.15 02:07:38,192	INFO	3	org.l2jmobius.gameserver.mechanics.siege.Siege	Siege of Rune: Sun Sep 27 20:00:00 EEST 2026
+2026.09.15 02:07:38,194	INFO	3	org.l2jmobius.gameserver.mechanics.siege.Siege	Siege of Schuttgart: Sun Sep 27 16:00:00 EEST 2026
+2026.09.15 02:07:38,207	INFO	3	org.l2jmobius.gameserver.managers.CastleManorManager	CastleManorManager: Loaded 258 seeds.
+2026.09.15 02:07:38,218	INFO	3	org.l2jmobius.gameserver.managers.CastleManorManager	CastleManorManager: Manor data loaded.
+2026.09.15 02:07:38,223	INFO	3	org.l2jmobius.gameserver.managers.MercTicketManager	MercTicketManager: Loaded 0 Mercenary Tickets
+2026.09.15 02:07:38,224	INFO	3	org.l2jmobius.gameserver.managers.ScriptManager	ScriptManager: Loaded 0 quests.
+2026.09.15 02:07:38,224	INFO	3	org.l2jmobius.gameserver.managers.ScriptManager	ScriptManager: Loaded 0 scripts.
+2026.09.15 02:07:38,228	INFO	3	org.l2jmobius.gameserver.managers.games.MonsterRaceManager	MonsterRace: loaded 3 records, currently on race #4
+2026.09.15 02:07:38,315	INFO	3	org.l2jmobius.gameserver.mechanics.sevensigns.SevenSignsFestival	SevenSignsFestival: Initialization bypassed due to Seal Validation in effect.
+2026.09.15 02:07:38,316	INFO	3	org.l2jmobius.gameserver.GameServer	AutoSpawnHandler: Loaded 124 handlers in total.
+2026.09.15 02:07:38,321	INFO	3	org.l2jmobius.gameserver.managers.DailyResetManager	DailyResetManager: Next schedule at 15/09/2026 06:30:00.
+2026.09.15 02:07:38,326	INFO	3	org.l2jmobius.gameserver.managers.PunishmentManager	PunishmentManager: Loaded 0 active and 0 expired punishments.
+2026.09.15 02:07:38,328	INFO	3	org.l2jmobius.gameserver.GameServer	IdManager: Free ObjectID's remaining: 1879008854
+2026.09.15 02:07:38,330	INFO	3	org.l2jmobius.gameserver.data.sql.OfflineTraderTable	OfflineTraderTable: Loading offline traders...
+2026.09.15 02:07:38,330	INFO	3	org.l2jmobius.gameserver.data.sql.OfflineTraderTable	OfflineTraderTable: Loaded 0 offline traders.
+2026.09.15 02:07:38,334	INFO	182	org.l2jmobius.gameserver.util.DeadlockWatcher	DeadlockWatcher: Thread started.
+2026.09.15 02:07:39,435	INFO	3	org.l2jmobius.gameserver.GameServer	GameServer: Started, using 1038 of 4096 MB total memory.
+2026.09.15 02:07:39,436	INFO	3	org.l2jmobius.gameserver.GameServer	GameServer: Maximum number of connected players is 2000.
+2026.09.15 02:07:39,436	INFO	3	org.l2jmobius.gameserver.GameServer	GameServer: Server loaded in 16 seconds.
+2026.09.15 02:07:39,454	INFO	188	org.l2jmobius.gameserver.LoginServerThread	LoginServerThread: Connecting to login on 127.0.0.1:9014
+2026.09.15 02:07:39,500	INFO	188	org.l2jmobius.gameserver.LoginServerThread	LoginServerThread: Registered on login as Server 2: Sieghardt
+2026.09.15 02:08:18,867	WARNING	188	org.l2jmobius.gameserver.LoginServerThread	LoginServerThread: LoginServer not available, trying to reconnect...

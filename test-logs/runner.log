@@ -1,12 +1,12 @@
 ﻿**********************
 Windows PowerShell transcript start
-Start time: 20260915092516
+Start time: 20260915200926
 Username: Desktop-1H06Q\Brata
 RunAs User: Desktop-1H06Q\Brata
 Configuration Name: 
 Machine: Desktop-1H06Q (Microsoft Windows NT 10.0.19045.0)
 Host Application: powershell -NoProfile -ExecutionPolicy Bypass -File C:\Agentic\l3\L3-run.ps1
-Process ID: 3168
+Process ID: 17940
 PSVersion: 5.1.19041.7291
 PSEdition: Desktop
 PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.19041.7291
@@ -25,14 +25,34 @@ L3 environment ready:
 Quick checks:  java -version | ant -version | mariadbd --version | git --version
 
 === 1/8  Git synchronization ===
-  local mode; skipping Git sync. Use -SyncGit to pull.
+From https://github.com/stefanbratasanu/L3
+ * branch              main       -> FETCH_HEAD
+Enumerating objects: 19795, done.
+Counting objects: 100% (19795/19795), done.
+Delta compression using up to 16 threads
+Compressing objects: 100% (16426/16426), done.
+Writing objects: 100% (19795/19795), done.
+Total 19795 (delta 3598), reused 19352 (delta 3295), pack-reused 0 (from 0)
+Enumerating cruft objects: 109, done.
+Traversing cruft objects: 197, done.
+Counting objects: 100% (109/109), done.
+Delta compression using up to 16 threads
+Compressing objects: 100% (109/109), done.
+Writing objects: 100% (109/109), done.
+Total 109 (delta 73), reused 0 (delta 0), pack-reused 0 (from 0)
+fatal: Cannot rebase onto multiple branches.
+  git pull --rebase failed (resolve the reported conflict, then re-run).
+  Starting anyway with the code you have locally.
 
 === 2/8  Checking toolchain ===
   java : C:\Agentic\tools\jdk-25\bin\java.exe
   db   : C:\Agentic\tools\mariadb\bin\mariadbd.exe
 
 === 3/8  Starting MariaDB ===
-  MariaDB is already running on port 3306 - leaving it alone.
+MariaDB running (PID 21212) on 127.0.0.1:3306.
+  data: C:\Agentic\data\mariadb
+  logs: C:\Agentic\data\mariadb\..\mariadb-logs\mariadbd.out.log
+Stop it with:  .\db-stop.ps1
 
 === 4/8  Restoring database ===
   DB already matches the current snapshot - no restore needed.
@@ -44,25 +64,27 @@ Quick checks:  java -version | ant -version | mariadbd --version | git --version
   starting LoginServer ...
   starting GameServer ...
 
-  LoginServer PID 21880
-  GameServer PID 3504
+  LoginServer PID 19692
+  GameServer PID 16300
   Servers are starting. Point the client at this machine, log in, and test.
   >>> To finish: type  .sd  in game (GM), or close a server window. <<<
       This script then dumps the DB and logs locally.
 
 === 7/8  Running - waiting for shutdown (.sd in game, or close a server window) ===
-  GameServer (PID 3504) stopped.
+  GameServer (PID 16300) stopped.
   Shutting the other server down too.
-  Stopping 21880 without a GUI shutdown prompt.
+  Stopping 19692 without a GUI shutdown prompt.
   Server(s) stopped.
 
 === 8/8  Saving database + logs locally ===
 Dumping l2jmobiusinterlude -> C:\Agentic\l3\server\dist\db_snapshot\l2jmobiusinterlude.sql ...
-  Wrote 561.7 KB.
-  Leaving MariaDB running (it was already up when this instance started).
-  safepoints collected: 2
+  Wrote 571.2 KB.
+Requesting graceful shutdown via mariadb-admin ...
+
+MariaDB stopped.
+  safepoints collected: 5
   logs collected into test-logs\ .
 **********************
 Windows PowerShell transcript end
-End time: 20260915092652
+End time: 20260915201253
 **********************
