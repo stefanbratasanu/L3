@@ -54,7 +54,8 @@ public class L3Config
 
 	/** The scheduler's heartbeat. Individual agents are gated by their own LOD on top of this, so
 	 * this is the *fastest* anything thinks, not how often every agent thinks. */
-	public static final int TICK_MS = 700;
+	/** Scheduler heartbeat; short enough to support accelerated agent thinking intervals. */
+	public static final int TICK_MS = 100;
 
 	/** Runtime multiplier for L3 agent thinking; one is normal speed and zero pauses decisions. */
 	private static volatile double _gameSpeed = 1.0;
