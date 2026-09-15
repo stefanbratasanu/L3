@@ -226,7 +226,7 @@ public class AdminL3Spawn implements IAdminCommandHandler
 
 		private boolean spawnPrius(Player observer)
 		{
-			final L3Agent agent = L3AgentManager.getInstance().spawnNew(inFrontOf(observer), "Prius", false, 10);
+			final L3Agent agent = L3AgentManager.getInstance().spawnNew(inFrontOf(observer), "Prius", false, 0);
 			if (agent == null)
 			{
 				observer.sendSysMessage("L3: Prius could not be created (name may already exist or the population cap is full).");
@@ -234,7 +234,7 @@ public class AdminL3Spawn implements IAdminCommandHandler
 			}
 
 			SPAWNED.add(agent.getObjectId());
-			observer.sendSysMessage("L3: Prius spawned as a Human Mage. Use //l3agent Prius and //gotonext to inspect.");
+			observer.sendSysMessage("L3: Prius spawned as a level 1 Human Fighter with standard starter gear.");
 			LOGGER.info("L3Spawn: " + observer.getName() + " spawned deterministic test agent Prius.");
 			return true;
 		}

@@ -79,6 +79,7 @@ public class L3AgentManager
 	private static final Logger LOGGER = Logger.getLogger(L3AgentManager.class.getName());
 
 	private static final String SELECT_AGENT_IDS = "SELECT charId FROM characters WHERE account_name=?";
+	private static final String SELECT_AGENT_BY_NAME = "SELECT charId FROM characters WHERE account_name=? AND char_name=?";
 
 	/** Matches the agent account and its variants (e.g. the turbo account), for a full purge. */
 	private static final String SELECT_AGENT_IDS_LIKE = "SELECT charId FROM characters WHERE account_name LIKE ?";
@@ -188,7 +189,29 @@ public class L3AgentManager
 		}
 
 		// A varied population normally uses a random class; named test agents may choose one.
-		final int level = L3Outfitter.randomLevel();
+		final boolean prius = "Prius".equalsIgnoreCase(name);
+		final int level = prius ? 1 : L3Outfitter.randomLevel();
+
+		if (name != null)
+		{
+			final Integer existingId = findPersistedAgent(name, turbo);
+			if (existingId != null)
+			{
+				final Player existing = Player.load(existingId);
+				if ((existing == null) || !placeInWorld(existing, location))
+				{
+					LOGGER.warning("L3: could not restore existing agent " + name + " (" + existingId + ").");
+					return null;
+				}
+
+				final L3Agent registered = register(existing);
+				if (registered == null)
+				{
+					LOGGER.warning("L3: existing agent " + name + " could not be registered.");
+				}
+				return registered;
+			}
+		}
 
 		final PlayerTemplate template = PlayerTemplateData.getInstance().getTemplate(classId);
 		if (template == null)
@@ -227,7 +250,14 @@ public class L3AgentManager
 		}
 
 		// Level, class skills, grade-appropriate weapon, shots, and test immortality.
-		L3Outfitter.outfit(player, classId, level);
+		if (prius)
+		{
+			L3Outfitter.outfitStarter(player, classId);
+		}
+		else
+		{
+			L3Outfitter.outfit(player, classId, level);
+		}
 
 		if (turbo)
 		{
@@ -241,6 +271,26 @@ public class L3AgentManager
 		}
 
 		return agent;
+	}
+
+	private Integer findPersistedAgent(String name, boolean turbo)
+	{
+		final String account = turbo ? (L3Config.AGENT_ACCOUNT + "_turbo") : L3Config.AGENT_ACCOUNT;
+		try (Connection con = DatabaseFactory.getConnection();
+			PreparedStatement ps = con.prepareStatement(SELECT_AGENT_BY_NAME))
+		{
+			ps.setString(1, account);
+			ps.setString(2, name);
+			try (ResultSet rs = ps.executeQuery())
+			{
+				return rs.next() ? rs.getInt("charId") : null;
+			}
+		}
+		catch (Exception e)
+		{
+			LOGGER.log(Level.WARNING, "L3: could not check for existing agent " + name + ".", e);
+			return null;
+		}
 	}
 
 	/**

@@ -25,7 +25,10 @@ import java.util.logging.Logger;
 
 import org.l2jmobius.commons.util.Rnd;
 import org.l2jmobius.gameserver.data.xml.ExperienceData;
+import org.l2jmobius.gameserver.data.xml.InitialEquipmentData;
 import org.l2jmobius.gameserver.entity.actor.Player;
+import org.l2jmobius.gameserver.entity.actor.enums.player.PlayerClass;
+import org.l2jmobius.gameserver.entity.item.holders.InitialEquipment;
 import org.l2jmobius.gameserver.entity.item.enums.ItemProcessType;
 import org.l2jmobius.gameserver.entity.item.instance.Item;
 import org.l2jmobius.gameserver.taskmanagers.AutoUseTaskManager;
@@ -195,6 +198,40 @@ public class L3Outfitter
 			if (L3Config.TEST_IMMORTAL)
 			{
 				makeImmortal(player);
+			}
+
+			/** Applies the same starter skills and equipment used when a Human Fighter is created. */
+			public static void outfitStarter(Player player, int classId)
+			{
+				try
+				{
+					giveSkills(player);
+					final var equipment = InitialEquipmentData.getInstance().getClassEquipment(PlayerClass.getPlayerClass(classId));
+					if (equipment != null)
+					{
+						for (InitialEquipment starter : equipment)
+						{
+							final Item item = player.addItem(ItemProcessType.REWARD, starter.getId(), starter.getCount(), null, false);
+							if ((item != null) && item.isEquipable() && starter.isEquipped())
+							{
+								player.getInventory().equipItem(item);
+							}
+						}
+					}
+
+					if (L3Config.TEST_IMMORTAL)
+					{
+						makeImmortal(player);
+					}
+					player.setCurrentHpMp(player.getMaxHp(), player.getMaxMp());
+					player.setCurrentCp(player.getMaxCp());
+					player.broadcastUserInfo();
+					AutoUseTaskManager.getInstance().startAutoUseTask(player);
+				}
+				catch (Exception e)
+				{
+					LOGGER.log(Level.WARNING, "L3: failed to apply starter outfit to " + player.getName(), e);
+				}
 			}
 
 			// Start at full health, and let the engine's own auto-use loop consume the shots we gave
