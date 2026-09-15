@@ -79,9 +79,9 @@ public class AdminL3Spawn implements IAdminCommandHandler
 		"admin_sdwipedb",
 		"admin_gotonext",
 		"admin_l3debug",
-		, "admin_l3agent"
-		, "admin_l3spawnprius"
-		, "admin_safepoint"
+		"admin_l3agent",
+		"admin_l3spawnprius",
+		"admin_safepoint"
 	};
 
 	/** Distance in front of the observer to place a single agent. */
