@@ -292,7 +292,7 @@ public class L3Reflex
 					continue;
 				}
 
-				if (dropped.isProtected())
+				if (dropped.getDropProtection().isProtected())
 				{
 					final org.l2jmobius.gameserver.entity.actor.Creature owner = dropped.getDropProtection().getOwner();
 					if ((owner == null) || !owner.isPlayer() || L3AgentManager.getInstance().isAgent(owner.asPlayer()) || (owner.calculateDistance2D(player) > 250))
@@ -319,10 +319,9 @@ public class L3Reflex
 			}
 			else
 			{
-				if (item.getOwnerId() != 0 && (item.getOwnerId() != player.getObjectId()))
+				if (item.getDropProtection().isProtected())
 				{
 					item.getDropProtection().unprotect();
-					item.setOwnerId(0);
 				}
 				player.doPickupItem(item);
 				if (item.isSpawned())

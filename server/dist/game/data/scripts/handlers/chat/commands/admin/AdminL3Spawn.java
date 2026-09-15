@@ -232,7 +232,7 @@ public class AdminL3Spawn implements IAdminCommandHandler
 			for (Item item : World.getVisibleObjectsInRange(agent.getPlayer(), Item.class, 250))
 			{
 				final org.l2jmobius.gameserver.entity.actor.Creature owner = item.getDropProtection().getOwner();
-				observer.sendSysMessage(item.getTemplate().getName() + " dist=" + (int) agent.getPlayer().calculateDistance2D(item) + " spawned=" + item.isSpawned() + " protected=" + item.isProtected() + " ownerId=" + item.getOwnerId() + " protectionOwner=" + (owner == null ? "none" : owner.getName()));
+				observer.sendSysMessage(item.getTemplate().getName() + " dist=" + (int) agent.getPlayer().calculateDistance2D(item) + " spawned=" + item.isSpawned() + " itemProtected=" + item.isProtected() + " dropProtected=" + item.getDropProtection().isProtected() + " ownerId=" + item.getOwnerId() + " protectionOwner=" + (owner == null ? "none" : owner.getName()));
 				if (++count >= 20)
 				{
 					break;
