@@ -1,0 +1,12 @@
+{"at":"2026-09-15T17:46:18.642186Z","charId":268474711,"name":"Prius","level":1,"lod":"COLD","goal":"REACH_LEVEL_20","state":"IDLE","type":"REGISTERED","detail":"mind initialized"}
+{"at":"2026-09-15T17:46:18.672212Z","charId":268474711,"name":"Prius","level":1,"lod":"COLD","goal":"REACH_LEVEL_20","state":"IDLE","type":"TICK","detail":"cold"}
+{"at":"2026-09-15T17:46:19.198314Z","charId":268474711,"name":"Prius","level":1,"lod":"HOT","goal":"REACH_LEVEL_20","state":"HUNTING","type":"STATE","detail":"IDLE->HUNTING"}
+{"at":"2026-09-15T17:46:19.199314300Z","charId":268474711,"name":"Prius","level":1,"lod":"HOT","goal":"REACH_LEVEL_20","state":"HUNTING","type":"TARGET","detail":"monster=268472039"}
+{"at":"2026-09-15T17:46:19.201316Z","charId":268474711,"name":"Prius","level":1,"lod":"HOT","goal":"REACH_LEVEL_20","state":"TRAVELING","type":"STATE","detail":"HUNTING->TRAVELING"}
+{"at":"2026-09-15T17:46:21.322365700Z","charId":268474711,"name":"Prius","level":1,"lod":"HOT","goal":"REACH_LEVEL_20","state":"HUNTING","type":"STATE","detail":"TRAVELING->HUNTING"}
+{"at":"2026-09-15T17:47:38.043419500Z","charId":268474711,"name":"Prius","level":1,"lod":"COLD","goal":"REACH_LEVEL_20","state":"IDLE","type":"REGISTERED","detail":"mind initialized"}
+{"at":"2026-09-15T17:47:38.072445800Z","charId":268474711,"name":"Prius","level":1,"lod":"COLD","goal":"REACH_LEVEL_20","state":"DEAD","type":"STATE","detail":"IDLE->DEAD"}
+{"at":"2026-09-15T17:47:38.073446600Z","charId":268474711,"name":"Prius","level":1,"lod":"COLD","goal":"REACH_LEVEL_20","state":"DEAD","type":"TICK","detail":"cold"}
+{"at":"2026-09-15T17:49:34.940206100Z","charId":268474711,"name":"Prius","level":1,"lod":"COLD","goal":"REACH_LEVEL_20","state":"IDLE","type":"REGISTERED","detail":"mind initialized"}
+{"at":"2026-09-15T17:49:34.947213100Z","charId":268474711,"name":"Prius","level":1,"lod":"COLD","goal":"REACH_LEVEL_20","state":"DEAD","type":"STATE","detail":"IDLE->DEAD"}
+{"at":"2026-09-15T17:49:34.948214Z","charId":268474711,"name":"Prius","level":1,"lod":"COLD","goal":"REACH_LEVEL_20","state":"DEAD","type":"TICK","detail":"cold"}

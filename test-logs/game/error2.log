@@ -1,4 +1,4 @@
-Sep 15, 2026 9:05:40 AM org.l2jmobius.gameserver.GameServer <init>
+Sep 15, 2026 8:42:38 PM org.l2jmobius.gameserver.GameServer <init>
 WARNING: Failed to execute script list!
 java.lang.RuntimeException: 
 ----------------
@@ -8,9 +8,11 @@ File diagnostics
 -----------------------
 Compilation diagnostics
 -----------------------
-	ERROR: data\scripts\handlers\chat\commands\admin\AdminL3Spawn.java, Line 82, Column 17
-		code: compiler.err.illegal.start.of.expr
-		message: illegal start of expression
+	ERROR: data\scripts\l3\ai\L3ThinkTaskManager.java, Line 150, Column 27
+		code: compiler.err.cant.resolve.location.args
+		message: cannot find symbol
+  symbol:   method scheduleAtFixedRateRealTime(()->runPool(pool),long,int)
+  location: class org.l2jmobius.commons.threads.ThreadPool
 
 	at org.l2jmobius.gameserver.scripting.engine.ScriptExecutor.executeScripts(ScriptExecutor.java:104)
 	at org.l2jmobius.gameserver.scripting.engine.ScriptExecutor.executeScript(ScriptExecutor.java:209)
