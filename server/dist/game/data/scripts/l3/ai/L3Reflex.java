@@ -363,6 +363,21 @@ public class L3Reflex
 					break;
 				}
 			}
+			if ((distance == Double.MAX_VALUE) && (agent.getHuntingAnchorCount() >= 2))
+			{
+				final int oldest = agent.getHuntingAnchorCount() - 1;
+				final double directionX = agent.getHuntingAnchorX(oldest) - agent.getHuntingAnchorX(oldest - 1);
+				final double directionY = agent.getHuntingAnchorY(oldest) - agent.getHuntingAnchorY(oldest - 1);
+				final double directionLength = Math.hypot(directionX, directionY);
+				if (directionLength > 1)
+				{
+					anchorX = agent.getHuntingAnchorX(oldest) + (int) ((directionX / directionLength) * 600);
+					anchorY = agent.getHuntingAnchorY(oldest) + (int) ((directionY / directionLength) * 600);
+					anchorZ = agent.getHuntingAnchorZ(oldest);
+					distance = 600;
+					selectedAnchor = oldest + 1;
+				}
+			}
 			if (distance > 150)
 			{
 				agent.setState(L3AgentState.TRAVELING);
