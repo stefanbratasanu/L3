@@ -78,16 +78,18 @@ public class L3Reflex
 		if (player.isDead())
 		{
 			agent.setState(L3AgentState.DEAD);
-			if (!agent.isRevivePending() && player.canRevive())
+			if (!agent.isRevivePending() && player.isReviveRequested())
 			{
 				agent.setRevivePending(true);
-				agent.shout("accepting resurrection");
+				agent.shout("accepting requested resurrection");
+				L3Debug.event(agent, "LIFECYCLE", "RESURRECTION_REQUESTED", "accepting");
 				org.l2jmobius.commons.threads.ThreadPool.schedule(() ->
 				{
-					if (player.isDead() && player.canRevive())
+					if (player.isDead() && player.isReviveRequested())
 					{
 						player.doRevive();
 						agent.shout("resurrected");
+						L3Debug.event(agent, "LIFECYCLE", "RESURRECTED", "requested resurrection accepted");
 					}
 					agent.setRevivePending(false);
 				}, Rnd.get(1000, 3000));
@@ -290,10 +292,10 @@ public class L3Reflex
 					continue;
 				}
 
-				if (dropped.isProtected() && (dropped.getOwnerId() != player.getObjectId()))
+				if (dropped.isProtected())
 				{
-					final Player owner = World.getPlayer(dropped.getOwnerId());
-					if ((owner == null) || L3AgentManager.getInstance().isAgent(owner) || (owner.calculateDistance2D(player) > 250))
+					final org.l2jmobius.gameserver.entity.actor.Creature owner = dropped.getDropProtection().getOwner();
+					if ((owner == null) || !owner.isPlayer() || L3AgentManager.getInstance().isAgent(owner.asPlayer()) || (owner.calculateDistance2D(player) > 250))
 					{
 						skipReason = "drop protected for another player";
 						continue;

@@ -34,6 +34,7 @@ import org.l2jmobius.gameserver.Shutdown;
 import org.l2jmobius.gameserver.entity.Location;
 import org.l2jmobius.gameserver.entity.World;
 import org.l2jmobius.gameserver.entity.actor.Player;
+import org.l2jmobius.gameserver.entity.item.instance.Item;
 import org.l2jmobius.gameserver.handler.IAdminCommandHandler;
 import org.l2jmobius.gameserver.network.GameClient;
 import org.l2jmobius.gameserver.network.serverpackets.NpcHtmlMessage;
@@ -80,6 +81,7 @@ public class AdminL3Spawn implements IAdminCommandHandler
 		"admin_sdwipedb",
 		"admin_gotonext",
 		"admin_l3debug",
+		"admin_l3pickupdebug",
 		"admin_l3agent",
 		"admin_l3spawnprius",
 		"admin_safepoint",
@@ -115,6 +117,11 @@ public class AdminL3Spawn implements IAdminCommandHandler
 			case "admin_l3debug":
 			{
 				showDebug(activeChar);
+				return true;
+			}
+			case "admin_l3pickupdebug":
+			{
+				showPickupDebug(activeChar, arg);
 				return true;
 			}
 			case "admin_l3agent":
@@ -209,6 +216,33 @@ public class AdminL3Spawn implements IAdminCommandHandler
 			observer.sendSysMessage("=== L3 debug ===");
 			observer.sendSysMessage("Records: " + L3Config.DEBUG_LOG_DIRECTORY + "/agents.jsonl");
 			observer.sendSysMessage(L3Debug.recent(8).replace('\n', ' '));
+		}
+
+		private void showPickupDebug(Player observer, String name)
+		{
+			final L3Agent agent = L3AgentManager.getInstance().getAgents().stream().filter(candidate -> name.isEmpty() || candidate.getPlayer().getName().equalsIgnoreCase(name)).findFirst().orElse(null);
+			if (agent == null)
+			{
+				observer.sendSysMessage("L3: agent not found: " + name);
+				return;
+			}
+
+			observer.sendSysMessage("=== L3 pickup probe: " + agent.getPlayer().getName() + " ===");
+			int count = 0;
+			for (Item item : World.getVisibleObjectsInRange(agent.getPlayer(), Item.class, 250))
+			{
+				final org.l2jmobius.gameserver.entity.actor.Creature owner = item.getDropProtection().getOwner();
+				observer.sendSysMessage(item.getTemplate().getName() + " dist=" + (int) agent.getPlayer().calculateDistance2D(item) + " spawned=" + item.isSpawned() + " protected=" + item.isProtected() + " ownerId=" + item.getOwnerId() + " protectionOwner=" + (owner == null ? "none" : owner.getName()));
+				if (++count >= 20)
+				{
+					break;
+				}
+			}
+			if (count == 0)
+			{
+				observer.sendSysMessage("No visible ground items in range.");
+			}
+			L3Debug.event(agent, "SURVIVAL", "PICKUP_PROBE", "items=" + count);
 		}
 
 		private void showAgent(Player observer, String name)
