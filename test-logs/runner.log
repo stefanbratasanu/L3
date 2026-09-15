@@ -1,12 +1,12 @@
 ﻿**********************
 Windows PowerShell transcript start
-Start time: 20260914005206
+Start time: 20260915092516
 Username: Desktop-1H06Q\Brata
 RunAs User: Desktop-1H06Q\Brata
 Configuration Name: 
 Machine: Desktop-1H06Q (Microsoft Windows NT 10.0.19045.0)
-Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -NoProfile -ExecutionPolicy Bypass -File C:\Agentic\l3\L3-run.ps1 -NoPull
-Process ID: 4196
+Host Application: powershell -NoProfile -ExecutionPolicy Bypass -File C:\Agentic\l3\L3-run.ps1
+Process ID: 3168
 PSVersion: 5.1.19041.7291
 PSEdition: Desktop
 PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.19041.7291
@@ -24,18 +24,15 @@ L3 environment ready:
 
 Quick checks:  java -version | ant -version | mariadbd --version | git --version
 
-=== 1/8  Pulling latest from GitHub ===
-  -NoPull set; skipping.
+=== 1/8  Git synchronization ===
+  local mode; skipping Git sync. Use -SyncGit to pull.
 
 === 2/8  Checking toolchain ===
   java : C:\Agentic\tools\jdk-25\bin\java.exe
   db   : C:\Agentic\tools\mariadb\bin\mariadbd.exe
 
 === 3/8  Starting MariaDB ===
-MariaDB running (PID 30984) on 127.0.0.1:3306.
-  data: C:\Agentic\data\mariadb
-  logs: C:\Agentic\data\mariadb\..\mariadb-logs\mariadbd.out.log
-Stop it with:  .\db-stop.ps1
+  MariaDB is already running on port 3306 - leaving it alone.
 
 === 4/8  Restoring database ===
   DB already matches the current snapshot - no restore needed.
@@ -47,25 +44,25 @@ Stop it with:  .\db-stop.ps1
   starting LoginServer ...
   starting GameServer ...
 
-  LoginServer PID 15768
-  GameServer PID 30724
+  LoginServer PID 21880
+  GameServer PID 3504
   Servers are starting. Point the client at this machine, log in, and test.
   >>> To finish: type  .sd  in game (GM), or close a server window. <<<
-      This script then dumps + commits the DB and logs.
+      This script then dumps the DB and logs locally.
 
 === 7/8  Running - waiting for shutdown (.sd in game, or close a server window) ===
-  GameServer (PID 30724) stopped.
+  GameServer (PID 3504) stopped.
   Shutting the other server down too.
+  Stopping 21880 without a GUI shutdown prompt.
   Server(s) stopped.
 
-=== 8/8  Syncing database + logs back to git ===
+=== 8/8  Saving database + logs locally ===
 Dumping l2jmobiusinterlude -> C:\Agentic\l3\server\dist\db_snapshot\l2jmobiusinterlude.sql ...
-  Wrote 336.4 KB.
-Requesting graceful shutdown via mariadb-admin ...
-
-MariaDB stopped.
+  Wrote 561.7 KB.
+  Leaving MariaDB running (it was already up when this instance started).
+  safepoints collected: 2
   logs collected into test-logs\ .
 **********************
 Windows PowerShell transcript end
-End time: 20260914005619
+End time: 20260915092652
 **********************

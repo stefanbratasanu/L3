@@ -429,9 +429,10 @@ if ($NoCommit) {
 } else {
   Push-Location $repoRoot
   try {
-    $syncPaths = @('server/dist/db_snapshot/l2jmobiusinterlude.sql', 'test-logs')
-    & $git add -- $syncPaths
-    $changed = (& $git status --porcelain -- $syncPaths)
+    # A safepoint is a complete checkpoint: include source, configuration, generated jars, the
+    # database snapshot, and collected logs rather than silently committing only test artifacts.
+    & $git add -A
+    $changed = (& $git status --porcelain)
     if ($changed) {
       $safepointText = @()
       if (Test-Path $safepointLog) {
