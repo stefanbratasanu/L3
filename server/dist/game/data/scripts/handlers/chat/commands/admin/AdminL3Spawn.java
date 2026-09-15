@@ -77,10 +77,11 @@ public class AdminL3Spawn implements IAdminCommandHandler
 		"admin_l3clean",
 		"admin_l3wipe",
 		"admin_sdwipedb",
-		"admin_gotonext"
-		, "admin_l3debug"
+		"admin_gotonext",
+		"admin_l3debug",
 		, "admin_l3agent"
 		, "admin_l3spawnprius"
+		, "admin_safepoint"
 	};
 
 	/** Distance in front of the observer to place a single agent. */
@@ -105,7 +106,7 @@ public class AdminL3Spawn implements IAdminCommandHandler
 
 		final String[] parts = command.split(" ");
 		final String cmd = parts[0];
-		final String arg = (parts.length > 1) ? parts[1].trim() : "";
+		final String arg = (parts.length > 1) ? command.substring(cmd.length()).trim() : "";
 
 		switch (cmd)
 		{
@@ -122,6 +123,18 @@ public class AdminL3Spawn implements IAdminCommandHandler
 			case "admin_l3spawnprius":
 			{
 				return spawnPrius(activeChar);
+			}
+			case "admin_safepoint":
+			{
+				if (arg.isEmpty())
+				{
+					activeChar.sendSysMessage("Usage: //safepoint <text>");
+					return false;
+				}
+
+				L3Debug.marker(activeChar.getName(), arg);
+				activeChar.sendSysMessage("L3: safe point recorded: " + arg);
+				return true;
 			}
 			case "admin_gotonext":
 			{

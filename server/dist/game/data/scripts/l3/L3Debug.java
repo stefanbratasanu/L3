@@ -33,13 +33,24 @@ public final class L3Debug
 	public static synchronized void event(L3Agent agent, String type, String detail)
 	{
 		final String record = "{\"at\":\"" + Instant.now() + "\",\"charId\":" + agent.getPlayer().getObjectId() + ",\"name\":\"" + escape(agent.getPlayer().getName()) + "\",\"level\":" + agent.getPlayer().getLevel() + ",\"lod\":\"" + agent.getLod() + "\",\"goal\":\"" + agent.getGoal() + "\",\"state\":\"" + agent.getState() + "\",\"type\":\"" + escape(type) + "\",\"detail\":\"" + escape(detail) + "\"}";
+		write(record, "TICK".equals(type));
+	}
+
+	public static synchronized void marker(String author, String detail)
+	{
+		final String record = "{\"at\":\"" + Instant.now() + "\",\"author\":\"" + escape(author) + "\",\"type\":\"SAFEPOINT\",\"detail\":\"" + escape(detail) + "\"}";
+		write(record, false);
+	}
+
+	private static void write(String record, boolean sampled)
+	{
 		if (RECENT.size() >= L3Config.DEBUG_RING_SIZE)
 		{
 			RECENT.removeFirst();
 		}
 		RECENT.addLast(record);
 
-		if (!L3Config.DEBUG_ENABLED || ("TICK".equals(type) && !shouldLogTick()))
+		if (!L3Config.DEBUG_ENABLED || (sampled && !shouldLogTick()))
 		{
 			return;
 		}
