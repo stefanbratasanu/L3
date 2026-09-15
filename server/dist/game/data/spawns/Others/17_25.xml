@@ -15,5 +15,7 @@
 		<npc id="20545" x="-72971" y="255123" z="-3256" heading="22286" respawnDelay="25" /> <!-- Young Keltir -->
 		<npc id="20545" x="-71081" y="254981" z="-3232" heading="48948" respawnDelay="25" /> <!-- Young Keltir -->
 		<npc id="27003" x="-96984" y="247644" z="-3640" heading="20794" respawnDelay="180" /> <!-- Spirit Of Mirrors -->
+		<npc id="21420" x="-80970" y="247362" z="-3670" heading="5933" respawnDelay="60" /> <!-- Ashuras -->
+		<npc id="18342" x="-79305" y="242598" z="-3619" heading="31680" respawnDelay="60" /> <!-- Gremlin -->
 	</spawn>
 </list>

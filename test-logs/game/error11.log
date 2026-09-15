@@ -1,4 +1,4 @@
-Sep 15, 2026 8:42:38 PM org.l2jmobius.gameserver.GameServer <init>
+Sep 15, 2026 9:02:45 PM org.l2jmobius.gameserver.GameServer <init>
 WARNING: Failed to execute script list!
 java.lang.RuntimeException: 
 ----------------
@@ -8,11 +8,27 @@ File diagnostics
 -----------------------
 Compilation diagnostics
 -----------------------
-	ERROR: data\scripts\l3\ai\L3ThinkTaskManager.java, Line 150, Column 27
-		code: compiler.err.cant.resolve.location.args
-		message: cannot find symbol
-  symbol:   method scheduleAtFixedRateRealTime(()->runPool(pool),long,int)
-  location: class org.l2jmobius.commons.threads.ThreadPool
+	ERROR: data\scripts\l3\ai\L3Reflex.java, Line 198, Column 17
+		code: compiler.err.illegal.start.of.expr
+		message: illegal start of expression
+	ERROR: data\scripts\l3\ai\L3Reflex.java, Line 366, Column 17
+		code: compiler.err.invalid.meth.decl.ret.type.req
+		message: invalid method declaration; return type required
+	ERROR: data\scripts\l3\ai\L3Reflex.java, Line 369, Column 1
+		code: compiler.err.expected4
+		message: class, interface, enum, or record expected
+	ERROR: data\scripts\l3\ai\L3Reflex.java, Line 21, Column 1
+		code: compiler.err.implicit.class.should.not.have.package.declaration
+		message: compact source file should not have package declaration
+	ERROR: data\scripts\l3\ai\L3ThinkTaskManager.java, Line 200, Column 41
+		code: compiler.err.cant.access
+		message: cannot access l3.ai.L3Reflex
+  bad source file: data\scripts\l3\ai\L3Reflex.java
+    file does not contain class l3.ai.L3Reflex
+    Please remove or make sure it appears in the correct subdirectory of the sourcepath.
+	ERROR: data\scripts\l3\ai\L3Reflex.java, Line 66, Column 1
+		code: compiler.err.implicit.class.does.not.have.main.method
+		message: compact source file does not have main method in the form of void main() or void main(String[] args)
 
 	at org.l2jmobius.gameserver.scripting.engine.ScriptExecutor.executeScripts(ScriptExecutor.java:104)
 	at org.l2jmobius.gameserver.scripting.engine.ScriptExecutor.executeScript(ScriptExecutor.java:209)
