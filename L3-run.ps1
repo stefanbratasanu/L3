@@ -253,8 +253,9 @@ function Start-Node([string]$name, [string]$sub, [string]$jar) {
   # for trouble.
   $javaArgs = @($cfg -split '\s+') + @('-jar', "..\libs\$jar")
   Say "  starting $name ..." 'Green'
-  # A normal (visible) window so you can watch/close it. Closing the window ends the JVM.
-  return Start-Process -FilePath $javaExe -ArgumentList $javaArgs -WorkingDirectory $dir -PassThru
+  # Keep the JVM consoles hidden; startup and runtime output is captured by the server log files
+  # and, when requested, surfaced by this runner's -Observe mode.
+  return Start-Process -FilePath $javaExe -ArgumentList $javaArgs -WorkingDirectory $dir -WindowStyle Hidden -PassThru
 }
 # $nodes keeps only the servers this invocation actually started, so steps 7 and 8 behave the same
 # whether you launched the pair, just the login server, or just the game server. Both are java.exe,
@@ -346,13 +347,11 @@ if ($nodes.Count -gt 1) { Say '  Shutting the other server down too.' 'Yellow' }
 
 foreach ($p in ($nodes | ForEach-Object { $_.Proc })) {
   if ($p.HasExited) { continue }
-  # Ask politely first (Mobius closes its window cleanly), then insist.
-  try { $null = $p.CloseMainWindow() } catch { }
-  if (-not $p.WaitForExit(20000)) {
-    Say "  PID $($p.Id) did not exit in 20s - terminating it." 'DarkYellow'
-    try { $p.Kill() } catch { }
-    try { $null = $p.WaitForExit(10000) } catch { }
-  }
+  # Do not close the GUI window: Mobius prompts for confirmation on that path. The game server's
+  # normal .sd remains graceful; this branch only stops sibling processes after the session ends.
+  Say "  Stopping $($p.Id) without a GUI shutdown prompt." 'DarkYellow'
+  try { Stop-Process -Id $p.Id -Force -ErrorAction Stop } catch { }
+  try { $null = $p.WaitForExit(10000) } catch { }
 }
 Say '  Server(s) stopped.' 'Green'
 
@@ -410,6 +409,17 @@ foreach ($node in @(@{ src = 'dist\game\log'; dst = 'game' }, @{ src = 'dist\log
     Copy-Item -LiteralPath $f.FullName -Destination (Join-Path $dst $f.Name) -Force
   }
 }
+
+# Promote in-game safepoint markers from the live debug stream into the tracked test artifacts.
+$agentDebugLog = Join-Path $serverDir 'dist\game\logs\l3\agents.jsonl'
+$safepointLog = Join-Path $logRoot 'safepoints.jsonl'
+if (Test-Path $agentDebugLog) {
+  $markers = @(Get-Content $agentDebugLog -ErrorAction SilentlyContinue | Where-Object { $_ -match '"type":"SAFEPOINT"' })
+  if ($markers.Count -gt 0) {
+    Set-Content -Path $safepointLog -Value $markers -Encoding utf8
+    Say "  safepoints collected: $($markers.Count)" 'Green'
+  }
+}
 Say "  logs collected into test-logs\ ." 'Green'
 
 # Close the transcript now, before the commit, so the runner log is complete in what gets committed
@@ -427,7 +437,17 @@ if (-not $SyncGit) {
     & $git add -- $syncPaths
     $changed = (& $git status --porcelain -- $syncPaths)
     if ($changed) {
-      $msg = "DB + logs from test run $(Get-Date -Format 'yyyy-MM-dd HH:mm')"
+      $safepointText = @()
+      if (Test-Path $safepointLog) {
+        $safepointText = @(Get-Content $safepointLog | ForEach-Object {
+            if ($_ -match '"detail":"([^"]*)"') { $Matches[1] }
+          } | Select-Object -Last 3)
+      }
+      if ($safepointText.Count -gt 0) {
+        $msg = "Safe point: " + ($safepointText -join ' | ')
+      } else {
+        $msg = "DB + logs from test run $(Get-Date -Format 'yyyy-MM-dd HH:mm')"
+      }
       & $git commit -m $msg | Out-Null
       Say "  committed: $msg" 'Green'
       $hasRemote = (& $git remote) | Where-Object { $_ -eq 'origin' }
