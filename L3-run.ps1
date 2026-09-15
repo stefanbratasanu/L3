@@ -21,7 +21,7 @@
 # =============================================================================
 
 param(
-  [switch]$SyncGit,         # retained for compatibility; synchronization is enabled by default
+  [switch]$SyncGit,         # retained for compatibility; manual synchronization is now required
   [switch]$NoPull,          # skip the git pull (offline / local iteration)
   [switch]$NoCommit,        # skip the on-close DB commit+push
   [switch]$NoPush,          # commit the DB snapshot locally but do not push
@@ -33,6 +33,7 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
+$automaticGitSync = $false
 
 if ($LoginOnly -and $GameOnly) {
   throw "-LoginOnly and -GameOnly are mutually exclusive. Omit both to run the pair."
@@ -88,7 +89,7 @@ $selfHashBefore = (Get-FileHash -LiteralPath $selfPath -Algorithm SHA256).Hash
 # 1. git pull
 # -----------------------------------------------------------------------------
 Section '1/8  Git synchronization'
-if ($NoPull) {
+if ($NoPull -or -not $automaticGitSync) {
   Say '  -NoPull set; skipping.' 'DarkYellow'
 } else {
   Push-Location $repoRoot
@@ -112,7 +113,7 @@ if ($NoPull) {
 # steps ran the old one. That combination silently broke the shutdown sync once already: a pulled
 # '.sd' shut down only the game server, while the still-old step 7 waited on the login server
 # forever and never reached the commit.
-if (-not $NoPull) {
+if ($automaticGitSync -and -not $NoPull) {
   $selfHashAfter = (Get-FileHash -LiteralPath $selfPath -Algorithm SHA256).Hash
   if ($selfHashBefore -ne $selfHashAfter) {
     Say '  The pull updated L3-run.ps1 itself - restarting with the new version...' 'Yellow'
@@ -448,8 +449,8 @@ if ($NoCommit) {
       & $git commit -m $msg | Out-Null
       Say "  committed: $msg" 'Green'
       $hasRemote = (& $git remote) | Where-Object { $_ -eq 'origin' }
-      if ($NoPush) {
-        Say '  -NoPush set; not pushing.' 'DarkYellow'
+      if ($NoPush -or -not $automaticGitSync) {
+        Say '  Automatic Git push disabled; leaving the local commit unpublished.' 'DarkYellow'
       } elseif (-not $hasRemote) {
         Say '  No "origin" remote; committed locally only.' 'DarkYellow'
       } else {
