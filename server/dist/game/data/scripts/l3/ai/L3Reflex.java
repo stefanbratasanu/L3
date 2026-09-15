@@ -35,6 +35,7 @@ import org.l2jmobius.commons.util.Rnd;
 import l3.L3Config;
 import l3.L3Debug;
 import l3.agent.L3Agent;
+import l3.agent.L3AgentManager;
 import l3.agent.L3AgentState;
 import l3.agent.L3Agent.Lod;
 
@@ -205,7 +206,8 @@ public class L3Reflex
 			{
 				if (skill.isDamage() && !skill.isPassive() && !skill.isToggle() && !player.hasSkillReuse(skill.getReuseHashCode()) && skill.checkCondition(player, target, false))
 				{
-					player.getAI().setIntentionCast(skill, target);
+					player.setTarget(target);
+					player.useMagic(skill, true, false);
 					agent.cooldownSkill(now, 1000);
 					L3Debug.event(agent, "COMBAT", "SKILL", skill.getName());
 					agent.shoutDebug("casting " + skill.getName());
@@ -265,7 +267,22 @@ public class L3Reflex
 			{
 				return false;
 			}
-			final Item item = World.getFirstVisibleObjectInRange(player, Item.class, 200, dropped -> dropped.isSpawned() && (!dropped.isProtected() || (dropped.getOwnerId() == player.getObjectId())));
+			final Item item = World.getFirstVisibleObjectInRange(player, Item.class, 200, dropped ->
+			{
+				if (!dropped.isSpawned())
+				{
+					return false;
+				}
+
+				if (!dropped.isProtected() || (dropped.getOwnerId() == player.getObjectId()))
+				{
+					return true;
+				}
+
+				// Items deliberately dropped by a nearby human are valid hand-offs to an AI agent.
+				final Player owner = World.getPlayer(dropped.getOwnerId());
+				return (owner != null) && !L3AgentManager.getInstance().isAgent(owner) && (owner.calculateDistance2D(player) <= 250);
+			});
 			if (item == null)
 			{
 				agent.cooldownPickup(now, 1000);
@@ -280,6 +297,10 @@ public class L3Reflex
 			}
 			else
 			{
+				if (item.getOwnerId() != 0 && (item.getOwnerId() != player.getObjectId()))
+				{
+					item.setOwnerId(0);
+				}
 				player.doPickupItem(item);
 				agent.shoutDebug("picked up an item");
 				L3Debug.event(agent, "SURVIVAL", "PICKUP", item.getTemplate().getName());
