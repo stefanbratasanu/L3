@@ -21,7 +21,7 @@
 # =============================================================================
 
 param(
-  [switch]$SyncGit,         # opt in to pulling before and committing/pushing after a run
+  [switch]$SyncGit,         # retained for compatibility; synchronization is enabled by default
   [switch]$NoPull,          # skip the git pull (offline / local iteration)
   [switch]$NoCommit,        # skip the on-close DB commit+push
   [switch]$NoPush,          # commit the DB snapshot locally but do not push
@@ -88,9 +88,7 @@ $selfHashBefore = (Get-FileHash -LiteralPath $selfPath -Algorithm SHA256).Hash
 # 1. git pull
 # -----------------------------------------------------------------------------
 Section '1/8  Git synchronization'
-if (-not $SyncGit) {
-  Say '  local mode; skipping Git sync. Use -SyncGit to pull.' 'DarkYellow'
-} elseif ($NoPull) {
+if ($NoPull) {
   Say '  -NoPull set; skipping.' 'DarkYellow'
 } else {
   Push-Location $repoRoot
@@ -99,10 +97,10 @@ if (-not $SyncGit) {
     if (-not $hasRemote) {
       Say '  No "origin" remote configured yet — skipping pull (nothing to pull from).' 'DarkYellow'
     } else {
-      # --ff-only keeps history linear; if it fails, the two sides diverged and a human should look.
-      & $git pull --ff-only origin (& $git rev-parse --abbrev-ref HEAD)
+      # Rebase keeps the local commits while incorporating the latest remote commit first.
+      & $git pull --rebase --autostash origin (& $git rev-parse --abbrev-ref HEAD)
       if ($LASTEXITCODE -ne 0) {
-        Say '  git pull --ff-only failed (histories diverged). Resolve manually, then re-run.' 'Red'
+        Say '  git pull --rebase failed (resolve the reported conflict, then re-run).' 'Red'
         Say '  Starting anyway with the code you have locally.' 'DarkYellow'
       }
     }
@@ -114,7 +112,7 @@ if (-not $SyncGit) {
 # steps ran the old one. That combination silently broke the shutdown sync once already: a pulled
 # '.sd' shut down only the game server, while the still-old step 7 waited on the login server
 # forever and never reached the commit.
-if ($SyncGit -and -not $NoPull) {
+if (-not $NoPull) {
   $selfHashAfter = (Get-FileHash -LiteralPath $selfPath -Algorithm SHA256).Hash
   if ($selfHashBefore -ne $selfHashAfter) {
     Say '  The pull updated L3-run.ps1 itself - restarting with the new version...' 'Yellow'
@@ -426,9 +424,7 @@ Say "  logs collected into test-logs\ ." 'Green'
 # rather than captured mid-write.
 Stop-RunnerLog
 
-if (-not $SyncGit) {
-  Say '  local mode; leaving the snapshot and logs uncommitted.' 'DarkYellow'
-} elseif ($NoCommit) {
+if ($NoCommit) {
   Say '  -NoCommit set; leaving the snapshot uncommitted.' 'DarkYellow'
 } else {
   Push-Location $repoRoot
