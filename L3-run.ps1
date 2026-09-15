@@ -28,6 +28,7 @@ param(
   [switch]$FreshDb,         # drop & reload the DB from the snapshot before starting
   [switch]$LoginOnly,       # start ONLY the LoginServer
   [switch]$GameOnly,        # start ONLY the GameServer (fast iteration on L3 code)
+  [switch]$Observe,         # emit structured health and error updates while servers run
   [string]$Database = 'l2jmobiusinterlude'
 )
 
@@ -285,6 +286,9 @@ if (-not $runGame) {
 }
 Say '  >>> To finish: type  .sd  in game (GM), or close a server window. <<<' 'Yellow'
 Say '      This script then dumps the DB and logs locally.' 'Yellow'
+if ($Observe) {
+  Say '      Observe mode is active: health snapshots and new log errors will be emitted below.' 'Magenta'
+}
 
 # -----------------------------------------------------------------------------
 # 7. wait for the session to end
@@ -294,7 +298,45 @@ Say '      This script then dumps the DB and logs locally.' 'Yellow'
 # Waiting for them in sequence would hang forever after a `.sd`, because the login server would
 # still be running with nobody left to close it.
 Section '7/8  Running - waiting for shutdown (.sd in game, or close a server window)'
+$observedLines = @{}
+$lastObservation = [DateTime]::MinValue
+function Observe-Servers {
+  $now = Get-Date
+  if (($now - $lastObservation).TotalSeconds -lt 10) { return }
+  $script:lastObservation = $now
+
+  $health = @()
+  foreach ($node in $nodes) {
+    $health += [ordered]@{
+      name = $node.Name
+      pid = $node.Proc.Id
+      alive = -not $node.Proc.HasExited
+    }
+  }
+  $payload = [ordered]@{
+    at = $now.ToUniversalTime().ToString('o')
+    event = 'server_health'
+    servers = $health
+  } | ConvertTo-Json -Compress
+  Say "OBSERVE $payload" 'DarkCyan'
+
+  foreach ($node in $nodes) {
+    $logPath = Join-Path $serverDir ("dist\" + ($(if ($node.Name -eq 'GameServer') { 'game' } else { 'login' })) + "\log\java0.log")
+    if (-not (Test-Path $logPath)) { continue }
+    $lines = @(Get-Content $logPath -Tail 80 -ErrorAction SilentlyContinue | Where-Object {
+        $_ -match '(?i)failed|exception|error|warning'
+      })
+    foreach ($line in $lines) {
+      $key = "$($node.Name)|$line"
+      if ($observedLines.ContainsKey($key)) { continue }
+      $observedLines[$key] = $true
+      Say "OBSERVE_LOG [$($node.Name)] $line" 'Red'
+    }
+  }
+}
+
 while (-not ($nodes | Where-Object { $_.Proc.HasExited })) {
+  if ($Observe) { Observe-Servers }
   Start-Sleep -Seconds 2
 }
 
