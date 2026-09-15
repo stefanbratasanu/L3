@@ -22,6 +22,13 @@ package l3;
 
 import java.util.logging.Logger;
 
+import org.l2jmobius.gameserver.mechanics.events.Containers;
+import org.l2jmobius.gameserver.mechanics.events.EventType;
+import org.l2jmobius.gameserver.mechanics.events.holders.actor.player.OnPlayerChat;
+import org.l2jmobius.gameserver.mechanics.events.listeners.AbstractEventListener;
+
+import l3.agent.L3Agent;
+import l3.agent.L3AgentManager;
 import l3.ai.L3ThinkTaskManager;
 
 /**
@@ -44,6 +51,23 @@ public class L3Bootstrap
 
 	public static void main(String[] args)
 	{
+		Containers.Global().addListener(new AbstractEventListener(Containers.Global(), EventType.ON_PLAYER_CHAT, L3Bootstrap.class)
+		{
+			@Override
+			public <R extends org.l2jmobius.gameserver.mechanics.events.returns.AbstractEventReturn> R executeEvent(org.l2jmobius.gameserver.mechanics.events.holders.IBaseEvent event, Class<R> returnBackClass)
+			{
+				final OnPlayerChat chat = (OnPlayerChat) event;
+				if ((chat.getTarget() != null) && (chat.getChatType() == org.l2jmobius.gameserver.network.enums.ChatType.WHISPER) && "debug".equalsIgnoreCase(chat.getText().trim()))
+				{
+					final L3Agent agent = L3AgentManager.getInstance().get(chat.getTarget().getObjectId());
+					if (agent != null)
+					{
+						agent.toggleChatDebug();
+					}
+				}
+				return null;
+			}
+		});
 		L3ThinkTaskManager.getInstance().start();
 		LOGGER.info("L3: agent system ready. Spawn with //l3spawn, remove with //l3spawn clean.");
 	}

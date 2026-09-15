@@ -197,6 +197,18 @@ public class L3AgentManager
 			final Integer existingId = findPersistedAgent(name, turbo);
 			if (existingId != null)
 			{
+				final Player alreadyLoaded = World.getPlayer(existingId);
+				if (alreadyLoaded != null)
+				{
+					final L3Agent registered = AGENTS.get(existingId);
+					if (registered != null)
+					{
+						return registered;
+					}
+
+					return register(alreadyLoaded);
+				}
+
 				final Player existing = Player.load(existingId);
 				if ((existing == null) || !placeInWorld(existing, location))
 				{

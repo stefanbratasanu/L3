@@ -26,7 +26,11 @@ import org.l2jmobius.gameserver.entity.WorldObject;
 import org.l2jmobius.gameserver.entity.actor.Creature;
 import org.l2jmobius.gameserver.entity.actor.Player;
 import org.l2jmobius.gameserver.entity.actor.instance.Monster;
+import org.l2jmobius.gameserver.entity.item.instance.Item;
 import org.l2jmobius.gameserver.geoengine.GeoEngine;
+import org.l2jmobius.gameserver.handler.ItemHandler;
+import org.l2jmobius.gameserver.mechanics.skill.Skill;
+import org.l2jmobius.commons.util.Rnd;
 
 import l3.L3Config;
 import l3.L3Debug;
@@ -67,12 +71,28 @@ public class L3Reflex
 	public static void tick(L3Agent agent, long now)
 	{
 		final Player player = agent.getPlayer();
+		agent.observeProgress();
 
 		if (player.isDead())
 		{
 			agent.setState(L3AgentState.DEAD);
+			if (!agent.isRevivePending() && player.canRevive())
+			{
+				agent.setRevivePending(true);
+				agent.shout("accepting resurrection");
+				org.l2jmobius.commons.threads.ThreadPool.schedule(() ->
+				{
+					if (player.isDead() && player.canRevive())
+					{
+						player.doRevive();
+						agent.shout("resurrected");
+					}
+					agent.setRevivePending(false);
+				}, Rnd.get(1000, 3000));
+			}
 			return;
 		}
+		agent.setRevivePending(false);
 		if (player.getCurrentHp() < (player.getMaxHp() * 0.35))
 		{
 			agent.setState(L3AgentState.RECOVERING);
@@ -80,6 +100,23 @@ public class L3Reflex
 
 		// Busy or unable to act: nothing to decide this tick.
 		if (player.isDead() || player.isSitting() || player.isCastingNow() || player.isDisabled())
+		{
+			return;
+		}
+
+		if (useHealingPotion(agent))
+		{
+			return;
+		}
+
+		if (player.getCurrentHp() < (player.getMaxHp() * 0.35))
+		{
+			player.sitDown();
+			agent.setState(L3AgentState.RECOVERING);
+			return;
+		}
+
+		if (pickupNearby(agent))
 		{
 			return;
 		}
@@ -136,6 +173,10 @@ public class L3Reflex
 		if (player.hasAI() && !player.isAttackingNow() && !player.isMoving())
 		{
 			agent.setState(L3AgentState.HUNTING);
+			if ((player.getCurrentMp() > (player.getMaxMp() * 0.20)) && useAttackSkill(agent, target))
+			{
+				return;
+			}
 			if (player.getAI().getIntention() != Intention.ATTACK)
 			{
 				player.getAI().setIntentionAttack(target);
@@ -153,7 +194,81 @@ public class L3Reflex
 		}
 	}
 
-	/**
+	private static boolean useAttackSkill(L3Agent agent, Creature target)
+		{
+			final Player player = agent.getPlayer();
+			for (Skill skill : player.getSkills().values())
+			{
+				if (skill.isDamage() && !skill.isPassive() && !skill.isToggle() && !player.hasSkillReuse(skill.getReuseHashCode()) && skill.checkCondition(player, target, false))
+				{
+					player.getAI().setIntentionCast(skill, target);
+					agent.shoutDebug("casting " + skill.getName());
+					return true;
+				}
+			}
+			return false;
+		}
+
+		private static boolean useHealingPotion(L3Agent agent)
+		{
+			final Player player = agent.getPlayer();
+			if (player.getCurrentHp() >= (player.getMaxHp() * 0.60))
+			{
+				return false;
+			}
+
+			for (Item item : player.getInventory().getItems())
+			{
+				if ((item.getTemplate().getSkills() == null) || (item.getTemplate().getSkills().length == 0))
+				{
+					continue;
+				}
+
+				for (var holder : item.getTemplate().getSkills())
+				{
+					final Skill skill = holder.getSkill();
+					if (skill.isHealingPotionSkill() && (player.getItemRemainingReuseTime(item.getObjectId()) <= 0))
+					{
+						final var handler = ItemHandler.getInstance().getHandler(item.getEtcItem());
+						if ((handler != null) && handler.onItemUse(player, item, false))
+						{
+							if (item.getReuseDelay() > 0)
+							{
+								player.addTimeStampItem(item, item.getReuseDelay());
+							}
+							agent.shoutDebug("used a healing potion");
+							return true;
+						}
+					}
+				}
+			}
+			return false;
+		}
+
+		private static boolean pickupNearby(L3Agent agent)
+		{
+			final Player player = agent.getPlayer();
+			final Item item = World.getFirstVisibleObjectInRange(player, Item.class, 200, dropped -> dropped.isSpawned() && (!dropped.isProtected() || (dropped.getOwnerId() == player.getObjectId())));
+			if (item == null)
+			{
+				return false;
+			}
+			if (player.calculateDistance2D(item) > 20)
+			{
+				if (!player.isMoving())
+				{
+					player.getAI().setIntentionMoveTo(item);
+				}
+			}
+			else
+			{
+				player.doPickupItem(item);
+				agent.shoutDebug("picked up an item");
+			}
+			return true;
+		}
+
+		/**
 	 * A COLD tick: nobody is anywhere near this agent, so it must not touch the world.
 	 * <p>
 	 * For now this only keeps the agent tidy (it should not be stuck in a combat intention while

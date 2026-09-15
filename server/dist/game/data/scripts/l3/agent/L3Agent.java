@@ -21,6 +21,8 @@
 package l3.agent;
 
 import org.l2jmobius.gameserver.entity.actor.Player;
+import org.l2jmobius.gameserver.network.enums.ChatType;
+import org.l2jmobius.gameserver.network.serverpackets.CreatureSay;
 
 import l3.L3Config;
 import l3.L3Debug;
@@ -88,12 +90,18 @@ public class L3Agent
 	private int _stuckTicks;
 	private L3AgentState _state = L3AgentState.IDLE;
 	private L3AgentGoal _goal = L3AgentGoal.REACH_LEVEL_20;
+	private boolean _chatDebug;
+	private boolean _revivePending;
+	private int _lastLevel;
+	private int _lastSkillCount;
 
 	public L3Agent(Player player)
 	{
 		_player = player;
 		_objectId = player.getObjectId();
 		_personaSeed = (((long) player.getObjectId()) * 0x9E3779B97F4A7C15L) ^ System.nanoTime();
+		_lastLevel = player.getLevel();
+		_lastSkillCount = player.getSkills().size();
 		L3Debug.event(this, "REGISTERED", "mind initialized");
 	}
 
@@ -129,6 +137,7 @@ public class L3Agent
 			final L3AgentState previous = _state;
 			_state = state;
 			L3Debug.event(this, "STATE", previous + "->" + state);
+			shoutDebug("state " + previous + " -> " + state);
 		}
 	}
 
@@ -243,6 +252,58 @@ public class L3Agent
 	public void resetStuckTicks()
 	{
 		_stuckTicks = 0;
+	}
+
+	public boolean toggleChatDebug()
+	{
+		_chatDebug = !_chatDebug;
+		shout("debug " + (_chatDebug ? "on" : "off"));
+		return _chatDebug;
+	}
+
+	public boolean isChatDebug()
+	{
+		return _chatDebug;
+	}
+
+	public boolean isRevivePending()
+	{
+		return _revivePending;
+	}
+
+	public void setRevivePending(boolean value)
+	{
+		_revivePending = value;
+	}
+
+	public void observeProgress()
+	{
+		final int level = _player.getLevel();
+		if (level > _lastLevel)
+		{
+			shout("leveled up to " + level);
+			_lastLevel = level;
+		}
+
+		final int skillCount = _player.getSkills().size();
+		if (skillCount > _lastSkillCount)
+		{
+			shout("learned new skills (" + (skillCount - _lastSkillCount) + ")");
+			_lastSkillCount = skillCount;
+		}
+	}
+
+	public void shoutDebug(String message)
+	{
+		if (_chatDebug)
+		{
+			shout(message);
+		}
+	}
+
+	public void shout(String message)
+	{
+		_player.broadcastPacket(new CreatureSay(_player, ChatType.SHOUT, _player.getName(), "! " + message));
 	}
 
 	@Override
