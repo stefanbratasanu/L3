@@ -1,12 +1,12 @@
 ﻿**********************
 Windows PowerShell transcript start
-Start time: 20260915210548
+Start time: 20260915210802
 Username: Desktop-1H06Q\Brata
 RunAs User: Desktop-1H06Q\Brata
 Configuration Name: 
 Machine: Desktop-1H06Q (Microsoft Windows NT 10.0.19045.0)
-Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -NoProfile -ExecutionPolicy Bypass -File C:\Agentic\l3\L3-run.ps1 -GameOnly -Observe -NoCommit
-Process ID: 28268
+Host Application: powershell -NoProfile -ExecutionPolicy Bypass -File C:\Agentic\l3\L3-run.ps1
+Process ID: 28884
 PSVersion: 5.1.19041.7291
 PSEdition: Desktop
 PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.19041.7291
@@ -38,28 +38,31 @@ Quick checks:  java -version | ant -version | mariadbd --version | git --version
   DB already matches the current snapshot - no restore needed.
 
 === 5/8  Preparing server jars ===
-  Game sources/config changed after the committed jar (C:\Agentic\l3\server\dist\game\data\scripts\l3\agent\L3Agent.java); rebuilding with Ant...
-
+  Using committed jars in server\dist\libs.
 
 === 6/8  Launching servers ===
+  starting LoginServer ...
   starting GameServer ...
 
-  GameServer PID 28652
-  GameServer only. It needs a LoginServer to register with, or clients cannot log in.
-  If one is not already running:  .\L3-run.ps1 -LoginOnly
+  LoginServer PID 29476
+  GameServer PID 25112
+  Servers are starting. Point the client at this machine, log in, and test.
   >>> To finish: type  .sd  in game (GM), or close a server window. <<<
       This script then dumps the DB and logs locally.
-      Observe mode is active: health snapshots and new log errors will be emitted below.
 
 === 7/8  Running - waiting for shutdown (.sd in game, or close a server window) ===
-OBSERVE {"at":"2026-09-15T18:06:11.3607776Z","event":"server_health","servers":[{"name":"GameServer","pid":28652,"alive":true}]}
-OBSERVE_LOG [GameServer] 2026.09.15 21:05:25,885	INFO	3	org.l2jmobius.gameserver.managers.DimensionalRiftManager	DimensionalRiftManager: Loaded 462 dimensional rift spawns, 0 errors.
-OBSERVE_LOG [GameServer] 2026.09.15 21:05:27,033	WARNING	190	org.l2jmobius.gameserver.LoginServerThread	LoginServerThread: LoginServer not available, trying to reconnect...
-OBSERVE_LOG [GameServer] 2026.09.15 21:05:32,035	WARNING	190	org.l2jmobius.gameserver.LoginServerThread	LoginServerThread: LoginServer not available, trying to reconnect...
-OBSERVE_LOG [GameServer] 2026.09.15 21:05:37,036	WARNING	190	org.l2jmobius.gameserver.LoginServerThread	LoginServerThread: LoginServer not available, trying to reconnect...
-OBSERVE_LOG [GameServer] 2026.09.15 21:05:42,037	WARNING	190	org.l2jmobius.gameserver.LoginServerThread	LoginServerThread: LoginServer not available, trying to reconnect...
-OBSERVE {"at":"2026-09-15T18:06:21.4765079Z","event":"server_health","servers":[{"name":"GameServer","pid":28652,"alive":true}]}
-OBSERVE_LOG [GameServer] 2026.09.15 21:06:19,694	WARNING	3	org.l2jmobius.commons.util.IXmlReader	Directory not found: C:\Agentic\l3\server\dist\game\.\data\buylists\custom
-OBSERVE {"at":"2026-09-15T18:06:31.5231760Z","event":"server_health","servers":[{"name":"GameServer","pid":28652,"alive":true}]}
-OBSERVE {"at":"2026-09-15T18:06:41.5954396Z","event":"server_health","servers":[{"name":"GameServer","pid":28652,"alive":true}]}
-OBSERVE_LOG [GameServer] 2026.09.15 21:06:33,667	INFO	3	org.l2jmobius.gameserver.managers.DimensionalRiftManager	DimensionalRiftManager: Loaded 462 dimensional rift spawns, 0 errors.
+  GameServer (PID 25112) stopped.
+  Shutting the other server down too.
+  Stopping 29476 without a GUI shutdown prompt.
+  Server(s) stopped.
+
+=== 8/8  Saving database + logs locally ===
+Dumping l2jmobiusinterlude -> C:\Agentic\l3\server\dist\db_snapshot\l2jmobiusinterlude.sql ...
+  Wrote 567.3 KB.
+  Leaving MariaDB running (it was already up when this instance started).
+  safepoints collected: 3
+  logs collected into test-logs\ .
+**********************
+Windows PowerShell transcript end
+End time: 20260915211517
+**********************

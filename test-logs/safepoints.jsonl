@@ -1,7 +1,3 @@
-﻿{"at":"2026-09-15T06:12:36.234217900Z","author":"admin","type":"SAFEPOINT","detail":"prius hunts ok"}
-{"at":"2026-09-15T06:26:37.958168300Z","author":"admin","type":"SAFEPOINT","detail":"IN-GAME SAFE COMMIT"}
-{"at":"2026-09-15T16:57:58.046900700Z","author":"admin","type":"SAFEPOINT","detail":"gamespeed=5.0"}
-{"at":"2026-09-15T17:01:42.816343800Z","author":"admin","type":"SAFEPOINT","detail":"gamespeed=20.0"}
-{"at":"2026-09-15T17:10:29.397234700Z","author":"admin","type":"SAFEPOINT","detail":"gamespeed=10.0"}
-{"at":"2026-09-15T17:20:58.424612500Z","author":"admin","type":"SAFEPOINT","detail":"gamespeed=2.0"}
-{"at":"2026-09-15T17:22:58.435715Z","author":"admin","type":"SAFEPOINT","detail":"gamespeed=1.0"}
+﻿{"at":"2026-09-15T18:13:24.803801600Z","author":"admin","type":"SAFEPOINT","detail":"gamespeed=20.0"}
+{"at":"2026-09-15T18:13:55.130353800Z","author":"admin","type":"SAFEPOINT","detail":"gamespeed=1.0"}
+{"at":"2026-09-15T18:14:49.739910500Z","author":"admin","type":"SAFEPOINT","detail":"gamespeed=1.0"}

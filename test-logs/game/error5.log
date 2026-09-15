@@ -1,15 +1,59 @@
-Sep 15, 2026 8:49:23 PM l3.agent.L3AgentManager placeInWorld
-WARNING: L3: failed to place Prius in the world.
-java.lang.NullPointerException: Cannot invoke "org.l2jmobius.gameserver.entity.WorldRegion.addVisibleObject(org.l2jmobius.gameserver.entity.WorldObject)" because "this._worldRegion" is null
-	at org.l2jmobius.gameserver.entity.WorldObject.spawnMe(WorldObject.java:171)
-	at org.l2jmobius.gameserver.entity.WorldObject.spawnMe(WorldObject.java:214)
-	at l3.agent.L3AgentManager.placeInWorld(L3AgentManager.java:312)
-	at l3.agent.L3AgentManager.spawnNew(L3AgentManager.java:201)
-	at handlers.chat.commands.admin.AdminL3Spawn.spawnPrius(AdminL3Spawn.java:229)
-	at handlers.chat.commands.admin.AdminL3Spawn.onCommand(AdminL3Spawn.java:127)
-	at org.l2jmobius.gameserver.handler.AdminCommandHandler.lambda$onCommand$0(AdminCommandHandler.java:129)
-	at org.l2jmobius.commons.threads.ThreadPool$RunnableWrapper.run(ThreadPool.java:310)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
-	at java.base/java.lang.Thread.run(Thread.java:1474)
+Sep 15, 2026 9:00:53 PM org.l2jmobius.gameserver.GameServer <init>
+WARNING: Failed to execute script list!
+java.lang.RuntimeException: 
+----------------
+File diagnostics
+----------------
+
+-----------------------
+Compilation diagnostics
+-----------------------
+	ERROR: data\scripts\l3\ai\L3Reflex.java, Line 189, Column 25
+		code: compiler.err.illegal.start.of.expr
+		message: illegal start of expression
+	ERROR: data\scripts\l3\ai\L3Reflex.java, Line 266, Column 25
+		code: compiler.err.statement.not.expected
+		message: statements not expected outside of methods and initializers
+	ERROR: data\scripts\l3\ai\L3Reflex.java, Line 271, Column 9
+		code: compiler.err.expected4
+		message: class, interface, enum, or record expected
+	ERROR: data\scripts\l3\ai\L3Reflex.java, Line 366, Column 17
+		code: compiler.err.invalid.meth.decl.ret.type.req
+		message: invalid method declaration; return type required
+	ERROR: data\scripts\l3\ai\L3Reflex.java, Line 369, Column 1
+		code: compiler.err.expected4
+		message: class, interface, enum, or record expected
+	ERROR: data\scripts\l3\ai\L3Reflex.java, Line 21, Column 1
+		code: compiler.err.implicit.class.should.not.have.package.declaration
+		message: compact source file should not have package declaration
+	ERROR: data\scripts\l3\ai\L3ThinkTaskManager.java, Line 200, Column 41
+		code: compiler.err.cant.access
+		message: cannot access l3.ai.L3Reflex
+  bad source file: data\scripts\l3\ai\L3Reflex.java
+    file does not contain class l3.ai.L3Reflex
+    Please remove or make sure it appears in the correct subdirectory of the sourcepath.
+	ERROR: data\scripts\l3\ai\L3Reflex.java, Line 266, Column 29
+		code: compiler.err.cant.resolve.location
+		message: cannot find symbol
+  symbol:   variable agent
+  location: class L3Reflex.L3Reflex
+	ERROR: data\scripts\l3\ai\L3Reflex.java, Line 268, Column 44
+		code: compiler.err.cant.resolve.location
+		message: cannot find symbol
+  symbol:   variable agent
+  location: class L3Reflex.L3Reflex
+	ERROR: data\scripts\l3\ai\L3Reflex.java, Line 268, Column 51
+		code: compiler.err.cant.resolve.location
+		message: cannot find symbol
+  symbol:   variable player
+  location: class L3Reflex.L3Reflex
+	ERROR: data\scripts\l3\ai\L3Reflex.java, Line 66, Column 1
+		code: compiler.err.implicit.class.does.not.have.main.method
+		message: compact source file does not have main method in the form of void main() or void main(String[] args)
+
+	at org.l2jmobius.gameserver.scripting.engine.ScriptExecutor.executeScripts(ScriptExecutor.java:104)
+	at org.l2jmobius.gameserver.scripting.engine.ScriptExecutor.executeScript(ScriptExecutor.java:209)
+	at org.l2jmobius.gameserver.scripting.ScriptEngine.executeScript(ScriptEngine.java:176)
+	at org.l2jmobius.gameserver.GameServer.<init>(GameServer.java:331)
+	at org.l2jmobius.gameserver.GameServer.main(GameServer.java:491)
 
