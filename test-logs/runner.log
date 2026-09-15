@@ -1,12 +1,12 @@
 ﻿**********************
 Windows PowerShell transcript start
-Start time: 20260915231152
+Start time: 20260915234851
 Username: Desktop-1H06Q\Brata
 RunAs User: Desktop-1H06Q\Brata
 Configuration Name: 
 Machine: Desktop-1H06Q (Microsoft Windows NT 10.0.19045.0)
-Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File .\L3-run.ps1 -Help
-Process ID: 28144
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File .\L3-run.ps1 -NoPull -NoPush
+Process ID: 25920
 PSVersion: 5.1.19041.7291
 PSEdition: Desktop
 PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.19041.7291
@@ -38,31 +38,32 @@ Quick checks:  java -version | ant -version | mariadbd --version | git --version
   DB already matches the current snapshot - no restore needed.
 
 === 5/8  Preparing server jars ===
-  Using committed jars in server\dist\libs.
+  Game sources/config changed after the committed jar (C:\Agentic\l3\server\dist\game\data\scripts\handlers\chat\commands\admin\AdminL3Spawn.java); rebuilding with Ant...
+
 
 === 6/8  Launching servers ===
   starting LoginServer ...
   starting GameServer ...
 
-  LoginServer PID 14264
-  GameServer PID 27940
+  LoginServer PID 31144
+  GameServer PID 14096
   Servers are starting. Point the client at this machine, log in, and test.
   >>> To finish: type  .sd  in game (GM), or close a server window. <<<
       This script then dumps the DB and logs locally.
 
 === 7/8  Running - waiting for shutdown (.sd in game, or close a server window) ===
-  GameServer (PID 27940) stopped.
+  GameServer (PID 14096) stopped.
   Shutting the other server down too.
-  Stopping 14264 without a GUI shutdown prompt.
+  Stopping 31144 without a GUI shutdown prompt.
   Server(s) stopped.
 
 === 8/8  Saving database + logs locally ===
 Dumping l2jmobiusinterlude -> C:\Agentic\l3\server\dist\db_snapshot\l2jmobiusinterlude.sql ...
-  Wrote 569 KB.
+  Wrote 569.2 KB.
   Leaving MariaDB running (it was already up when this instance started).
   safepoints collected: 3
   logs collected into test-logs\ .
 **********************
 Windows PowerShell transcript end
-End time: 20260915232019
+End time: 20260915235333
 **********************

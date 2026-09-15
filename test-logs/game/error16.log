@@ -1,4 +1,4 @@
-Sep 15, 2026 8:35:09 PM org.l2jmobius.gameserver.GameServer <init>
+Sep 15, 2026 9:02:45 PM org.l2jmobius.gameserver.GameServer <init>
 WARNING: Failed to execute script list!
 java.lang.RuntimeException: 
 ----------------
@@ -8,115 +8,27 @@ File diagnostics
 -----------------------
 Compilation diagnostics
 -----------------------
-	ERROR: data\scripts\l3\agent\L3Outfitter.java, Line 204, Column 25
+	ERROR: data\scripts\l3\ai\L3Reflex.java, Line 198, Column 17
 		code: compiler.err.illegal.start.of.expr
 		message: illegal start of expression
-	ERROR: data\scripts\l3\agent\L3Outfitter.java, Line 192, Column 17
-		code: compiler.err.try.without.catch.finally.or.resource.decls
-		message: 'try' without 'catch', 'finally' or resource declarations
-	ERROR: data\scripts\l3\agent\L3Outfitter.java, Line 239, Column 46
-		code: compiler.err.expected
-		message: <identifier> expected
-	ERROR: data\scripts\l3\agent\L3Outfitter.java, Line 239, Column 62
-		code: compiler.err.expected
-		message: <identifier> expected
-	ERROR: data\scripts\l3\agent\L3Outfitter.java, Line 240, Column 44
-		code: compiler.err.expected
-		message: <identifier> expected
-	ERROR: data\scripts\l3\agent\L3Outfitter.java, Line 240, Column 60
-		code: compiler.err.expected
-		message: <identifier> expected
-	ERROR: data\scripts\l3\agent\L3Outfitter.java, Line 241, Column 49
-		code: compiler.err.expected
-		message: <identifier> expected
-	ERROR: data\scripts\l3\agent\L3Outfitter.java, Line 243, Column 55
-		code: compiler.err.expected
-		message: <identifier> expected
-	ERROR: data\scripts\l3\agent\L3Outfitter.java, Line 243, Column 57
-		code: compiler.err.expected2
-		message: '{' or ';' expected
-	ERROR: data\scripts\l3\agent\L3Outfitter.java, Line 243, Column 58
-		code: compiler.err.expected
-		message: '{' expected
-	ERROR: data\scripts\l3\agent\L3Outfitter.java, Line 245, Column 17
-		code: compiler.err.illegal.start.of.type
-		message: illegal start of type
-	ERROR: data\scripts\l3\agent\L3Outfitter.java, Line 245, Column 35
-		code: compiler.err.expected
-		message: ';' expected
-	ERROR: data\scripts\l3\agent\L3Outfitter.java, Line 324, Column 17
+	ERROR: data\scripts\l3\ai\L3Reflex.java, Line 366, Column 17
 		code: compiler.err.invalid.meth.decl.ret.type.req
 		message: invalid method declaration; return type required
-	ERROR: data\scripts\l3\agent\L3Outfitter.java, Line 327, Column 1
+	ERROR: data\scripts\l3\ai\L3Reflex.java, Line 369, Column 1
 		code: compiler.err.expected4
 		message: class, interface, enum, or record expected
-	ERROR: data\scripts\l3\agent\L3Outfitter.java, Line 21, Column 1
+	ERROR: data\scripts\l3\ai\L3Reflex.java, Line 21, Column 1
 		code: compiler.err.implicit.class.should.not.have.package.declaration
 		message: compact source file should not have package declaration
-	ERROR: data\scripts\l3\agent\L3Outfitter.java, Line 239, Column 53
-		code: compiler.err.doesnt.exist
-		message: package player does not exist
-	ERROR: data\scripts\l3\agent\L3Outfitter.java, Line 239, Column 31
-		code: compiler.err.doesnt.exist
-		message: package player does not exist
-	ERROR: data\scripts\l3\agent\L3Outfitter.java, Line 240, Column 51
-		code: compiler.err.doesnt.exist
-		message: package player does not exist
-	ERROR: data\scripts\l3\agent\L3Outfitter.java, Line 240, Column 31
-		code: compiler.err.doesnt.exist
-		message: package player does not exist
-	ERROR: data\scripts\l3\agent\L3Outfitter.java, Line 241, Column 31
-		code: compiler.err.doesnt.exist
-		message: package player does not exist
-	ERROR: data\scripts\l3\agent\L3Outfitter.java, Line 243, Column 43
-		code: compiler.err.cant.resolve.location
-		message: cannot find symbol
-  symbol:   class getInstance
-  location: class org.l2jmobius.gameserver.taskmanagers.AutoUseTaskManager
-	ERROR: data\scripts\l3\agent\L3AgentManager.java, Line 178, Column 56
+	ERROR: data\scripts\l3\ai\L3ThinkTaskManager.java, Line 200, Column 41
 		code: compiler.err.cant.access
-		message: cannot access l3.agent.L3Outfitter
-  bad source file: data\scripts\l3\agent\L3Outfitter.java
-    file does not contain class l3.agent.L3Outfitter
+		message: cannot access l3.ai.L3Reflex
+  bad source file: data\scripts\l3\ai\L3Reflex.java
+    file does not contain class l3.ai.L3Reflex
     Please remove or make sure it appears in the correct subdirectory of the sourcepath.
-	ERROR: data\scripts\l3\agent\L3Outfitter.java, Line 54, Column 1
-		code: compiler.err.duplicate.class
-		message: duplicate class: L3Outfitter
-	ERROR: data\scripts\l3\agent\L3Outfitter.java, Line 243, Column 75
-		code: compiler.err.cant.resolve.location
-		message: cannot find symbol
-  symbol:   variable player
-  location: class L3Outfitter.L3Outfitter
-	ERROR: data\scripts\l3\agent\L3Outfitter.java, Line 247, Column 77
-		code: compiler.err.cant.resolve.location
-		message: cannot find symbol
-  symbol:   variable player
-  location: class L3Outfitter.L3Outfitter
-	ERROR: data\scripts\l3\agent\L3Outfitter.java, Line 287, Column 35
-		code: compiler.err.cant.resolve.location.args
-		message: cannot find symbol
-  symbol:   method gradeFor(int)
-  location: class L3Outfitter
-	ERROR: data\scripts\l3\agent\L3Outfitter.java, Line 290, Column 74
-		code: compiler.err.cant.resolve.location
-		message: cannot find symbol
-  symbol:   variable SWORDS
-  location: class L3Outfitter
-	ERROR: data\scripts\l3\agent\L3Outfitter.java, Line 305, Column 36
-		code: compiler.err.cant.resolve.location.args
-		message: cannot find symbol
-  symbol:   method isMageClass(int)
-  location: class L3Outfitter
-	ERROR: data\scripts\l3\agent\L3Outfitter.java, Line 305, Column 59
-		code: compiler.err.cant.resolve.location
-		message: cannot find symbol
-  symbol:   variable BLESSED_SPIRITSHOTS
-  location: class L3Outfitter
-	ERROR: data\scripts\l3\agent\L3Outfitter.java, Line 305, Column 88
-		code: compiler.err.cant.resolve.location
-		message: cannot find symbol
-  symbol:   variable SOULSHOTS
-  location: class L3Outfitter
+	ERROR: data\scripts\l3\ai\L3Reflex.java, Line 66, Column 1
+		code: compiler.err.implicit.class.does.not.have.main.method
+		message: compact source file does not have main method in the form of void main() or void main(String[] args)
 
 	at org.l2jmobius.gameserver.scripting.engine.ScriptExecutor.executeScripts(ScriptExecutor.java:104)
 	at org.l2jmobius.gameserver.scripting.engine.ScriptExecutor.executeScript(ScriptExecutor.java:209)
