@@ -200,40 +200,6 @@ public class L3Outfitter
 				makeImmortal(player);
 			}
 
-			/** Applies the same starter skills and equipment used when a Human Fighter is created. */
-			public static void outfitStarter(Player player, int classId)
-			{
-				try
-				{
-					giveSkills(player);
-					final var equipment = InitialEquipmentData.getInstance().getClassEquipment(PlayerClass.getPlayerClass(classId));
-					if (equipment != null)
-					{
-						for (InitialEquipment starter : equipment)
-						{
-							final Item item = player.addItem(ItemProcessType.REWARD, starter.getId(), starter.getCount(), null, false);
-							if ((item != null) && item.isEquipable() && starter.isEquipped())
-							{
-								player.getInventory().equipItem(item);
-							}
-						}
-					}
-
-					if (L3Config.TEST_IMMORTAL)
-					{
-						makeImmortal(player);
-					}
-					player.setCurrentHpMp(player.getMaxHp(), player.getMaxMp());
-					player.setCurrentCp(player.getMaxCp());
-					player.broadcastUserInfo();
-					AutoUseTaskManager.getInstance().startAutoUseTask(player);
-				}
-				catch (Exception e)
-				{
-					LOGGER.log(Level.WARNING, "L3: failed to apply starter outfit to " + player.getName(), e);
-				}
-			}
-
 			// Start at full health, and let the engine's own auto-use loop consume the shots we gave
 			// it - the same mechanism offline-play characters use, so no bespoke shot code.
 			player.setCurrentHpMp(player.getMaxHp(), player.getMaxMp());
@@ -245,6 +211,40 @@ public class L3Outfitter
 		catch (Exception e)
 		{
 			LOGGER.log(Level.WARNING, "L3: failed to outfit " + player.getName(), e);
+		}
+	}
+
+	/** Applies the same starter skills and equipment used when a Human Fighter is created. */
+	public static void outfitStarter(Player player, int classId)
+	{
+		try
+		{
+			giveSkills(player);
+			final var equipment = InitialEquipmentData.getInstance().getClassEquipment(PlayerClass.getPlayerClass(classId));
+			if (equipment != null)
+			{
+				for (InitialEquipment starter : equipment)
+				{
+					final Item item = player.addItem(ItemProcessType.REWARD, starter.getId(), starter.getCount(), null, false);
+					if ((item != null) && item.isEquipable() && starter.isEquipped())
+					{
+						player.getInventory().equipItem(item);
+					}
+				}
+			}
+
+			if (L3Config.TEST_IMMORTAL)
+			{
+				makeImmortal(player);
+			}
+			player.setCurrentHpMp(player.getMaxHp(), player.getMaxMp());
+			player.setCurrentCp(player.getMaxCp());
+			player.broadcastUserInfo();
+			AutoUseTaskManager.getInstance().startAutoUseTask(player);
+		}
+		catch (Exception e)
+		{
+			LOGGER.log(Level.WARNING, "L3: failed to apply starter outfit to " + player.getName(), e);
 		}
 	}
 
