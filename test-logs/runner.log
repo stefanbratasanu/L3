@@ -1,12 +1,12 @@
 ﻿**********************
 Windows PowerShell transcript start
-Start time: 20260915200926
+Start time: 20260915204216
 Username: Desktop-1H06Q\Brata
 RunAs User: Desktop-1H06Q\Brata
 Configuration Name: 
 Machine: Desktop-1H06Q (Microsoft Windows NT 10.0.19045.0)
 Host Application: powershell -NoProfile -ExecutionPolicy Bypass -File C:\Agentic\l3\L3-run.ps1
-Process ID: 17940
+Process ID: 24500
 PSVersion: 5.1.19041.7291
 PSEdition: Desktop
 PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.19041.7291
@@ -27,20 +27,14 @@ Quick checks:  java -version | ant -version | mariadbd --version | git --version
 === 1/8  Git synchronization ===
 From https://github.com/stefanbratasanu/L3
  * branch              main       -> FETCH_HEAD
-Enumerating objects: 19795, done.
-Counting objects: 100% (19795/19795), done.
-Delta compression using up to 16 threads
-Compressing objects: 100% (16426/16426), done.
-Writing objects: 100% (19795/19795), done.
-Total 19795 (delta 3598), reused 19352 (delta 3295), pack-reused 0 (from 0)
-Enumerating cruft objects: 109, done.
-Traversing cruft objects: 197, done.
-Counting objects: 100% (109/109), done.
-Delta compression using up to 16 threads
-Compressing objects: 100% (109/109), done.
-Writing objects: 100% (109/109), done.
-Total 109 (delta 73), reused 0 (delta 0), pack-reused 0 (from 0)
-fatal: Cannot rebase onto multiple branches.
+fatal: It seems that there is already a rebase-merge directory, and
+I wonder if you are in the middle of another rebase.  If that is the
+case, please try
+        git rebase (--continue | --abort | --skip)
+If that is not the case, please
+        rm -fr ".git/rebase-merge"
+and run me again.  I am stopping in case you still have something
+valuable there.
   git pull --rebase failed (resolve the reported conflict, then re-run).
   Starting anyway with the code you have locally.
 
@@ -49,13 +43,12 @@ fatal: Cannot rebase onto multiple branches.
   db   : C:\Agentic\tools\mariadb\bin\mariadbd.exe
 
 === 3/8  Starting MariaDB ===
-MariaDB running (PID 21212) on 127.0.0.1:3306.
-  data: C:\Agentic\data\mariadb
-  logs: C:\Agentic\data\mariadb\..\mariadb-logs\mariadbd.out.log
-Stop it with:  .\db-stop.ps1
+  MariaDB is already running on port 3306 - leaving it alone.
 
 === 4/8  Restoring database ===
-  DB already matches the current snapshot - no restore needed.
+  Snapshot differs, but MariaDB was ALREADY running - not reloading it.
+  Another L3-run instance may have a live server attached, and a reload would wipe it.
+  Stop everything first, or pass -FreshDb to force the reload.
 
 === 5/8  Preparing server jars ===
   Using committed jars in server\dist\libs.
@@ -64,27 +57,24 @@ Stop it with:  .\db-stop.ps1
   starting LoginServer ...
   starting GameServer ...
 
-  LoginServer PID 19692
-  GameServer PID 16300
+  LoginServer PID 25912
+  GameServer PID 19660
   Servers are starting. Point the client at this machine, log in, and test.
   >>> To finish: type  .sd  in game (GM), or close a server window. <<<
       This script then dumps the DB and logs locally.
 
 === 7/8  Running - waiting for shutdown (.sd in game, or close a server window) ===
-  GameServer (PID 16300) stopped.
+  GameServer (PID 19660) stopped.
   Shutting the other server down too.
-  Stopping 19692 without a GUI shutdown prompt.
+  Stopping 25912 without a GUI shutdown prompt.
   Server(s) stopped.
 
 === 8/8  Saving database + logs locally ===
 Dumping l2jmobiusinterlude -> C:\Agentic\l3\server\dist\db_snapshot\l2jmobiusinterlude.sql ...
-  Wrote 571.2 KB.
-Requesting graceful shutdown via mariadb-admin ...
-
-MariaDB stopped.
-  safepoints collected: 5
+  Wrote 566.3 KB.
+  Leaving MariaDB running (it was already up when this instance started).
   logs collected into test-logs\ .
 **********************
 Windows PowerShell transcript end
-End time: 20260915201253
+End time: 20260915204318
 **********************
