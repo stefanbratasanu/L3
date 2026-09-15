@@ -174,13 +174,20 @@ public class L3AgentManager
 	 */
 	public L3Agent spawnNew(Location location, String name, boolean turbo)
 	{
+		return spawnNew(location, name, turbo, L3Outfitter.randomClassId());
+	}
+
+	/**
+	 * Creates an agent with an explicit starting class for deterministic behavior tests.
+	 */
+	public L3Agent spawnNew(Location location, String name, boolean turbo, int classId)
+	{
 		if (AGENTS.size() >= L3Config.POPULATION_CAP)
 		{
 			return null;
 		}
 
-		// A varied population: random starting class, random level, gear to match both.
-		final int classId = L3Outfitter.randomClassId();
+		// A varied population normally uses a random class; named test agents may choose one.
 		final int level = L3Outfitter.randomLevel();
 
 		final PlayerTemplate template = PlayerTemplateData.getInstance().getTemplate(classId);

@@ -1,0 +1,18 @@
+2026.09.13 22:23:38,457	INFO	3	org.l2jmobius.commons.database.DatabaseFactory	Database: HikariCP pool initialized successfully.
+2026.09.13 22:23:38,709	INFO	3	org.l2jmobius.commons.database.DatabaseFactory	Database: Initialized with a valid connection.
+2026.09.13 22:23:38,718	INFO	3	org.l2jmobius.commons.threads.ThreadPool	ThreadPool: Initializing.
+2026.09.13 22:23:38,721	INFO	3	org.l2jmobius.commons.threads.ThreadPool	...scheduled pool executor with 2 total threads.
+2026.09.13 22:23:38,721	INFO	3	org.l2jmobius.commons.threads.ThreadPool	...instant pool executor with 2 total threads.
+2026.09.13 22:23:38,722	INFO	3	org.l2jmobius.loginserver.controller.LoginController	Loading LoginController...
+2026.09.13 22:23:38,953	INFO	3	org.l2jmobius.loginserver.controller.LoginController	Cached 10 KeyPairs for RSA communication.
+2026.09.13 22:23:38,984	INFO	3	org.l2jmobius.loginserver.controller.LoginController	Stored 20 keys for Blowfish communication.
+2026.09.13 22:23:39,061	INFO	3	org.l2jmobius.loginserver.data.GameServerTable	Loaded 127 server names.
+2026.09.13 22:23:39,139	INFO	3	org.l2jmobius.loginserver.data.GameServerTable	Loaded 2 registered Game Servers.
+2026.09.13 22:23:39,171	INFO	3	org.l2jmobius.loginserver.data.GameServerTable	Cached 10 RSA keys for Game Server communication.
+2026.09.13 22:23:39,174	INFO	3	org.l2jmobius.loginserver.LoginServer	Loaded 2 IP Bans.
+2026.09.13 22:23:39,176	INFO	3	org.l2jmobius.loginserver.LoginServer	Game server listener is listening on 127.0.0.1:9014.
+2026.09.13 22:23:39,191	INFO	3	org.l2jmobius.loginserver.LoginServer	LoginServer: Login client listener started on 0.0.0.0:2106.
+2026.09.13 22:24:27,683	INFO	71	org.l2jmobius.loginserver.GameServerThread	Updated Gameserver [1] Bartz IP's:
+2026.09.13 22:24:27,684	INFO	71	org.l2jmobius.loginserver.GameServerThread	127.0.0.1/127.0.0.0/8
+2026.09.13 22:24:27,684	INFO	71	org.l2jmobius.loginserver.GameServerThread	127.0.0.1/0.0.0.0/0
+2026.09.13 22:24:27,684	INFO	71	org.l2jmobius.loginserver.GameServerThread	127.0.0.1/0.0.0.0/0

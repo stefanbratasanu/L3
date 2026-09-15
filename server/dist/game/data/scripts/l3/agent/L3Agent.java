@@ -23,6 +23,7 @@ package l3.agent;
 import org.l2jmobius.gameserver.entity.actor.Player;
 
 import l3.L3Config;
+import l3.L3Debug;
 
 /**
  * One agent's brain state: the controller that sits beside a clientless {@link Player}.
@@ -85,12 +86,15 @@ public class L3Agent
 	/** Consecutive ticks where we asked for an attack but nothing happened - the agent is probably
 	 * wedged on geometry and should be nudged. */
 	private int _stuckTicks;
+	private L3AgentState _state = L3AgentState.IDLE;
+	private L3AgentGoal _goal = L3AgentGoal.REACH_LEVEL_20;
 
 	public L3Agent(Player player)
 	{
 		_player = player;
 		_objectId = player.getObjectId();
 		_personaSeed = (((long) player.getObjectId()) * 0x9E3779B97F4A7C15L) ^ System.nanoTime();
+		L3Debug.event(this, "REGISTERED", "mind initialized");
 	}
 
 	public Player getPlayer()
@@ -106,6 +110,36 @@ public class L3Agent
 	public long getPersonaSeed()
 	{
 		return _personaSeed;
+	}
+
+	public L3AgentState getState()
+	{
+		return _state;
+	}
+
+	public L3AgentGoal getGoal()
+	{
+		return _goal;
+	}
+
+	public void setState(L3AgentState state)
+	{
+		if (state != _state)
+		{
+			final L3AgentState previous = _state;
+			_state = state;
+			L3Debug.event(this, "STATE", previous + "->" + state);
+		}
+	}
+
+	public void setGoal(L3AgentGoal goal)
+	{
+		if (goal != _goal)
+		{
+			final L3AgentGoal previous = _goal;
+			_goal = goal;
+			L3Debug.event(this, "GOAL", previous + "->" + goal);
+		}
 	}
 
 	public Lod getLod()

@@ -1,0 +1,161 @@
+Sep 15, 2026 2:02:35 AM org.l2jmobius.gameserver.GameServer <init>
+WARNING: Failed to execute script list!
+java.lang.RuntimeException: 
+----------------
+File diagnostics
+----------------
+
+-----------------------
+Compilation diagnostics
+-----------------------
+	ERROR: data\scripts\handlers\chat\commands\admin\AdminL3Spawn.java, Line 187, Column 17
+		code: compiler.err.illegal.start.of.expr
+		message: illegal start of expression
+	ERROR: data\scripts\handlers\chat\commands\admin\AdminL3Spawn.java, Line 491, Column 1
+		code: compiler.err.expected4
+		message: class, interface, enum, or record expected
+	ERROR: data\scripts\handlers\chat\commands\admin\AdminL3Spawn.java, Line 21, Column 1
+		code: compiler.err.implicit.class.should.not.have.package.declaration
+		message: compact source file should not have package declaration
+	ERROR: C:\Agentic\l3\server\dist\game\data\scripts\handlers\MasterHandler.java, Line 155, Column 36
+		code: compiler.err.cant.access
+		message: cannot access handlers.chat.commands.admin.AdminL3Spawn
+  bad source file: data\scripts\handlers\chat\commands\admin\AdminL3Spawn.java
+    file does not contain class handlers.chat.commands.admin.AdminL3Spawn
+    Please remove or make sure it appears in the correct subdirectory of the sourcepath.
+	ERROR: C:\Agentic\l3\server\dist\game\data\scripts\handlers\MasterHandler.java, Line 372, Column 25
+		code: compiler.err.cant.resolve.location
+		message: cannot find symbol
+  symbol:   class AdminL3Spawn
+  location: class handlers.MasterHandler
+	ERROR: data\scripts\handlers\chat\commands\admin\AdminL3Spawn.java, Line 64, Column 8
+		code: compiler.err.does.not.override.abstract
+		message: AdminL3Spawn.AdminL3Spawn is not abstract and does not override abstract method getCommandList() in org.l2jmobius.gameserver.handler.IAdminCommandHandler
+	ERROR: data\scripts\handlers\chat\commands\admin\AdminL3Spawn.java, Line 232, Column 53
+		code: compiler.err.cant.resolve.location
+		message: cannot find symbol
+  symbol:   variable MAX_PER_COMMAND
+  location: class AdminL3Spawn
+	ERROR: data\scripts\handlers\chat\commands\admin\AdminL3Spawn.java, Line 302, Column 25
+		code: compiler.err.cant.resolve.location
+		message: cannot find symbol
+  symbol:   variable SPAWNED
+  location: class AdminL3Spawn
+	ERROR: data\scripts\handlers\chat\commands\admin\AdminL3Spawn.java, Line 307, Column 17
+		code: compiler.err.cant.resolve.location
+		message: cannot find symbol
+  symbol:   variable LOGGER
+  location: class AdminL3Spawn
+	ERROR: data\scripts\handlers\chat\commands\admin\AdminL3Spawn.java, Line 324, Column 33
+		code: compiler.err.cant.resolve.location
+		message: cannot find symbol
+  symbol:   variable SPAWNED
+  location: class AdminL3Spawn
+	ERROR: data\scripts\handlers\chat\commands\admin\AdminL3Spawn.java, Line 331, Column 25
+		code: compiler.err.cant.resolve.location
+		message: cannot find symbol
+  symbol:   variable LOGGER
+  location: class AdminL3Spawn
+	ERROR: data\scripts\handlers\chat\commands\admin\AdminL3Spawn.java, Line 340, Column 81
+		code: compiler.err.cant.resolve.location
+		message: cannot find symbol
+  symbol:   variable SPAWN_OFFSET
+  location: class AdminL3Spawn
+	ERROR: data\scripts\handlers\chat\commands\admin\AdminL3Spawn.java, Line 340, Column 141
+		code: compiler.err.cant.resolve.location
+		message: cannot find symbol
+  symbol:   variable SPAWN_OFFSET
+  location: class AdminL3Spawn
+	ERROR: data\scripts\handlers\chat\commands\admin\AdminL3Spawn.java, Line 354, Column 17
+		code: compiler.err.cant.resolve.location
+		message: cannot find symbol
+  symbol:   variable LOGGER
+  location: class AdminL3Spawn
+	ERROR: data\scripts\handlers\chat\commands\admin\AdminL3Spawn.java, Line 393, Column 17
+		code: compiler.err.cant.resolve.location
+		message: cannot find symbol
+  symbol:   variable SPAWNED
+  location: class AdminL3Spawn
+	ERROR: data\scripts\handlers\chat\commands\admin\AdminL3Spawn.java, Line 403, Column 17
+		code: compiler.err.cant.resolve.location
+		message: cannot find symbol
+  symbol:   variable LOGGER
+  location: class AdminL3Spawn
+	ERROR: data\scripts\handlers\chat\commands\admin\AdminL3Spawn.java, Line 424, Column 21
+		code: compiler.err.cant.resolve.location
+		message: cannot find symbol
+  symbol:   variable _gotoIndex
+  location: class AdminL3Spawn
+	ERROR: data\scripts\handlers\chat\commands\admin\AdminL3Spawn.java, Line 426, Column 25
+		code: compiler.err.cant.resolve.location
+		message: cannot find symbol
+  symbol:   variable _gotoIndex
+  location: class AdminL3Spawn
+	ERROR: data\scripts\handlers\chat\commands\admin\AdminL3Spawn.java, Line 429, Column 50
+		code: compiler.err.cant.resolve.location
+		message: cannot find symbol
+  symbol:   variable _gotoIndex
+  location: class AdminL3Spawn
+	ERROR: data\scripts\handlers\chat\commands\admin\AdminL3Spawn.java, Line 430, Column 17
+		code: compiler.err.cant.resolve.location
+		message: cannot find symbol
+  symbol:   variable _gotoIndex
+  location: class AdminL3Spawn
+	ERROR: data\scripts\handlers\chat\commands\admin\AdminL3Spawn.java, Line 430, Column 31
+		code: compiler.err.cant.resolve.location
+		message: cannot find symbol
+  symbol:   variable _gotoIndex
+  location: class AdminL3Spawn
+	ERROR: data\scripts\handlers\chat\commands\admin\AdminL3Spawn.java, Line 434, Column 80
+		code: compiler.err.cant.resolve.location
+		message: cannot find symbol
+  symbol:   variable _gotoIndex
+  location: class AdminL3Spawn
+	ERROR: data\scripts\handlers\chat\commands\admin\AdminL3Spawn.java, Line 434, Column 114
+		code: compiler.err.cant.resolve.location
+		message: cannot find symbol
+  symbol:   variable _gotoIndex
+  location: class AdminL3Spawn
+	ERROR: data\scripts\handlers\chat\commands\admin\AdminL3Spawn.java, Line 447, Column 31
+		code: compiler.err.cant.resolve.location
+		message: cannot find symbol
+  symbol:   variable SPAWNED
+  location: class AdminL3Spawn
+	ERROR: data\scripts\handlers\chat\commands\admin\AdminL3Spawn.java, Line 449, Column 31
+		code: compiler.err.cant.resolve.location
+		message: cannot find symbol
+  symbol:   variable SPAWNED
+  location: class AdminL3Spawn
+	ERROR: data\scripts\handlers\chat\commands\admin\AdminL3Spawn.java, Line 450, Column 25
+		code: compiler.err.cant.resolve.location
+		message: cannot find symbol
+  symbol:   variable SPAWNED
+  location: class AdminL3Spawn
+	ERROR: data\scripts\handlers\chat\commands\admin\AdminL3Spawn.java, Line 478, Column 33
+		code: compiler.err.cant.resolve.location
+		message: cannot find symbol
+  symbol:   variable LOGGER
+  location: class AdminL3Spawn
+	ERROR: data\scripts\handlers\chat\commands\admin\AdminL3Spawn.java, Line 483, Column 17
+		code: compiler.err.cant.resolve.location
+		message: cannot find symbol
+  symbol:   variable LOGGER
+  location: class AdminL3Spawn
+	ERROR: data\scripts\handlers\chat\commands\admin\AdminL3Spawn.java, Line 486, Column 9
+		code: compiler.err.method.does.not.override.superclass
+		message: method does not override or implement a method from a supertype
+	ERROR: data\scripts\handlers\chat\commands\admin\AdminL3Spawn.java, Line 489, Column 24
+		code: compiler.err.cant.resolve.location
+		message: cannot find symbol
+  symbol:   variable ADMIN_COMMANDS
+  location: class AdminL3Spawn
+	ERROR: data\scripts\handlers\chat\commands\admin\AdminL3Spawn.java, Line 64, Column 1
+		code: compiler.err.implicit.class.does.not.have.main.method
+		message: compact source file does not have main method in the form of void main() or void main(String[] args)
+
+	at org.l2jmobius.gameserver.scripting.engine.ScriptExecutor.executeScripts(ScriptExecutor.java:104)
+	at org.l2jmobius.gameserver.scripting.engine.ScriptExecutor.executeScript(ScriptExecutor.java:209)
+	at org.l2jmobius.gameserver.scripting.ScriptEngine.executeScript(ScriptEngine.java:176)
+	at org.l2jmobius.gameserver.GameServer.<init>(GameServer.java:331)
+	at org.l2jmobius.gameserver.GameServer.main(GameServer.java:491)
+

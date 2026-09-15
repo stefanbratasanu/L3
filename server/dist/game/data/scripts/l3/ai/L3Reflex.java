@@ -29,7 +29,9 @@ import org.l2jmobius.gameserver.entity.actor.instance.Monster;
 import org.l2jmobius.gameserver.geoengine.GeoEngine;
 
 import l3.L3Config;
+import l3.L3Debug;
 import l3.agent.L3Agent;
+import l3.agent.L3AgentState;
 import l3.agent.L3Agent.Lod;
 
 /**
@@ -66,6 +68,16 @@ public class L3Reflex
 	{
 		final Player player = agent.getPlayer();
 
+		if (player.isDead())
+		{
+			agent.setState(L3AgentState.DEAD);
+			return;
+		}
+		if (player.getCurrentHp() < (player.getMaxHp() * 0.35))
+		{
+			agent.setState(L3AgentState.RECOVERING);
+		}
+
 		// Busy or unable to act: nothing to decide this tick.
 		if (player.isDead() || player.isSitting() || player.isCastingNow() || player.isDisabled())
 		{
@@ -87,6 +99,7 @@ public class L3Reflex
 		// --- 2. No target: maybe scan for one (the rationed, expensive path) ------------------
 		if (target == null)
 		{
+			agent.setState(L3AgentState.IDLE);
 			if (!agent.mayAcquire(now))
 			{
 				return; // Still on cooldown: cost nothing this tick.
@@ -100,6 +113,8 @@ public class L3Reflex
 			}
 
 			agent.onAcquireSucceeded(now, target.getObjectId());
+			agent.setState(L3AgentState.HUNTING);
+			L3Debug.event(agent, "TARGET", "monster=" + target.getObjectId());
 			player.setTarget(target);
 		}
 
@@ -108,6 +123,7 @@ public class L3Reflex
 
 		if (distance > L3Config.MELEE_RANGE)
 		{
+			agent.setState(L3AgentState.TRAVELING);
 			// Re-issuing MoveTo every tick would spam the movement system; only nudge when idle.
 			if (!player.isMoving() && player.hasAI())
 			{
@@ -119,6 +135,7 @@ public class L3Reflex
 
 		if (player.hasAI() && !player.isAttackingNow() && !player.isMoving())
 		{
+			agent.setState(L3AgentState.HUNTING);
 			if (player.getAI().getIntention() != Intention.ATTACK)
 			{
 				player.getAI().setIntentionAttack(target);
@@ -147,6 +164,8 @@ public class L3Reflex
 	public static void tickCold(L3Agent agent, long now)
 	{
 		final Player player = agent.getPlayer();
+		agent.setState(player.isDead() ? L3AgentState.DEAD : L3AgentState.IDLE);
+		L3Debug.event(agent, "TICK", "cold");
 		if (agent.getTargetObjectId() != 0)
 		{
 			dropTarget(agent, player);

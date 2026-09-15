@@ -173,6 +173,18 @@ public class L3Config
 	/** Log a one-line summary of the whole population this often. Set to 0 to disable. */
 	public static final int STATS_INTERVAL_MS = 60000;
 
+	/** Enables compact JSON-lines records for state and goal transitions. */
+	public static final boolean DEBUG_ENABLED = true;
+
+	/** Relative to the game-server working directory unless an absolute path is supplied. */
+	public static final String DEBUG_LOG_DIRECTORY = "logs/l3";
+
+	/** Bounds the in-memory window exposed by the admin debug command. */
+	public static final int DEBUG_RING_SIZE = 256;
+
+	/** Prevents an overnight run from writing one record for every scheduler tick. */
+	public static final int DEBUG_TICK_SAMPLE_MS = 30000;
+
 	private L3Config()
 	{
 	}

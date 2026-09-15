@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 2026.09.13 20:16:00,574	INFO	3	org.l2jmobius.commons.database.DatabaseFactory	Database: HikariCP pool initialized successfully.
 2026.09.13 20:16:00,980	INFO	3	org.l2jmobius.commons.database.DatabaseFactory	Database: Initialized with a valid connection.
 2026.09.13 20:16:00,993	INFO	3	org.l2jmobius.commons.threads.ThreadPool	ThreadPool: Initializing.
@@ -19,3 +20,19 @@
 2026.09.13 20:36:55,714	INFO	77	org.l2jmobius.loginserver.controller.LoginController	Auto created account 'admin'.
 2026.09.13 20:54:57,880	INFO	63	org.l2jmobius.loginserver.GameServerThread	GameServer [1] Bartz: Connection lost - Connection reset
 2026.09.13 20:54:57,880	INFO	63	org.l2jmobius.loginserver.GameServerThread	Server [1] Bartz is now marked as disconnected.
+=======
+2026.09.13 17:17:05,787	INFO	3	org.l2jmobius.commons.database.DatabaseFactory	Database: HikariCP pool initialized successfully.
+2026.09.13 17:17:06,072	INFO	3	org.l2jmobius.commons.database.DatabaseFactory	Database: Initialized with a valid connection.
+2026.09.13 17:17:06,078	INFO	3	org.l2jmobius.commons.threads.ThreadPool	ThreadPool: Initializing.
+2026.09.13 17:17:06,088	INFO	3	org.l2jmobius.commons.threads.ThreadPool	...scheduled pool executor with 2 total threads.
+2026.09.13 17:17:06,089	INFO	3	org.l2jmobius.commons.threads.ThreadPool	...instant pool executor with 2 total threads.
+2026.09.13 17:17:06,090	INFO	3	org.l2jmobius.loginserver.controller.LoginController	Loading LoginController...
+2026.09.13 17:17:06,345	INFO	3	org.l2jmobius.loginserver.controller.LoginController	Cached 10 KeyPairs for RSA communication.
+2026.09.13 17:17:06,406	INFO	3	org.l2jmobius.loginserver.controller.LoginController	Stored 20 keys for Blowfish communication.
+2026.09.13 17:17:06,520	INFO	3	org.l2jmobius.loginserver.data.GameServerTable	Loaded 127 server names.
+2026.09.13 17:17:06,544	INFO	3	org.l2jmobius.loginserver.data.GameServerTable	Loaded 1 registered Game Servers.
+2026.09.13 17:17:06,585	INFO	3	org.l2jmobius.loginserver.data.GameServerTable	Cached 10 RSA keys for Game Server communication.
+2026.09.13 17:17:06,605	INFO	3	org.l2jmobius.loginserver.LoginServer	Loaded 2 IP Bans.
+2026.09.13 17:17:06,607	INFO	3	org.l2jmobius.loginserver.LoginServer	Game server listener is listening on 127.0.0.1:9014.
+2026.09.13 17:17:06,633	INFO	3	org.l2jmobius.loginserver.LoginServer	LoginServer: Login client listener started on 0.0.0.0:2106.
+>>>>>>> 2d137a4d (//safe point// working agent debug snapshot)

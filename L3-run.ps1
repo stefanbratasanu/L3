@@ -1,16 +1,15 @@
 # =============================================================================
-#  L3-run.ps1 — ONE-CLICK run for the TEST machine.
+#  L3-run.ps1 — ONE-CLICK local build/test runner.
 # =============================================================================
 #  What it does, in order:
-#    1. git pull            -> get the latest code + DB snapshot from the build box
+#    1. optional git pull   -> get the latest code + DB snapshot when -SyncGit is set
 #    2. ensure toolchain    -> JDK (to run) + MariaDB present (bootstraps if missing)
 #    3. start MariaDB        (portable, no admin, no service)
 #    4. restore DB snapshot  (first run / whenever the pulled snapshot changed)
 #    5. ensure jars          (use committed jars; build from source only if absent)
 #    6. start LoginServer + GameServer  (their own GUI windows)
 #    7. WAIT until you close both servers
-#    8. on close: dump DB -> stop MariaDB -> git commit + push the snapshot
-#       so the build box stays in sync with whatever you did while testing.
+#    8. on close: dump DB -> stop MariaDB -> optionally commit + push the snapshot
 #
 #  You normally launch this by double-clicking  L3-run.bat  (which just calls this).
 #  To run one side only:  L3-run-login.bat / L3-run-game.bat, or -LoginOnly / -GameOnly.
@@ -22,6 +21,7 @@
 # =============================================================================
 
 param(
+  [switch]$SyncGit,         # opt in to pulling before and committing/pushing after a run
   [switch]$NoPull,          # skip the git pull (offline / local iteration)
   [switch]$NoCommit,        # skip the on-close DB commit+push
   [switch]$NoPush,          # commit the DB snapshot locally but do not push
@@ -86,8 +86,10 @@ $selfHashBefore = (Get-FileHash -LiteralPath $selfPath -Algorithm SHA256).Hash
 # -----------------------------------------------------------------------------
 # 1. git pull
 # -----------------------------------------------------------------------------
-Section '1/8  Pulling latest from GitHub'
-if ($NoPull) {
+Section '1/8  Git synchronization'
+if (-not $SyncGit) {
+  Say '  local mode; skipping Git sync. Use -SyncGit to pull.' 'DarkYellow'
+} elseif ($NoPull) {
   Say '  -NoPull set; skipping.' 'DarkYellow'
 } else {
   Push-Location $repoRoot
@@ -111,7 +113,7 @@ if ($NoPull) {
 # steps ran the old one. That combination silently broke the shutdown sync once already: a pulled
 # '.sd' shut down only the game server, while the still-old step 7 waited on the login server
 # forever and never reached the commit.
-if (-not $NoPull) {
+if ($SyncGit -and -not $NoPull) {
   $selfHashAfter = (Get-FileHash -LiteralPath $selfPath -Algorithm SHA256).Hash
   if ($selfHashBefore -ne $selfHashAfter) {
     Say '  The pull updated L3-run.ps1 itself - restarting with the new version...' 'Yellow'
@@ -209,12 +211,27 @@ Section '5/8  Preparing server jars'
 $distLibs = Join-Path $serverDir 'dist\libs'
 $loginJar = Join-Path $distLibs 'LoginServer.jar'
 $gameJar  = Join-Path $distLibs 'GameServer.jar'
+$scriptRoot = Join-Path $serverDir 'dist\game\data\scripts'
+$gameConfigRoot = Join-Path $serverDir 'dist\game\config'
+$runtimeNeedsBuild = $false
 if ((Test-Path $loginJar) -and (Test-Path $gameJar)) {
+  $jarTime = (Get-Item $gameJar).LastWriteTimeUtc
+  $newerGameSource = Get-ChildItem $scriptRoot, $gameConfigRoot -Recurse -File -ErrorAction SilentlyContinue |
+    Where-Object { $_.LastWriteTimeUtc -gt $jarTime } |
+    Select-Object -First 1
+  $runtimeNeedsBuild = $null -ne $newerGameSource
+}
+
+if ((Test-Path $loginJar) -and (Test-Path $gameJar) -and -not $runtimeNeedsBuild) {
   Say '  Using committed jars in server\dist\libs.' 'Green'
 } else {
   $ant = Join-Path $ANT_HOME 'bin\ant.bat'
   if (Test-Path $ant) {
-    Say '  Jars not committed — building from source with Ant...' 'Yellow'
+    if ($runtimeNeedsBuild) {
+      Say "  Game sources/config changed after the committed jar ($($newerGameSource.FullName)); rebuilding with Ant..." 'Yellow'
+    } else {
+      Say '  Jars not committed — building from source with Ant...' 'Yellow'
+    }
     Push-Location $serverDir
     try { & $ant jar } finally { Pop-Location }
     Copy-Item (Join-Path $repoRoot 'build\dist\libs\LoginServer.jar') $loginJar -Force
@@ -267,7 +284,7 @@ if (-not $runGame) {
   Say '  Servers are starting. Point the client at this machine, log in, and test.' 'Cyan'
 }
 Say '  >>> To finish: type  .sd  in game (GM), or close a server window. <<<' 'Yellow'
-Say '      This script then dumps + commits the DB and logs.' 'Yellow'
+Say '      This script then dumps the DB and logs locally.' 'Yellow'
 
 # -----------------------------------------------------------------------------
 # 7. wait for the session to end
@@ -300,7 +317,7 @@ Say '  Server(s) stopped.' 'Green'
 # -----------------------------------------------------------------------------
 # 8. dump DB, stop MariaDB, commit + push the snapshot
 # -----------------------------------------------------------------------------
-Section '8/8  Syncing database + logs back to git'
+Section '8/8  Saving database + logs locally'
 
 # A stale marker from the old, over-broad wipe implementation. That version rebuilt the entire
 # schema - destroying the human account and its GM access along with the agents - so it is gone.
@@ -357,7 +374,9 @@ Say "  logs collected into test-logs\ ." 'Green'
 # rather than captured mid-write.
 Stop-RunnerLog
 
-if ($NoCommit) {
+if (-not $SyncGit) {
+  Say '  local mode; leaving the snapshot and logs uncommitted.' 'DarkYellow'
+} elseif ($NoCommit) {
   Say '  -NoCommit set; leaving the snapshot uncommitted.' 'DarkYellow'
 } else {
   Push-Location $repoRoot

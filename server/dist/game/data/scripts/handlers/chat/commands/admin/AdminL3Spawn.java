@@ -41,6 +41,7 @@ import l3.L3Config;
 import l3.L3Locations;
 import l3.agent.L3Agent;
 import l3.agent.L3AgentManager;
+import l3.L3Debug;
 
 /**
  * Admin tools for spawning and inspecting L3 agents.
@@ -77,6 +78,9 @@ public class AdminL3Spawn implements IAdminCommandHandler
 		"admin_l3wipe",
 		"admin_sdwipedb",
 		"admin_gotonext"
+		, "admin_l3debug"
+		, "admin_l3agent"
+		, "admin_l3spawnprius"
 	};
 
 	/** Distance in front of the observer to place a single agent. */
@@ -105,6 +109,20 @@ public class AdminL3Spawn implements IAdminCommandHandler
 
 		switch (cmd)
 		{
+			case "admin_l3debug":
+			{
+				showDebug(activeChar);
+				return true;
+			}
+			case "admin_l3agent":
+			{
+				showAgent(activeChar, arg);
+				return true;
+			}
+			case "admin_l3spawnprius":
+			{
+				return spawnPrius(activeChar);
+			}
 			case "admin_gotonext":
 			{
 				return gotoNext(activeChar);
@@ -166,6 +184,41 @@ public class AdminL3Spawn implements IAdminCommandHandler
 			}
 		}
 	}
+
+		private void showDebug(Player observer)
+		{
+			observer.sendSysMessage("=== L3 debug ===");
+			observer.sendSysMessage("Records: " + L3Config.DEBUG_LOG_DIRECTORY + "/agents.jsonl");
+			observer.sendSysMessage(L3Debug.recent(8).replace('\n', ' '));
+		}
+
+		private void showAgent(Player observer, String name)
+		{
+			for (L3Agent agent : L3AgentManager.getInstance().getAgents())
+			{
+				if (name.isEmpty() || agent.getPlayer().getName().equalsIgnoreCase(name))
+				{
+					observer.sendSysMessage("L3: " + agent.getPlayer().getName() + " id=" + agent.getObjectId() + " level=" + agent.getPlayer().getLevel() + " lod=" + agent.getLod() + " goal=" + agent.getGoal() + " state=" + agent.getState() + " target=" + agent.getTargetObjectId());
+					return;
+				}
+			}
+			observer.sendSysMessage("L3: agent not found: " + name);
+		}
+
+		private boolean spawnPrius(Player observer)
+		{
+			final L3Agent agent = L3AgentManager.getInstance().spawnNew(inFrontOf(observer), "Prius", false, 10);
+			if (agent == null)
+			{
+				observer.sendSysMessage("L3: Prius could not be created (name may already exist or the population cap is full).");
+				return false;
+			}
+
+			SPAWNED.add(agent.getObjectId());
+			observer.sendSysMessage("L3: Prius spawned as a Human Mage. Use //l3agent Prius and //gotonext to inspect.");
+			LOGGER.info("L3Spawn: " + observer.getName() + " spawned deterministic test agent Prius.");
+			return true;
+		}
 
 	private static int parseCount(String arg, int fallback)
 	{
